@@ -67,7 +67,8 @@
             "rm -rf public/assets/bootstrap",
             "mkdir -p public/assets",
             "cp -R vendor/twbs/bootstrap/dist public/assets/bootstrap",
-            "cp -R vendor/twbs/bootstrap/scss public/assets/bootstrap/scss"
+            "cp -R vendor/twbs/bootstrap/scss public/assets/bootstrap/scss",
+            "sass public/assets/scss/custom_bootstrap.scss:public/assets/css/custom_bootstrap.css"
         ]
     }
 }

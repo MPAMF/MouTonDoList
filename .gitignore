@@ -7,7 +7,8 @@
 .phpunit.result.cache
 
 # Assets
-public/assets/bootstrap
+public/assets/bootstrap/
+public/assets/css/
 
 ##### Windows
 # Windows thumbnail cache files
