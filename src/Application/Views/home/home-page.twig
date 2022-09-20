@@ -10,6 +10,7 @@
 
     <script type="text/javascript" src="{{ ROOT_URL }}assets/bootstrap/js/bootstrap.min.js"></script>
     <link href="{{ ROOT_URL }}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-light">
@@ -27,18 +28,25 @@
                         <a class="nav-link active" aria-current="page" href="#">Présentation</a>
                     </li>
                 </ul>
-            </div>
-            <div>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Connexion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Commencer Gratuitement</a>
+                        <button class="btn btn-outline-success me-2" type="button">Commencez gratuitement</button>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <h1><b>Bienvenue</b></h1>
+        <p>Trop bien cette todolist</p>
+        <button class="btn btn-outline-success me-2" type="button">Commencez gratuitement</button>
+
+        <img src="assets/img/leGang.jpeg" alt="ApplyImage" width="600" height="350" class="d-inline-block align-text-top">
+    </div>
 </body>
 </html>
