@@ -6,6 +6,9 @@
 !/logs/README.md
 .phpunit.result.cache
 
+# Assets
+public/assets/bootstrap
+
 ##### Windows
 # Windows thumbnail cache files
 Thumbs.db
