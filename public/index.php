@@ -10,6 +10,9 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Component\Translation\Loader\JsonFileLoader;
+use Symfony\Component\Translation\Translator;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -38,10 +41,34 @@ $container = $containerBuilder->build();
 // Instantiate the app
 AppFactory::setContainer($container);
 
+// Load languages
+
+
 // Set view in Container
 $container->set('view', function () {
+
+    // creates the Translator
+    $translator = new Translator('fr');
+    // somehow load some translations into it
+    $translator->addLoader('json', new JsonFileLoader());
+
+    // Add resources
+    $translator->addResource(
+        'json',
+        __DIR__.'/../resources/translations/translations.en.json',
+        'en'
+    );
+
+    $translator->addResource(
+        'json',
+        __DIR__.'/../resources/translations/translations.fr.json',
+        'fr'
+    );
+
     // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
-    return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
+    $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
+    $twig->addExtension(new TranslationExtension($translator));
+    return $twig;
 });
 
 $app = AppFactory::create();
