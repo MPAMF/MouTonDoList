@@ -15,6 +15,10 @@ return function (App $app) {
         return $response;
     });
 
+    $app->get('/home', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'home/home-page.twig');
+    });
+
     $app->get('/', function (Request $request, Response $response) {
         $noms = [
             'Matthieu',
