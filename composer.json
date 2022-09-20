@@ -29,6 +29,9 @@
         "slim/psr7": "^1.5",
         "slim/slim": "^4.9",
         "slim/twig-view": "^3.3",
+        "symfony/config": "^6.1",
+        "symfony/translation": "^6.1",
+        "symfony/twig-bridge": "^6.1",
         "twbs/bootstrap": "5.2.1",
         "twig/twig": "^3.0"
     },
@@ -62,8 +65,9 @@
         "test": "phpunit",
         "post-update-cmd": [
             "rm -rf public/assets/bootstrap",
-            "mkdir public/assets",
-            "cp -R vendor/twbs/bootstrap/dist public/assets/bootstrap"
+            "mkdir -p public/assets",
+            "cp -R vendor/twbs/bootstrap/dist public/assets/bootstrap",
+            "cp -R vendor/twbs/bootstrap/scss public/assets/bootstrap/scss"
         ]
     }
 }
