@@ -9,9 +9,15 @@
   "HomeText": "Gagnez en temps et organisation avec %name%. La meilleure application de gestion de tâches et de to do list.",
 
   "LogInPage": "LogMouton",
-  "FormTitle": "Identifiez vous",
+  "FormLogInTitle": "Identifiez vous",
   "FormEmail": "Votre adresse e-mail",
   "FormPwd": "Votre mot de passe",
   "FormLetConnect": "Se souvenir de moi",
-  "FormSubmit": "Connexion"
+  "FormSubmit": "Connexion",
+
+  "SignInPage": "SingInMouton",
+  "FormSignInTitle": "Créez votre compte",
+  "FormPseudo": "Votre pseudonyme",
+  "FormConfPwd": "Confirmez votre mot de passe",
+  "FormCGV": "J'accepte les conditions générales de ventes."
 }
