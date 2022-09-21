@@ -4,74 +4,103 @@
 
 // Required
 @import "../bootstrap/scss/functions";
-
-// Default variable
-
-$blue:    #0d6efd !default;
-$indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
-$pink:    #d63384 !default;
-$red:     #dc3545 !default;
-$orange:  #fd7e14 !default;
-$yellow:  #ffc107 !default;
-$green:   #198754 !default;
-$teal:    #20c997 !default;
-$cyan:    #0dcaf0 !default;
-
-$white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$black:    #000 !default;
-
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-900 !default;
+@import "../bootstrap/scss/mixins";
+@import "../bootstrap/scss/variables";
 
 $component-active-color: $dark;
 $component-active-bg: $light;
 $input-bg: $light;
 $input-color: $dark;
 
-input[type="search"]::-webkit-search-cancel-button{
-  background: red;
-  color: red;
-}
-
 // Themes overriding default variables
 
-// Light :
-$primary: #71C9CE;
-$secondary: #CBF1F5;
-$body-bg: #E3FDFD;
-$body-color: #222831;
-
-// Dark :
-/*$primary: #00ADB5;
+// Default : dark theme
+$primary: #00ADB5;
 $secondary: #393E46;
 $info: #A5C9CA;
 $body-bg: #222831;
-$body-color: #EEEEEE;*/
-
+$body-color: #EEEEEE;
 $theme-colors: (
         "primary": $primary,
         "secondary": $secondary,
-        "dark": $dark,
-        "light": $light,
         "success": $success,
-        "info": $info,
+        "danger": $danger,
         "warning": $warning,
-        "danger": $danger
+        "info": $info,
+        "dark": $dark,
+        "light": $light
 );
+
+// Dark theme
+.dark {
+
+  $primary: #00ADB5;
+  $secondary: #393E46;
+  $info: #A5C9CA;
+
+  $theme-colors: (
+          "primary": $primary,
+          "secondary": $secondary,
+          "success": $success,
+          "danger": $danger,
+          "warning": $warning,
+          "info": $info,
+          "dark": $dark,
+          "light": $light
+  );
+
+  /* redefine theme color variables */
+  @each $color, $value in $theme-colors {
+    --#{$variable-prefix}#{$color}: #{$value};
+  }
+
+  $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+  @each $color, $value in $theme-colors-rgb {
+    --#{$variable-prefix}#{$color}-rgb: #{$value};
+  }
+
+  $body-bg: #222831;
+  $body-color: #EEEEEE;
+
+  --#{$variable-prefix}body-color: #{$body-color};
+  --#{$variable-prefix}body-bg: #{$body-bg};
+}
+
+// Light theme
+.light {
+
+  $primary: #71C9CE;
+  $secondary: #CBF1F5;
+
+  $theme-colors: (
+          "primary": $primary,
+          "secondary": $secondary,
+          "success": $success,
+          "danger": $danger,
+          "warning": $warning,
+          "info": $info,
+          "dark": $dark,
+          "light": $light
+  );
+
+  /* redefine theme color variables */
+  @each $color, $value in $theme-colors {
+    --#{$variable-prefix}#{$color}: #{$value};
+  }
+
+  $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+
+  @each $color, $value in $theme-colors-rgb {
+    --#{$variable-prefix}#{$color}-rgb: #{$value};
+  }
+
+  $body-bg: #E3FDFD;
+  $body-color: #222831;
+
+  --#{$variable-prefix}body-color: #{$body-color};
+  --#{$variable-prefix}body-bg: #{$body-bg};
+}
 
 // Required
 @import "../bootstrap/scss/bootstrap";
