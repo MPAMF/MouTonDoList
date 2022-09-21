@@ -46,3 +46,32 @@ input[type="search"]::-webkit-search-cancel-button{
   background: red;
   color: red;
 }
+
+// Themes overriding default variables
+
+// Light :
+$primary: #71C9CE;
+$secondary: #CBF1F5;
+$body-bg: #E3FDFD;
+$body-color: #222831;
+
+// Dark :
+/*$primary: #00ADB5;
+$secondary: #393E46;
+$info: #A5C9CA;
+$body-bg: #222831;
+$body-color: #EEEEEE;*/
+
+$theme-colors: (
+        "primary": $primary,
+        "secondary": $secondary,
+        "dark": $dark,
+        "light": $light,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger
+);
+
+// Required
+@import "../bootstrap/scss/bootstrap";
