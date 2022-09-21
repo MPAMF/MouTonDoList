@@ -19,16 +19,20 @@
 <body class="light">
 {% include 'components/navbar.twig' %}
 
-<h1>{% trans %}TodoList{% endtrans %}</h1>
+<h1>{% trans %}AppName{% endtrans %}</h1>
 
-<div class="container">
-    <h1>testssss</h1>
-    {% include 'components/vertical-navbar.twig' %}
-</div>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-2 sidebar collapse-horizontal">
+            {% include 'components/vertical-navbar.twig' %}
+        </nav>
 
-<div class="container">
-    {% block content %}
-    {% endblock %}
+        <div class="col">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
 </div>
 </body>
 </html>
