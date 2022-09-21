@@ -64,12 +64,13 @@
         "start": "php -S localhost:8080 -t public",
         "test": "phpunit",
         "post-update-cmd": [
+            ""
+        ],
+        "make-static": [
             "rm -rf public/assets/bootstrap",
-            "mkdir -p public/assets/bootstrap",
+            "cp -R vendor/twbs/bootstrap/dist public/assets/bootstrap",
             "cp -R vendor/twbs/bootstrap/scss public/assets/bootstrap/scss",
-            "rm -rf public/assets/css",
-            "mkdir -p public/assets/css",
-            "sass public/assets/scss/custom_bootstrap.scss:public/assets/css/custom_bootstrap.css"
+            "sass public/assets/scss/global.scss:public/assets/css/custom_bootstrap.css"
         ]
     }
 }
