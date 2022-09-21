@@ -15,6 +15,18 @@ return function (App $app) {
         return $response;
     });
 
+    $app->get('/home', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'home/home-page.twig');
+    });
+
+    $app->get('/login', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'account/login-page.twig');
+    });
+
+    $app->get('/signin', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'account/signin-page.twig');
+    });
+
     $app->get('/', function (Request $request, Response $response) {
         $noms = [
             'Matthieu',
