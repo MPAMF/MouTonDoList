@@ -8,7 +8,7 @@
 
 # Assets
 public/assets/bootstrap/
-public/assets/css/
+public/assets/css/custom_bootstrap.css
 
 ##### Windows
 # Windows thumbnail cache files
