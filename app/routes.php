@@ -34,7 +34,7 @@ return function (App $app) {
             'Victor',
             'Paul',
             'Mouton'];
-        return $this->get('view')->render($response, 'dashboard.twig', ['noms' => $noms]);
+        return $this->get('view')->render($response, 'pages/dashboard.twig', ['noms' => $noms]);
     });
 
     $app->group('/users', function (Group $group) {
