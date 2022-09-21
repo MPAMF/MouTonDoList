@@ -1,3 +1,12 @@
 {
-  "TodoList": "TodoList francais"
+  "AppName" : "MouTonDoList",
+  "TodoList": "TodoList francais",
+
+  "HomePresentation": "Présentation",
+  "HomeLogin": "Connexion",
+  "HomeSignIn": "Commencez gratuitement",
+  "HomeTitle": "L'outil dont vous avez besoin pour organiser votre travail et votre vie",
+  "HomeText": "Gagnez en temps et organisation avec %name%. La meilleure application de gestion de tâches et de to do list.",
+
+  "LogInPage": "LogMouton"
 }
