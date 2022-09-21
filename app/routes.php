@@ -23,6 +23,10 @@ return function (App $app) {
         return $this->get('view')->render($response, 'account/login-page.twig');
     });
 
+    $app->get('/signin', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'account/signin-page.twig');
+    });
+
     $app->get('/', function (Request $request, Response $response) {
         $noms = [
             'Matthieu',
