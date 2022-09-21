@@ -19,6 +19,10 @@ return function (App $app) {
         return $this->get('view')->render($response, 'home/home-page.twig');
     });
 
+    $app->get('/login', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'account/login-page.twig');
+    });
+
     $app->get('/', function (Request $request, Response $response) {
         $noms = [
             'Matthieu',
