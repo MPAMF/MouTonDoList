@@ -65,9 +65,10 @@
         "test": "phpunit",
         "post-update-cmd": [
             "rm -rf public/assets/bootstrap",
-            "mkdir -p public/assets",
-            "cp -R vendor/twbs/bootstrap/dist public/assets/bootstrap",
+            "mkdir -p public/assets/bootstrap",
             "cp -R vendor/twbs/bootstrap/scss public/assets/bootstrap/scss",
+            "rm -rf public/assets/css",
+            "mkdir -p public/assets/css",
             "sass public/assets/scss/custom_bootstrap.scss:public/assets/css/custom_bootstrap.css"
         ]
     }
