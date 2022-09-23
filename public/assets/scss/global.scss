@@ -100,7 +100,42 @@ $theme-colors: (
 
   --#{$variable-prefix}body-color: #{$body-color};
   --#{$variable-prefix}body-bg: #{$body-bg};
+
+  $ct-bg: white;
+  .accordion-item-task {
+    --#{$variable-prefix}accordion-active-bg: #{$ct-bg};
+    --#{$variable-prefix}accordion-btn-focus-box-shadow: #{$ct-bg};
+  }
+
+  .btn-addtask {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+
+    --#{$variable-prefix}btn-bg: #{$ct-bg};
+    --#{$variable-prefix}btn-hover-bg: #{$ct-bg};
+    --#{$variable-prefix}btn-hover-border-color: #{$ct-bg};
+    --#{$variable-prefix}btn-active-bg: #{$ct-bg};
+    --#{$variable-prefix}btn-active-border-color: #{$ct-bg};
+
+    --#{$variable-prefix}btn-hover-color: #{$primary};
+    --#{$variable-prefix}btn-focus-shadow-rgb: none;
+    text-align: left !important;
+  }
 }
 
 // Required
 @import "../bootstrap/scss/bootstrap";
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.task-info {
+  display: flex;
+  flex-direction: column;
+}
