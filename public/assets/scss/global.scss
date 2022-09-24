@@ -72,6 +72,7 @@ $theme-colors: (
 
   $primary: #71C9CE;
   $secondary: #CBF1F5;
+  $tertiary: #A6E3E9;
 
   $theme-colors: (
           "primary": $primary,
@@ -100,6 +101,43 @@ $theme-colors: (
 
   --#{$variable-prefix}body-color: #{$body-color};
   --#{$variable-prefix}body-bg: #{$body-bg};
+
+  $ct-bg: Black;
+
+  .btn-nav{
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+
+    --#{$variable-prefix}btn-bg: #{$primary};
+    --#{$variable-prefix}btn-hover-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-border-color: #{$tertiary};
+
+    --#{$variable-prefix}btn-hover-color: #{$ct-bg};
+    --#{$variable-prefix}btn-focus-shadow-rgb: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+  }
+
+  .span-nav{
+    font-size: 30px;
+  }
+
+  .dd-nav{
+    --#{$variable-prefix}dropdown-color: #{$body-color};
+    --#{$variable-prefix}dropdown-link-active-color: #{$body-color};
+
+    --#{$variable-prefix}dropdown-bg: #{$secondary};
+    --#{$variable-prefix}dropdown-link-hover-bg: #{$tertiary};
+    --#{$variable-prefix}dropdown-link-active-bg: #{$tertiary};
+
+    --#{$variable-prefix}dropdown-link-hover-color: #{$ct-bg};
+    --#{$variable-prefix}dropdown-box-shadow: none;
+  }
 }
 
 // Required

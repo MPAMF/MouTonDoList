@@ -1,0 +1,15 @@
+/* Need to convert this SASS file to CSS format :
+* sass public/assets/scss/custom_bootstrap.scss:public/assets/css/custom_bootstrap.css
+ */
+input[type=search]::-webkit-search-cancel-button {
+  background: red;
+  color: red;
+}
+
+/*$primary: #00ADB5;
+$secondary: #393E46;
+$info: #A5C9CA;
+$body-bg: #222831;
+$body-color: #EEEEEE;*/
+
+/*# sourceMappingURL=custom_bootstrap.css.map */
