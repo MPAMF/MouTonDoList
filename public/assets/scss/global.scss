@@ -138,6 +138,11 @@ $theme-colors: (
     --#{$variable-prefix}dropdown-link-hover-color: #{$ct-bg};
     --#{$variable-prefix}dropdown-box-shadow: none;
   }
+
+  .logo{
+    height: 40px;
+    width: 40px;
+  }
 }
 
 // Required
