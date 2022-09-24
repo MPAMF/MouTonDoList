@@ -19,5 +19,11 @@
   "FormSignInTitle": "Créez votre compte",
   "FormPseudo": "Votre pseudonyme",
   "FormConfPwd": "Confirmez votre mot de passe",
-  "FormCGV": "J'accepte les conditions générales de ventes."
+  "FormCGV": "J'accepte les conditions générales de ventes.",
+
+  "InputSearchNav": "Recherche",
+  "DropDownParameters": "Paramètres",
+  "DropDownDisconnectNav": "Déconnexion",
+  "DropDownThemeNav": "Thème",
+  "DropDownShareNav": "Partage"
 }
