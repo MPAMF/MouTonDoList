@@ -122,26 +122,50 @@ $theme-colors: (
     text-align: left !important;
   }
 
-  .task-drag-ghost {
-    background: #{$secondary};
-    filter: brightness(85%);
+  .btn-task-actions {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+
+    --#{$variable-prefix}btn-bg: #{$ct-bg};
+    --#{$variable-prefix}btn-border-color: #{$ct-bg};
+    --#{$variable-prefix}btn-hover-bg: #{$ct-bg};
+    --#{$variable-prefix}btn-hover-border-color: #{$ct-bg};
+    --#{$variable-prefix}btn-active-bg: #{$ct-bg};
+    --#{$variable-prefix}btn-active-border-color: #{$ct-bg};
+
+    --#{$variable-prefix}btn-focus-shadow-rgb: none;
   }
 
   .task-drag-dragging {
     background: #{$secondary};
     opacity: 1 !important;
   }
+
+  .task-drag-ghost {
+    background: #{$secondary};
+    filter: brightness(85%);
+  }
+
+  .task-drag-ghost .btn-task-actions {
+    --#{$variable-prefix}btn-bg: #{$secondary};
+    --#{$variable-prefix}btn-border-color: #{$secondary};
+  }
 }
 
 // Required
 @import "../bootstrap/scss/bootstrap";
 
+.grabbing * {
+  cursor: grabbing !important;
+}
+
 .accordion-button:focus {
   box-shadow: none;
 }
 
-.grabbing * {
-  cursor: grabbing !important;
+#tasks .list-group-item:last-child {
+  border-width: 0 0 var(--bs-list-group-border-width);
 }
 
 .task-view {
@@ -150,12 +174,6 @@ $theme-colors: (
 }
 
 .task-view-details {
-  /*flex: 1;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0%;
-  margin-right: 30px;
-  border: solid 1px green;*/
   margin-left: 30px;
   margin-right: 30px;
 }
@@ -163,30 +181,60 @@ $theme-colors: (
 .task-view-info {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+}
+
+.task-view-info label {
+  cursor: pointer;
+}
+
+.task-view-info small {
+  word-wrap: break-word;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .btn-task-drag {
   cursor: grab;
   position: absolute;
-  /*left: -27px;
-  top: 7px;
-  width: 27px;*/
   display: flex;
   flex-wrap: nowrap;
   opacity: 0;
 }
 
-.task-view:hover .btn-task-drag{
+.btn-task-actions {
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+
+.task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions{
   opacity: 1;
 }
 
-.task-add {
-  padding-top: 0;
+.task-view .dropdown-toggle::after {
+  display: none;
 }
 
 .task-new {
   display: none;
+  padding: 6px 12px;
 }
+
+.task-new-active {
+  display: block;
+}
+
+.btn-task-add-unactive {
+  display: none;
+}
+
 .btn-task-create:disabled {
   cursor: not-allowed;
   pointer-events: all !important;

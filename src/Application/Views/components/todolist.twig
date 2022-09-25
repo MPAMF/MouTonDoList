@@ -1,95 +1,54 @@
-<div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
-    <div class="accordion-item accordion-item-task">
-        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                Accordion Item #1
-            </button>
-        </h2>
-        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-            <div class="accordion-body">
-                <ul class="list-group list-group-flush" id="tasks">
-                    {% for id in 0..5 %}
-                        {% include 'tasks/task.twig' %}
-                    {% endfor %}
-                    {% include 'tasks/task-new.twig' %}
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="accordion-item accordion-item-task">
-        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                Accordion Item #2
-            </button>
-        </h2>
-        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-            <div class="accordion-body">
-                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                <div class="d-grid">
-                    <button class="btn btn-addtask" type="button">
-                        <span data-feather="plus" class="align-text-bottom"></span>
-                        Ajouter une tâche
-                    </button>
-                </div>
-                <div>
-                    <div class="form-floating mb-3">
-                        <input type="email" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput" placeholder="name@example.com">
-                        <label for="floatingEmptyPlaintextInput">Empty input</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="email" readonly class="form-control-plaintext" id="floatingPlaintextInput" placeholder="name@example.com" value="name@example.com">
-                        <label for="floatingPlaintextInput">Input with value</label>
-                    </div>
+<div class="accordion accordion-flush">
+    {% for catId in 0..2 %}
+        <div class="accordion-item accordion-item-task">
+            <h2 class="accordion-header" id="panelsStayOpen-heading-{{ catId }}">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
+                    Catégorie #{{ catId }}
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapse-{{ catId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ catId }}">
+                <div class="accordion-body">
+                    <ul class="list-group list-group-flush tasks">
+                        {% for taskId in 0..5 %}
+                            {% include 'tasks/task.twig' with { 'catId' : catId, 'taskId': taskId } %}
+                        {% endfor %}
+                    </ul>
+                    {% include 'tasks/task-new.twig' with { 'catId' : catId } %}
                 </div>
             </div>
         </div>
-    </div>
-    <div class="accordion-item accordion-item-task">
-        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                Accordion Item #3
-            </button>
-        </h2>
-        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-            <div class="accordion-body">
-                <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                <div class="d-grid">
-                    <button class="btn btn-addtask" type="button">
-                        <span data-feather="plus" class="align-text-bottom"></span>
-                        Ajouter une tâche
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <!-- Latest Sortable -->
 <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
 
-<script>
-    new Sortable(document.getElementById('tasks'), {
-        group: 'shared',
-        animation: 300,
-        ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
-        chosenClass: "task-drag-chosen",  // Class name for the chosen item
-        dragClass: "task-drag-dragging",  // Class name for the dragging item
-        handle: ".btn-task-drag",
-        forceFallback: true,
-        onChoose: function(e) {
-            e.target.classList.add('grabbing');
-        },
-        onUnchoose: function(e) {
-            e.target.classList.remove('grabbing');
-        },
-        onStart: function(e) {
-            e.target.classList.add('grabbing');
-        },
-        onEnd: function(e) {
-            e.target.classList.remove('grabbing');
-        },
-        onMove: function(e) {
-            e.target.classList.add('grabbing');
-        },
+<script type="text/javascript">
+    const els = document.getElementsByClassName("tasks");
+    Array.prototype.forEach.call(els, function(el) {
+        new Sortable(el, {
+            group: 'shared',
+            animation: 300,
+            ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
+            chosenClass: "task-drag-chosen",  // Class name for the chosen item
+            dragClass: "task-drag-dragging",  // Class name for the dragging item
+            handle: ".btn-task-drag",
+            forceFallback: true,
+            onChoose: function (e) {
+                e.target.classList.add('grabbing');
+            },
+            onUnchoose: function (e) {
+                e.target.classList.remove('grabbing');
+            },
+            onStart: function (e) {
+                e.target.classList.add('grabbing');
+            },
+            onEnd: function (e) {
+                e.target.classList.remove('grabbing');
+            },
+            onMove: function (e) {
+                e.target.classList.add('grabbing');
+            },
+        })
     });
 </script>

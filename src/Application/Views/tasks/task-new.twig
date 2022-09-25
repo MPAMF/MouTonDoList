@@ -1,11 +1,11 @@
 <li class="list-group-item task-add">
     <div class="d-grid">
-        <button class="btn btn-task-add" type="button">
+        <button class="btn btn-task-add" type="button" id="taskAdd-{{ catId }}">
             <span class="mdi mdi-plus-circle"></span>
-            Ajouter une tâche
+            Ajouter une tâche [{{ catId }}]
         </button>
     </div>
-    <form class="task-new">
+    <form class="task-new" id="taskNew-{{ catId }}">
         <div class="mb-2">
             <input type="text" class="form-control form-control-sm" placeholder="Nom de la tâche" required>
         </div>
@@ -13,8 +13,17 @@
             <textarea class="form-control form-control-sm" rows="3" placeholder="Description"></textarea>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-secondary btn-sm me-md-2" type="button">Annuler</button>
+            <button class="btn btn-secondary btn-sm me-md-2" type="button" id="taskNewCancel-{{ catId }}">Annuler</button>
             <button class="btn btn-primary btn-sm btn-task-create" type="submit" disabled>Ajouter une tâche</button>
         </div>
     </form>
 </li>
+
+<script type="text/javascript">
+    function toggleNewTask() {
+        document.getElementById("taskAdd-{{ catId }}").classList.toggle("btn-task-add-unactive");
+        document.getElementById("taskNew-{{ catId }}").classList.toggle("task-new-active");
+    }
+    document.getElementById("taskAdd-{{ catId }}").addEventListener('click', toggleNewTask);
+    document.getElementById("taskNewCancel-{{ catId }}").addEventListener('click', toggleNewTask);
+</script>
