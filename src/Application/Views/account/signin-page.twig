@@ -7,52 +7,49 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% trans %}SignInPage{% endtrans %}</title>
 
-    <script type="text/javascript" src="{{ ROOT_URL }}assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="{{ ROOT_URL }}assets/css/global.css">
-    <link rel="stylesheet" href="{{ ROOT_URL }}assets/css/layout.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+    {% include 'components/head.twig' %}
 </head>
 <body class="light">
-<nav class="navbar navbar-expand-lg bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand align-items-center d-flex" href="signin">
-            <img src="assets/img/appImg.jpg" alt="Logo" class="d-inline-block align-text-top rounded-circle logo">
-            {% trans %}AppName{% endtrans %}
-        </a>
-        <a href="login">
-            <button class="btn me-2 btn-primary" type="button">{% trans %}HomeLogin{% endtrans %}</button>
-        </a>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand align-items-center d-flex" href="signin">
+                <img src="assets/img/appImg.jpg" alt="Logo" class="d-inline-block align-text-top rounded-circle logo">
+                {% trans %}AppName{% endtrans %}
+            </a>
+            <a href="login">
+                <button class="btn me-2 btn-primary" type="button">{% trans %}HomeLogin{% endtrans %}</button>
+            </a>
+        </div>
+    </nav>
 
-<div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
-    <h1>{% trans %}FormSignInTitle{% endtrans %}</h1>
-    <form>
-        <div class="mb-3">
-            <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Il y aura des erreurs avec le mail</div>
-        </div>
-        <div class="mb-3">
-            <label for="pseudo" class="form-label">{% trans %}FormPseudo{% endtrans %}</label>
-            <input type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp">
-            <div id="pseudoHelp" class="form-text">Il y aura des erreurs avec le pseudo</div>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">{% trans %}FormPwd{% endtrans %}</label>
-            <input type="password" class="form-control" id="password" aria-describedby="passwordHelp">
-            <div id="passwordHelp" class="form-text">Il y aura des erreurs avec le mdp</div>
-        </div>
-        <div class="mb-3">
-            <label for="confirmationPassword" class="form-label">{% trans %}FormConfPwd{% endtrans %}</label>
-            <input type="password" class="form-control" id="confirmationPassword">
-        </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">{% trans %}FormCGV{% endtrans %}</label>
-        </div>
+    <div class="container d-flex flex-column min-vh-100 align-items-center mt-4">
+        <h1 class="text-center">{% trans %}FormSignInTitle{% endtrans %}</h1>
+        <form>
+            <div class="mb-3">
+                <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">Il y aura des erreurs avec le mail</div>
+            </div>
+            <div class="mb-3">
+                <label for="pseudo" class="form-label">{% trans %}FormPseudo{% endtrans %}</label>
+                <input type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp">
+                <div id="pseudoHelp" class="form-text">Il y aura des erreurs avec le pseudo</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">{% trans %}FormPwd{% endtrans %}</label>
+                <input type="password" class="form-control" id="password" aria-describedby="passwordHelp">
+                <div id="passwordHelp" class="form-text">Il y aura des erreurs avec le mdp</div>
+            </div>
+            <div class="mb-3">
+                <label for="confirmationPassword" class="form-label">{% trans %}FormConfPwd{% endtrans %}</label>
+                <input type="password" class="form-control" id="confirmationPassword">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">{% trans %}FormCGV{% endtrans %}</label>
+            </div>
+        </form>
         <button type="submit" class="btn btn-primary">{% trans %}FormSubmit{% endtrans %}</button>
-    </form>
-</div>
+    </div>
 </body>
 </html>

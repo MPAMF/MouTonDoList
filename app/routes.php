@@ -16,7 +16,13 @@ return function (App $app) {
     });
 
     $app->get('/home', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'home/home-page.twig');
+        return $this->get('view')->render($response, 'home/components/content-page.twig',
+            ['contents' => 'home']);
+    });
+
+    $app->get('/home-presentation', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'home/components/content-page.twig',
+            ['contents' => 'presentation']);
     });
 
     $app->get('/login', function (Request $request, Response $response) {
