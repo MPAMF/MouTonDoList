@@ -5,49 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <title>{% trans %}AppName{% endtrans %}</title>
 
-    <script type="text/javascript" src="{{ ROOT_URL }}assets/bootstrap/js/bootstrap.min.js"></script>
-    <link href="{{ ROOT_URL }}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ ROOT_URL }}assets/css/home-page.css" rel="stylesheet">
-
+    {% include 'components/head.twig' %}
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="assets/img/appImg.jpg" alt="Logo" class="d-inline-block align-text-top rounded-circle logo">
-                {% trans %}AppName{% endtrans %}
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">{% trans %}HomePresentation{% endtrans %}</a>
-                    </li>
-                </ul>
+<body class="light">
+    {% include 'home/components/home-nav.twig' %}
 
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">{% trans %}HomeLogin{% endtrans %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-outline-success me-2" type="button">{% trans %}HomeSignIn{% endtrans %}</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
-        <h1 class="HomeTitle"><b>{% trans %}HomeTitle{% endtrans %}</b></h1>
-        <p id="HomeText">{% trans with {'%name%': t('AppName')} %}HomeText{% endtrans %}</p>
-        <button class="btn btn-outline-success me-2" type="button">{% trans %}HomeSignIn{% endtrans %}</button>
-
-        <img src="assets/img/leGang.jpeg" id="ApplyImage" alt="ApplyImage" class="d-inline-block align-text-top">
+    <div id="body-container">
+        {% block content %}
+        {% endblock %}
     </div>
 </body>
 </html>
