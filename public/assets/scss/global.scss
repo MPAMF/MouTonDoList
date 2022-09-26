@@ -12,6 +12,10 @@ $component-active-bg: $light;
 $input-bg: $light;
 $input-color: $dark;
 
+$form-check-input-border-radius: 50%;
+$form-check-input-width: 1.5em;
+$form-check-padding-start: $form-check-input-width + 1em;
+
 // Themes overriding default variables
 
 // Default : dark theme
@@ -72,6 +76,7 @@ $theme-colors: (
 
   $primary: #71C9CE;
   $secondary: #CBF1F5;
+  $tertiary: #0d6efd;
 
   $theme-colors: (
           "primary": $primary,
@@ -81,7 +86,8 @@ $theme-colors: (
           "warning": $warning,
           "info": $info,
           "dark": $dark,
-          "light": $light
+          "light": $light,
+          "tertiary": $tertiary,
   );
 
   /* redefine theme color variables */
@@ -151,6 +157,23 @@ $theme-colors: (
     --#{$variable-prefix}btn-bg: #{$secondary};
     --#{$variable-prefix}btn-border-color: #{$secondary};
   }
+
+  $ct-input-checked-color: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$primary}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>");
+  .task-checkbox {
+    border-color: tint-color($tertiary, 50%);
+    &:checked {
+      background-color: #{$primary};
+      border-color: tint-color($tertiary, 50%);
+    }
+    &:focus {
+      box-shadow: none;
+      border-color: tint-color($tertiary, 50%)
+    }
+    &:hover {
+      background-image: escape-svg($ct-input-checked-color);
+    }
+  }
+
 }
 
 // Required
