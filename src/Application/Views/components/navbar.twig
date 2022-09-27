@@ -1,13 +1,42 @@
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <div class="dropdown-center">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="assets/img/appImg.jpg" alt="Logo" width="30" height="25" class="d-inline-block align-text-top rounded-circle">
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Action two</a></li>
-                <li><a class="dropdown-item" href="#">Action three</a></li>
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container p-0">
+        <div class="d-inline-flex">
+            <button type="button" class="btn btn-abs-nav btn-nav me-1 ms-1" aria-expanded="false">
+                <span class="mdi mdi-menu span-nav"></span> </button>
+            <a class="me-1" href=".">
+                <img src="assets/img/appImg.jpg" alt="Logo" class="rounded-circle logo">
+            </a>
+        </div>
+
+        <div class="d-inline-flex">
+            <div class="collapse collapse-horizontal" id="collapseSearch">
+                <div class="card" style="width: 40vw">
+                    <form class="d-flex" role="search">
+                        <input class="form-control bg-secondary" type="search" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
+                    </form>
+                </div>
+            </div>
+            <button class="btn btn-abs-nav btn-nav" type="submit" data-bs-toggle="collapse" data-bs-target="#collapseSearch"
+                    aria-expanded="false" aria-controls="collapseSearch"> <span class="mdi mdi-magnify span-nav"></span> </button>
+
+            <button type="button" class="btn btn-abs-nav btn-nav me-1" aria-expanded="false">
+                <span class="mdi mdi-card-plus-outline span-nav"></span> </button>
+
+            <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="mdi mdi-account-circle span-nav"></span> </button>
+            <ul class="dropdown-menu dropdown-menu-end dd-nav">
+                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-cog-outline me-2"></span>
+                        {% trans %}DropDownParameters{% endtrans %}</button></li>
+                <li><hr class="dropdown-divider"></li>
+
+                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-palette-outline me-2"></span>
+                        {% trans %}DropDownThemeNav{% endtrans %}</button></li>
+                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-share me-2"></span>
+                        {% trans %}DropDownShareNav{% endtrans %}</button></li>
+                <li><hr class="dropdown-divider"></li>
+
+                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-exit-run me-2"></span>
+                        {% trans %}DropDownDisconnectNav{% endtrans %}</button></li>
             </ul>
         </div>
     </div>

@@ -76,7 +76,7 @@ $theme-colors: (
 
   $primary: #71C9CE;
   $secondary: #CBF1F5;
-  $tertiary: #0d6efd;
+  $tertiary: #A6E3E9;
 
   $theme-colors: (
           "primary": $primary,
@@ -128,17 +128,18 @@ $theme-colors: (
   }
 
   /* Task */
+  $ct-blue: #0d6efd;
   $ct-input-checked-color: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$primary}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>");
   .task-checkbox {
     background-color: #{$body-bg};
-    border-color: tint-color($tertiary, 50%);
+    border-color: tint-color($ct-blue, 50%);
     &:checked {
       background-color: #{$primary};
-      border-color: tint-color($tertiary, 50%);
+      border-color: tint-color($ct-blue, 50%);
     }
     &:focus {
       box-shadow: none;
-      border-color: tint-color($tertiary, 50%)
+      border-color: tint-color($ct-blue, 50%)
     }
     &:hover {
       background-image: escape-svg($ct-input-checked-color);
@@ -181,6 +182,49 @@ $theme-colors: (
     --#{$variable-prefix}btn-hover-color: #{$primary};
     --#{$variable-prefix}btn-focus-shadow-rgb: none;
     text-align: left !important;
+  }
+
+  .btn-abs-nav{
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+
+    --#{$variable-prefix}btn-bg: #{$primary};
+    --#{$variable-prefix}btn-hover-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-border-color: #{$tertiary};
+
+    --#{$variable-prefix}btn-hover-color: black;
+    --#{$variable-prefix}btn-focus-shadow-rgb: none;
+  }
+
+  .btn-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+  }
+
+  .span-nav{
+    font-size: 30px;
+  }
+
+  .dd-nav{
+    --#{$variable-prefix}dropdown-color: #{$body-color};
+    --#{$variable-prefix}dropdown-link-active-color: #{$body-color};
+
+    --#{$variable-prefix}dropdown-bg: #{$secondary};
+    --#{$variable-prefix}dropdown-link-hover-bg: #{$tertiary};
+    --#{$variable-prefix}dropdown-link-active-bg: #{$tertiary};
+
+    --#{$variable-prefix}dropdown-link-hover-color: black;
+    --#{$variable-prefix}dropdown-box-shadow: none;
+  }
+
+  .logo{
+    margin-right: 3px;
+    height: 40px;
+    width: 40px;
   }
 
 }

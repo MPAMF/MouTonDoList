@@ -7,23 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% trans %}LogInPage{% endtrans %}</title>
 
-    <script type="text/javascript" src="{{ ROOT_URL }}assets/bootstrap/js/bootstrap.min.js"></script>
-    <link href="{{ ROOT_URL }}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    {% include 'components/head.twig' %}
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-light">
+<body class="light">
+    <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="assets/img/appImg.jpg" alt="Logo" width="30" height="25" class="d-inline-block align-text-top rounded-circle">
+            <a class="navbar-brand align-items-center d-flex" href="login">
+                <img src="assets/img/appImg.jpg" alt="Logo" class="d-inline-block align-text-top rounded-circle logo">
                 {% trans %}AppName{% endtrans %}
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <a href="signin">
+                <button class="btn me-2 btn-primary" type="button">{% trans %}SignIn{% endtrans %}</button>
+            </a>
         </div>
     </nav>
 
-    <div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <div class="container d-flex flex-column min-vh-100 align-items-center mt-5">
         <h1>{% trans %}FormLogInTitle{% endtrans %}</h1>
         <form>
             <div class="mb-3">

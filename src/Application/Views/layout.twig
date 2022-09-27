@@ -5,14 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MoutonTodoList</title>
+    <title>{% trans %}AppName{% endtrans %}</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ ROOT_URL }}assets/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{ ROOT_URL }}assets/css/global.css" >
-    <link rel="stylesheet" href="{{ ROOT_URL }}assets/css/layout.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
-
+    {% include 'components/head.twig' %}
 
     {% block stylesheets %}
     {% endblock %}

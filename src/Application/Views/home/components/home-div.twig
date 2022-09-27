@@ -1,0 +1,9 @@
+<div class="container d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <h1 class="text-center"><b>{% trans %}HomeTitle{% endtrans %}</b></h1>
+    <p class="text-center">{% trans with {'%name%': t('AppName')} %}HomeText{% endtrans %}</p>
+    <a class="nav-link active" href="signin">
+        <button class="btn m-2 btn-primary" type="button">{% trans %}HomeSignIn{% endtrans %}</button>
+    </a>
+
+    <img src="assets/img/leGang.jpeg" id="ApplyImage" alt="ApplyImage" class="d-inline-block align-text-top m-2">
+</div>
