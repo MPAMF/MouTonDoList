@@ -1,0 +1,45 @@
+<li class="list-group-item task-add">
+    <div class="d-grid">
+        <button class="btn btn-task-add" type="button" id="taskAdd-{{ catId }}">
+            <span class="mdi mdi-plus-circle"></span>
+            Ajouter une tâche [{{ catId }}]
+        </button>
+    </div>
+    <form class="task-new" id="taskNew-{{ catId }}">
+        <div class="mb-2">
+            <input type="text" class="form-control form-control-sm" id="taskNewName-{{ catId }}" placeholder="Nom de la tâche" required>
+        </div>
+        <div class="mb-2">
+            <textarea class="form-control form-control-sm" rows="3" id="taskNewDescription-{{ catId }}" placeholder="Description"></textarea>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-secondary btn-sm me-md-2" type="button" id="taskNewCancel-{{ catId }}">Annuler</button>
+            <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="taskNewCreate-{{ catId }}" disabled>Ajouter une tâche</button>
+        </div>
+    </form>
+</li>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#taskNewName-{{ catId }}").keyup(function () {
+            var name = $("#taskNewName-{{ catId }}").val();
+
+            if (name.length < 1) {
+                $("#taskNewCreate-{{ catId }}").prop('disabled', true);
+            } else {
+                $("#taskNewCreate-{{ catId }}").prop('disabled', false);
+            }
+
+        });
+    });
+
+    function toggleNewTask() {
+        document.getElementById("taskAdd-{{ catId }}").classList.toggle("btn-task-add-unactive");
+        document.getElementById("taskNew-{{ catId }}").classList.toggle("task-new-active");
+        document.getElementById("taskNewName-{{ catId }}").value = "";
+        document.getElementById("taskNewDescription-{{ catId }}").value = "";
+    }
+    document.getElementById("taskAdd-{{ catId }}").addEventListener('click', toggleNewTask);
+    document.getElementById("taskNewCancel-{{ catId }}").addEventListener('click', toggleNewTask);
+</script>
