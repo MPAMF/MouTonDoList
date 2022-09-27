@@ -26,15 +26,19 @@
 <h1>{% trans %}AppName{% endtrans %}</h1>
 
 <div class="container-fluid">
-    <div class="row">
+
+    <div class="row align-items-start">
         <nav class="col-2 sidebar collapse-horizontal">
             {% include 'components/vertical-navbar.twig' %}
         </nav>
 
         <div class="col">
-            {% include 'components/todolist.twig' %}
+            <div class=" row d-flex justify-content-center">
+                <div class="col-md-8">
+                    {% include 'components/todolist.twig' %}
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
 </body>

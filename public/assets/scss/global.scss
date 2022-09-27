@@ -243,6 +243,17 @@ $theme-colors: (
   opacity: 0;
 }
 
+.btn-category-drag {
+  cursor: grab;
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  opacity: 0;
+  z-index: 5;
+  margin-left: -15px;
+  margin-top: 9px;
+}
+
 .btn-task-actions {
   position: absolute;
   display: flex;
@@ -252,7 +263,7 @@ $theme-colors: (
   top: 0;
 }
 
-.task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions{
+.task-category-header:hover .btn-category-drag, .task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions {
   opacity: 1;
 }
 
@@ -280,4 +291,14 @@ $theme-colors: (
 
 .grabbing * {
   cursor: grabbing !important;
+}
+
+.accordion-button {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.accordion-button:after {
+  order: -1; //swap order
+  margin-left: 0;
+  margin-right:0.5em; // just extra space between text and icon
 }

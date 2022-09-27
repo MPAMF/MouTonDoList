@@ -1,14 +1,17 @@
-<div class="accordion accordion-flush">
+<div class="accordion accordion-flush task-categories">
     {% for catId in 0..2 %}
         <div class="accordion-item accordion-item-tasks">
-            <h2 class="accordion-header" id="panelsStayOpen-heading-{{ catId }}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
-                    Catégorie #{{ catId }}
-                </button>
-            </h2>
+            <div class="task-category-header">
+                <span class="mdi mdi-24px mdi-drag btn-category-drag"></span>
+                <h2 class="accordion-header" id="panelsStayOpen-heading-{{ catId }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
+                        Catégorie #{{ catId }}
+                    </button>
+                </h2>
+            </div>
             <div id="panelsStayOpen-collapse-{{ catId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ catId }}">
                 <div class="accordion-body">
-                    <ul class="list-group list-group-flush tasks">
+                    <ul class="list-group list-group-flush task-tasks">
                         {% for taskId in 0..5 %}
                             {% include 'tasks/task.twig' with { 'catId' : catId, 'taskId': taskId } %}
                         {% endfor %}
@@ -24,10 +27,38 @@
 <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
 
 <script type="text/javascript">
-    const els = document.getElementsByClassName("tasks");
+    var els = document.getElementsByClassName("task-categories");
     Array.prototype.forEach.call(els, function(el) {
         new Sortable(el, {
-            group: 'shared',
+            group: 'task-categories-shared',
+            animation: 300,
+            ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
+            chosenClass: "task-drag-chosen",  // Class name for the chosen item
+            dragClass: "task-drag-dragging",  // Class name for the dragging item
+            handle: ".btn-category-drag",
+            forceFallback: true,
+            onChoose: function (e) {
+                e.target.classList.add('grabbing');
+            },
+            onUnchoose: function (e) {
+                e.target.classList.remove('grabbing');
+            },
+            onStart: function (e) {
+                e.target.classList.add('grabbing');
+            },
+            onEnd: function (e) {
+                e.target.classList.remove('grabbing');
+            },
+            onMove: function (e) {
+                e.target.classList.add('grabbing');
+            },
+        })
+    });
+
+    els = document.getElementsByClassName("task-tasks");
+    Array.prototype.forEach.call(els, function(el) {
+        new Sortable(el, {
+            group: 'task-tasks-shared',
             animation: 300,
             ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
             chosenClass: "task-drag-chosen",  // Class name for the chosen item
