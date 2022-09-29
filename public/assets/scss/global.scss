@@ -235,8 +235,8 @@ $theme-colors: (
 .accordion-item {
   --#{$variable-prefix}accordion-border-width: 0;
 }
-.accordion-item + .accordion-item {
-  margin-top: 3%;
+.accordion-item {
+  margin-bottom: 3%;
 }
 .accordion-item-tasks .accordion-button:focus {
   box-shadow: none;
@@ -294,7 +294,7 @@ $theme-colors: (
   flex-wrap: nowrap;
   opacity: 0;
   z-index: 5;
-  margin-left: -15px;
+  margin-left: -20px;
   margin-top: 9px;
 }
 
@@ -345,4 +345,9 @@ $theme-colors: (
   order: -1; //swap order
   margin-left: 0;
   margin-right:0.5em; // just extra space between text and icon
+}
+
+.todolist {
+  max-width: 850px;
+  padding: 0 5%;
 }
