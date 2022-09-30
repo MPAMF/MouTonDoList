@@ -1,18 +1,26 @@
-version: '3.7'
+version: "3.8"
 
 volumes:
     logs:
         driver: local
 
 services:
-    slim:
-        image: php:8-alpine
-        working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public -d display_errors=on
-        environment:
-            docker: "true"
+    php:
+        container_name: slim_php
+        build:
+            context: ./docker/php
         ports:
-            - 8080:8080
+            - '80:80'
         volumes:
             - .:/var/www
-            - logs:/var/www/logs
+
+    mysql:
+        image: mysql:latest
+        container_name: mysql_todo_1
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: todos
+            MYSQL_USER: todos-user
+            MYSQL_PASSWORD: todos-pwd
+        ports:
+            - "8002:3306"
