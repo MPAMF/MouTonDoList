@@ -107,8 +107,51 @@ $theme-colors: (
   --#{$variable-prefix}body-color: #{$body-color};
   --#{$variable-prefix}body-bg: #{$body-bg};
 
-  /* Accordion tasks */
+  /* Navbar */
+  .btn-abs-nav{
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+
+    --#{$variable-prefix}btn-bg: #{$primary};
+    --#{$variable-prefix}btn-hover-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-border-color: #{$tertiary};
+  }
+  .dd-nav{
+    --#{$variable-prefix}dropdown-color: #{$body-color};
+    --#{$variable-prefix}dropdown-link-active-color: #{$body-color};
+
+    --#{$variable-prefix}dropdown-bg: #{$secondary};
+    --#{$variable-prefix}dropdown-link-hover-bg: #{$tertiary};
+    --#{$variable-prefix}dropdown-link-active-bg: #{$tertiary};
+  }
+
+  /* Category */
+  .category-actions .accordion-button {
+    --#{$variable-prefix}accordion-btn-padding-x: 0;
+  }
+  .btn-category-actions {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-bg: #{$body-bg};
+    --#{$variable-prefix}btn-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-hover-bg: #{$body-bg};
+    --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-active-bg: #{$body-bg};
+    --#{$variable-prefix}btn-active-border-color: #{$body-bg};
+  }
+
+  /* Task */
+  $ct-blue: #0d6efd;
+  $ct-input-checked-color: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$primary}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>");
   $accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$body-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+  .accordion-item-tasks {
+    --#{$variable-prefix}accordion-bg: #{$body-bg};
+  }
+  .accordion-item-tasks .list-group-item {
+    --#{$variable-prefix}list-group-bg: #{$body-bg};
+  }
   .accordion-item-tasks .accordion-button {
     --#{$variable-prefix}accordion-btn-color: #{$body-color};
     --#{$variable-prefix}accordion-btn-bg: #{$body-bg};
@@ -120,16 +163,7 @@ $theme-colors: (
     --#{$variable-prefix}accordion-active-bg: #{$body-bg};
     --#{$variable-prefix}accordion-btn-active-icon: #{escape-svg($accordion-button-icon)};
   }
-  .accordion-item-tasks {
-    --#{$variable-prefix}accordion-bg: #{$body-bg};
-  }
-  .accordion-item-tasks .list-group-item {
-    --#{$variable-prefix}list-group-bg: #{$body-bg};
-  }
 
-  /* Task */
-  $ct-blue: #0d6efd;
-  $ct-input-checked-color: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$primary}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>");
   .task-checkbox {
     background-color: #{$body-bg};
     border-color: tint-color($ct-blue, 50%);
@@ -145,13 +179,8 @@ $theme-colors: (
       background-image: escape-svg($ct-input-checked-color);
     }
   }
-  .task-drag-dragging {
+  .task-drag-dragging, .task-drag-ghost {
     background: #{$secondary};
-    opacity: 1 !important;
-  }
-  .task-drag-ghost {
-    background: #{$secondary};
-    filter: brightness(85%);
   }
   .task-drag-ghost .btn-task-actions {
     --#{$variable-prefix}btn-bg: #{$secondary};
@@ -167,28 +196,9 @@ $theme-colors: (
     --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
     --#{$variable-prefix}btn-active-bg: #{$body-bg};
     --#{$variable-prefix}btn-active-border-color: #{$body-bg};
-    --#{$variable-prefix}btn-focus-shadow-rgb: none;
   }
 
-  .category-actions .accordion-button {
-    --#{$variable-prefix}accordion-btn-padding-x: 0;
-  }
-
-  .btn-category-actions {
-    --#{$variable-prefix}btn-color: #{$body-color};
-    --#{$variable-prefix}btn-hover-color: #{$body-color};
-    --#{$variable-prefix}btn-active-color: #{$body-color};
-    --#{$variable-prefix}btn-bg: #{$body-bg};
-    --#{$variable-prefix}btn-border-color: #{$body-bg};
-    --#{$variable-prefix}btn-hover-bg: #{$body-bg};
-    --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
-    --#{$variable-prefix}btn-active-bg: #{$body-bg};
-    --#{$variable-prefix}btn-active-border-color: #{$body-bg};
-    --#{$variable-prefix}btn-focus-shadow-rgb: none;
-  }
-  .btn-category-actions:hover {
-    filter: brightness(85%);
-  }
+  /* Task new */
   .btn-task-add {
     --#{$variable-prefix}btn-color: #{$body-color};
     --#{$variable-prefix}btn-active-color: #{$body-bg};
@@ -200,193 +210,52 @@ $theme-colors: (
     --#{$variable-prefix}btn-active-border-color: #{$body-bg};
 
     --#{$variable-prefix}btn-hover-color: #{$primary};
-    --#{$variable-prefix}btn-focus-shadow-rgb: none;
-    text-align: left !important;
   }
-
-  .btn-abs-nav{
-    --#{$variable-prefix}btn-color: #{$body-color};
-    --#{$variable-prefix}btn-active-color: #{$body-color};
-
-    --#{$variable-prefix}btn-bg: #{$primary};
-    --#{$variable-prefix}btn-hover-bg: #{$tertiary};
-    --#{$variable-prefix}btn-active-bg: #{$tertiary};
-    --#{$variable-prefix}btn-active-border-color: #{$tertiary};
-
-    --#{$variable-prefix}btn-hover-color: black;
-    --#{$variable-prefix}btn-focus-shadow-rgb: none;
-  }
-
-  .btn-nav{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    width: 40px;
-  }
-
-  .span-nav{
-    font-size: 30px;
-  }
-
-  .dd-nav{
-    --#{$variable-prefix}dropdown-color: #{$body-color};
-    --#{$variable-prefix}dropdown-link-active-color: #{$body-color};
-
-    --#{$variable-prefix}dropdown-bg: #{$secondary};
-    --#{$variable-prefix}dropdown-link-hover-bg: #{$tertiary};
-    --#{$variable-prefix}dropdown-link-active-bg: #{$tertiary};
-
-    --#{$variable-prefix}dropdown-link-hover-color: black;
-    --#{$variable-prefix}dropdown-box-shadow: none;
-  }
-
-  .logo{
-    margin-right: 3px;
-    height: 40px;
-    width: 40px;
-  }
-
 }
 
 // Required
 @import "../bootstrap/scss/bootstrap";
 
-.accordion-item {
-  --#{$variable-prefix}accordion-border-width: 0;
+/* Navbar */
+.btn-abs-nav{
+  --#{$variable-prefix}btn-hover-color: black;
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
 }
-.accordion-item {
-  margin-bottom: 3%;
-}
-.accordion-item-tasks .accordion-button:focus {
-  box-shadow: none;
+.dd-nav{
+  --#{$variable-prefix}dropdown-link-hover-color: black;
+  --#{$variable-prefix}dropdown-box-shadow: none;
 }
 
+/* Category */
 .accordion-item-tasks .accordion-button {
   border-bottom: #{$accordion-border-color} solid #{$accordion-border-width};
 }
-
-#tasks .list-group-item:last-child {
-  border-width: 0 0 var(--bs-list-group-border-width);
+.accordion-item {
+  --#{$variable-prefix}accordion-border-width: 0;
 }
-
-.task-view {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.task-view-details {
-  margin-left: 30px;
-  margin-right: 30px;
-}
-
-.task-view-info {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-}
-
-.task-view-info label {
-  cursor: pointer;
-}
-
-.task-view-info small {
-  word-wrap: break-word;
-  word-break: break-all;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.btn-task-drag {
-  cursor: grab;
-  position: absolute;
-  display: flex;
-  flex-wrap: nowrap;
-  opacity: 0;
-}
-
-.btn-category-drag {
-  cursor: grab;
-  position: absolute;
-  display: flex;
-  flex-wrap: nowrap;
-  opacity: 0;
-  z-index: 5;
-  margin-left: -20px;
-  margin-top: 9px;
-}
-
-.btn-task-actions {
-  position: absolute;
-  display: flex;
-  flex-wrap: nowrap;
-  opacity: 0;
-  right: 0;
-  top: 0;
-}
-
-.task-category-header:hover .btn-category-drag, .task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions {
-  opacity: 1;
-}
-
-.task-view .dropdown-toggle::after {
-  display: none;
-}
-
-.task-new {
-  display: none;
-  padding: 6px 12px;
-}
-
-.task-new-active {
-  display: block;
-}
-
-.btn-task-add-unactive {
-  display: none;
-}
-
-.btn-task-create:disabled {
-  cursor: not-allowed;
-  pointer-events: all !important;
-}
-
-.grabbing * {
-  cursor: grabbing !important;
-}
-
-.accordion-button {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-.accordion-button:after {
-  order: -1; //swap order
-  margin-left: 0;
-  margin-right:0.5em; // just extra space between text and icon
-}
-
-.todolist {
-  max-width: 1200px;
-  padding: 0 5%;
-}
-
-.task-category-header {
-  display: flex;
-  flex-direction: row;
-}
-
-.accordion-header {
-  width: 100%;
-}
-
 .btn-category-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
+}
+.btn-category-actions:hover {
+  filter: brightness(85%);
 }
 
-.category-actions .accordion-button:after {
-  display: none;
+/* Task */
+.task-checkbox:focus {
+    box-shadow: none;
+}
+.task-drag-dragging {
+  opacity: 1 !important;
+}
+.task-drag-ghost {
+  filter: brightness(85%);
+}
+.btn-task-actions {
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
+}
+
+/* Task new */
+.btn-task-add {
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
+  text-align: left !important;
 }
