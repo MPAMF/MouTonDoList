@@ -13,10 +13,11 @@
         <span class="mdi mdi-dots-horizontal"></span>
     </button>
 
-    {% include 'tasks/task-edit.twig' with { 'catId' : catId, 'taskId': taskId } %}
+    {% include 'tasks/task-modal.twig' with { 'catId' : catId, 'taskId': taskId } %}
 </li>
 
 <script type="text/javascript">
+    /* Task modal */
     function taskToggleModal() {
         $("#taskModal-{{ catId }}-{{ taskId }}").modal();
     }
