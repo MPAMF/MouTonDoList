@@ -112,20 +112,22 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.btn-task-drag {
-    cursor: grab;
+.btn-task-drag, .btn-task-actions {
     position: absolute;
     display: flex;
     flex-wrap: nowrap;
     opacity: 0;
 }
+.btn-task-drag {
+    cursor: grab !important;
+}
 .btn-task-actions {
-    position: absolute;
-    display: flex;
-    flex-wrap: nowrap;
-    opacity: 0;
     right: 0;
     top: 0;
+    margin-top: 5px;
+}
+.btn-task-drag:hover, .btn-task-actions:hover {
+    filter: brightness(85%);
 }
 .task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions {
     opacity: 1;
