@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% trans %}AppName{% endtrans %}</title>
+    <link rel="icon" type="image/jpg" href="{{ ROOT_URL }}assets/img/appImg.jpg" />
 
     {% include 'components/head.twig' %}
 
@@ -15,7 +16,7 @@
     {% endblock %}
 
 </head>
-<body class="dark">
+<body class="light">
 {% include 'components/navbar.twig' %}
 
 <h1>{% trans %}AppName{% endtrans %}</h1>
@@ -30,7 +31,7 @@
 
         <div class="col">
             <div class=" row d-flex justify-content-center">
-                <div class="col-md-8 todolist">
+                <div class="col-md-8">
                     {% include 'components/todolist.twig' %}
                 </div>
             </div>
