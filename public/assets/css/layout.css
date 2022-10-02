@@ -83,11 +83,20 @@
     justify-content: center;
     align-items: center;
 }
+.btn-category-actions:hover {
+    filter: brightness(85%);
+}
 .category-button .accordion-button:after {
+    display: none;
+}
+.task-drag-ghost .category-button {
     display: none;
 }
 
 /* Task */
+.task-checkbox:focus {
+    box-shadow: none;
+}
 .task-view {
     padding-left: 0;
     padding-right: 0;
@@ -132,6 +141,9 @@
 .task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions {
     opacity: 1;
 }
+.task-drag-ghost .btn-task-drag, .task-drag-ghost .btn-task-actions {
+    display: none;
+}
 
 /* Task add */
 .task-add {
@@ -146,6 +158,9 @@
 .task-new-active {
     display: block;
 }
+.btn-task-add {
+    text-align: left !important;
+}
 .btn-task-add-unactive {
     display: none;
 }
@@ -156,3 +171,11 @@
 
 /* Task modal */
 /* todo */
+
+/* Category/Task drag */
+.task-drag-dragging {
+    opacity: 1 !important;
+}
+.task-drag-ghost {
+    filter: brightness(85%);
+}
