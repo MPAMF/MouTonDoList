@@ -1,14 +1,25 @@
 <div class="accordion accordion-flush task-categories">
     {% for catId in 0..2 %}
         <div class="accordion-item accordion-item-tasks">
-            <div class="task-category-header">
-                <span class="mdi mdi-24px mdi-drag btn-category-drag"></span>
-                <h2 class="accordion-header" id="panelsStayOpen-heading-{{ catId }}">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
-                        Catégorie #{{ catId }}
-                    </button>
-                </h2>
-            </div>
+            <h2 class="accordion-header task-category-header" id="panelsStayOpen-heading-{{ catId }}">
+                <div class="category-button">
+                    <div class="accordion-button btn-category-drag">
+                        <button class="btn btn-category-actions" type="button">
+                            <span class="mdi mdi-24px mdi-drag"></span>
+                        </button>
+                    </div>
+                </div>
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
+                    Catégorie #{{ catId }}
+                </button>
+                <div class="category-button">
+                    <div class="accordion-button">
+                        <button class="btn btn-category-actions" type="button" id="categoryModalBtn-{{ catId }}" data-bs-toggle="modal" data-bs-target="#categoryModal-{{ catId }}">
+                            <span class="mdi mdi-24px mdi-dots-horizontal"></span>
+                        </button>
+                    </div>
+                </div>
+            </h2>
             <div id="panelsStayOpen-collapse-{{ catId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ catId }}">
                 <div class="accordion-body">
                     <ul class="list-group list-group-flush task-tasks">
@@ -19,7 +30,17 @@
                     {% include 'tasks/task-new.twig' with { 'catId' : catId } %}
                 </div>
             </div>
+            {% include 'tasks/category-modal.twig' with { 'catId' : catId } %}
         </div>
+
+        <script type="text/javascript">
+
+            /* Category modal */
+            function categoryToggleModal() {
+                $("#categoryModal-{{ catId }}").modal();
+            }
+            document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);
+        </script>
     {% endfor %}
 </div>
 
@@ -27,15 +48,17 @@
 <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
 
 <script type="text/javascript">
-    var els = document.getElementsByClassName("task-categories");
+
+    /* Drag task */
+    var els = document.getElementsByClassName("task-tasks");
     Array.prototype.forEach.call(els, function(el) {
         new Sortable(el, {
-            group: 'task-categories-shared',
+            group: 'task-tasks-shared',
             animation: 300,
             ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
             chosenClass: "task-drag-chosen",  // Class name for the chosen item
             dragClass: "task-drag-dragging",  // Class name for the dragging item
-            handle: ".btn-category-drag",
+            handle: ".btn-task-drag",
             forceFallback: true,
             onChoose: function (e) {
                 e.target.classList.add('grabbing');
@@ -55,15 +78,16 @@
         })
     });
 
-    els = document.getElementsByClassName("task-tasks");
+    /* Drag category */
+    els = document.getElementsByClassName("task-categories");
     Array.prototype.forEach.call(els, function(el) {
         new Sortable(el, {
-            group: 'task-tasks-shared',
+            group: 'task-categories-shared',
             animation: 300,
             ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
             chosenClass: "task-drag-chosen",  // Class name for the chosen item
             dragClass: "task-drag-dragging",  // Class name for the dragging item
-            handle: ".btn-task-drag",
+            handle: ".btn-category-drag",
             forceFallback: true,
             onChoose: function (e) {
                 e.target.classList.add('grabbing');
