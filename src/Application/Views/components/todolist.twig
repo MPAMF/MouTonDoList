@@ -26,6 +26,15 @@
             </div>
             {% include 'tasks/category-modal.twig' with { 'catId' : catId } %}
         </div>
+
+        <script type="text/javascript">
+
+            /* Category modal */
+            function categoryToggleModal() {
+                $("#categoryModal-{{ catId }}").modal();
+            }
+            document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);
+        </script>
     {% endfor %}
 </div>
 
@@ -33,12 +42,6 @@
 <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
 
 <script type="text/javascript">
-
-    /* Category modal */
-    function categoryToggleModal() {
-        $("#categoryModal-{{ catId }}").modal();
-    }
-    document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);
 
     /* Drag task */
     var els = document.getElementsByClassName("task-tasks");
