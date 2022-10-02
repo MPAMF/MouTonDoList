@@ -66,6 +66,9 @@
 .category-button {
     display: flex;
 }
+.accordion-button.btn-category-drag {
+    border-bottom-width: 0;
+}
 .btn-category-drag {
     opacity: 0;
 }
@@ -88,10 +91,10 @@
 .task-view {
     padding-left: 0;
     padding-right: 0;
+    margin-left: 30px;
 }
 .task-view-details {
     margin-left: 30px;
-    margin-right: 30px;
 }
 .task-view-info {
     display: flex;
@@ -126,6 +129,11 @@
 }
 .task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions {
     opacity: 1;
+}
+
+/* Task add */
+.task-add {
+    margin-left: 30px;
 }
 
 /* Task new */
