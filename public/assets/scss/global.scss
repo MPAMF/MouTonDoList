@@ -127,7 +127,7 @@ $theme-colors: (
   }
 
   /* Category */
-  .category-actions .accordion-button {
+  .category-button .accordion-button {
     --#{$variable-prefix}accordion-btn-padding-x: 0;
   }
   .btn-category-actions {
@@ -233,8 +233,14 @@ $theme-colors: (
 .accordion-item {
   --#{$variable-prefix}accordion-border-width: 0;
 }
+.category-button .accordion-button {
+  --#{$variable-prefix}accordion-btn-padding-x: 0;
+  --#{$variable-prefix}accordion-btn-padding-y: 0;
+}
 .btn-category-actions {
   --#{$variable-prefix}btn-focus-shadow-rgb: none;
+  --#{$variable-prefix}btn-padding-x: 0;
+  --#{$variable-prefix}btn-padding-y: 0;
 }
 .btn-category-actions:hover {
   filter: brightness(85%);

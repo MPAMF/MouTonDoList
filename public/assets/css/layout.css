@@ -63,15 +63,14 @@
     margin-left: 0;
     margin-right:0.5em;
 }
-.btn-category-drag {
-    cursor: grab;
-    position: absolute;
+.category-button {
     display: flex;
-    flex-wrap: nowrap;
+}
+.btn-category-drag {
     opacity: 0;
-    z-index: 5;
-    margin-left: -20px;
-    margin-top: 9px;
+}
+.btn-category-drag button {
+    cursor: grab !important;
 }
 .task-category-header:hover .btn-category-drag {
     opacity: 1;
@@ -81,7 +80,7 @@
     justify-content: center;
     align-items: center;
 }
-.category-actions .accordion-button:after {
+.category-button .accordion-button:after {
     display: none;
 }
 
