@@ -25,10 +25,18 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" type="button" href="#">
                 <span data-feather="bar-chart-2" class="mdi mdi-chart-bar align-text-bottom"></span>
                 Rapports
             </a>
+            <a type="button" class="btn btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                <span data-feather="bar-chart-2" class="visually-hidden">Toggle Dropdown</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item nav-link" href="#">Jour</a></li>
+                <li><a class="dropdown-item nav-link" href="#">Semaine</a></li>
+                <li><a class="dropdown-item nav-link" href="#">Mois</a></li>
+            </ul>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">
@@ -36,6 +44,23 @@
                 Intégrations
             </a>
         </li>
+        <div class="nav-item">
+            <div class="nav-link">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-favorites" aria-expanded="true" aria-controls="Nav-Menu-favorites">
+                    <span data-feather="star" class="mdi mdi-layers align-text-bottom"></span>
+                    Favorites
+                </button>
+            </div>
+            <div id="Nav-Menu-favorites" class="accordion-collapse collapse hidden">
+                {% for favID in 0..3 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            favorites {{ favID }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
     </ul>
 
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
@@ -45,29 +70,77 @@
         </a>
     </h6>
     <ul class="nav flex-column mb-2">
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                Current month
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                Last quarter
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                Social engagement
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                Year-end sale
-            </a>
-        </li>
+        <div class="nav-item">
+            <div class="nav-link" href="#">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Current-Month" aria-expanded="true" aria-controls="Nav-Menu-Current-Month">
+                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
+                    Current Month
+                    <small id="Nav-Menu-Current-Month" class="accordion-collapse collapse show">9+</small>
+                </button>
+            </div>
+            <div id="Nav-Menu-Current-Month" class="accordion-collapse collapse hidden">
+                {% for notifID in 0..3 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            notif {{ notifID }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-link" href="#">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Last-Quarter" aria-expanded="true" aria-controls="Nav-Menu-Last-Quarter">
+                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
+                    Last quarter
+                    <small id="Nav-Menu-Last-Quarter" class="accordion-collapse collapse show">9+</small>
+                </button>
+            </div>
+            <div id="Nav-Menu-Last-Quarter" class="accordion-collapse collapse hidden ">
+                {% for notifID in 0..3 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            notif {{ notifID }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-link" href="#">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Social-Engagement" aria-expanded="true" aria-controls="Nav-Menu-Social-Engagement">
+                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
+                    Social engagement
+                    <small id="Nav-Menu-Social-Engagement" class="accordion-collapse collapse show">9+</small>
+                </button>
+            </div>
+            <div id="Nav-Menu-Social-Engagement" class="accordion-collapse collapse hidden">
+                {% for notifID in 0..3 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            notif {{ notifID }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="nav-link" href="#">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Year-end-sale" aria-expanded="true" aria-controls="Nav-Menu-Year-end-sale">
+                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
+                    Year-end sale
+                    <small id="Nav-Menu-Year-end-sale" class="accordion-collapse collapse show">9+</small>
+                </button>
+            </div>
+            <div id="Nav-Menu-Year-end-sale" class="accordion-collapse collapse hidden">
+                {% for notifID in 0..3 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            notif {{ notifID }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </div>
+        </div>
     </ul>
 </div>
