@@ -64,11 +64,123 @@ $theme-colors: (
     --#{$variable-prefix}#{$color}-rgb: #{$value};
   }
 
+  /* Body */
   $body-bg: #222831;
   $body-color: #EEEEEE;
-
   --#{$variable-prefix}body-color: #{$body-color};
   --#{$variable-prefix}body-bg: #{$body-bg};
+
+  /* Global */
+  .form-control, .form-control:focus {
+    color: #{$body-color};
+    border-color: #{$secondary};
+  }
+
+  /* Category */
+  .btn-category-actions {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-bg: #{$body-bg};
+    --#{$variable-prefix}btn-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-hover-bg: #{$body-bg};
+    --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-active-bg: #{$body-bg};
+    --#{$variable-prefix}btn-active-border-color: #{$body-bg};
+  }
+
+  /* Task */
+  $ct-blue: #0d6efd;
+  $ct-input-checked-color: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$primary}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>");
+  $accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$body-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+  .accordion-item-tasks {
+    --#{$variable-prefix}accordion-bg: #{$body-bg};
+  }
+  .accordion-item-tasks .list-group-item {
+    --#{$variable-prefix}list-group-bg: #{$body-bg};
+    --#{$prefix}list-group-border-color: rgba(255, 255, 255, 0.075);
+  }
+  .accordion-item-tasks .accordion-button {
+    --#{$variable-prefix}accordion-btn-color: #{$body-color};
+    --#{$variable-prefix}accordion-btn-bg: #{$body-bg};
+    --#{$variable-prefix}accordion-btn: #{$body-bg};
+    --#{$variable-prefix}accordion-btn-icon: #{escape-svg($accordion-button-icon)};
+    --#{$variable-prefix}border-color: rgba(255, 255, 255, 0.125);
+  }
+  .accordion-item-tasks .accordion-button:not(.collapsed) {
+    --#{$variable-prefix}accordion-active-color: #{$body-color};
+    --#{$variable-prefix}accordion-active-bg: #{$body-bg};
+    --#{$variable-prefix}accordion-btn-active-icon: #{escape-svg($accordion-button-icon)};
+  }
+  .task-checkbox {
+    background-color: #{$body-bg};
+    border-color: tint-color($ct-blue, 50%);
+    &:checked {
+      background-color: #{$primary};
+      border-color: tint-color($ct-blue, 50%);
+    }
+    &:focus {
+      box-shadow: none;
+      border-color: tint-color($ct-blue, 50%)
+    }
+    &:hover {
+      background-image: escape-svg($ct-input-checked-color);
+    }
+  }
+  .task-view-info .form-check-label {
+    color: #{$body-color};
+  }
+  .btn-task-drag, .btn-task-actions {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-bg: #{$body-bg};
+    --#{$variable-prefix}btn-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-hover-bg: #{$body-bg};
+    --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-active-bg: #{$body-bg};
+    --#{$variable-prefix}btn-active-border-color: #{$body-bg};
+  }
+  .task-drag-ghost .btn-task-actions {
+    --#{$variable-prefix}btn-bg: #{$secondary};
+    --#{$variable-prefix}btn-border-color: #{$secondary};
+  }
+
+  /* Task new */
+  .btn-task-add {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-bg};
+
+    --#{$variable-prefix}btn-bg: #{$body-bg};
+    --#{$variable-prefix}btn-hover-bg: #{$body-bg};
+    --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-active-bg: #{$body-bg};
+    --#{$variable-prefix}btn-active-border-color: #{$body-bg};
+
+    --#{$variable-prefix}btn-hover-color: #{$primary};
+  }
+
+  /* Category/Task drag */
+  .task-drag-dragging, .task-drag-ghost {
+    background: #{$secondary};
+  }
+  .task-drag-dragging .accordion-button, .task-drag-ghost .accordion-button {
+    --#{$variable-prefix}accordion-btn-bg: #{$secondary};
+  }
+  .task-drag-dragging .accordion-button:not(.collapsed), .task-drag-ghost .accordion-button:not(.collapsed) {
+    --#{$variable-prefix}accordion-active-bg: #{$secondary};
+  }
+  .task-drag-dragging .list-group-item, .task-drag-ghost .list-group-item {
+    --#{$variable-prefix}list-group-bg: #{$secondary};
+  }
+  .task-drag-dragging .btn-task-add, .task-drag-ghost .btn-task-add {
+    --#{$variable-prefix}btn-bg: #{$secondary};
+  }
+  .task-drag-dragging .btn-category-actions, .task-drag-ghost .btn-category-actions {
+    --#{$variable-prefix}btn-bg: #{$secondary};
+    --#{$variable-prefix}btn-border-color: #{$secondary};
+  }
+
 }
 
 // Light theme
@@ -107,6 +219,12 @@ $theme-colors: (
   --#{$variable-prefix}body-color: #{$body-color};
   --#{$variable-prefix}body-bg: #{$body-bg};
 
+  /* Global */
+  .form-control, .form-control:focus {
+    color: #{$body-color};
+    border-color: #{$secondary};
+  }
+
   /* Navbar */
   .btn-abs-nav{
     --#{$variable-prefix}btn-color: #{$body-color};
@@ -127,9 +245,6 @@ $theme-colors: (
   }
 
   /* Category */
-  .category-button .accordion-button {
-    --#{$variable-prefix}accordion-btn-padding-x: 0;
-  }
   .btn-category-actions {
     --#{$variable-prefix}btn-color: #{$body-color};
     --#{$variable-prefix}btn-hover-color: #{$body-color};
@@ -151,12 +266,14 @@ $theme-colors: (
   }
   .accordion-item-tasks .list-group-item {
     --#{$variable-prefix}list-group-bg: #{$body-bg};
+    --#{$prefix}list-group-border-color: rgba(0, 0, 0, 0.075);
   }
   .accordion-item-tasks .accordion-button {
     --#{$variable-prefix}accordion-btn-color: #{$body-color};
     --#{$variable-prefix}accordion-btn-bg: #{$body-bg};
     --#{$variable-prefix}accordion-btn: #{$body-bg};
     --#{$variable-prefix}accordion-btn-icon: #{escape-svg($accordion-button-icon)};
+    --#{$variable-prefix}border-color: rgba(0, 0, 0, 0.125);
   }
   .accordion-item-tasks .accordion-button:not(.collapsed) {
     --#{$variable-prefix}accordion-active-color: #{$body-color};
@@ -177,6 +294,9 @@ $theme-colors: (
     &:hover {
       background-image: escape-svg($ct-input-checked-color);
     }
+  }
+  .task-view-info .form-check-label {
+    color: #{$body-color};
   }
   .btn-task-drag, .btn-task-actions {
     --#{$variable-prefix}btn-color: #{$body-color};
@@ -245,6 +365,9 @@ $theme-colors: (
 }
 
 /* Category */
+.category-button .accordion-button {
+  --#{$variable-prefix}accordion-btn-padding-x: 0;
+}
 .accordion-item-tasks .accordion-button {
   border-bottom: #{$accordion-border-color} solid #{$accordion-border-width};
 }
