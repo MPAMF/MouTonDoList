@@ -5,22 +5,50 @@ volumes:
         driver: local
 
 services:
-    php:
-        container_name: slim_php
-        build:
-            context: ./docker/php
-        ports:
-            - '80:80'
+    web:
+        image: nginx:alpine
+        container_name: web
         volumes:
-            - .:/var/www
-
-    mysql:
-        image: mysql:latest
-        container_name: mysql_todo_1
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: todos
-            MYSQL_USER: todos-user
-            MYSQL_PASSWORD: todos-pwd
+            - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+#            - "./etc/ssl:/etc/ssl" decommenter si pas de certif SSL
+            - ".:/var/www/html"
+            - "./docker/nginx/default.template.conf:/etc/nginx/conf.d/default.template"
         ports:
-            - "8002:3306"
+            - "8000:80"
+#            - "3000:443"
+        environment:
+            - NGINX_HOST=${NGINX_HOST}
+        command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+        restart: always
+        depends_on:
+            - php
+            - db
+    php:
+        image: nanoninja/php-fpm:8.1
+        restart: always
+        volumes:
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+            - ".:/var/www/html"
+        depends_on:
+            - composer
+    composer:
+        image: composer/composer
+        restart: "no"
+        volumes:
+            - ".:/app"
+        # Manque SASS, peut-être faire une image custom pour build les fichiers statiques?
+        command: [sh, -c, "composer install && composer make-static"]
+    db:
+        image: mysql:latest
+        restart: always
+        env_file:
+            - ".env"
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - "8989:3306"
+        volumes:
+            - "./var/db/mysql:/var/lib/mysql"

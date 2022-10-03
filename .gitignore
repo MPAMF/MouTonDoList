@@ -6,6 +6,10 @@
 !/logs/README.md
 .phpunit.result.cache
 
+.env
+
+var/db/
+
 # Assets
 public/assets/bootstrap/
 public/assets/css/global.css
