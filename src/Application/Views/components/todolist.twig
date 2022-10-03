@@ -14,9 +14,9 @@
                 </button>
                 <div class="category-button">
                     <div class="accordion-button">
-                        <button class="btn btn-category-actions" type="button" id="categoryModalBtn-{{ catId }}" data-bs-toggle="modal" data-bs-target="#categoryModal-{{ catId }}">
+                        <a tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="category-popover">
                             <span class="mdi mdi-24px mdi-dots-horizontal"></span>
-                        </button>
+                        </a>
                     </div>
                 </div>
             </h2>
@@ -34,15 +34,55 @@
         </div>
 
         <script type="text/javascript">
-
             /* Category modal */
-            function categoryToggleModal() {
+            /*function categoryToggleModal() {
                 $("#categoryModal-{{ catId }}").modal();
             }
-            document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);
+            document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);*/
         </script>
     {% endfor %}
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("[data-bs-popover=category-popover]").popover({
+            trigger: 'focus',
+            placement: 'left',
+            customClass: 'popover',
+            offset: [0,0],
+            html: true,
+            sanitize: false,
+            content:
+                '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-pencil-outline"></span> Modifier la section</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-delete-outline"></span> Supprimer la section</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-archive-outline"></span> Archiver la section</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-up-bold-outline"> Ajouter une section ci-dessus</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-down-bold-outline"> Ajouter une section ci-dessous</button>' +
+                '</div>',
+
+        })
+        $("[data-bs-popover=task-popover]").popover({
+            trigger: 'focus',
+            placement: 'left',
+            customClass: 'popover',
+            offset: [0,0],
+            html: true,
+            sanitize: false,
+            content:
+                '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-pencil-outline"></span> Modifier la tâche</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-delete-outline"></span> Supprimer la tâche</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer la tâche</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-up-bold-outline"> Ajouter une tâche ci-dessus</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-down-bold-outline"> Ajouter une tâche ci-dessous</button>' +
+                '</div>',
+
+        })
+    })
+
+</script>
 
 <!-- Latest Sortable -->
 <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>

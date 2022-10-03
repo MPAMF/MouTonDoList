@@ -181,6 +181,16 @@ $theme-colors: (
     --#{$variable-prefix}btn-border-color: #{$secondary};
   }
 
+  /* Popover */
+  .popover {
+    --#{$variable-prefix}popover-bg: #{$secondary};
+  }
+  .btn-popover {
+    --#{$variable-prefix}btn-bg: #{$secondary};
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-bg: #{$secondary};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+  }
 }
 
 // Light theme
@@ -349,6 +359,16 @@ $theme-colors: (
     --#{$variable-prefix}btn-border-color: #{$secondary};
   }
 
+  /* Popover */
+  .popover {
+    --#{$variable-prefix}popover-bg: #{$tertiary};
+  }
+  .btn-popover {
+    --#{$variable-prefix}btn-bg: #{$tertiary};
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-bg: #{$tertiary};
+  }
+
 }
 
 // Required
@@ -394,4 +414,16 @@ $theme-colors: (
 /* Task new */
 .btn-task-add {
   --#{$variable-prefix}btn-focus-shadow-rgb: none;
+}
+
+/* Popover */
+.popover {
+  --#{$variable-prefix}popover-border-radius: #{$border-radius-sm};
+  --#{$variable-prefix}popover-body-padding-y: 4px;
+  --#{$variable-prefix}popover-body-padding-x: 0;
+  --#{$variable-prefix}popover-arrow-width: 0;
+  --#{$variable-prefix}popover-arrow-height: 0;
+}
+.btn-popover {
+  --#{$variable-prefix}btn-border-radius: 0;
 }
