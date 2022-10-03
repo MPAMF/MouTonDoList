@@ -11,18 +11,18 @@
             <small class="form-text text-muted">Description</small>
         </div>
     </div>
-    <button class="btn btn-sm btn-task-actions" type="button" id="taskModalBtn-{{ catId }}-{{ taskId }}" data-bs-toggle="modal" data-bs-target="#taskModal-{{ catId }}-{{ taskId }}">
+    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs-toggle="popover">
         <span class="mdi mdi-dots-horizontal"></span>
-    </button>
+    </a>
 
     {% include 'tasks/task-modal.twig' with { 'catId' : catId, 'taskId': taskId } %}
 </li>
 
 <script type="text/javascript">
     /* Task modal */
-    function taskToggleModal() {
+    /*function taskToggleModal() {
         $("#taskModal-{{ catId }}-{{ taskId }}").modal();
     }
     document.getElementById("taskModalBtn-{{ catId }}-{{ taskId }}").addEventListener('click', taskToggleModal);
-    document.getElementById("taskViewInfo-{{ catId }}-{{ taskId }}").addEventListener('click', taskToggleModal);
+    document.getElementById("taskViewInfo-{{ catId }}-{{ taskId }}").addEventListener('click', taskToggleModal);*/
 </script>

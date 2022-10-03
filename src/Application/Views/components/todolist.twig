@@ -44,6 +44,30 @@
     {% endfor %}
 </div>
 
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("[data-bs-toggle=popover]").popover({
+            trigger: 'focus',
+            placement: 'left',
+            customClass: 'task-popover',
+            offset: [0,0],
+            html: true,
+            sanitize: false,
+            content:
+                '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                    '<button type="button" class="btn btn-sm btn-task-popover"><span class="mdi mdi-pencil-outline"></span> Modifier la tâche</button>' +
+                    '<button type="button" class="btn btn-sm btn-task-popover"><span class="mdi mdi-delete-outline"></span> Supprimer la tâche</button>' +
+                    '<button type="button" class="btn btn-sm btn-task-popover"><span class="mdi mdi-content-duplicate"> Dupliquer la tâche</button>' +
+                    '<button type="button" class="btn btn-sm btn-task-popover"><span class="mdi mdi-arrow-up-bold-outline"> Ajouter une tâche ci-dessus</button>' +
+                    '<button type="button" class="btn btn-sm btn-task-popover"><span class="mdi mdi-arrow-down-bold-outline"> Ajouter une tâche ci-dessous</button>' +
+                '</div>',
+
+        })
+    })
+
+</script>
+
 <!-- Latest Sortable -->
 <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
 
