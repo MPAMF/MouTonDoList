@@ -1,4 +1,14 @@
 <div class="accordion accordion-flush task-categories">
+
+    <div class="todolist-title">
+        <h3>To-do list [id]</h3>
+        <div class="title-actions">
+            <a tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="title-popover">
+                <span class="mdi mdi-24px mdi-dots-horizontal"></span>
+            </a>
+        </div>
+    </div>
+
     {% for catId in 0..2 %}
         {% include 'tasks/category.twig' with { 'catId' : catId } %}
     {% endfor %}
@@ -6,4 +16,5 @@
     {% for catId in 3..3 %}
         {% include 'tasks/category-archive.twig' with { 'catId' : catId } %}
     {% endfor %}
+
 </div>

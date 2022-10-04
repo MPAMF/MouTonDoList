@@ -1,4 +1,22 @@
 $(document).ready(function() {
+    $("[data-bs-popover=title-popover]").popover({
+        trigger: 'focus',
+        placement: 'left',
+        customClass: 'popover',
+        offset: [0,0],
+        html: true,
+        sanitize: false,
+        content:
+            '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+            '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
+            '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
+            '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
+            '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-delete-outline"></span> Supprimer le projet</button>' +
+            '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
+            '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une tâche</button>' +
+            '</div>',
+
+    })
     $("[data-bs-popover=category-popover]").popover({
         trigger: 'focus',
         placement: 'left',

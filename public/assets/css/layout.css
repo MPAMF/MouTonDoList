@@ -42,6 +42,19 @@
     max-width: 1200px;
     padding: 0 5%;
 }
+.todolist-title {
+    margin: 32px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.todolist-title #titleModal {
+    width: 100%;
+    cursor: pointer;
+}
+.title-actions {
+    display: flex;
+}
 
 /* Category */
 .task-category-header {
