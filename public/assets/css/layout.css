@@ -48,7 +48,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.todolist-title #titleModal {
+.todolist-title #title {
     width: 100%;
     cursor: pointer;
 }
