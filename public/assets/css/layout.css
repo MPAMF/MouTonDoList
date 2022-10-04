@@ -194,3 +194,43 @@
 .btn-popover:hover {
     filter: brightness(85%);
 }
+
+/* Archive */
+.category-archive .task-view-info, .category-archive .task-view-info label {
+    cursor: default;
+}
+
+/* Archive */
+
+.category-archive .btn-task-actions,
+.category-archive .btn-category-drag .btn-category-actions {
+    opacity: 0;
+}
+
+.dark .category-archive .task-view-info,
+.dark .category-archive .task-view-info label,
+.dark .category-archive .accordion-header .btn-category-actions
+.dark .category-archive .accordion-header:hover .btn-category-actions {
+    opacity: 0.5;
+}
+.dark .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions{
+    opacity: 1;
+}
+.dark .category-archive .task-view:hover .btn-task-actions,
+.dark .category-archive .accordion-button {
+    opacity: 0.40;
+}
+
+.light .category-archive .task-view-info,
+.light .category-archive .task-view-info label,
+.light .category-archive .accordion-header .btn-category-actions
+.light .category-archive .accordion-header:hover .btn-category-actions {
+    opacity: 0.85;
+}
+.light .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions{
+    opacity: 1;
+}
+.light .category-archive .task-view:hover .btn-task-actions,
+.light .category-archive .accordion-button {
+    opacity: 0.40;
+}

@@ -8,7 +8,7 @@
             </div>
         </div>
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
-            [Archive] Catégorie #{{ catId }}
+            Catégorie #{{ catId }}
         </button>
         <div class="category-button">
             <div class="accordion-button">
@@ -22,19 +22,9 @@
         <div class="accordion-body">
             <ul class="list-group list-group-flush task-tasks">
                 {% for taskId in 0..5 %}
-                    {% include 'tasks/task.twig' with { 'catId' : catId, 'taskId': taskId } %}
+                    {% include 'tasks/task-archive.twig' with { 'catId' : catId, 'taskId': taskId } %}
                 {% endfor %}
             </ul>
-            {% include 'tasks/task-new.twig' with { 'catId' : catId } %}
         </div>
     </div>
-    {% include 'tasks/category-modal.twig' with { 'catId' : catId } %}
 </div>
-
-<script type="text/javascript">
-    /* Category modal */
-    /*function categoryToggleModal() {
-        $("#categoryModal-{{ catId }}").modal();
-            }
-            document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);*/
-</script>
