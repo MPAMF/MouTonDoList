@@ -1,146 +1,60 @@
-<div class="position-sticky pt-3 sidebar-sticky">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
-                <span class="mdi mdi-home"></span>
+<div class="flex-shrink-0 p-3 bg-dark sidebar-div" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+        <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+        <span class="fs-5 fw-semibold">Collapsible</span>
+    </a>
+    <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                Home
+            </button>
+            <div class="collapse show" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
                 Dashboard
-            </a>
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Weekly</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Monthly</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Annually</a></li>
+                </ul>
+            </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="file" class="mdi mdi-file align-text-bottom"></span>
-                Commandes
-            </a>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                Orders
+            </button>
+            <div class="collapse" id="orders-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Processed</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Shipped</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Returned</a></li>
+                </ul>
+            </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="shopping-cart" class="mdi mdi-cart align-text-bottom"></span>
-                Produits
-            </a>
+        <li class="border-top my-3"></li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                Account
+            </button>
+            <div class="collapse" id="account-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
+                </ul>
+            </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="users" class="mdi mdi-account align-text-bottom"></span>
-                Clients
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" type="button" href="#">
-                <span data-feather="bar-chart-2" class="mdi mdi-chart-bar align-text-bottom"></span>
-                Rapports
-            </a>
-            <a type="button" class="btn btn-lg dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                <span data-feather="bar-chart-2" class="visually-hidden">Toggle Dropdown</span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item nav-link" href="#">Jour</a></li>
-                <li><a class="dropdown-item nav-link" href="#">Semaine</a></li>
-                <li><a class="dropdown-item nav-link" href="#">Mois</a></li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span data-feather="layers" class="mdi mdi-layers align-text-bottom"></span>
-                Intégrations
-            </a>
-        </li>
-        <div class="nav-item">
-            <div class="nav-link">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-favorites" aria-expanded="true" aria-controls="Nav-Menu-favorites">
-                    <span data-feather="star" class="mdi mdi-layers align-text-bottom"></span>
-                    Favorites
-                </button>
-            </div>
-            <div id="Nav-Menu-favorites" class="accordion-collapse collapse hidden">
-                {% for favID in 0..3 %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            favorites {{ favID }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </div>
-        </div>
-    </ul>
-
-    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-        <span>Saved reports</span>
-        <a class="link-secondary" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle" class="mdi mdi-plus-circle align-text-bottom"></span>
-        </a>
-    </h6>
-    <ul class="nav flex-column mb-2">
-        <div class="nav-item">
-            <div class="nav-link" href="#">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Current-Month" aria-expanded="true" aria-controls="Nav-Menu-Current-Month">
-                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                    Current Month
-                    <small id="Nav-Menu-Current-Month" class="accordion-collapse collapse show">9+</small>
-                </button>
-            </div>
-            <div id="Nav-Menu-Current-Month" class="accordion-collapse collapse hidden">
-                {% for notifID in 0..3 %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            notif {{ notifID }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="nav-item">
-            <div class="nav-link" href="#">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Last-Quarter" aria-expanded="true" aria-controls="Nav-Menu-Last-Quarter">
-                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                    Last quarter
-                    <small id="Nav-Menu-Last-Quarter" class="accordion-collapse collapse show">9+</small>
-                </button>
-            </div>
-            <div id="Nav-Menu-Last-Quarter" class="accordion-collapse collapse hidden ">
-                {% for notifID in 0..3 %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            notif {{ notifID }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="nav-item">
-            <div class="nav-link" href="#">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Social-Engagement" aria-expanded="true" aria-controls="Nav-Menu-Social-Engagement">
-                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                    Social engagement
-                    <small id="Nav-Menu-Social-Engagement" class="accordion-collapse collapse show">9+</small>
-                </button>
-            </div>
-            <div id="Nav-Menu-Social-Engagement" class="accordion-collapse collapse hidden">
-                {% for notifID in 0..3 %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            notif {{ notifID }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="nav-item">
-            <div class="nav-link" href="#">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Nav-Menu-Year-end-sale" aria-expanded="true" aria-controls="Nav-Menu-Year-end-sale">
-                    <span data-feather="file-text" class="mdi mdi-file-document align-text-bottom"></span>
-                    Year-end sale
-                    <small id="Nav-Menu-Year-end-sale" class="accordion-collapse collapse show">9+</small>
-                </button>
-            </div>
-            <div id="Nav-Menu-Year-end-sale" class="accordion-collapse collapse hidden">
-                {% for notifID in 0..3 %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            notif {{ notifID }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </div>
-        </div>
     </ul>
 </div>

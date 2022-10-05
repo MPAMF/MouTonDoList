@@ -16,6 +16,22 @@
 }
 
 /* Sidebar */
+.sidebar-nav {
+    padding-left: 0;
+    padding-right: 0;
+    z-index: 500;
+    position: fixed;
+}
+.sidebar-div {
+    height: 100vh;
+    padding-top: 5rem !important;
+}
+@media (min-width: 992px) {
+    .sidebar-nav {
+        position: sticky;
+        top: 0;
+    }
+}
 .sidebar .nav-link {
     font-weight: 500;
     color: #333;
@@ -43,7 +59,8 @@
     padding: 0 5%;
 }
 .todolist-title {
-    margin: 32px 0;
+    margin-bottom: 32px;
+    margin-top: 6rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
