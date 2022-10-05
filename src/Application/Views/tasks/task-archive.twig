@@ -1,9 +1,6 @@
 <li class="list-group-item task-view">
-    <button class="btn btn-sm btn-task-drag" type="button">
-        <span class="mdi mdi-18px mdi-drag"></span>
-    </button>
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="">
+        <input class="form-check-input task-checkbox" type="checkbox" value="" disabled>
         <div class="task-view-info" id="taskViewInfo-{{ catId }}-{{ taskId }}" data-bs-toggle="modal" data-bs-target="#taskModal-{{ catId }}-{{ taskId }}">
             <label class="form-check-label">
                 Nom de la tâche [{{ catId }}-{{ taskId }}]
@@ -11,9 +8,7 @@
             <small class="form-text text-muted">Description</small>
         </div>
     </div>
-    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs-popover="task-popover">
-        <span class="mdi mdi-dots-horizontal"></span>
-    </a>
-
-    {% include 'tasks/task-modal.twig' with { 'catId' : catId, 'taskId': taskId } %}
+    <button class="btn btn-sm btn-task-actions" type="button">
+        <span class="mdi mdi-18px mdi-delete"></span>
+    </button>
 </li>
