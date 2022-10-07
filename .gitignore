@@ -9,6 +9,7 @@
 .env
 
 var/db/
+var/log/
 
 # Assets
 public/assets/bootstrap/
