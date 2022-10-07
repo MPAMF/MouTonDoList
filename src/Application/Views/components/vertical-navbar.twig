@@ -2,31 +2,68 @@
     <ul class="list-unstyled ps-0">
         <li class="mb-3">
             <div class="sidebar-list-header">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#todolist" aria-expanded="true">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#todolist-active" aria-expanded="true">
                     Projets
                 </button>
                 <button class="btn btn-sm btn-sidebar-add" type="button">
                     <span class="mdi mdi-18px mdi-plus"></span>
                 </button>
             </div>
-            <div class="collapse show" id="todolist">
+            <div class="collapse show" id="todolist-active">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="d-inline-flex text-decoration-none rounded active">To-do list #3</a></li>
-                    <li><a href="#" class="d-inline-flex text-decoration-none rounded">To-do list #5</a></li>
-                    <li><a href="#" class="d-inline-flex text-decoration-none rounded">To-do list #6</a></li>
-                    <li><a href="#" class="d-inline-flex text-decoration-none rounded">To-do list #7</a></li>
+                    <li class="sidebar-li rounded">
+                        <a href="#" class="d-inline-flex text-decoration-none rounded sidebar-li-name">To-do list #3</a>
+                        <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs-popover="title-popover">
+                            <span class="mdi mdi-dots-horizontal"></span>
+                        </a>
+                    </li>
+                    <li class="sidebar-li rounded active">
+                        <a href="#" class="d-inline-flex text-decoration-none rounded sidebar-li-name">To-do list #5</a>
+                        <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs-popover="title-popover">
+                            <span class="mdi mdi-dots-horizontal"></span>
+                        </a>
+                    </li>
+                    <li class="sidebar-li rounded">
+                        <a href="#" class="d-inline-flex text-decoration-none rounded sidebar-li-name">To-do list #6</a>
+                        <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs-popover="title-popover">
+                            <span class="mdi mdi-dots-horizontal"></span>
+                        </a>
+                    </li>
+                    <li class="sidebar-li rounded">
+                        <a href="#" class="d-inline-flex text-decoration-none rounded sidebar-li-name">To-do list #7</a>
+                        <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs-popover="title-popover">
+                            <span class="mdi mdi-dots-horizontal"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>
         <li class="mb-3">
-            <button class="btn btn-toggle d-inline-flex border-0 align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#archive" aria-expanded="true">
-                Projets archivés
-            </button>
-            <div class="collapse show" id="archive">
+            <div class="sidebar-list-header">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#todolist-archive" aria-expanded="true">
+                    Projets archivés
+                </button>
+            </div>
+            <div class="collapse show" id="todolist-archive">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="d-inline-flex text-decoration-none rounded">To-do list #1</a></li>
-                    <li><a href="#" class="d-inline-flex text-decoration-none rounded">To-do list #2</a></li>
-                    <li><a href="#" class="d-inline-flex text-decoration-none rounded">To-do list #4</a></li>
+                    <li class="sidebar-li rounded">
+                        <a href="#" class="d-inline-flex text-decoration-none rounded sidebar-li-name">To-do list #1</a>
+                        <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs-popover="title-archive-popover">
+                            <span class="mdi mdi-dots-horizontal"></span>
+                        </a>
+                    </li>
+                    <li class="sidebar-li rounded">
+                        <a href="#" class="d-inline-flex text-decoration-none rounded sidebar-li-name">To-do list #2</a>
+                        <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs-popover="title-archive-popover">
+                            <span class="mdi mdi-dots-horizontal"></span>
+                        </a>
+                    </li>
+                    <li class="sidebar-li rounded">
+                        <a href="#" class="d-inline-flex text-decoration-none rounded sidebar-li-name">To-do list #4</a>
+                        <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs-popover="title-archive-popover">
+                            <span class="mdi mdi-dots-horizontal"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>
