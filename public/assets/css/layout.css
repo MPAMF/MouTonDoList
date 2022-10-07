@@ -269,9 +269,9 @@
 .dropdown-toggle { outline: 0; }
 .btn-toggle {
     padding: .25rem .5rem;
-    margin-bottom: .75rem;
     font-weight: 600;
     background-color: transparent;
+    width: 100%;
 }
 .btn-toggle::before {
     width: 1.25em;
@@ -282,6 +282,12 @@
 .btn-toggle[aria-expanded="true"]::before {
     transform: rotate(90deg);
 }
+.btn-toggle:hover::before {
+    transform: rotate(360deg);
+}
+.btn-toggle[aria-expanded="true"]:hover::before {
+    transform: rotate(450deg);
+}
 .btn-toggle-nav a {
     padding: .5rem .5rem;
     margin-top: .125rem;
@@ -289,4 +295,9 @@
 }
 .scrollarea {
     overflow-y: auto;
+}
+.sidebar-list-header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .75rem;
 }

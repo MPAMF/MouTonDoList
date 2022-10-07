@@ -1,9 +1,14 @@
 <div class="flex-shrink-0 p-3 sidebar-div" style="width: 280px;">
     <ul class="list-unstyled ps-0">
         <li class="mb-3">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#todolist" aria-expanded="true">
-                Projets
-            </button>
+            <div class="sidebar-list-header">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#todolist" aria-expanded="true">
+                    Projets
+                </button>
+                <button class="btn btn-sm btn-sidebar-add" type="button">
+                    <span class="mdi mdi-18px mdi-plus"></span>
+                </button>
+            </div>
             <div class="collapse show" id="todolist">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li><a href="#" class="d-inline-flex text-decoration-none rounded active">To-do list #3</a></li>

@@ -97,6 +97,9 @@ $theme-colors: (
   .sidebar-div a {
     color: #{$body-color};
   }
+  .btn-sidebar-add {
+    --#{$variable-prefix}btn-hover-bg: #{$body-bg};
+  }
 
   /* Category */
   .btn-category-actions {
@@ -425,6 +428,12 @@ $theme-colors: (
 .dd-nav{
   --#{$variable-prefix}dropdown-link-hover-color: black;
   --#{$variable-prefix}dropdown-box-shadow: none;
+}
+
+/* Sidebar */
+.btn-sidebar-add {
+  --#{$variable-prefix}btn-padding-x: 0.3rem;
+  --#{$variable-prefix}btn-padding-y: 0;
 }
 
 /* Category */
