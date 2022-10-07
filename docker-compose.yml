@@ -14,9 +14,9 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./var/log/nginx:/var/log/nginx/
     links:
-      - php
+      - php-fpm
     depends_on:
-      - php
+      - php-fpm
   db:
     image: mysql:latest
     restart: always
@@ -31,11 +31,11 @@ services:
       - "8989:3306"
     volumes:
       - ./var/db/mysql:/var/lib/mysql
-  php:
+  php-fpm:
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
     volumes:
       - .:/var/www/html
-
+    command: bash -c "composer install && composer make-static && php-fpm"
