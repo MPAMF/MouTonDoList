@@ -76,6 +76,45 @@ $theme-colors: (
     border-color: #{$secondary};
   }
 
+  /* Sidebar*/
+  .sidebar-div {
+    background-color: #{$secondary};
+  }
+  .sidebar-list-header {
+    border-bottom: solid 1px #{$primary};
+  }
+  .btn-toggle {
+    color: #{$body-color};
+  }
+  .btn-toggle::before {
+    content: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path fill='none' stroke='%2300ADB5' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/></svg>") !important;
+  }
+  .btn-toggle[aria-expanded="true"] {
+    color: #{$body-color};
+  }
+  .btn-sidebar-add {
+    --#{$variable-prefix}btn-hover-bg: #{$body-bg};
+    --#{$variable-prefix}btn-active-border-color: #{$body-bg};
+  }
+  .sidebar-li.active,
+  .sidebar-li:hover {
+    background-color: #{$body-bg};
+  }
+  .sidebar-div .sidebar-li-name {
+    color: #{$body-color};
+  }
+  .btn-todolist-actions {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-bg: #{$body-bg};
+    --#{$variable-prefix}btn-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-hover-bg: #{$secondary};
+    --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
+    --#{$variable-prefix}btn-active-bg: #{$secondary};
+    --#{$variable-prefix}btn-active-border-color: #{$body-bg};
+  }
+
   /* Category */
   .btn-category-actions {
     --#{$variable-prefix}btn-color: #{$body-color};
@@ -254,6 +293,46 @@ $theme-colors: (
     --#{$variable-prefix}dropdown-link-active-bg: #{$tertiary};
   }
 
+  /* Sidebar */
+  .sidebar-div {
+    background-color: #{$secondary};
+  }
+  .sidebar-list-header {
+    border-bottom: solid 1px #{$primary};
+  }
+  .btn-toggle {
+    color: #{$body-color};
+  }
+  .btn-toggle::before {
+    content: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path fill='none' stroke='%23529296' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/></svg>") !important;
+  }
+  .btn-toggle[aria-expanded="true"] {
+    color: #{$body-color};
+  }
+  .btn-sidebar-add {
+    --#{$variable-prefix}btn-hover-bg: #{$primary};
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-active-border-color: #{$primary};
+  }
+  .sidebar-li.active,
+  .sidebar-li:hover {
+    background-color: #{$primary};
+  }
+  .sidebar-div .sidebar-li-name {
+    color: #{$body-color};
+  }
+  .btn-todolist-actions {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-bg: #{$primary};
+    --#{$variable-prefix}btn-border-color: #{$primary};
+    --#{$variable-prefix}btn-hover-bg: #{$secondary};
+    --#{$variable-prefix}btn-hover-border-color: #{$primary};
+    --#{$variable-prefix}btn-active-bg: #{$secondary};
+    --#{$variable-prefix}btn-active-border-color: #{$primary};
+  }
+
   /* Category */
   .btn-category-actions {
     --#{$variable-prefix}btn-color: #{$body-color};
@@ -381,6 +460,15 @@ $theme-colors: (
 .dd-nav{
   --#{$variable-prefix}dropdown-link-hover-color: black;
   --#{$variable-prefix}dropdown-box-shadow: none;
+}
+
+/* Sidebar */
+.btn-sidebar-add, .btn-todolist-actions {
+  --#{$variable-prefix}btn-padding-x: 0.3rem;
+  --#{$variable-prefix}btn-padding-y: 0;
+}
+.btn-todolist-actions {
+  --#{$variable-prefix}btn-border-width: 3px;
 }
 
 /* Category */
