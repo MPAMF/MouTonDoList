@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Domain\User;
 
 use App\Domain\TimeStampedModel;
+use DateTime;
 use JsonSerializable;
 
 class User extends TimeStampedModel implements JsonSerializable
@@ -27,8 +28,8 @@ class User extends TimeStampedModel implements JsonSerializable
         string $email,
         string $username,
         string $password,
-        \DateTime $updated_at,
-        \DateTime $created_at
+        DateTime $updated_at,
+        DateTime $created_at
     ) {
         parent::__construct($updated_at, $created_at);
         $this->id = $id;
