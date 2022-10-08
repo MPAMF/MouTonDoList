@@ -6,6 +6,7 @@ use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;
 use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use Illuminate\Database\Capsule\Manager;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Views\Twig;
@@ -41,9 +42,6 @@ $container = $containerBuilder->build();
 // Instantiate the app
 AppFactory::setContainer($container);
 
-// Load languages
-
-
 // Set view in Container
 $container->set('view', function () {
 
@@ -69,6 +67,17 @@ $container->set('view', function () {
     $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
     $twig->addExtension(new TranslationExtension($translator));
     return $twig;
+});
+
+// Eloquent
+$container->set('db', function ($container) {
+    $capsule = new Manager;
+    $capsule->addConnection($container['settings']['db']);
+
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+
+    return $capsule;
 });
 
 $app = AppFactory::create();

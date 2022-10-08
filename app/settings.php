@@ -20,6 +20,17 @@ return function (ContainerBuilder $containerBuilder) {
                     'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
                     'level' => Logger::DEBUG,
                 ],
+                // Eloquent
+                'db' => [
+                    'driver' => 'mysql',
+                    'host' => 'localhost',
+                    'database' => ($mysql_db = getenv('MYSQL_DATABASE')) ? $mysql_db : 'database',
+                    'username' => ($mysql_user = getenv('MYSQL_USER')) ? $mysql_user : 'user',
+                    'password' => ($mysql_user = getenv('MYSQL_PASSWORD')) ? $mysql_user : 'pwd',
+                    'charset'   => 'utf8',
+                    'collation' => 'utf8_unicode_ci',
+                    'prefix'    => '',
+                ]
             ]);
         }
     ]);

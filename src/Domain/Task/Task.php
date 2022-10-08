@@ -11,7 +11,6 @@ use JsonSerializable;
 
 class Task extends TimeStampedModel implements JsonSerializable
 {
-
     private ?int $id;
     private Category $category;
     private string $description;
