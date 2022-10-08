@@ -1,0 +1,62 @@
+/* Navbar */
+.btn-abs-nav{
+  --#{$variable-prefix}btn-hover-color: black;
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
+}
+.dd-nav{
+  --#{$variable-prefix}dropdown-link-hover-color: black;
+  --#{$variable-prefix}dropdown-box-shadow: none;
+}
+
+/* Sidebar */
+.btn-sidebar-add, .btn-todolist-actions {
+  --#{$variable-prefix}btn-padding-x: 0.3rem;
+  --#{$variable-prefix}btn-padding-y: 0;
+}
+.btn-todolist-actions {
+  --#{$variable-prefix}btn-border-width: 3px;
+}
+
+/* Category */
+.category-button .accordion-button {
+  --#{$variable-prefix}accordion-btn-padding-x: 0;
+}
+.accordion-item-tasks .accordion-button {
+  border-bottom: #{$accordion-border-color} solid #{$accordion-border-width};
+}
+.accordion-item {
+  --#{$variable-prefix}accordion-border-width: 0;
+}
+.category-button .accordion-button {
+  --#{$variable-prefix}accordion-btn-padding-x: 0;
+  --#{$variable-prefix}accordion-btn-padding-y: 0;
+}
+.btn-category-actions {
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
+  --#{$variable-prefix}btn-padding-x: 0;
+  --#{$variable-prefix}btn-padding-y: 0;
+}
+
+/* Task */
+.btn-task-drag, .btn-task-actions {
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
+  --#{$variable-prefix}btn-padding-x: 0;
+  --#{$variable-prefix}btn-padding-y: 0;
+}
+
+/* Task new */
+.btn-task-add {
+  --#{$variable-prefix}btn-focus-shadow-rgb: none;
+}
+
+/* Popover */
+.popover {
+  --#{$variable-prefix}popover-border-radius: #{$border-radius-sm};
+  --#{$variable-prefix}popover-body-padding-y: 4px;
+  --#{$variable-prefix}popover-body-padding-x: 0;
+  --#{$variable-prefix}popover-arrow-width: 0;
+  --#{$variable-prefix}popover-arrow-height: 0;
+}
+.btn-popover {
+  --#{$variable-prefix}btn-border-radius: 0;
+}

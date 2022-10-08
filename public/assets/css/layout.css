@@ -1,18 +1,324 @@
+/* Navbar */
+.btn-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+}
+.span-nav{
+    font-size: 30px;
+}
+.logo{
+    margin-right: 3px;
+    height: 40px;
+    width: 40px;
+}
+
+/* Sidebar */
+.sidebar-nav {
+    padding-left: 0;
+    padding-right: 0;
+    z-index: 500;
+    position: fixed;
+}
+.sidebar-div {
+    height: 100vh;
+    padding-top: 5rem !important;
+}
+@media (min-width: 992px) {
+    .sidebar-nav {
+        position: sticky;
+        top: 0;
+    }
+}
 .sidebar .nav-link {
     font-weight: 500;
     color: #333;
 }
-
 .sidebar .nav-link .mdi {
     margin-right: 4px;
     color: #727272;
 }
-
 .sidebar .nav-link.active {
     color: #2470dc;
 }
-
 .sidebar .nav-link:hover .mdi,
 .sidebar .nav-link.active .mdi {
     color: inherit;
+}
+
+/* Global */
+.grabbing * {
+    cursor: grabbing !important;
+}
+
+/* To-do-list */
+.todolist {
+    max-width: 1200px;
+    padding: 0 5%;
+}
+.todolist-title {
+    margin-bottom: 32px;
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.todolist-title #title {
+    width: 100%;
+    cursor: pointer;
+}
+.title-actions {
+    display: flex;
+}
+
+/* Category */
+.task-category-header {
+    display: flex;
+    flex-direction: row;
+}
+.accordion-item {
+    margin-bottom: 3%;
+}
+.accordion-button {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.accordion-button:focus {
+    box-shadow: none;
+}
+.accordion-button:after {
+    order: -1;
+    margin-left: 0;
+    margin-right:0.5em;
+}
+.category-button {
+    display: flex;
+}
+.accordion-button.btn-category-drag {
+    border-bottom-width: 0;
+}
+.btn-category-drag {
+    opacity: 0;
+}
+.btn-category-drag button {
+    cursor: grab !important;
+}
+.task-category-header:hover .btn-category-drag {
+    opacity: 1;
+}
+.btn-category-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-category-actions:hover {
+    filter: brightness(85%);
+}
+.category-button .accordion-button:after {
+    display: none;
+}
+.task-drag-ghost .category-button {
+    display: none;
+}
+
+/* Task */
+.task-checkbox:focus {
+    box-shadow: none;
+}
+.task-view {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 30px;
+}
+.task-view-details {
+    margin-left: 30px;
+}
+.task-view-info {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.task-view-info label {
+    cursor: pointer;
+}
+.task-view-info small {
+    word-wrap: break-word;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.btn-task-drag, .btn-task-actions {
+    position: absolute;
+    display: flex;
+    flex-wrap: nowrap;
+    opacity: 0;
+}
+.btn-task-drag {
+    cursor: grab !important;
+}
+.btn-task-actions {
+    right: 0;
+    top: 0;
+    margin-top: 5px;
+}
+.btn-task-drag:hover, .btn-task-actions:hover {
+    filter: brightness(85%);
+}
+.task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions {
+    opacity: 1;
+}
+.task-drag-ghost .btn-task-drag, .task-drag-ghost .btn-task-actions {
+    display: none;
+}
+
+/* Task add */
+.task-add {
+    margin-left: 30px;
+}
+
+/* Task new */
+.task-new {
+    display: none;
+    padding: 6px 12px;
+}
+.task-new-active {
+    display: block;
+}
+.btn-task-add {
+    text-align: left !important;
+}
+.btn-task-add-unactive {
+    display: none;
+}
+.btn-task-create:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+}
+
+/* Task modal */
+/* todo */
+
+/* Category/Task drag */
+.task-drag-dragging {
+    opacity: 1 !important;
+}
+.task-drag-ghost {
+    filter: brightness(85%);
+}
+
+/* Popover */
+.popover {
+    box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+    width: 250px;
+}
+.popover .btn-group-vertical {
+    width: 100%;
+}
+.btn-popover {
+    text-align: left;
+}
+.btn-popover:hover {
+    filter: brightness(85%);
+}
+
+/* Archive */
+.category-archive .task-view-info, .category-archive .task-view-info label {
+    cursor: default;
+}
+
+/* Archive */
+
+.category-archive .btn-task-actions,
+.category-archive .btn-category-drag .btn-category-actions {
+    opacity: 0;
+}
+
+.dark .category-archive .task-view-info,
+.dark .category-archive .task-view-info label,
+.dark .category-archive .accordion-header .btn-category-actions
+.dark .category-archive .accordion-header:hover .btn-category-actions,
+.default .category-archive .task-view-info,
+.default .category-archive .task-view-info label,
+.default .category-archive .accordion-header .btn-category-actions
+.default .category-archive .accordion-header:hover .btn-category-actions{
+    opacity: 0.5;
+}
+.dark .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions,
+.default .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions {
+    opacity: 1;
+}
+.dark .category-archive .task-view:hover .btn-task-actions,
+.dark .category-archive .accordion-button,
+.default .category-archive .task-view:hover .btn-task-actions,
+.default .category-archive .accordion-button {
+    opacity: 0.40;
+}
+
+.light .category-archive .task-view-info,
+.light .category-archive .task-view-info label,
+.light .category-archive .accordion-header .btn-category-actions
+.light .category-archive .accordion-header:hover .btn-category-actions {
+    opacity: 0.85;
+}
+.light .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions{
+    opacity: 1;
+}
+.light .category-archive .task-view:hover .btn-task-actions,
+.light .category-archive .accordion-button {
+    opacity: 0.40;
+}
+
+/* Sidebar */
+.dropdown-toggle { outline: 0; }
+.scrollarea {
+    overflow-y: auto;
+}
+.sidebar-list-header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .75rem;
+    padding-bottom: 0.35rem;
+}
+.btn-toggle {
+    padding: .25rem .5rem;
+    font-weight: 600;
+    background-color: transparent;
+    width: 100%;
+}
+.btn-toggle::before {
+    width: 1.25em;
+    line-height: 0;
+    transition: transform .35s ease;
+    transform-origin: .5em 50%;
+}
+.btn-toggle[aria-expanded="true"]::before {
+    transform: rotate(90deg);
+}
+.btn-toggle:hover::before {
+    transform: rotate(360deg);
+}
+.btn-toggle[aria-expanded="true"]:hover::before {
+    transform: rotate(450deg);
+}
+.sidebar-li {
+    display: flex;
+    flex-direction: row;
+    margin-top: .125rem;
+}
+.sidebar-li-name {
+    padding: .5rem .5rem;
+    width: 100%;
+}
+.btn-todolist-actions {
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar-li:hover .btn-todolist-actions {
+    opacity: 1;
 }
