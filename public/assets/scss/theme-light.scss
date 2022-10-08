@@ -39,6 +39,43 @@
     color: #{$body-color};
     border-color: #{$secondary};
   }
+  .btn-primary {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-bg: #{$primary};
+    --#{$variable-prefix}btn-border-color: #{$primary};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-bg: #67B7BB;
+    --#{$variable-prefix}btn-hover-border-color: #67B7BB;
+    --#{$variable-prefix}btn-focus-shadow-rgb: 49, 132, 253;
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #67B7BB;
+    --#{$variable-prefix}btn-active-border-color: #67B7BB;
+    --#{$variable-prefix}btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --#{$variable-prefix}btn-disabled-color: #{$body-color};
+    --#{$variable-prefix}btn-disabled-bg: #{$primary};
+    --#{$variable-prefix}btn-disabled-border-color: #{$primary};
+  }
+  .btn-primary:disabled:hover {
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-bg: #{$primary};
+    --#{$variable-prefix}btn-hover-border-color: #{$primary};
+  }
+  .btn-secondary {
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-bg: #529296;
+    --#{$variable-prefix}btn-border-color: #529296;
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-bg: #488083;
+    --#{$variable-prefix}btn-hover-border-color: #488083;
+    --#{$variable-prefix}btn-focus-shadow-rgb: 49, 132, 253;
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #529296;
+    --#{$variable-prefix}btn-active-border-color: #529296;
+    --#{$variable-prefix}btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --#{$variable-prefix}btn-disabled-color: #{$body-color};
+    --#{$variable-prefix}btn-disabled-bg: #7ECED2;
+    --#{$variable-prefix}btn-disabled-border-color: #7ECED2;
+  }
 
   /* Navbar */
   .btn-abs-nav{

@@ -1,0 +1,215 @@
+:root {
+  /* redefine theme color variables */
+  --bs-primary: #00ADB5;
+  --bs-secondary: #393E46;
+  --bs-success: #198754;
+  --bs-danger: #dc3545;
+  --bs-warning: #ffc107;
+  --bs-info: #A5C9CA;
+  --bs-dark: #212529;
+  --bs-light: #f8f9fa;
+  --bs-primary-rgb: 0, 173, 181;
+  --bs-secondary-rgb: 57, 62, 70;
+  --bs-success-rgb: 25, 135, 84;
+  --bs-danger-rgb: 220, 53, 69;
+  --bs-warning-rgb: 255, 193, 7;
+  --bs-info-rgb: 165, 201, 202;
+  --bs-dark-rgb: 33, 37, 41;
+  --bs-light-rgb: 248, 249, 250;
+  --bs-body-color: #EEEEEE;
+  --bs-body-bg: #222831;
+}
+
+/* Global */
+.form-control, .form-control:focus {
+  color: #EEEEEE;
+  border-color: #393E46;
+}
+.btn-primary {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-bg: #00ADB5;
+  --bs-btn-border-color: #00ADB5;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-hover-bg: #009DA5;
+  --bs-btn-hover-border-color: #009DA5;
+  --bs-btn-focus-shadow-rgb: 49, 132, 253;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-active-bg: #009DA5;
+  --bs-btn-active-border-color: #009DA5;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #EEEEEE;
+  --bs-btn-disabled-bg: #00ADB5;
+  --bs-btn-disabled-border-color: #00ADB5;
+}
+.btn-primary:disabled:hover {
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-hover-bg: #00ADB5;
+  --bs-btn-hover-border-color: #00ADB5;
+}
+.btn-secondary {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-bg: #393E46;
+  --bs-btn-border-color: #393E46;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-hover-bg: #4B5057;
+  --bs-btn-hover-border-color: #4B5057;
+  --bs-btn-focus-shadow-rgb: 49, 132, 253;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-active-bg: #4B5057;
+  --bs-btn-active-border-color: #4B5057;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #EEEEEE;
+  --bs-btn-disabled-bg: #393E46;
+  --bs-btn-disabled-border-color: #393E46;
+}
+
+/* Sidebar */
+.sidebar-div {
+  background-color: #393E46;
+}
+.sidebar-list-header {
+  border-bottom: solid 1px #00ADB5;
+}
+.btn-toggle {
+  color: #EEEEEE;
+}
+.btn-toggle::before {
+  content: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path fill='none' stroke='%2300ADB5' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/></svg>") !important;
+}
+.btn-toggle[aria-expanded=true] {
+  color: #EEEEEE;
+}
+.btn-sidebar-add {
+  --bs-btn-hover-bg: #222831;
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-active-border-color: #222831;
+}
+.sidebar-li.active,
+.sidebar-li:hover {
+  background-color: #222831;
+}
+.sidebar-div .sidebar-li-name {
+  color: #EEEEEE;
+}
+.btn-todolist-actions {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-bg: #222831;
+  --bs-btn-border-color: #222831;
+  --bs-btn-hover-bg: #393E46;
+  --bs-btn-hover-border-color: #222831;
+  --bs-btn-active-bg: #393E46;
+  --bs-btn-active-border-color: #222831;
+}
+
+/* Category */
+.btn-category-actions {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-bg: #222831;
+  --bs-btn-border-color: #222831;
+  --bs-btn-hover-bg: #222831;
+  --bs-btn-hover-border-color: #222831;
+  --bs-btn-active-bg: #222831;
+  --bs-btn-active-border-color: #222831;
+}
+
+/* Task */
+.accordion-item-tasks {
+  --bs-accordion-bg: #222831;
+}
+.accordion-item-tasks .list-group-item {
+  --bs-list-group-bg: #222831;
+  --bs-list-group-border-color: rgba(255, 255, 255, 0.075);
+}
+.accordion-item-tasks .accordion-button {
+  --bs-accordion-btn-color: #EEEEEE;
+  --bs-accordion-btn-bg: #222831;
+  --bs-accordion-btn: #222831;
+  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23EEEEEE'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  --bs-border-color: rgba(255, 255, 255, 0.125);
+}
+.accordion-item-tasks .accordion-button:not(.collapsed) {
+  --bs-accordion-active-color: #EEEEEE;
+  --bs-accordion-active-bg: #222831;
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23EEEEEE'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+.task-checkbox {
+  background-color: #222831;
+  border-color: #86b7fe;
+}
+.task-checkbox:checked {
+  background-color: #00ADB5;
+  border-color: #86b7fe;
+}
+.task-checkbox:focus {
+  box-shadow: none;
+  border-color: #86b7fe;
+}
+.task-checkbox:hover {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%2300ADB5' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+.task-view-info .form-check-label {
+  color: #EEEEEE;
+}
+.btn-task-drag, .btn-task-actions {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-bg: #222831;
+  --bs-btn-border-color: #222831;
+  --bs-btn-hover-bg: #222831;
+  --bs-btn-hover-border-color: #222831;
+  --bs-btn-active-bg: #222831;
+  --bs-btn-active-border-color: #222831;
+}
+.task-drag-ghost .btn-task-actions {
+  --bs-btn-bg: #393E46;
+  --bs-btn-border-color: #393E46;
+}
+
+/* Task new */
+.btn-task-add {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-active-color: #222831;
+  --bs-btn-bg: #222831;
+  --bs-btn-hover-bg: #222831;
+  --bs-btn-hover-border-color: #222831;
+  --bs-btn-active-bg: #222831;
+  --bs-btn-active-border-color: #222831;
+  --bs-btn-hover-color: #00ADB5;
+}
+
+/* Category/Task drag */
+.task-drag-dragging, .task-drag-ghost {
+  background: #393E46;
+}
+.task-drag-dragging .accordion-button, .task-drag-ghost .accordion-button {
+  --bs-accordion-btn-bg: #393E46;
+}
+.task-drag-dragging .accordion-button:not(.collapsed), .task-drag-ghost .accordion-button:not(.collapsed) {
+  --bs-accordion-active-bg: #393E46;
+}
+.task-drag-dragging .list-group-item, .task-drag-ghost .list-group-item {
+  --bs-list-group-bg: #393E46;
+}
+.task-drag-dragging .btn-task-add, .task-drag-ghost .btn-task-add {
+  --bs-btn-bg: #393E46;
+}
+.task-drag-dragging .btn-category-actions, .task-drag-ghost .btn-category-actions {
+  --bs-btn-bg: #393E46;
+  --bs-btn-border-color: #393E46;
+}
+
+/* Popover */
+.popover {
+  --bs-popover-bg: #393E46;
+}
+.btn-popover {
+  --bs-btn-bg: #393E46;
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-hover-bg: #393E46;
+  --bs-btn-hover-color: #EEEEEE;
+}
