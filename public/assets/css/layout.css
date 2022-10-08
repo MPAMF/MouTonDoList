@@ -249,24 +249,24 @@
     opacity: 0;
 }
 
-.dark .category-archive .task-view-info,
-.dark .category-archive .task-view-info label,
-.dark .category-archive .accordion-header .btn-category-actions
-.dark .category-archive .accordion-header:hover .btn-category-actions,
-.default .category-archive .task-view-info,
-.default .category-archive .task-view-info label,
-.default .category-archive .accordion-header .btn-category-actions
-.default .category-archive .accordion-header:hover .btn-category-actions{
+.category-archive .task-view-info,
+.category-archive .task-view-info label,
+.category-archive .accordion-header .btn-category-actions
+.category-archive .accordion-header:hover .btn-category-actions,
+.category-archive .task-view-info,
+.category-archive .task-view-info label,
+.category-archive .accordion-header .btn-category-actions
+.category-archive .accordion-header:hover .btn-category-actions{
     opacity: 0.5;
 }
-.dark .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions,
-.default .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions {
+.category-archive .accordion-header:hover .btn-category-drag .btn-category-actions,
+.category-archive .accordion-header:hover .btn-category-drag .btn-category-actions {
     opacity: 1;
 }
-.dark .category-archive .task-view:hover .btn-task-actions,
-.dark .category-archive .accordion-button,
-.default .category-archive .task-view:hover .btn-task-actions,
-.default .category-archive .accordion-button {
+.category-archive .task-view:hover .btn-task-actions,
+.category-archive .accordion-button,
+.category-archive .task-view:hover .btn-task-actions,
+.category-archive .accordion-button {
     opacity: 0.40;
 }
 
