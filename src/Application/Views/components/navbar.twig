@@ -16,11 +16,16 @@
                     </form>
                 </div>
             </div>
+            
             <button class="btn btn-abs-nav btn-nav" type="submit" data-bs-toggle="collapse" data-bs-target="#collapseSearch"
-                    aria-expanded="false" aria-controls="collapseSearch"> <span class="mdi mdi-magnify span-nav"></span> </button>
+                    aria-expanded="false" aria-controls="collapseSearch">
+                <span class="mdi mdi-magnify span-nav"></span>
+            </button>
 
-            <button type="button" class="btn btn-abs-nav btn-nav me-1" aria-expanded="false">
-                <span class="mdi mdi-card-plus-outline span-nav"></span> </button>
+            <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false">
+                <span class="mdi mdi-bell span-nav"></span>
+                <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notif">99+</span>
+            </button>
 
             <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="mdi mdi-account-circle span-nav"></span> </button>
@@ -36,7 +41,8 @@
                 <li><hr class="dropdown-divider"></li>
 
                 <li><button class="dropdown-item" type="button"> <span class="mdi mdi-exit-run me-2"></span>
-                        {% trans %}DropDownDisconnectNav{% endtrans %}</button></li>
+                        {% trans %}DropDownDisconnectNav{% endtrans %}</button>
+                </li>
             </ul>
         </div>
     </div>
