@@ -10,9 +10,9 @@
 
         <div class="d-inline-flex">
             <div class="collapse collapse-horizontal" id="collapseSearch">
-                <div class="card" style="width: 40vw">
+                <div class="div-research">
                     <form class="d-flex" role="search">
-                        <input class="form-control bg-secondary" type="search" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
+                        <input class="form-control input-research" type="search" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
                     </form>
                 </div>
             </div>
@@ -24,23 +24,23 @@
 
             <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false">
                 <span class="mdi mdi-bell span-nav"></span>
-                <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notif">99+</span>
+                <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification">99+</span>
             </button>
 
             <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="mdi mdi-account-circle span-nav"></span> </button>
             <ul class="dropdown-menu dropdown-menu-end dd-nav">
-                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-cog-outline me-2"></span>
+                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-cog-outline me-2"></span>
                         {% trans %}DropDownParameters{% endtrans %}</button></li>
                 <li><hr class="dropdown-divider"></li>
 
-                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-palette-outline me-2"></span>
+                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-palette-outline me-2"></span>
                         {% trans %}DropDownThemeNav{% endtrans %}</button></li>
-                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-share me-2"></span>
+                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-share me-2"></span>
                         {% trans %}DropDownShareNav{% endtrans %}</button></li>
                 <li><hr class="dropdown-divider"></li>
 
-                <li><button class="dropdown-item" type="button"> <span class="mdi mdi-exit-run me-2"></span>
+                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-exit-run me-2"></span>
                         {% trans %}DropDownDisconnectNav{% endtrans %}</button>
                 </li>
             </ul>
