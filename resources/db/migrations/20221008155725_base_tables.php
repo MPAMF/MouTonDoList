@@ -53,7 +53,7 @@ final class BaseTables extends AbstractMigration
             ->create();
 
         // Create tasks table
-/*        $tasks_table = $this->table('tasks');
+        $tasks_table = $this->table('tasks');
         $tasks_table
             ->addColumn('name', 'string', ['limit' => 64])
             ->addColumn('description', 'text')
@@ -61,14 +61,14 @@ final class BaseTables extends AbstractMigration
             ->addColumn('checked', 'boolean')
             ->addColumn('position', 'integer', ['default' => 0])
             //
-            ->addColumn('owner_id', 'integer')
-            ->addForeignKey('owner_id', 'users', 'id', ['delete' => 'NO_ACTION'])
+            ->addColumn('category_id', 'integer')
+            ->addForeignKey('category_id', 'categories', 'id', ['delete' => 'CASCADE'])
             //
-            ->addColumn('parent_category_id', 'integer', ['null' => true, 'default' => null])
-            ->addForeignKey('parent_category_id', 'categories', 'id', ['delete' => 'SET_NULL'])
+            ->addColumn('last_editor_id', 'integer', ['null' => true, 'default' => null])
+            ->addForeignKey('last_editor_id', 'users', 'id', ['delete' => 'SET_NULL'])
             //
             ->addTimestamps()
-            ->create();*/
+            ->create();
     }
 
 }
