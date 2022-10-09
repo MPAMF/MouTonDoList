@@ -27,5 +27,12 @@
   "DropDownParameters": "Paramètres",
   "DropDownDisconnectNav": "Déconnexion",
   "DropDownThemeNav": "Thème",
-  "DropDownShareNav": "Partage"
+  "DropDownShareNav": "Partage",
+
+  "TitreModalNav": "Les Thèmes",
+  "CloseModalNav": "Fermer",
+  "SaveModalNav": "Sauvegarder",
+  "LabelModalNav": "Cliquez sur le thème de votre choix :",
+  "LightModalNav": "Clair",
+  "DarkModalNav": "Sombre"
 }
