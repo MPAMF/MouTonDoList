@@ -11,7 +11,7 @@ final class BaseTables extends AbstractMigration
         // Create users table
         $users_table = $this->table('users');
         $users_table
-            ->addColumn('email', 'string', ['limit' => 254, 'unique' => true])
+            ->addColumn('email', 'string', ['limit' => 254]) // should be unique
             ->addColumn('username', 'string', ['limit' => 64])
             ->addColumn('password', 'string', ['limit' => 128])
             ->addColumn('image_path', 'text')
@@ -28,10 +28,10 @@ final class BaseTables extends AbstractMigration
             ->addColumn('position', 'integer', ['default' => 0])
             ->addColumn('archived', 'boolean')
             //
-            ->addColumn('owner_id', 'integer')
+            ->addColumn('owner_id', 'integer', ['signed' => false])
             ->addForeignKey('owner_id', 'users', 'id', ['delete' => 'NO_ACTION'])
             //
-            ->addColumn('parent_category_id', 'integer', ['null' => true, 'default' => null])
+            ->addColumn('parent_category_id', 'integer', ['null' => true, 'default' => null, 'signed' => false])
             ->addForeignKey('parent_category_id', 'categories', 'id', ['delete' => 'SET_NULL'])
             //
             ->addTimestamps()
@@ -43,10 +43,10 @@ final class BaseTables extends AbstractMigration
             ->addColumn('accepted', 'boolean')
             ->addColumn('can_edit', 'boolean')
             //
-            ->addColumn('user_id', 'integer')
+            ->addColumn('user_id', 'integer', ['signed' => false])
             ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE'])
             //
-            ->addColumn('category_id', 'integer')
+            ->addColumn('category_id', 'integer', ['signed' => false])
             ->addForeignKey('category_id', 'categories', 'id', ['delete' => 'CASCADE'])
             //
             ->addTimestamps()
@@ -61,10 +61,10 @@ final class BaseTables extends AbstractMigration
             ->addColumn('checked', 'boolean')
             ->addColumn('position', 'integer', ['default' => 0])
             //
-            ->addColumn('category_id', 'integer')
+            ->addColumn('category_id', 'integer', ['signed' => false])
             ->addForeignKey('category_id', 'categories', 'id', ['delete' => 'CASCADE'])
             //
-            ->addColumn('last_editor_id', 'integer', ['null' => true, 'default' => null])
+            ->addColumn('last_editor_id', 'integer', ['null' => true, 'default' => null, 'signed' => false])
             ->addForeignKey('last_editor_id', 'users', 'id', ['delete' => 'SET_NULL'])
             //
             ->addTimestamps()

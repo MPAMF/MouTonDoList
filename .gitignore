@@ -6,6 +6,7 @@
 !/logs/README.md
 .phpunit.result.cache
 
+phinx.yml
 .env
 
 var/db/
