@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
-use Slim\Views\Twig;
 
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
@@ -16,13 +15,19 @@ return function (App $app) {
     });
 
     $app->get('/home', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'home/components/content-page.twig',
-            ['contents' => 'home']);
+        return $this->get('view')->render(
+            $response,
+            'home/components/content-page.twig',
+            ['contents' => 'home']
+        );
     });
 
     $app->get('/home-presentation', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'home/components/content-page.twig',
-            ['contents' => 'presentation']);
+        return $this->get('view')->render(
+            $response,
+            'home/components/content-page.twig',
+            ['contents' => 'presentation']
+        );
     });
 
     $app->get('/login', function (Request $request, Response $response) {

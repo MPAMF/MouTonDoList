@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Domain\Task;
 
@@ -10,7 +11,6 @@ use JsonSerializable;
 
 class Task extends TimeStampedModel implements JsonSerializable
 {
-
     private ?int $id;
     private Category $category;
     private string $description;
