@@ -27,9 +27,17 @@
     height: 40px;
     margin-right: 5px;
 }
-
 .div-research{
-    width: 40vw;
+    width: 39vw;
+}
+.appName{
+    margin-bottom: 0px;
+    padding-top: 8px;
+}
+@media (max-width: 770px) {
+    .appName{
+        display: none;
+    }
 }
 
 /* Sidebar */
