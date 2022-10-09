@@ -6,6 +6,10 @@
     height: 40px;
     width: 40px;
 }
+.btn-group-nav{
+    position: relative;
+    flex: 1 1 auto;
+}
 .span-nav{
     font-size: 30px;
 }
@@ -16,6 +20,7 @@
 }
 .notification{
     font-size: 9px;
+    z-index: +1;
 }
 .input-research{
     border: unset;
