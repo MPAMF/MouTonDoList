@@ -3,8 +3,9 @@
         <div class="d-inline-flex">
             <button type="button" class="btn btn-abs-nav btn-nav me-1 ms-1" data-bs-toggle="collapse" data-bs-target="#verticalNavbar" aria-expanded="false" aria-controls="verticalNavbar">
                 <span class="mdi mdi-menu span-nav"></span> </button>
-            <a class="me-1" href=".">
+            <a class="nav-link active d-flex me-1" href=".">
                 <img src="assets/img/appImg.jpg" alt="Logo" class="rounded-circle logo">
+                <p class="appName">{% trans %}AppName{% endtrans %}</p>
             </a>
         </div>
 
@@ -22,28 +23,64 @@
                 <span class="mdi mdi-magnify span-nav"></span>
             </button>
 
-            <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false">
-                <span class="mdi mdi-bell span-nav"></span>
-                <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification">99+</span>
-            </button>
+            <div class="btn-group-nav">
+                <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false">
+                    <span class="mdi mdi-bell span-nav"></span>
+                    <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification">99+</span>
+                </button>
+            </div>
 
-            <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="mdi mdi-account-circle span-nav"></span> </button>
-            <ul class="dropdown-menu dropdown-menu-end dd-nav">
-                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-cog-outline me-2"></span>
-                        {% trans %}DropDownParameters{% endtrans %}</button></li>
-                <li><hr class="dropdown-divider"></li>
+            <div class="btn-group-nav">
+                <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="mdi mdi-account-circle span-nav"></span> </button>
+                <ul class="dropdown-menu dropdown-menu-end dd-nav">
+                    <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-cog-outline me-2"></span>
+                            {% trans %}DropDownParameters{% endtrans %}</button></li>
+                    <li><hr class="dropdown-divider"></li>
 
-                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-palette-outline me-2"></span>
-                        {% trans %}DropDownThemeNav{% endtrans %}</button></li>
-                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-share me-2"></span>
-                        {% trans %}DropDownShareNav{% endtrans %}</button></li>
-                <li><hr class="dropdown-divider"></li>
+                    <li><button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal" data-bs-target="#themeModal"> <span class="mdi mdi-palette-outline me-2"></span>
+                            {% trans %}DropDownThemeNav{% endtrans %}</button></li>
+                    <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-share me-2"></span>
+                            {% trans %}DropDownShareNav{% endtrans %}</button></li>
+                    <li><hr class="dropdown-divider"></li>
 
-                <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-exit-run me-2"></span>
-                        {% trans %}DropDownDisconnectNav{% endtrans %}</button>
-                </li>
-            </ul>
+                    <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-exit-run me-2"></span>
+                            {% trans %}DropDownDisconnectNav{% endtrans %}</button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="themeModal" tabindex="-1" aria-labelledby="themeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-secondary">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="themeModalLabel">{% trans %}TitreModalNav{% endtrans %}</h1>
+                <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>{% trans %}LabelModalNav{% endtrans %}</h5>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-modal-theme" type="button" onclick="setToLightMode()">
+                        <div class="theme-modal-color">
+                            <div class="theme-color lightPrimary"></div>
+                            <div class="theme-color lightSecondary"></div>
+                            <div class="theme-color lightTertiary"></div>
+                            <div class="theme-color lightBG"></div>
+                        </div>
+                    </button>
+                    <button class="btn btn-modal-theme" type="button" onclick="setToDarkMode()">
+                        <div class="theme-modal-color">
+                            <div class="theme-color darkPrimary"></div>
+                            <div class="theme-color darkSecondary"></div>
+                            <div class="theme-color darkTertiary"></div>
+                            <div class="theme-color darkBG"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
