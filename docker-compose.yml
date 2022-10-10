@@ -38,4 +38,4 @@ services:
     restart: always
     volumes:
       - .:/var/www/html
-    command: bash -c "composer install && composer make-static && php-fpm"
+    command: bash -c "composer install && composer update && composer make-static && php-fpm"
