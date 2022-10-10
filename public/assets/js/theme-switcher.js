@@ -1,6 +1,6 @@
 
 /* Values */
-let body = document.getElementById("body");
+let body = document.body;
 let theme = researchTheme()
 
 body.onload = function (){
