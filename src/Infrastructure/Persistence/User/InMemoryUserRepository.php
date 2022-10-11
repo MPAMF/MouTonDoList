@@ -7,6 +7,7 @@ use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use App\Infrastructure\Persistence\Repository;
+use DateTime;
 use Illuminate\Database\DatabaseManager;
 
 class InMemoryUserRepository extends Repository implements UserRepository
@@ -22,12 +23,13 @@ class InMemoryUserRepository extends Repository implements UserRepository
     public function __construct(DatabaseManager $db, array $users = null)
     {
         parent::__construct($db);
+        $datetime = new DateTime();
         $this->users = $users ?? [
-            1 => new User(1, 'bill.gates', 'Bill', 'Gates', null, null),
-            2 => new User(2, 'steve.jobs', 'Steve', 'Jobs', null, null),
-            3 => new User(3, 'mark.zuckerberg', 'Mark', 'Zuckerberg', null, null),
-            4 => new User(4, 'evan.spiegel', 'Evan', 'Spiegel', null, null),
-            5 => new User(5, 'jack.dorsey', 'Jack', 'Dorsey', null, null),
+            1 => new User(1, 'bill.gates', 'Bill', 'Gates', $datetime, $datetime),
+            2 => new User(2, 'steve.jobs', 'Steve', 'Jobs', $datetime, $datetime),
+            3 => new User(3, 'mark.zuckerberg', 'Mark', 'Zuckerberg', $datetime, $datetime),
+            4 => new User(4, 'evan.spiegel', 'Evan', 'Spiegel', $datetime, $datetime),
+            5 => new User(5, 'jack.dorsey', 'Jack', 'Dorsey', $datetime, $datetime),
         ];
     }
 

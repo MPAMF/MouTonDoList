@@ -35,6 +35,8 @@ return function (ContainerBuilder $containerBuilder) {
 
             $capsule->setAsGlobal();
             $capsule->bootEloquent();
+
+            return $capsule;
         },
         DatabaseManager::class => function(ContainerInterface $c) {
             $capsule = $c->get(Manager::class);
