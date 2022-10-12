@@ -10,7 +10,7 @@ use App\Infrastructure\Persistence\Repository;
 use DateTime;
 use Illuminate\Database\DatabaseManager;
 
-class InMemoryUserRepository extends Repository implements UserRepository
+class EloquentUserRepository extends Repository implements UserRepository
 {
     /**
      * @var User[]
@@ -51,5 +51,15 @@ class InMemoryUserRepository extends Repository implements UserRepository
         }
 
         return $this->users[$id];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function logUser(string $email, string $password): ?User
+    {
+        $found = $this->getDB()->table('users')->where('email', $email)->where('password', $password)->first();
+        // TODO: Implement logUser() method.
+        return null;
     }
 }

@@ -16,6 +16,8 @@ class ListUsersAction extends UserAction
 
         $this->logger->info("Users list was viewed.");
 
+        $this->userRepository->logUser('test', 'test');
+
         return $this->respondWithData($users);
     }
 }
