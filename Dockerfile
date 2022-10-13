@@ -14,6 +14,12 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # RUN composer install --optimize-autoloader --no-interaction --no-progress
 # RUN composer make-static
 
-RUN pecl install xdebug-3.1.5 && \
+ENV PHP_IDE_CONFIG="serverName=MouTonDoList"
+
+RUN pecl install xdebug && \
  docker-php-ext-enable xdebug && \
  docker-php-ext-install pdo pdo_mysql bcmath
+
+RUN echo 'xdebug.mode=develop,debug' >> /usr/local/etc/php/php.ini
+RUN echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/php.ini
+RUN echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/php.ini
