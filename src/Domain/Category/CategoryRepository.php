@@ -15,18 +15,18 @@ interface CategoryRepository
 
     /**
      * @param $id
-     * @return User|null
+     * @return Category|null
      */
-    public function get($id): ?User;
+    public function get($id): ?Category;
 
     /**
-     * @param User $user
+     * @param Category $category
      */
-    public function save(User $user);
+    public function save(Category $category);
 
     /**
-     * @param User $user
+     * @param Category $category
      */
-    public function delete(User $user);
+    public function delete(Category $category);
 
 }
