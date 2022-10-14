@@ -62,6 +62,12 @@
   --bs-btn-disabled-bg: #393E46;
   --bs-btn-disabled-border-color: #393E46;
 }
+::-webkit-scrollbar-track {
+  background-color: #222831;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #00ADB5;
+}
 
 /* Navbar */
 .btn-abs-nav{

@@ -1,3 +1,14 @@
+/* Global */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 100px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+}
+
 /* Navbar */
 .btn-nav{
     display: flex;
@@ -108,7 +119,16 @@
 .sidebar-div {
     height: 100vh;
     padding-top: 5rem !important;
+    scrollbar-gutter: stable;
+    overflow: hidden;
 }
+.sidebar-div:hover {
+    overflow-y: scroll;
+}
+.sidebar-div::-webkit-scrollbar {
+    scrollbar-gutter: stable;
+}
+
 @media (min-width: 992px) {
     .sidebar-nav {
         position: sticky;

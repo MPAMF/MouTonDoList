@@ -1,4 +1,13 @@
 // Light theme
+body.light::-webkit-scrollbar-track,
+.light::-webkit-scrollbar-track {
+  background-color: #E3FDFD;
+}
+body.light::-webkit-scrollbar-thumb,
+.light::-webkit-scrollbar-thumb{
+    background-color: #71C9CE;
+}
+
 .light {
 
   $primary: #71C9CE;
@@ -75,6 +84,12 @@
     --#{$variable-prefix}btn-disabled-color: #{$body-color};
     --#{$variable-prefix}btn-disabled-bg: #7ECED2;
     --#{$variable-prefix}btn-disabled-border-color: #7ECED2;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #E3FDFD;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #71C9CE;
   }
 
   /* Navbar */
