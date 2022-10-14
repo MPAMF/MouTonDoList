@@ -24,4 +24,20 @@ interface UserRepository
      */
     public function parseUserFromDb(stdClass $result) : ?User;
 
+    /**
+     * @param $id
+     * @return User|null
+     */
+    public function get($id): ?User;
+
+    /**
+     * @param User $user
+     */
+    public function save(User $user);
+
+    /**
+     * @param User $user
+     */
+    public function delete(User $user);
+
 }

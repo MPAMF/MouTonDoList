@@ -59,4 +59,20 @@ class EloquentUserRepository extends Repository implements UserRepository
             $created_at
         );
     }
+
+    public function get($id): ?User
+    {
+        // TODO: Implement get() method.
+        return null;
+    }
+
+    public function save(User $user)
+    {
+        // TODO: Implement save() method.
+    }
+
+    public function delete(User $user)
+    {
+        // TODO: Implement delete() method.
+    }
 }
