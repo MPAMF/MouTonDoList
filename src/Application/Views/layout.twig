@@ -1,50 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% trans %}AppName{% endtrans %}</title>
-    <link rel="icon" type="image/jpg" href="{{ ROOT_URL }}assets/img/appImg.jpg" />
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% trans %}AppName{% endtrans %}</title>
+        <link rel="icon" type="image/jpg" href="{{ ROOT_URL }}assets/img/appImg.jpg" />
 
-    {% include 'components/head.twig' %}
+        {% include 'components/head.twig' %}
 
-    {% block stylesheets %}
-    {% endblock %}
-    {% block javascripts %}
-    {% endblock %}
+        {% block stylesheets %}
+        {% endblock %}
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        <header role="banner">
+            {% include 'components/header.twig' %}
+        </header>
 
-</head>
-<body>
-{% include 'components/navbar.twig' %}
+        <main role="main">
+            {% include 'components/main.twig' %}
+        </main>
 
-<div class="container-fluid">
+        <footer role="contentinfo">
+            {% include 'components/footer.twig' %}
+        </footer>
 
-    <div class="row align-items-start">
-
-        <div class="" style="min-height: 100vh; width: 0; display: flex; margin: 0; padding: 0;"></div>
-
-        <nav class="col-2 collapse collapse-horizontal show sidebar-nav" id="verticalNavbar">
-            {% include 'components/vertical-navbar.twig' %}
-        </nav>
-
-        <div class="col column">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-8">
-                    {% include 'components/todolist.twig' %}
-                </div>
-            </div>
-        </div>
-
-        {% include 'components/footer.twig' %}
-
-    </div>
-</div>
-
-<script type="text/javascript" src="{{ ROOT_URL }}assets/js/popover-setup.js"></script>
-<script type="text/javascript" src="{{ ROOT_URL }}assets/js/dragdrop-setup.js"></script>
-<script type="text/javascript" src="{{ ROOT_URL }}assets/js/theme-switcher.js"></script>
-
-</body>
+        <script type="text/javascript" src="{{ ROOT_URL }}assets/js/popover-setup.js"></script>
+        <script type="text/javascript" src="{{ ROOT_URL }}assets/js/dragdrop-setup.js"></script>
+        <script type="text/javascript" src="{{ ROOT_URL }}assets/js/theme-switcher.js"></script>
+    </body>
 </html>
