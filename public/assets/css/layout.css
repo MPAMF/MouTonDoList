@@ -123,10 +123,7 @@
     overflow: hidden;
 }
 .sidebar-div:hover {
-    overflow-y: scroll;
-}
-.sidebar-div::-webkit-scrollbar {
-    scrollbar-gutter: stable;
+    overflow-y: auto;
 }
 
 @media (min-width: 992px) {
