@@ -1,4 +1,17 @@
 // Dark theme
+body.dark::-webkit-scrollbar-track,
+body.default::-webkit-scrollbar-track,
+.dark::-webkit-scrollbar-track,
+.default::-webkit-scrollbar-track {
+    background-color: #222831;
+}
+body.dark::-webkit-scrollbar-thumb,
+body.default::-webkit-scrollbar-thumb,
+.dark::-webkit-scrollbar-thumb,
+.default::-webkit-scrollbar-thumb {
+    background-color: #00ADB5;
+}
+
 .dark, .default {
 
   $primary: #00ADB5;
@@ -75,6 +88,12 @@
     --#{$variable-prefix}btn-disabled-color: #{$body-color};
     --#{$variable-prefix}btn-disabled-bg: #{$secondary};
     --#{$variable-prefix}btn-disabled-border-color: #{$secondary};
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #222831;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #00ADB5;
   }
 
   /* Navbar */
