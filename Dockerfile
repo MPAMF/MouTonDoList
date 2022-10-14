@@ -14,6 +14,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # RUN composer install --optimize-autoloader --no-interaction --no-progress
 # RUN composer make-static
 
+ENV TZ=Europe/Paris
 ENV PHP_IDE_CONFIG="serverName=MouTonDoList"
 
 RUN pecl install xdebug && \
