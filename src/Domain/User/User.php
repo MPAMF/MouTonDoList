@@ -24,13 +24,14 @@ class User extends TimeStampedModel implements JsonSerializable
     private string $language;
 
     public function __construct(
-        ?int      $id,
-        string $email,
-        string $username,
-        string $password,
+        ?int     $id,
+        string   $email,
+        string   $username,
+        string   $password,
         DateTime $updated_at,
         DateTime $created_at
-    ) {
+    )
+    {
         parent::__construct($updated_at, $created_at);
         $this->id = $id;
         $this->email = $email;
@@ -145,4 +146,5 @@ class User extends TimeStampedModel implements JsonSerializable
             'language' => $this->language,
         ];
     }
+
 }

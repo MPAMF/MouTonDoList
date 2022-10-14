@@ -8,7 +8,9 @@ use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use App\Infrastructure\Persistence\Repository;
 use DateTime;
+use Exception;
 use Illuminate\Database\DatabaseManager;
+use stdClass;
 
 class EloquentUserRepository extends Repository implements UserRepository
 {
@@ -59,7 +61,30 @@ class EloquentUserRepository extends Repository implements UserRepository
     public function logUser(string $email, string $password): ?User
     {
         $found = $this->getDB()->table('users')->where('email', $email)->where('password', $password)->first();
+        if(empty($found))
+            return null;
+        try {
+            $user = $this->parseUserFromDb($found);
+        } catch (Exception $e) {
+        }
         // TODO: Implement logUser() method.
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function parseUserFromDb(stdClass $result): ?User
+    {
+        $updated_at = new DateTime($result->updated_at);
+        $created_at = new DateTime($result->created_at);
+        return new User(
+            $result->id,
+            $result->email,
+            $result->username,
+            $result->password,
+            $updated_at,
+            $created_at
+        );
     }
 }
