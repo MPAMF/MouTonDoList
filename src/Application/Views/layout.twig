@@ -23,17 +23,22 @@
 
     <div class="row align-items-start">
 
+        <div class="" style="min-height: 100vh; width: 0; display: flex; margin: 0; padding: 0;"></div>
+
         <nav class="col-2 collapse collapse-horizontal show sidebar-nav" id="verticalNavbar">
             {% include 'components/vertical-navbar.twig' %}
         </nav>
 
-        <div class="col">
-            <div class=" row d-flex justify-content-center">
+        <div class="col column">
+            <div class="row d-flex justify-content-center">
                 <div class="col-md-8">
                     {% include 'components/todolist.twig' %}
                 </div>
             </div>
         </div>
+
+        {% include 'components/footer.twig' %}
+
     </div>
 </div>
 

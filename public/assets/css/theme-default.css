@@ -93,9 +93,25 @@
   color: #EEEEEE;
 }
 
+/* Footer */
+.footer {
+  background-color: #393E46;
+}
+.footer .logo {
+  height: 24px;
+  width: 24px;
+}
+.footer-text, .footer-links {
+  color: #EEEEEE;
+}
+.footer-links:hover {
+  color: #00ADB5;
+}
+
 /* Sidebar */
 .sidebar-div {
   background-color: #393E46;
+  box-shadow: 0 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 .sidebar-list-header {
   border-bottom: solid 1px #00ADB5;
