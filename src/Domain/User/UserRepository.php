@@ -8,24 +8,14 @@ use stdClass;
 
 interface UserRepository
 {
-    /**
-     * @return User[]
-     */
-    public function findAll(): array;
-
-    /**
-     * @param int $id
-     * @return User
-     * @throws UserNotFoundException
-     */
-    public function findUserOfId(int $id): User;
 
     /**
      * @param string $email
      * @param string $password
      * @return User
+     * @throws UserNotFoundException
      */
-    public function logUser(string $email, string $password): ?User;
+    public function logUser(string $email, string $password): User;
 
     /**
      * @param stdClass $result
