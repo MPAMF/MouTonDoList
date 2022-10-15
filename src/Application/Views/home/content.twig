@@ -1,0 +1,30 @@
+{% extends "layout.twig" %}
+
+{% block head %}
+    {% block title %}
+        {% if (content == 'login') %}
+            <title>{% trans %}AppName{% endtrans %} · {% trans %}LogInPage{% endtrans %}</title>
+        {% elseif (content == 'signin') %}
+            <title>{% trans %}AppName{% endtrans %} · {% trans %}SignInPage{% endtrans %}</title>
+        {% else %}
+            <title>{% trans %}AppName{% endtrans %}</title>
+        {% endif %}
+    {% endblock %}
+    {% block javascript_before %} {% endblock %}
+{% endblock %}
+
+{% block header %}
+    {% include 'home/components/navbar.twig' with { 'content' : content } %}
+{% endblock %}
+
+{% block main %}
+    {% if (content == 'login') %}
+        {% include 'home/components/content-login.twig' %}
+    {% elseif (content == 'signin') %}
+        {% include 'home/components/content-signin.twig' %}
+    {% else %}
+        {% include 'home/components/content-home.twig' %}
+    {% endif %}
+{% endblock %}
+
+{% block javascript_after %} {% endblock %}

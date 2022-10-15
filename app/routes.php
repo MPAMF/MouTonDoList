@@ -15,37 +15,19 @@ return function (App $app) {
     });
 
     $app->get('/home', function (Request $request, Response $response) {
-        return $this->get('view')->render(
-            $response,
-            'home/components/content-page.twig',
-            ['contents' => 'home']
-        );
-    });
-
-    $app->get('/home-presentation', function (Request $request, Response $response) {
-        return $this->get('view')->render(
-            $response,
-            'home/components/content-page.twig',
-            ['contents' => 'presentation']
-        );
+        return $this->get('view')->render($response, 'home/content.twig', ['content' => 'home']);
     });
 
     $app->get('/login', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'account/login-page.twig');
+        return $this->get('view')->render($response, 'home/content.twig', ['content' => 'login']);
     });
 
     $app->get('/signin', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'account/signin-page.twig');
+        return $this->get('view')->render($response, 'home/content.twig', ['content' => 'signin']);
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        $noms = [
-            'Matthieu',
-            'Quentin',
-            'Victor',
-            'Paul',
-            'Mouton'];
-        return $this->get('view')->render($response, 'pages/dashboard.twig', ['noms' => $noms]);
+        return $this->get('view')->render($response, 'pages/dashboard.twig');
     });
 
     $app->group('/users', function (Group $group) {
