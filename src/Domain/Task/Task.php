@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace App\Domain\Task;
 
 use App\Domain\Category\Category;
+use App\Domain\EloquentModel;
 use App\Domain\TimeStampedModel;
 use App\Domain\User\User;
 use DateTime;
 use JsonSerializable;
+use stdClass;
 
 class Task extends TimeStampedModel implements JsonSerializable
 {
@@ -19,34 +21,16 @@ class Task extends TimeStampedModel implements JsonSerializable
     private int $position;
     private ?User $last_editor;
 
-    /**
-     * @param int|null $id
-     * @param Category $category
-     * @param string $description
-     * @param DateTime $due_date
-     * @param bool $checked
-     * @param int $position
-     * @param User|null $last_editor
-     */
-    public function __construct(
-        ?int $id,
-        Category $category,
-        string $description,
-        DateTime $due_date,
-        bool $checked,
-        int $position,
-        ?User $last_editor,
-        DateTime $updated_at,
-        DateTime $created_at
-    ) {
-        parent::__construct($updated_at, $created_at);
-        $this->id = $id;
-        $this->category = $category;
-        $this->description = $description;
-        $this->due_date = $due_date;
-        $this->checked = $checked;
-        $this->position = $position;
-        $this->last_editor = $last_editor;
+    public function __construct()
+    {
+        parent::__construct(new DateTime(), new DateTime());
+        $this->id = null;
+        $this->category = new Category();
+        $this->description = "";
+        $this->due_date = new DateTime();
+        $this->checked = false;
+        $this->position = 0;
+        $this->last_editor = null;
     }
 
     /**
@@ -175,4 +159,27 @@ class Task extends TimeStampedModel implements JsonSerializable
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        parent::fromRow($row);
+        $this->id = $row->id;
+        // stdClass must have loaded instances of other models
+        $this->category = $row->category;
+        $this->description = $row->description;
+        $this->due_date = new DateTime($row->due_date);
+        $this->checked = $row->checked;
+        $this->position = $row->position;
+        $this->last_editor = $row->last_editor;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        return $this->jsonSerialize();
+    }
 }
