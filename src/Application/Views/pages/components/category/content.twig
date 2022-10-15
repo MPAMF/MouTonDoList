@@ -9,13 +9,21 @@
         </div>
     </div>
 
-    {% for catId in 0..2 %}
-        {% include 'pages/components/sub-category/content.twig' with { 'catId' : catId } %}
-    {% endfor %}
+    {% if (default) %}
 
-    {% for catId in 3..3 %}
-        {% include 'pages/components/sub-category/archive.twig' with { 'catId' : catId } %}
-    {% endfor %}
+        {% include 'pages/components/sub-category/content.twig' with { 'catId' : 0 , 'default' : true } %}
+
+    {% else %}
+
+        {% for catId in 0..2 %}
+            {% include 'pages/components/sub-category/content.twig' with { 'catId' : catId } %}
+        {% endfor %}
+
+        {% for catId in 3..3 %}
+            {% include 'pages/components/sub-category/archive.twig' with { 'catId' : catId } %}
+        {% endfor %}
+
+    {% endif %}
 
     {% include 'pages/components/category/modal.twig' %}
 

@@ -8,7 +8,11 @@
             </div>
         </div>
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
-            Sous-catégorie #{{ catId }}
+            {% if(default) %}
+                Default #{{ catId }}
+            {% else %}
+                Sous-catégorie #{{ catId }}
+            {% endif %}
         </button>
         <div class="category-button">
             <div class="accordion-button">
@@ -21,9 +25,11 @@
     <div id="panelsStayOpen-collapse-{{ catId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ catId }}">
         <div class="accordion-body">
             <ul class="list-group list-group-flush tasks">
-                {% for taskId in 0..5 %}
-                    {% include 'pages/components/task/content.twig' with { 'catId' : catId, 'taskId': taskId } %}
-                {% endfor %}
+                {% if(not(default)) %}
+                    {% for taskId in 0..5 %}
+                        {% include 'pages/components/task/content.twig' with { 'catId' : catId, 'taskId': taskId } %}
+                    {% endfor %}
+                {% endif %}
             </ul>
             {% include 'pages/components/task/new.twig' with { 'catId' : catId } %}
         </div>
