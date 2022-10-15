@@ -1,1 +1,20 @@
 {% extends 'layout.twig' %}
+
+{% block javascript_before %}
+    <script type="text/javascript" src="assets/js/popover-init.js"></script>
+{% endblock %}
+
+{% block header %}
+    {% include 'components/header.twig' %}
+{% endblock %}
+
+{% block main %}
+    {% include 'pages/components/content.twig' %}
+{% endblock %}
+
+{% block javascript_after %}
+    <script type="text/javascript" src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+    <script type="text/javascript" src="assets/js/popover-setup.js"></script>
+    <script type="text/javascript" src="assets/js/dragdrop-setup.js"></script>
+    <script type="text/javascript" src="assets/js/theme-switcher.js"></script>
+{% endblock %}

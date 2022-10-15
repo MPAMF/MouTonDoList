@@ -7,33 +7,22 @@
             {% block title %}
                 <title>{% trans %}AppName{% endtrans %}</title>
             {% endblock %}
-            {% block javascript_before %}
-                <script type="text/javascript" src="assets/js/popover-init.js"></script>
-            {% endblock %}
+            {% block javascript_before %} {% endblock %}
         {% endblock %}
     </head>
     <body class="d-flex flex-column h-100">
         <header role="banner">
-            {% block header %}
-                {% include 'components/header.twig' %}
-            {% endblock %}
+            {% block header %} {% endblock %}
         </header>
 
         <main role="main" class="flex-shrink-0">
-            {% block main %}
-                {% include 'components/main.twig' %}
-            {% endblock %}
+            {% block main %} {% endblock %}
         </main>
 
         <footer role="contentinfo" class="mt-auto py-3">
             {% include 'components/footer.twig' %}
         </footer>
 
-        {% block javascript_after %}
-            <script type="text/javascript" src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
-            <script type="text/javascript" src="assets/js/popover-setup.js"></script>
-            <script type="text/javascript" src="assets/js/dragdrop-setup.js"></script>
-            <script type="text/javascript" src="assets/js/theme-switcher.js"></script>
-        {% endblock %}
+        {% block javascript_after %} {% endblock %}
     </body>
 </html>

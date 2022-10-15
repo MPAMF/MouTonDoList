@@ -10,13 +10,13 @@
     </div>
 
     {% for catId in 0..2 %}
-        {% include 'tasks/category.twig' with { 'catId' : catId } %}
+        {% include 'pages/components/sub-category/content.twig' with { 'catId' : catId } %}
     {% endfor %}
 
     {% for catId in 3..3 %}
-        {% include 'tasks/category-archive.twig' with { 'catId' : catId } %}
+        {% include 'pages/components/sub-category/archive.twig' with { 'catId' : catId } %}
     {% endfor %}
 
-    {% include 'tasks/title-modal.twig' %}
+    {% include 'pages/components/category/modal.twig' %}
 
 </div>

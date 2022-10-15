@@ -1,4 +1,4 @@
-<div class="accordion-item accordion-item-tasks">
+<div class="accordion-item accordion-item-tasks category-archive">
     <h2 class="accordion-header task-category-header" id="panelsStayOpen-heading-{{ catId }}">
         <div class="category-button">
             <div class="accordion-button btn-category-drag">
@@ -12,7 +12,7 @@
         </button>
         <div class="category-button">
             <div class="accordion-button">
-                <a tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="category-popover" aria-label="Liste d'actions d'une section archivée dans une todolist">
+                <a tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="category-archive-popover" aria-label="Liste d'actions d'une section archivée dans une todolist">
                     <span class="mdi mdi-24px mdi-dots-horizontal"></span>
                 </a>
             </div>
@@ -22,19 +22,9 @@
         <div class="accordion-body">
             <ul class="list-group list-group-flush task-tasks">
                 {% for taskId in 0..5 %}
-                    {% include 'tasks/task.twig' with { 'catId' : catId, 'taskId': taskId } %}
+                    {% include 'pages/components/task/archive.twig' with { 'catId' : catId, 'taskId': taskId } %}
                 {% endfor %}
             </ul>
-            {% include 'tasks/task-new.twig' with { 'catId' : catId } %}
         </div>
     </div>
-    {% include 'tasks/category-modal.twig' with { 'catId' : catId } %}
 </div>
-
-<script type="text/javascript">
-    /* Category modal */
-    /*function categoryToggleModal() {
-        $("#categoryModal-{{ catId }}").modal();
-    }
-    document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);*/
-</script>
