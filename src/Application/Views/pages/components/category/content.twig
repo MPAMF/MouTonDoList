@@ -1,0 +1,22 @@
+<div class="accordion accordion-flush categories">
+
+    <div class="category-title">
+        <h3 id="title" data-bs-toggle="modal" data-bs-target="#categoryModal">Catégorie [id]</h3>
+        <div class="title-actions">
+            <a tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="category-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
+                <span class="mdi mdi-24px mdi-dots-horizontal"></span>
+            </a>
+        </div>
+    </div>
+
+    {% for catId in 0..2 %}
+        {% include 'pages/components/sub-category/content.twig' with { 'catId' : catId } %}
+    {% endfor %}
+
+    {% for catId in 3..3 %}
+        {% include 'pages/components/sub-category/archive.twig' with { 'catId' : catId } %}
+    {% endfor %}
+
+    {% include 'pages/components/category/modal.twig' %}
+
+</div>

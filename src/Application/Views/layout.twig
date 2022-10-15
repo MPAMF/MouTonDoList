@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr" class="h-100">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>{% trans %}AppName{% endtrans %}</title>
-        <link rel="icon" type="image/jpg" href="{{ ROOT_URL }}assets/img/appImg.jpg" />
-
         {% include 'components/head.twig' %}
 
-        {% block stylesheets %}
-        {% endblock %}
-        {% block javascripts %}
+        {% block head %}
+            {% block title %}
+                <title>{% trans %}AppName{% endtrans %}</title>
+            {% endblock %}
+            {% block javascript_before %} {% endblock %}
         {% endblock %}
     </head>
     <body class="d-flex flex-column h-100">
         <header role="banner">
-            {% include 'components/header.twig' %}
+            {% block header %} {% endblock %}
         </header>
 
         <main role="main" class="flex-shrink-0">
-            {% include 'components/main.twig' %}
+            {% block main %} {% endblock %}
         </main>
 
         <footer role="contentinfo" class="mt-auto py-3">
-            {% include 'components/footer.twig' %}
+            {% block footer %} {% endblock %}
         </footer>
 
-        <script type="text/javascript" src="{{ ROOT_URL }}assets/js/popover-setup.js"></script>
-        <script type="text/javascript" src="{{ ROOT_URL }}assets/js/dragdrop-setup.js"></script>
-        <script type="text/javascript" src="{{ ROOT_URL }}assets/js/theme-switcher.js"></script>
+        {% block javascript_after %} {% endblock %}
     </body>
 </html>

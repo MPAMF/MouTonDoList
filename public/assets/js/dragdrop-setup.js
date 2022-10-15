@@ -1,12 +1,12 @@
 /* Drag task */
-var els = document.getElementsByClassName("task-tasks");
+var els = document.getElementsByClassName("tasks");
 Array.prototype.forEach.call(els, function(el) {
     new Sortable(el, {
-        group: 'task-tasks-shared',
+        group: 'tasks-shared',
         animation: 300,
-        ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
-        chosenClass: "task-drag-chosen",  // Class name for the chosen item
-        dragClass: "task-drag-dragging",  // Class name for the dragging item
+        ghostClass: "drag-ghost",  // Class name for the drop placeholder
+        chosenClass: "drag-chosen",  // Class name for the chosen item
+        dragClass: "drag-dragging",  // Class name for the dragging item
         handle: ".btn-task-drag",
         forceFallback: true,
         onChoose: function (e) {
@@ -28,15 +28,15 @@ Array.prototype.forEach.call(els, function(el) {
 });
 
 /* Drag category */
-els = document.getElementsByClassName("task-categories");
+els = document.getElementsByClassName("categories");
 Array.prototype.forEach.call(els, function(el) {
     new Sortable(el, {
-        group: 'task-categories-shared',
+        group: 'categories-shared',
         animation: 300,
-        ghostClass: "task-drag-ghost",  // Class name for the drop placeholder
-        chosenClass: "task-drag-chosen",  // Class name for the chosen item
-        dragClass: "task-drag-dragging",  // Class name for the dragging item
-        handle: ".btn-category-drag",
+        ghostClass: "drag-ghost",  // Class name for the drop placeholder
+        chosenClass: "drag-chosen",  // Class name for the chosen item
+        dragClass: "drag-dragging",  // Class name for the dragging item
+        handle: ".btn-subcategory-drag",
         forceFallback: true,
         onChoose: function (e) {
             e.target.classList.add('grabbing');

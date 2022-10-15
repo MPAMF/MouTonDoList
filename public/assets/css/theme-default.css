@@ -217,7 +217,7 @@ footer .logo {
   --bs-btn-active-bg: #222831;
   --bs-btn-active-border-color: #222831;
 }
-.task-drag-ghost .btn-task-actions {
+.drag-ghost .btn-task-actions {
   --bs-btn-bg: #393E46;
   --bs-btn-border-color: #393E46;
 }
@@ -235,22 +235,22 @@ footer .logo {
 }
 
 /* Category/Task drag */
-.task-drag-dragging, .task-drag-ghost {
+.drag-dragging, .drag-ghost {
   background: #393E46;
 }
-.task-drag-dragging .accordion-button, .task-drag-ghost .accordion-button {
+.drag-dragging .accordion-button, .drag-ghost .accordion-button {
   --bs-accordion-btn-bg: #393E46;
 }
-.task-drag-dragging .accordion-button:not(.collapsed), .task-drag-ghost .accordion-button:not(.collapsed) {
+.drag-dragging .accordion-button:not(.collapsed), .drag-ghost .accordion-button:not(.collapsed) {
   --bs-accordion-active-bg: #393E46;
 }
-.task-drag-dragging .list-group-item, .task-drag-ghost .list-group-item {
+.drag-dragging .list-group-item, .drag-ghost .list-group-item {
   --bs-list-group-bg: #393E46;
 }
-.task-drag-dragging .btn-task-add, .task-drag-ghost .btn-task-add {
+.drag-dragging .btn-task-add, .drag-ghost .btn-task-add {
   --bs-btn-bg: #393E46;
 }
-.task-drag-dragging .btn-category-actions, .task-drag-ghost .btn-category-actions {
+.drag-dragging .btn-category-actions, .drag-ghost .btn-category-actions {
   --bs-btn-bg: #393E46;
   --bs-btn-border-color: #393E46;
 }

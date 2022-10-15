@@ -1,0 +1,29 @@
+<div class="container d-flex flex-column align-items-center mt-4">
+    <h1 class="text-center">{% trans %}FormSignInTitle{% endtrans %}</h1>
+    <form>
+        <div class="mb-3">
+            <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Il y aura des erreurs avec le mail</div>
+        </div>
+        <div class="mb-3">
+            <label for="pseudo" class="form-label">{% trans %}FormPseudo{% endtrans %}</label>
+            <input type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp">
+            <div id="pseudoHelp" class="form-text">Il y aura des erreurs avec le pseudo</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">{% trans %}FormPwd{% endtrans %}</label>
+            <input type="password" class="form-control" id="password" aria-describedby="passwordHelp">
+            <div id="passwordHelp" class="form-text">Il y aura des erreurs avec le mdp</div>
+        </div>
+        <div class="mb-3">
+            <label for="confirmationPassword" class="form-label">{% trans %}FormConfPwd{% endtrans %}</label>
+            <input type="password" class="form-control" id="confirmationPassword">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">{% trans %}FormCGV{% endtrans %}</label>
+        </div>
+    </form>
+    <button type="submit" class="btn btn-primary">{% trans %}FormSubmit{% endtrans %}</button>
+</div>

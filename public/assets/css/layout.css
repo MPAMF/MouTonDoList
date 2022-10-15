@@ -159,14 +159,14 @@
     max-width: 1200px;
     padding: 0 5%;
 }
-.todolist-title {
+.category-title {
     margin-bottom: 32px;
     margin-top: 6rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.todolist-title #title {
+.category-title #title {
     width: 100%;
     cursor: pointer;
 }
@@ -175,7 +175,7 @@
 }
 
 /* Category */
-.task-category-header {
+.subcategory-header {
     display: flex;
     flex-direction: row;
 }
@@ -197,16 +197,16 @@
 .category-button {
     display: flex;
 }
-.accordion-button.btn-category-drag {
+.accordion-button.btn-subcategory-drag {
     border-bottom-width: 0;
 }
-.btn-category-drag {
+.btn-subcategory-drag {
     opacity: 0;
 }
-.btn-category-drag button {
+.btn-subcategory-drag button {
     cursor: grab !important;
 }
-.task-category-header:hover .btn-category-drag {
+.subcategory-header:hover .btn-subcategory-drag {
     opacity: 1;
 }
 .btn-category-actions {
@@ -220,7 +220,7 @@
 .category-button .accordion-button:after {
     display: none;
 }
-.task-drag-ghost .category-button {
+.drag-ghost .category-button {
     display: none;
 }
 
@@ -272,7 +272,7 @@
 .task-view:hover .btn-task-drag, .task-view:hover .btn-task-actions {
     opacity: 1;
 }
-.task-drag-ghost .btn-task-drag, .task-drag-ghost .btn-task-actions {
+.drag-ghost .btn-task-drag, .drag-ghost .btn-task-actions {
     display: none;
 }
 
@@ -304,10 +304,10 @@
 /* todo */
 
 /* Category/Task drag */
-.task-drag-dragging {
+.drag-dragging {
     opacity: 1 !important;
 }
-.task-drag-ghost {
+.drag-ghost {
     filter: brightness(85%);
 }
 
@@ -327,49 +327,49 @@
 }
 
 /* Archive */
-.category-archive .task-view-info, .category-archive .task-view-info label {
+.subcategory-archive .task-view-info, .subcategory-archive .task-view-info label {
     cursor: default;
 }
 
 /* Archive */
 
-.category-archive .btn-task-actions,
-.category-archive .btn-category-drag .btn-category-actions {
+.subcategory-archive .btn-task-actions,
+.subcategory-archive .btn-subcategory-drag .btn-category-actions {
     opacity: 0;
 }
 
-.category-archive .task-view-info,
-.category-archive .task-view-info label,
-.category-archive .accordion-header .btn-category-actions
-.category-archive .accordion-header:hover .btn-category-actions,
-.category-archive .task-view-info,
-.category-archive .task-view-info label,
-.category-archive .accordion-header .btn-category-actions
-.category-archive .accordion-header:hover .btn-category-actions{
+.subcategory-archive .task-view-info,
+.subcategory-archive .task-view-info label,
+.subcategory-archive .accordion-header .btn-category-actions
+.subcategory-archive .accordion-header:hover .btn-category-actions,
+.subcategory-archive .task-view-info,
+.subcategory-archive .task-view-info label,
+.subcategory-archive .accordion-header .btn-category-actions
+.subcategory-archive .accordion-header:hover .btn-category-actions{
     opacity: 0.5;
 }
-.category-archive .accordion-header:hover .btn-category-drag .btn-category-actions,
-.category-archive .accordion-header:hover .btn-category-drag .btn-category-actions {
+.subcategory-archive .accordion-header:hover .btn-subcategory-drag .btn-category-actions,
+.subcategory-archive .accordion-header:hover .btn-subcategory-drag .btn-category-actions {
     opacity: 1;
 }
-.category-archive .task-view:hover .btn-task-actions,
-.category-archive .accordion-button,
-.category-archive .task-view:hover .btn-task-actions,
-.category-archive .accordion-button {
+.subcategory-archive .task-view:hover .btn-task-actions,
+.subcategory-archive .accordion-button,
+.subcategory-archive .task-view:hover .btn-task-actions,
+.subcategory-archive .accordion-button {
     opacity: 0.40;
 }
 
-.light .category-archive .task-view-info,
-.light .category-archive .task-view-info label,
-.light .category-archive .accordion-header .btn-category-actions
-.light .category-archive .accordion-header:hover .btn-category-actions {
+.light .subcategory-archive .task-view-info,
+.light .subcategory-archive .task-view-info label,
+.light .subcategory-archive .accordion-header .btn-category-actions
+.light .subcategory-archive .accordion-header:hover .btn-category-actions {
     opacity: 0.85;
 }
-.light .category-archive .accordion-header:hover .btn-category-drag .btn-category-actions{
+.light .subcategory-archive .accordion-header:hover .btn-subcategory-drag .btn-category-actions{
     opacity: 1;
 }
-.light .category-archive .task-view:hover .btn-task-actions,
-.light .category-archive .accordion-button {
+.light .subcategory-archive .task-view:hover .btn-task-actions,
+.light .subcategory-archive .accordion-button {
     opacity: 0.40;
 }
 

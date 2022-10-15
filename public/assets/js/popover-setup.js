@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("[data-bs-popover=title-popover]").popover({
+    $("[data-bs-popover=category-popover]").popover({
         trigger: 'focus',
         placement: 'left',
         customClass: 'popover',
@@ -17,7 +17,7 @@ $(document).ready(function() {
             '</div>',
 
     })
-    $("[data-bs-popover=title-archive-popover]").popover({
+    $("[data-bs-popover=category-archive-popover]").popover({
         trigger: 'focus',
         placement: 'left',
         customClass: 'popover',
@@ -32,7 +32,7 @@ $(document).ready(function() {
             '</div>',
 
     })
-    $("[data-bs-popover=category-popover]").popover({
+    $("[data-bs-popover=subcategory-popover]").popover({
         trigger: 'focus',
         placement: 'left',
         customClass: 'popover',
@@ -49,7 +49,7 @@ $(document).ready(function() {
             '</div>',
 
     })
-    $("[data-bs-popover=category-archive-popover]").popover({
+    $("[data-bs-popover=subcategory-archive-popover]").popover({
         trigger: 'focus',
         placement: 'left',
         customClass: 'popover',
