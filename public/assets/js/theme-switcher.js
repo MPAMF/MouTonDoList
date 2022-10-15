@@ -2,6 +2,10 @@
 /* Values */
 let body = document.body;
 let theme = researchTheme()
+let themes = [
+    'dark',
+    'light'
+]
 
 body.onload = function (){
     setTheme();
@@ -19,9 +23,17 @@ function setToLightMode(){
 }
 
 function setTheme(){
+    if(body.classList.contains(theme)) return;
     if((theme != "dark") && (theme != "light"))
         return;
-    body.setAttribute("class",theme);
+    themes.forEach(toggleThemes);
+}
+
+function toggleThemes(element) {
+    if(element === theme)
+        body.classList.add(theme);
+    else
+        body.classList.remove(element);
 }
 
 function researchTheme(){
