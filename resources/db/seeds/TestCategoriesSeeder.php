@@ -153,7 +153,7 @@ class TestCategoriesSeeder extends AbstractSeed
                 'owner_id' => $user_id,
                 'parent_category_id' => $idx + 16
             ], [
-                'name' => 'Week-end at lake',
+                'name' => 'Weekend at lake',
                 'color' => '#185843',
                 'position' => 1,
                 'archived' => false,
