@@ -23,10 +23,10 @@ return function (ContainerBuilder $containerBuilder) {
                 // Eloquent
                 'db' => [
                     'driver' => 'mysql',
-                    'host' => ($mysql_db = getenv('MYSQL_HOST')) ? $mysql_db : 'localhost',
-                    'database' => ($mysql_db = getenv('MYSQL_DATABASE')) ? $mysql_db : 'database',
-                    'username' => ($mysql_user = getenv('MYSQL_USER')) ? $mysql_user : 'user',
-                    'password' => ($mysql_user = getenv('MYSQL_PASSWORD')) ? $mysql_user : 'pwd',
+                    'host' => ($mysql_db = env('MYSQL_HOST')) ? $mysql_db : 'localhost',
+                    'database' => ($mysql_db = env('MYSQL_DATABASE')) ? $mysql_db : 'database',
+                    'username' => ($mysql_user = env('MYSQL_USER')) ? $mysql_user : 'user',
+                    'password' => ($mysql_user = env('MYSQL_PASSWORD')) ? $mysql_user : 'pwd',
                     'charset'   => 'utf8',
                     'collation' => 'utf8_unicode_ci',
                     'prefix'    => '',

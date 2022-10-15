@@ -38,7 +38,7 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $capsule;
         },
-        DatabaseManager::class => function(ContainerInterface $c) {
+        DatabaseManager::class => function (ContainerInterface $c) {
             $capsule = $c->get(Manager::class);
             return $capsule->getDatabaseManager();
         },

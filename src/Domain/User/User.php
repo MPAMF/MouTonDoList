@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
+use App\Domain\EloquentModel;
 use App\Domain\TimeStampedModel;
 use DateTime;
 use JsonSerializable;
+use stdClass;
 
-class User extends TimeStampedModel implements JsonSerializable
+class User extends TimeStampedModel implements JsonSerializable, EloquentModel
 {
     private ?int $id;
 
@@ -23,23 +25,26 @@ class User extends TimeStampedModel implements JsonSerializable
     private string $theme;
     private string $language;
 
-    public function __construct(
-        ?int      $id,
-        string $email,
-        string $username,
-        string $password,
-        DateTime $updated_at,
-        DateTime $created_at
-    ) {
-        parent::__construct($updated_at, $created_at);
-        $this->id = $id;
-        $this->email = $email;
-        $this->username = strtolower($username);
-        $this->password = $password; // Don't forget to hash password
+    public function __construct()
+    {
+        parent::__construct(new DateTime(), new DateTime());
+        $this->id = null;
+        $this->email = "";
+        $this->username = "";
+        $this->password = ""; // Don't forget to hash password
         //
         $this->image_path = "";
         $this->theme = "";
         $this->language = "";
+        /**
+         *
+         * ?int     $id,
+         * string   $email,
+         * string   $username,
+         * string   $password,
+         * DateTime $updated_at,
+         * DateTime $created_at
+         */
     }
 
     public function getId(): ?int
@@ -142,7 +147,33 @@ class User extends TimeStampedModel implements JsonSerializable
             'username' => $this->username,
             'image_path' => $this->image_path,
             'theme' => $this->theme,
-            'language' => $this->language,
+            'language' => $this->language
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        $this->id = $row->id;
+        $this->email = $row->email;
+        $this->username = $row->username;
+        $this->password = $row->password;
+        $this->image_path = $row->image_path;
+        $this->theme = $row->theme;
+        $this->language = $row->language;
+        $this->setUpdatedAt(new DateTime($row->updated_at));
+        $this->setCreatedAt(new DateTime($row->created_at));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        $row = $this->jsonSerialize();
+        $row['password'] = $this->password;
+        return $row;
     }
 }
