@@ -155,6 +155,9 @@
 }
 
 /* To-do-list */
+.categories {
+    margin-bottom: 5rem;
+}
 .todolist {
     max-width: 1200px;
     padding: 0 5%;
