@@ -1,17 +1,17 @@
 <li class="list-group-item task-view">
-    <button class="btn btn-sm btn-task-drag" type="button">
+    <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d'emplacement">
         <span class="mdi mdi-18px mdi-drag"></span>
     </button>
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="">
+        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche">
         <div class="task-view-info" id="taskViewInfo-{{ catId }}-{{ taskId }}" data-bs-toggle="modal" data-bs-target="#taskModal-{{ catId }}-{{ taskId }}">
-            <label class="form-check-label">
+            <label class="form-check-label" title="Nom de la tâche">
                 Nom de la tâche [{{ catId }}-{{ taskId }}]
             </label>
-            <small class="form-text text-muted">Description</small>
+            <small class="form-text text-muted" title="Description de la tâche">Description</small>
         </div>
     </div>
-    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs-popover="task-popover" title="Ouvre une liste d'actions pour une tâche d'une section">
+    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs-popover="task-popover" title="Actions de la tâche">
         <span class="mdi mdi-dots-horizontal"></span>
     </a>
 

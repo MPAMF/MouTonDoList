@@ -7,10 +7,11 @@
     </div>
     <form class="task-new" id="taskNew-{{ catId }}">
         <div class="mb-2">
-            <input type="text" class="form-control form-control-sm bg-secondary" id="taskNewName-{{ catId }}" placeholder="Nom de la tâche" required>
+            <input type="text" class="form-control form-control-sm bg-secondary" id="taskNewName-{{ catId }}" placeholder="Nom de la tâche" title="Nom de la nouvelle tâche" required>
+            <div id="error-taskNew{{ catId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>
         </div>
         <div class="mb-2">
-            <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ catId }}" placeholder="Description"></textarea>
+            <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ catId }}" placeholder="Description" title="Description de la nouvelle tâche" ></textarea>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-secondary btn-sm me-md-2" type="button" id="taskNewCancel-{{ catId }}">Annuler</button>
