@@ -100,10 +100,10 @@
 }
 
 /* Footer */
-.footer {
+footer {
   background-color: #393E46;
 }
-.footer .logo {
+footer .logo {
   height: 24px;
   width: 24px;
 }

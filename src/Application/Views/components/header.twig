@@ -2,7 +2,8 @@
     <div class="container p-0">
         <div class="d-inline-flex">
             <button type="button" class="btn btn-abs-nav btn-nav me-1 ms-1" data-bs-toggle="collapse" data-bs-target="#verticalNavbar" aria-expanded="false" aria-controls="verticalNavbar">
-                <span class="mdi mdi-menu span-nav"></span> </button>
+                <span class="mdi mdi-menu span-nav"></span>
+            </button>
             <a class="nav-link active d-flex me-1" href=".">
                 <img src="assets/img/appImg.jpg" alt="Logo" class="rounded-circle logo">
                 <p class="appName">{% trans %}AppName{% endtrans %}</p>
@@ -17,22 +18,23 @@
                     </form>
                 </div>
             </div>
-            
+
             <button class="btn btn-abs-nav btn-nav" type="submit" data-bs-toggle="collapse" data-bs-target="#collapseSearch"
                     aria-expanded="false" aria-controls="collapseSearch">
                 <span class="mdi mdi-magnify span-nav"></span>
             </button>
 
             <div class="btn-group-nav">
-                <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false">
+                <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false" title="Notification">
                     <span class="mdi mdi-bell span-nav"></span>
                     <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification">99+</span>
                 </button>
             </div>
 
             <div class="btn-group-nav">
-                <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="mdi mdi-account-circle span-nav"></span> </button>
+                <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false" title="Compte">
+                    <span class="mdi mdi-account-circle span-nav"></span>
+                </button>
                 <ul class="dropdown-menu dropdown-menu-end dd-nav">
                     <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-cog-outline me-2"></span>
                             {% trans %}DropDownParameters{% endtrans %}</button></li>
@@ -63,7 +65,7 @@
             <div class="modal-body">
                 <h5>{% trans %}LabelModalNav{% endtrans %}</h5>
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-modal-theme" type="button" onclick="setToLightMode()">
+                    <button class="btn btn-modal-theme" type="button" onclick="setToLightMode()" title="Thème clair">
                         <div class="theme-modal-color">
                             <div class="theme-color lightPrimary"></div>
                             <div class="theme-color lightSecondary"></div>
@@ -71,7 +73,7 @@
                             <div class="theme-color lightBG"></div>
                         </div>
                     </button>
-                    <button class="btn btn-modal-theme" type="button" onclick="setToDarkMode()">
+                    <button class="btn btn-modal-theme" type="button" onclick="setToDarkMode()" title="Thème sombre">
                         <div class="theme-modal-color">
                             <div class="theme-color darkPrimary"></div>
                             <div class="theme-color darkSecondary"></div>
