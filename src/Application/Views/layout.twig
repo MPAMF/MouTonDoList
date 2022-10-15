@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="h-100">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
@@ -15,16 +15,16 @@
         {% block javascripts %}
         {% endblock %}
     </head>
-    <body>
+    <body class="d-flex flex-column h-100">
         <header role="banner">
             {% include 'components/header.twig' %}
         </header>
 
-        <main role="main">
+        <main role="main" class="flex-shrink-0">
             {% include 'components/main.twig' %}
         </main>
 
-        <footer role="contentinfo">
+        <footer role="contentinfo" class="footer mt-auto py-3">
             {% include 'components/footer.twig' %}
         </footer>
 

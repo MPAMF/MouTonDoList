@@ -121,6 +121,7 @@
     padding-top: 5rem !important;
     scrollbar-gutter: stable;
     overflow: hidden;
+    position: absolute;
 }
 .sidebar-div:hover {
     overflow-y: auto;
