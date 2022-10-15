@@ -33,9 +33,10 @@ class EloquentUserRepository extends Repository implements UserRepository
             throw new UserNotFoundException();
         }
 
+        $parsed = new User();
         // If there's a parsing error, just show the user a not found exception.
         try {
-            $parsed = $this->parseUserFromDb($found);
+            $parsed->fromRow($found);
         } catch (Exception) {
             throw new UserNotFoundException();
         }
@@ -46,33 +47,33 @@ class EloquentUserRepository extends Repository implements UserRepository
     /**
      * {@inheritdoc}
      */
-    public function parseUserFromDb(stdClass $result): ?User
+    public function get($id): User
     {
-        $updated_at = new DateTime($result->updated_at);
-        $created_at = new DateTime($result->created_at);
-        return new User(
-            $result->id,
-            $result->email,
-            $result->username,
-            $result->password,
-            $updated_at,
-            $created_at
-        );
-    }
+        $found = $this->getDB()->table('users')->where('id', $id)->first();
+        if (empty($found)) {
+            throw new UserNotFoundException();
+        }
 
-    public function get($id): ?User
-    {
-        // TODO: Implement get() method.
-        return null;
+        $parsed = new User();
+        // If there's a parsing error, just show the user a not found exception.
+        try {
+            $parsed->fromRow($found);
+        } catch (Exception) {
+            throw new UserNotFoundException();
+        }
+
+        return $parsed;
     }
 
     public function save(User $user)
     {
-        // TODO: Implement save() method.
+        $this->getDB()->table('users')->updateOrInsert(
+            $user->toRow()
+        );
     }
 
     public function delete(User $user)
     {
-        // TODO: Implement delete() method.
+        $this->getDB()->table('users')->delete($user->getId());
     }
 }

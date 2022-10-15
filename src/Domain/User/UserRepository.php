@@ -18,17 +18,11 @@ interface UserRepository
     public function logUser(string $email, string $password): User;
 
     /**
-     * @param stdClass $result
-     * @return User|null
-     * @throws Exception
-     */
-    public function parseUserFromDb(stdClass $result) : ?User;
-
-    /**
      * @param $id
-     * @return User|null
+     * @return User
+     * @throws UserNotFoundException
      */
-    public function get($id): ?User;
+    public function get($id): User;
 
     /**
      * @param User $user
