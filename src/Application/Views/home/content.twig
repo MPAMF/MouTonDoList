@@ -23,3 +23,7 @@
         {% include 'home/components/content-home.twig' %}
     {% endif %}
 {% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.twig' with { 'content' : true } %}
+{% endblock %}

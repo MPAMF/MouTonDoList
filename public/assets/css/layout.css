@@ -159,14 +159,14 @@
     max-width: 1200px;
     padding: 0 5%;
 }
-.todolist-title {
+.category-title {
     margin-bottom: 32px;
     margin-top: 6rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.todolist-title #title {
+.category-title #title {
     width: 100%;
     cursor: pointer;
 }
