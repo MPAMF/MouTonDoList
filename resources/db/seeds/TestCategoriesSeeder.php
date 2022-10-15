@@ -181,8 +181,9 @@ class TestCategoriesSeeder extends AbstractSeed
     {
         $data = [];
         // Generate data for the 4 users
-        for ($i = 1; $i <= 4; $i++)
+        for ($i = 1; $i <= 4; $i++) {
             $data[] = $this->generateCategories($i);
+        }
 
         $posts = $this->table('categories');
         $posts->insert($data)->saveData();
