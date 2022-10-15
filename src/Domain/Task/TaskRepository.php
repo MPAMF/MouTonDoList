@@ -16,6 +16,7 @@ interface TaskRepository
     /**
      * @param $id
      * @return Task|null
+     * @throws TaskNotFoundException
      */
     public function get($id): ?Task;
 

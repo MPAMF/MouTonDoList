@@ -143,8 +143,8 @@ class Category extends TimeStampedModel implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->owner->getId(),
-            'parent_category_id' => isset($this->parentCategory) ? $this->parentCategory->getId() : '',
+            'owner' => $this->owner->jsonSerialize(),
+            'parent_category' => !empty($this->parentCategory) ? $this->parentCategory->jsonSerialize() : null,
             'name' => $this->name,
             'color' => $this->color,
             'position' => $this->position,
@@ -165,8 +165,7 @@ class Category extends TimeStampedModel implements JsonSerializable
         $this->name = $row->name;
         $this->color = $row->color;
         $this->position = $row->position;
-        $this->archived = $row->archived;
-
+        $this->archived = boolval($row->archived);
     }
 
     /**
@@ -174,6 +173,9 @@ class Category extends TimeStampedModel implements JsonSerializable
      */
     public function toRow(): array
     {
-        return $this->jsonSerialize();
+        $row = $this->jsonSerialize();
+        unset($row['parent_category']);
+        $row['parent_category_id'] = !empty($this->parentCategory) ? $this->parentCategory->getId() : null;
+        return $row;
     }
 }
