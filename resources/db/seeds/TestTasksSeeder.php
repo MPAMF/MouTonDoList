@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Domain\Category\Category;
+use App\Domain\User\User;
 use Phinx\Seed\AbstractSeed;
 
 class TestTasksSeeder extends AbstractSeed
@@ -23,6 +25,25 @@ class TestTasksSeeder extends AbstractSeed
         // TODO:
         return [
             // Maths
+            [
+                'category_id' => $idx + 1,
+                'name' => 'Do homework',
+                'description' => 'This is a description',
+                'checked' => false,
+                'position' => 0,
+                'last_editor_id' => null,
+                'due_date' => new DateTime()
+            ]
+            /**
+             *
+             *    private ?int $id;
+            private Category $category;
+            private string $description;
+            private DateTime $due_date;
+            private bool $checked;
+            private int $position;
+            private ?User $last_editor;
+            */
             // Physics
             // Sport
             // French
