@@ -33,7 +33,34 @@ class TestTasksSeeder extends AbstractSeed
                 'position' => 0,
                 'last_editor_id' => null,
                 'due_date' => new DateTime()
-            ]
+            ],
+            [
+                'category_id' => $idx + 1,
+                'name' => 'Do homework',
+                'description' => 'This is a description',
+                'checked' => false,
+                'position' => 1,
+                'last_editor_id' => null,
+                'due_date' => new DateTime()
+            ],
+            [
+                'category_id' => $idx + 1,
+                'name' => 'Do homework',
+                'description' => 'This is a description',
+                'checked' => false,
+                'position' => 2,
+                'last_editor_id' => null,
+                'due_date' => new DateTime()
+            ],
+            [
+                'category_id' => $idx + 1,
+                'name' => 'Do homework',
+                'description' => 'This is a description',
+                'checked' => false,
+                'position' => 3,
+                'last_editor_id' => null,
+                'due_date' => new DateTime()
+            ],
             /**
              *
              *    private ?int $id;
