@@ -10,4 +10,10 @@
 
 La base de données fonctionne avec des migrations.
 
-La commande pour gérer les migrations est : `vendor/bin/phinx help`
+La commande pour gérer les migrations est : `vendor/bin/phinx`
+
+#### Seeder la base de données (seulement en dev)
+
+**Important:** Il faut que la base de données soit vide avant de lancer la génération de données de test. Sinon il y'aura des erreurs conséquentes.
+
+`vendor/bin/phinx seed:run`
