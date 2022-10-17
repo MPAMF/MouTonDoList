@@ -1,14 +1,20 @@
 <?php
 declare(strict_types=1);
 
+use App\Domain\Category\CategoryRepository;
+use App\Domain\Task\TaskRepository;
 use App\Domain\User\UserRepository;
-use App\Infrastructure\Persistence\User\EloquentUserRepository;
+use App\Infrastructure\Repositories\EloquentCategoryRepository;
+use App\Infrastructure\Repositories\EloquentTaskRepository;
+use App\Infrastructure\Repositories\EloquentUserRepository;
 use DI\ContainerBuilder;
+use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
-    // Here we map our UserRepository interface to its in memory implementation
+    // Here we map our repository interfaces to their eloquent implementations
     $containerBuilder->addDefinitions([
-        UserRepository::class => \DI\autowire(EloquentUserRepository::class),
-
+        UserRepository::class => autowire(EloquentUserRepository::class),
+        TaskRepository::class => autowire(EloquentTaskRepository::class),
+        CategoryRepository::class => autowire(EloquentCategoryRepository::class)
     ]);
 };
