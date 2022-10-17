@@ -8,6 +8,7 @@ class TestUsersSeeder extends AbstractSeed
 
     public function run(): void
     {
+        echo "Seeding test users...";
         $data = [
             [
                 'email' => 'contact@schawnndev.fr',
