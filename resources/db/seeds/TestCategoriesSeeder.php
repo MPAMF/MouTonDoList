@@ -179,13 +179,13 @@ class TestCategoriesSeeder extends AbstractSeed
 
     public function run(): void
     {
-        $data = [];
+        $categories = $this->table('categories');
+
         // Generate data for the 4 users
         for ($i = 1; $i <= 4; $i++) {
-            $data[] = $this->generateCategories($i);
+           $categories->insert($this->generateCategories($i));
         }
 
-        $posts = $this->table('categories');
-        $posts->insert($data)->saveData();
+        $categories->saveData();
     }
 }

@@ -9,7 +9,8 @@ class TestUserCategoriesSeeder extends AbstractSeed
     public function getDependencies(): array
     {
         return [
-            'TestUserCategoriesSeeder',
+            'TestUsersSeeder',
+            'TestCategoriesSeeder',
         ];
     }
 
@@ -158,8 +159,7 @@ class TestUserCategoriesSeeder extends AbstractSeed
 
         ];
 
-
-        $posts = $this->table('user_categories');
-        $posts->insert($data)->saveData();
+        $userCategories = $this->table('user_categories');
+        $userCategories->insert($data)->saveData();
     }
 }

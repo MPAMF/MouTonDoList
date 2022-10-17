@@ -15,15 +15,15 @@ class TestTasksSeeder extends AbstractSeed
         ];
     }
 
-    private function generateRandomDate() : DateTime
+    private function generateRandomDate() : string
     {
         $date = new DateTime();
         try {
             $date->add(new DateInterval('P' . rand(1,14) . 'D'));
         } catch (Exception) {
-            return new DateTime();
+            $date= new DateTime();
         }
-        return $date;
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
@@ -35,6 +35,7 @@ class TestTasksSeeder extends AbstractSeed
         $idx = ($user_id - 1) * 4 * 5 + 1;
         $passed = new DateTime();
         $passed->sub(new DateInterval('P2D'));
+        $passed = $passed->format('Y-m-d H:i:s');
 
         return [
             // Maths
@@ -556,13 +557,13 @@ class TestTasksSeeder extends AbstractSeed
 
     public function run(): void
     {
-        $data = [];
+        $tasks = $this->table('tasks');
+
         // Generate data for the 4 users
         for ($i = 1; $i <= 4; $i++) {
-            $data[] = $this->generateTasks($i);
+            $tasks->insert($this->generateTasks($i));
         }
 
-        $posts = $this->table('tasks');
-        $posts->insert($data)->saveData();
+        $tasks->saveData();
     }
 }
