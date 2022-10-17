@@ -15,16 +15,27 @@ class TestTasksSeeder extends AbstractSeed
         ];
     }
 
+    private function generateRandomDate() : DateTime
+    {
+        $date = new DateTime();
+        try {
+            $date->add(new DateInterval('P' . rand(1,14) . 'D'));
+        } catch (Exception) {
+            return new DateTime();
+        }
+        return $date;
+    }
+
     /**
      * @param $user_id int
      * @return array[]
      */
     private function generateTasks(int $user_id): array
     {
-        $idx = ($user_id - 1) * 4 * 4;
+        $idx = ($user_id - 1) * 4 * 5 + 1;
         $passed = new DateTime();
         $passed->sub(new DateInterval('P2D'));
-        // TODO:
+
         return [
             // Maths
             [
@@ -34,7 +45,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 1,
@@ -52,7 +63,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 1,
@@ -71,7 +82,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 2,
@@ -80,7 +91,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => true,
                 'position' => 1,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 2,
@@ -99,7 +110,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 3,
@@ -117,7 +128,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 3,
@@ -136,7 +147,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 4,
@@ -154,7 +165,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 4,
@@ -168,16 +179,16 @@ class TestTasksSeeder extends AbstractSeed
 
             // Breakfast
             [
-                'category_id' => $idx + 5,
+                'category_id' => $idx + 6,
                 'name' => 'Tartines nutella.',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 5,
+                'category_id' => $idx + 6,
                 'name' => 'Pain perdu',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -186,16 +197,16 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 5,
+                'category_id' => $idx + 6,
                 'name' => 'Oeuf a la coque.',
                 'description' => 'This is a description',
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 5,
+                'category_id' => $idx + 6,
                 'name' => 'Fromage blanc fraises.',
                 'description' => 'This is a description',
                 'checked' => false,
@@ -206,16 +217,16 @@ class TestTasksSeeder extends AbstractSeed
 
             // Lunch
             [
-                'category_id' => $idx + 6,
+                'category_id' => $idx + 7,
                 'name' => 'Tartiflette',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 6,
+                'category_id' => $idx + 7,
                 'name' => 'Steak haché frites',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -226,47 +237,47 @@ class TestTasksSeeder extends AbstractSeed
 
             // Diner
             [
-                'category_id' => $idx + 7,
+                'category_id' => $idx + 8,
                 'name' => 'Lasagnes',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
 
             // Sunday lunch
             [
-                'category_id' => $idx + 8,
+                'category_id' => $idx + 9,
                 'name' => 'Cuisses de poulet et légumes rôtis au four',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 8,
+                'category_id' => $idx + 9,
                 'name' => 'Pavé de saumon, sauce hollandaise',
                 'description' => 'This is a description',
                 'checked' => true,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
 
             // Super U
             [
-                'category_id' => $idx + 9,
+                'category_id' => $idx + 11,
                 'name' => 'Nutella',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 9,
+                'category_id' => $idx + 11,
                 'name' => 'Pain',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -275,16 +286,16 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 9,
+                'category_id' => $idx + 11,
                 'name' => 'Oeufs',
                 'description' => 'This is a description',
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 9,
+                'category_id' => $idx + 11,
                 'name' => 'Fromage blanc',
                 'description' => 'This is a description',
                 'checked' => false,
@@ -293,7 +304,7 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 9,
+                'category_id' => $idx + 11,
                 'name' => 'Fromage blanc',
                 'description' => 'This is a description',
                 'checked' => false,
@@ -302,7 +313,7 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 9,
+                'category_id' => $idx + 11,
                 'name' => 'Fromage blanc',
                 'description' => 'This is a description',
                 'checked' => false,
@@ -313,16 +324,16 @@ class TestTasksSeeder extends AbstractSeed
 
             // Ikea
             [
-                'category_id' => $idx + 10,
+                'category_id' => $idx + 12,
                 'name' => 'Lit',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 10,
+                'category_id' => $idx + 12,
                 'name' => 'Coussins et couette',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -331,16 +342,16 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 10,
+                'category_id' => $idx + 12,
                 'name' => 'Verres à pied.',
                 'description' => 'This is a description',
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 10,
+                'category_id' => $idx + 12,
                 'name' => 'Chaise de bureau.',
                 'description' => 'This is a description',
                 'checked' => false,
@@ -351,16 +362,16 @@ class TestTasksSeeder extends AbstractSeed
 
             // Local grocery
             [
-                'category_id' => $idx + 11,
+                'category_id' => $idx + 13,
                 'name' => 'Graines',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 11,
+                'category_id' => $idx + 13,
                 'name' => 'Farine',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -369,13 +380,13 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 12,
+                'category_id' => $idx + 13,
                 'name' => 'Olives vertes.',
                 'description' => 'This is a description',
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 13,
@@ -395,7 +406,7 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
                 'category_id' => $idx + 14,
@@ -413,21 +424,21 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
 
             // Voyage to France
             [
-                'category_id' => $idx + 15,
+                'category_id' => $idx + 16,
                 'name' => 'VISA',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 15,
+                'category_id' => $idx + 16,
                 'name' => 'Chaussettes',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -436,16 +447,16 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 15,
+                'category_id' => $idx + 16,
                 'name' => 'Book hotels.',
                 'description' => 'This is a description',
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 15,
+                'category_id' => $idx + 16,
                 'name' => 'Buy plan tickets.',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -456,16 +467,16 @@ class TestTasksSeeder extends AbstractSeed
 
             // Weekend at lake
             [
-                'category_id' => $idx + 16,
+                'category_id' => $idx + 17,
                 'name' => 'Serviette',
                 'description' => 'This is a description',
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 16,
+                'category_id' => $idx + 17,
                 'name' => 'Tuba',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -474,16 +485,16 @@ class TestTasksSeeder extends AbstractSeed
                 'due_date' => $passed
             ],
             [
-                'category_id' => $idx + 16,
+                'category_id' => $idx + 17,
                 'name' => 'Maillot de bain',
                 'description' => 'This is a description',
                 'checked' => true,
                 'position' => 2,
                 'last_editor_id' => null,
-                'due_date' => new DateTime()
+                'due_date' => $this->generateRandomDate()
             ],
             [
-                'category_id' => $idx + 16,
+                'category_id' => $idx + 17,
                 'name' => 'Pic-nic',
                 'description' => 'This is a description',
                 'checked' => true,
@@ -493,24 +504,65 @@ class TestTasksSeeder extends AbstractSeed
             ],
 
             // Voyage to Hell
+            [
+                'category_id' => $idx + 18,
+                'name' => 'Hope',
+                'description' => 'This is a description',
+                'checked' => false,
+                'position' => 0,
+                'last_editor_id' => null,
+                'due_date' => $this->generateRandomDate()
+            ],
+            [
+                'category_id' => $idx + 18,
+                'name' => 'Angel',
+                'description' => 'This is a description',
+                'checked' => true,
+                'position' => 1,
+                'last_editor_id' => null,
+                'due_date' => $passed
+            ],
+            [
+                'category_id' => $idx + 18,
+                'name' => 'Snacks',
+                'description' => 'This is a description',
+                'checked' => true,
+                'position' => 2,
+                'last_editor_id' => null,
+                'due_date' => $this->generateRandomDate()
+            ],
+            [
+                'category_id' => $idx + 18,
+                'name' => 'Blood bag',
+                'description' => 'This is a description',
+                'checked' => false,
+                'position' => 3,
+                'last_editor_id' => null,
+                'due_date' => $passed
+            ],
+
             // Montreal
+            [
+                'category_id' => $idx + 19,
+                'name' => 'Lot of winter cloths',
+                'description' => 'Its really cold...',
+                'checked' => false,
+                'position' => 0,
+                'last_editor_id' => null,
+                'due_date' => $this->generateRandomDate()
+            ],
         ];
     }
 
     public function run(): void
     {
-        $data = [
-            [
-                'body' => 'foo',
-                'created' => date('Y-m-d H:i:s'),
-            ], [
-                'body' => 'bar',
-                'created' => date('Y-m-d H:i:s'),
-            ]
-        ];
+        $data = [];
+        // Generate data for the 4 users
+        for ($i = 1; $i <= 4; $i++) {
+            $data[] = $this->generateTasks($i);
+        }
 
-        $posts = $this->table('posts');
-        $posts->insert($data)
-            ->saveData();
+        $posts = $this->table('tasks');
+        $posts->insert($data)->saveData();
     }
 }
