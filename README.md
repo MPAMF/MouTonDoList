@@ -36,3 +36,17 @@ Les thèmes sont gérés par des fichiers au format SCSS (voir #lien). Cependant
 
 ### Layout CSS
 C’est le fichier `layout.css`. Il doit être importé comme stylesheet dans le HTML. Contrairement au fichier `layout.scss` (voir [ici](#layout-scss)), il modifie les propriétés des nouveaux éléments non pris en charge par bootstrap (comportement et parfois couleurs).
+
+## Code Twig
+
+### Principaux
+
+Dans `Views/components` se trouve les éléments principaux qui correspondent aux balises : `head`, `header`, `footer`. Ils sont utilisés par quasiment toutes les pages et notamment dans le fichier `layout.twig` qui sert de template par défaut pour toutes les pages. Les différents éléments de ce layout sont modulables selon les besoins de chaque page.
+
+### Home
+
+Dans `View/home` se trouve `content.twig` qui reprend le template de base et applique ses propres composants qu'on retrouve dans `Views/home/components`. Cela représente les pages auxquelles un invité (utilisateur non connecté) aura accès : présentation, connexion, inscription, etc...
+
+### Pages
+
+Dans `View/pages` se trouve `dashboard.twig` qui le template de base et applique ses propres composants qu'on retrouve dans `Views/pages/components`. Cela représente les éléments auxquelles un utilisateur connecté aura accès : catégorie, sous-catégorie, tâche, barre verticale, etc...
