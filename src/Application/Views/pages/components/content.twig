@@ -2,15 +2,17 @@
 
     <div class="row align-items-start">
 
-        <div class="col-2 collapse collapse-horizontal show sidebar-nav" id="verticalNavbar">
+        <div class="collapse collapse-horizontal show sidebar-nav" id="verticalNavbar">
             {% include 'pages/components/sidebar.twig' %}
         </div>
 
-        <div class="col">
-            <div class="container">
+        <div class="main-category">
+            <div class="container-category">
                 {% include 'pages/components/category/content.twig' with { 'default' : false } %}
             </div>
         </div>
+
+        <span id="hidePanel" data-bs-toggle="collapse" data-bs-target="#verticalNavbar" aria-controls="verticalNavbar"></span>
 
     </div>
 </div>

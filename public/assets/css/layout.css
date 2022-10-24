@@ -1,4 +1,7 @@
 /* Global */
+.scrolling-disabled {
+    overflow: hidden;
+}
 ::-webkit-scrollbar {
     width: 8px;
 }
