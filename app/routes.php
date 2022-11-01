@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -38,15 +39,7 @@ return function (App $app) {
         return $this->get('view')->render($response, 'account/signin-page.twig');
     });
 
-    $app->get('/', function (Request $request, Response $response) {
-        $noms = [
-            'Matthieu',
-            'Quentin',
-            'Victor',
-            'Paul',
-            'Mouton'];
-        return $this->get('view')->render($response, 'pages/dashboard.twig', ['noms' => $noms]);
-    });
+    $app->get('/', DisplayDashboardAction::class);
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);

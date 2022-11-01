@@ -4,23 +4,17 @@ declare(strict_types=1);
 namespace App\Application\Actions\Dashboard;
 
 use App\Application\Actions\Action;
-use App\Domain\Category\CategoryRepository;
-use App\Domain\Task\TaskRepository;
-use App\Domain\User\UserRepository;
+use DI\Container;
 use Psr\Log\LoggerInterface;
+use Slim\Views\Twig;
 
 abstract class DashboardAction extends Action
 {
-    protected UserRepository $userRepository;
-    protected TaskRepository $tempRepo;
-    protected CategoryRepository $categoryRepository;
+    protected Twig $twig;
 
-    public function __construct(LoggerInterface $logger, UserRepository $userRepository, TaskRepository $tempRepo,
-    CategoryRepository $categoryRepository)
+    public function __construct(LoggerInterface $logger, Container $container)
     {
         parent::__construct($logger);
-        $this->userRepository = $userRepository;
-        $this->tempRepo = $tempRepo;
-        $this->categoryRepository = $categoryRepository;
+        $this->twig = $container->get('view');
     }
 }

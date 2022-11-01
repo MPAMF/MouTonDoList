@@ -10,6 +10,10 @@ use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Slim\Views\Twig;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Component\Translation\Loader\JsonFileLoader;
+use Symfony\Component\Translation\Translator;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
