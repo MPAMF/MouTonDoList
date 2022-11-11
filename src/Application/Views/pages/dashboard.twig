@@ -1,6 +1,15 @@
 {% extends 'layout.twig' %}
 
 {% block javascript_before %}
+    <script>
+        const categories = []
+        {% for i in 0..1 %}
+            categories.push({
+                id: parseInt("{{ category.id }}"),
+                name: "{{ category.name }}"
+            })
+        {% endfor %}
+    </script>
     <script type="text/javascript" src="assets/js/popover-init.js"></script>
 {% endblock %}
 
@@ -10,6 +19,7 @@
 
 {% block main %}
     {% include 'pages/components/content.twig' %}
+    {% include 'components/modal.twig' %}
 {% endblock %}
 
 {% block footer %}

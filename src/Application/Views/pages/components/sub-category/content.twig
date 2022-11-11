@@ -1,5 +1,5 @@
 <div class="accordion-item accordion-item-tasks">
-    <h2 class="accordion-header subcategory-header" id="panelsStayOpen-heading-{{ catId }}">
+    <h2 class="accordion-header subcategory-header" id="panelsStayOpen-heading-{{ subCatId }}">
         <span class="category-button">
             <span class="accordion-button btn-subcategory-drag">
                 <button class="btn btn-category-actions" type="button" title="Attrape la sous-catégorie pour la changer d'emplacement">
@@ -7,42 +7,33 @@
                 </button>
             </span>
         </span>
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ catId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ catId }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ subCatId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ subCatId }}">
             {% if(default) %}
-                Default #{{ catId }}
+                Default #{{ subCatId }}
             {% else %}
-                Sous-catégorie #{{ catId }}
+                Sous-catégorie #{{ subCatId }}
             {% endif %}
         </button>
         <span class="category-button">
             <span class="accordion-button">
-                <a tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="subcategory-popover" aria-label="Liste d'actions d'une sous-catégorie archivée dans une todolist">
+                <a data-id="{{ subCatId }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="subcategory-popover" aria-label="Liste d'actions d'une sous-catégorie archivée dans une todolist">
                     <span class="mdi mdi-24px mdi-dots-horizontal"></span>
                 </a>
             </span>
         </span>
     </h2>
-    <div id="panelsStayOpen-collapse-{{ catId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ catId }}">
+    <div id="panelsStayOpen-collapse-{{ subCatId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ subCatId }}">
         <div class="accordion-body">
             <ul class="list-group list-group-flush tasks">
                 {% if(not(default)) %}
                     {% for taskId in 0..5 %}
-                        {% include 'pages/components/task/content.twig' with { 'catId' : catId, 'taskId': taskId } %}
+                        {% include 'pages/components/task/content.twig' with { 'subCatId' : subCatId, 'taskId': taskId } %}
                     {% endfor %}
                 {% endif %}
             </ul>
             <ul>
-                {% include 'pages/components/task/new.twig' with { 'catId' : catId } %}
+                {% include 'pages/components/task/new.twig' with { 'subCatId' : subCatId } %}
             </ul>
         </div>
     </div>
-    {% include 'pages/components/sub-category/modal.twig' with { 'catId' : catId } %}
 </div>
-
-<script type="text/javascript">
-    /* Category modal */
-    /*function categoryToggleModal() {
-        $("#categoryModal-{{ catId }}").modal();
-    }
-    document.getElementById("categoryModalBtn-{{ catId }}").addEventListener('click', categoryToggleModal);*/
-</script>

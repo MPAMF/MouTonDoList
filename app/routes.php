@@ -27,7 +27,9 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'pages/dashboard.twig');
+        return $this->get('view')->render($response, 'pages/dashboard.twig', ['category' => new \App\Domain\Category\Category(
+            2, new \App\Domain\User\User(), null, "Voyage en Corée", "#FFFFFF", 0, false, new DateTime(),  new DateTime()
+        )]);
     });
 
     $app->group('/users', function (Group $group) {

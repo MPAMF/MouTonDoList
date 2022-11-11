@@ -4,16 +4,14 @@
     </button>
     <div class="form-check task-view-details">
         <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche">
-        <div class="task-view-info" id="taskViewInfo-{{ catId }}-{{ taskId }}" data-bs-toggle="modal" data-bs-target="#taskModal-{{ catId }}-{{ taskId }}">
+        <div class="task-view-info" id="taskViewInfo-{{ subCatId }}-{{ taskId }}" onclick="openModalTask({{ subCatId }},{{ taskId }})">
             <label class="form-check-label" title="Nom de la tâche">
-                Nom de la tâche [{{ catId }}-{{ taskId }}]
+                Nom de la tâche [{{ subCatId }}-{{ taskId }}]
             </label>
             <small class="form-text text-muted" title="Description de la tâche">Description</small>
         </div>
     </div>
-    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs-popover="task-popover" aria-label="Actions de la tâche">
+    <a data-idCat="{{ subCatId }}" data-idTask="{{ taskId }}" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs-popover="task-popover" aria-label="Actions de la tâche">
         <span class="mdi mdi-dots-horizontal"></span>
     </a>
-
-    {% include 'pages/components/task/modal.twig' with { 'catId' : catId, 'taskId': taskId } %}
 </li>
