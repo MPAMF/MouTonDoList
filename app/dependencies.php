@@ -1,20 +1,20 @@
 <?php
 declare(strict_types=1);
 
-use App\Application\Settings\SettingsInterface;
+use App\Domain\Auth\AuthInterface;
+use App\Domain\Settings\SettingsInterface;
 use App\Infrastructure\Auth\Auth;
-use Illuminate\Database\Capsule\Manager;
 use DI\ContainerBuilder;
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\DatabaseManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
-use Slim\Views\Twig;
-use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Symfony\Component\Translation\Loader\JsonFileLoader;
-use Symfony\Component\Translation\Translator;
+use Slim\App;
+use Slim\Factory\AppFactory;
 use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -48,6 +48,6 @@ return function (ContainerBuilder $containerBuilder) {
             $capsule = $c->get(Manager::class);
             return $capsule->getDatabaseManager();
         },
-        Auth::class => autowire(Auth::class)
+        AuthInterface::class => autowire(Auth::class)
     ]);
 };

@@ -2,7 +2,7 @@
 
 namespace App\Application\Middleware;
 
-use App\Infrastructure\Auth\Auth;
+use App\Domain\Auth\AuthInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -13,10 +13,9 @@ abstract class Middleware implements MiddlewareInterface
 {
 
     protected ResponseFactoryInterface $responseFactory;
-    protected Auth $auth;
+    protected AuthInterface $auth;
 
-
-    public function __construct(Auth $auth, ResponseFactoryInterface $responseFactory)
+    public function __construct(AuthInterface $auth, ResponseFactoryInterface $responseFactory)
     {
         $this->auth = $auth;
         $this->responseFactory = $responseFactory;

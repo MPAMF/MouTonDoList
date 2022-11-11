@@ -2,21 +2,22 @@
 
 namespace App\Infrastructure\Auth;
 
-use App\Application\Settings\Settings;
+use App\Domain\Auth\AuthInterface;
+use App\Domain\Settings\SettingsInterface;
 use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use App\Infrastructure\Lib\Session;
 
-class Auth
+class Auth implements AuthInterface
 {
     private UserRepository $userRepository;
     private string $authId;
 
-    public function __construct(UserRepository $userRepository, Settings $settings)
+    public function __construct(UserRepository $userRepository, SettingsInterface $settings)
     {
         $this->userRepository = $userRepository;
-        $this->authId = $settings->getOrDefault('APP_AUTH_ID', 'user_id');
+        $this->authId = $settings->getOrDefault('auth_session_key', 'user_id');
     }
 
     /**

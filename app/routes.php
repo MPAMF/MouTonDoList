@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
+use App\Application\Middleware\AuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -31,13 +32,19 @@ return function (App $app) {
         );
     });
 
-    $app->get('/login', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'account/login-page.twig');
+    $app->group('/account', function (Group $group) {
+        $group->get('/login', function (Request $request, Response $response) {
+            return $this->get('view')->render($response, 'account/login-page.twig');
+        })->setName('account/login');
+
+        $group->get('/register', function (Request $request, Response $response) {
+            return $this->get('view')->render($response, 'account/signin-page.twig');
+        });
     });
 
-    $app->get('/signin', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'account/signin-page.twig');
-    });
+    $app->get('/account/logout', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'account/login-page.twig');
+    })->add(AuthMiddleware::class);
 
     $app->get('/', DisplayDashboardAction::class);
 
