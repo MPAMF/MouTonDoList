@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
+use App\Infrastructure\Auth\Auth;
 use Illuminate\Database\Capsule\Manager;
 use DI\ContainerBuilder;
 use Illuminate\Database\DatabaseManager;
@@ -14,6 +15,7 @@ use Slim\Views\Twig;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Loader\JsonFileLoader;
 use Symfony\Component\Translation\Translator;
+use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -46,5 +48,6 @@ return function (ContainerBuilder $containerBuilder) {
             $capsule = $c->get(Manager::class);
             return $capsule->getDatabaseManager();
         },
+        Auth::class => autowire(Auth::class)
     ]);
 };
