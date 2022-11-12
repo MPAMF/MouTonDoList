@@ -12,6 +12,19 @@
     border-radius: 100px;
 }
 
+/* Modal */
+.modal-content .form-check {
+    padding-right: 2.5rem;
+}
+.modal-content .checkbox {
+    margin-left: 2.5rem;
+    margin-top: 1.25rem;
+}
+.modal-content .checkbox .form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+}
+
 /* Navbar */
 .btn-nav{
     display: flex;

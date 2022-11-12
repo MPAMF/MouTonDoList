@@ -1,8 +1,19 @@
 function openModalCategory(id)
 {
     // get from categories where id=id
-    $("#modal-title").html('Category ' + id)
-    $("#modal-body").html(id)
+    $("#modal-title").html('Modifier le projet')
+    $("#modal-body").html('' +
+        '<form class="row g-3 form-check">' +
+            '<div class="col-12">' +
+                '<label for="modal-input-name" class="form-label">Nom</label>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel de la catégorie" title="Nom de la catégorie" required>' +
+                '<div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
+            '</div>' +
+            '<div class="col-12 checkbox">' +
+                '<input id="modal-checkbox" class="form-check-input task-checkbox" type="checkbox" value="">' +
+                '<label for="modal-checkbox">Masquer les sections archivées</label>' +
+            '</div>' +
+        '</form>')
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -46,7 +57,7 @@ $(document).ready(function () {
         content: () => {
             let id = $(this)[0].activeElement.getAttribute('data-id').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="openModalSubCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="openModalCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-delete-outline"></span> Supprimer le projet</button>' +
