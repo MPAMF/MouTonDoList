@@ -24,10 +24,20 @@ function openModalTask(idCat, idTask)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
+$(document).ready(
+    $('html').on('click', function (e) {
+        $('[data-bs=popover]').each(function () {
+            // hide any open popovers when the anywhere else in the body is clicked
+            if ((e.target.classList.contains("btn-popover")) || !$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+    })
+)
 
 $(document).ready(function () {
     $("[data-bs-popover=category-popover]").popover({
-        trigger: 'focus',
+        trigger: 'click',
         placement: 'left',
         customClass: 'popover',
         offset: [0, 0],
@@ -36,7 +46,7 @@ $(document).ready(function () {
         content: () => {
             let id = $(this)[0].activeElement.getAttribute('data-id').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="openModalCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="openModalSubCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-delete-outline"></span> Supprimer le projet</button>' +
@@ -46,7 +56,7 @@ $(document).ready(function () {
         }
     })
     $("[data-bs-popover=category-archive-popover]").popover({
-        trigger: 'focus',
+        trigger: 'click',
         placement: 'left',
         customClass: 'popover',
         offset: [0, 0],
@@ -61,7 +71,7 @@ $(document).ready(function () {
 
     })
     $("[data-bs-popover=subcategory-popover]").popover({
-        trigger: 'focus',
+        trigger: 'click',
         placement: 'left',
         customClass: 'popover',
         offset: [0, 0],
@@ -79,7 +89,7 @@ $(document).ready(function () {
         }
     })
     $("[data-bs-popover=subcategory-archive-popover]").popover({
-        trigger: 'focus',
+        trigger: 'click',
         placement: 'left',
         customClass: 'popover',
         offset: [0, 0],
@@ -93,7 +103,7 @@ $(document).ready(function () {
 
     })
     $("[data-bs-popover=task-popover]").popover({
-        trigger: 'focus',
+        trigger: 'click',
         placement: 'left',
         customClass: 'popover',
         offset: [0, 0],
