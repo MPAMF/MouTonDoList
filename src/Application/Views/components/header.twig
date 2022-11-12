@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top bg-primary">
+<nav role="navigation" class="navbar navbar-expand-lg fixed-top bg-primary" aria-label="Actions principales et accès aux autres pages">
     <div class="container p-0">
         <div class="d-inline-flex">
             <button type="button" class="btn btn-abs-nav btn-nav me-1 ms-1" data-bs-toggle="collapse" data-bs-target="#verticalNavbar" aria-expanded="false" aria-controls="verticalNavbar">
@@ -65,22 +65,22 @@
             <div class="modal-body">
                 <h5>{% trans %}LabelModalNav{% endtrans %}</h5>
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-modal-theme" type="button" onclick="setToLightMode()" title="Thème clair">
+                    <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="Thème clair">
                         <div class="theme-modal-color">
                             <div class="theme-color lightPrimary"></div>
                             <div class="theme-color lightSecondary"></div>
                             <div class="theme-color lightTertiary"></div>
                             <div class="theme-color lightBG"></div>
                         </div>
-                    </button>
-                    <button class="btn btn-modal-theme" type="button" onclick="setToDarkMode()" title="Thème sombre">
+                    </div>
+                    <div class="btn btn-modal-theme" role="button" onclick="setToDarkMode()" title="Thème sombre">
                         <div class="theme-modal-color">
                             <div class="theme-color darkPrimary"></div>
                             <div class="theme-color darkSecondary"></div>
                             <div class="theme-color darkTertiary"></div>
                             <div class="theme-color darkBG"></div>
                         </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>

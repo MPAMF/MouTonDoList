@@ -220,7 +220,7 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-active-bg: #{$body-bg};
     --#{$variable-prefix}btn-active-border-color: #{$body-bg};
   }
-  .task-drag-ghost .btn-task-actions {
+  .drag-ghost .btn-task-actions {
     --#{$variable-prefix}btn-bg: #{$secondary};
     --#{$variable-prefix}btn-border-color: #{$secondary};
   }
@@ -240,22 +240,22 @@ body.light::-webkit-scrollbar-thumb,
   }
 
   /* Category/Task drag */
-  .task-drag-dragging, .task-drag-ghost {
+  .drag-dragging, .drag-ghost {
     background: #{$secondary};
   }
-  .task-drag-dragging .accordion-button, .task-drag-ghost .accordion-button {
+  .drag-dragging .accordion-button, .drag-ghost .accordion-button {
     --#{$variable-prefix}accordion-btn-bg: #{$secondary};
   }
-  .task-drag-dragging .accordion-button:not(.collapsed), .task-drag-ghost .accordion-button:not(.collapsed) {
+  .drag-dragging .accordion-button:not(.collapsed), .drag-ghost .accordion-button:not(.collapsed) {
     --#{$variable-prefix}accordion-active-bg: #{$secondary};
   }
-  .task-drag-dragging .list-group-item, .task-drag-ghost .list-group-item {
+  .drag-dragging .list-group-item, .drag-ghost .list-group-item {
     --#{$variable-prefix}list-group-bg: #{$secondary};
   }
-  .task-drag-dragging .btn-task-add, .task-drag-ghost .btn-task-add {
+  .drag-dragging .btn-task-add, .drag-ghost .btn-task-add {
     --#{$variable-prefix}btn-bg: #{$secondary};
   }
-  .task-drag-dragging .btn-category-actions, .task-drag-ghost .btn-category-actions {
+  .drag-dragging .btn-category-actions, .drag-ghost .btn-category-actions {
     --#{$variable-prefix}btn-bg: #{$secondary};
     --#{$variable-prefix}btn-border-color: #{$secondary};
   }

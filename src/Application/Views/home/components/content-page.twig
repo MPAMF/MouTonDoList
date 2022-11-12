@@ -1,9 +1,0 @@
-{% extends 'home/home-page.twig' %}
-
-{% block content %}
-    {% if (contents == 'presentation') %}
-        {% include 'home/components/presentation-div.twig' %}
-    {% else %}
-        {% include 'home/components/home-div.twig' %}
-    {% endif %}
-{% endblock %}

@@ -1,0 +1,18 @@
+<div class="container-fluid">
+
+    <div class="row align-items-start">
+
+        <div class="collapse collapse-horizontal show sidebar-nav" id="verticalNavbar">
+            {% include 'pages/components/sidebar.twig' %}
+        </div>
+
+        <div class="main-category">
+            <div class="container-category">
+                {% include 'pages/components/category/content.twig' with { 'default' : false } %}
+            </div>
+        </div>
+
+        <span id="hidePanel" data-bs-toggle="collapse" data-bs-target="#verticalNavbar" aria-controls="verticalNavbar"></span>
+
+    </div>
+</div>

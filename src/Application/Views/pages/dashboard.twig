@@ -1,21 +1,26 @@
 {% extends 'layout.twig' %}
 
-{% block headercss %}
-    <style>
-        h1 {
-            color: blue;
-        }
-    </style>
+{% block javascript_before %}
+    <script type="text/javascript" src="assets/js/popover-init.js"></script>
 {% endblock %}
 
-{% block titre %}
-    Titre salut
+{% block header %}
+    {% include 'components/header.twig' %}
 {% endblock %}
 
-{% block content %}
-    <ul>
-        {% for user in noms %}
-            <li><b>{{ user }}</b></li>
-        {% endfor %}
-    </ul>
+{% block main %}
+    {% include 'pages/components/content.twig' %}
 {% endblock %}
+
+{% block footer %}
+    {% include 'components/footer.twig' %}
+{% endblock %}
+
+{% block javascript_after %}
+    <script type="text/javascript" src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+    <script type="text/javascript" src="assets/js/popover-setup.js"></script>
+    <script type="text/javascript" src="assets/js/dragdrop-setup.js"></script>
+    <script type="text/javascript" src="assets/js/theme-switcher.js"></script>
+    <script type="text/javascript" src="assets/js/sidebar-event.js"></script>
+{% endblock %}
+
