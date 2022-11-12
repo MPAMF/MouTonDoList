@@ -29,6 +29,5 @@ class DisplayDashboardAction extends DashboardAction
         }*/
 
         return $this->twig->render($this->response, 'pages/dashboard.twig');
-        //return $this->respondWithData("");
     }
 }
