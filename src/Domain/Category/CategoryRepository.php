@@ -8,16 +8,18 @@ interface CategoryRepository
 {
 
     /**
-     * @param User $user
+     * Fetch only categories, not sub-categories
+     * @param $user_id
      * @return array
      */
-    public function getCategories(User $user) : array;
+    public function getCategories($user_id) : array;
 
     /**
      * @param $id
-     * @return Category|null
+     * @return Category
+     * @throws CategoryNotFoundException
      */
-    public function get($id): ?Category;
+    public function get($id): Category;
 
     /**
      * @param Category $category

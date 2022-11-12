@@ -7,6 +7,7 @@ use App\Domain\TimeStampedModel;
 use App\Domain\User\User;
 use DateTime;
 use JsonSerializable;
+use stdClass;
 
 class Category extends TimeStampedModel implements JsonSerializable
 {
@@ -19,34 +20,9 @@ class Category extends TimeStampedModel implements JsonSerializable
     private int $position;
     private bool $archived;
 
-    /**
-     * @param int|null $id
-     * @param User $owner
-     * @param Category|null $parentCategory
-     * @param string $name
-     * @param string $color
-     * @param int $position
-     * @param bool $archived
-     */
-    public function __construct(
-        ?int $id,
-        User $owner,
-        ?Category $parentCategory,
-        string $name,
-        string $color,
-        int $position,
-        bool $archived,
-        DateTime $updated_at,
-        DateTime $created_at
-    ) {
-        parent::__construct($updated_at, $created_at);
-        $this->id = $id;
-        $this->owner = $owner;
-        $this->parentCategory = $parentCategory;
-        $this->name = $name;
-        $this->color = $color;
-        $this->position = $position;
-        $this->archived = $archived;
+    public function __construct()
+    {
+        parent::__construct(new DateTime(), new DateTime());
     }
 
     /**
@@ -167,12 +143,39 @@ class Category extends TimeStampedModel implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->owner->getId(),
-            'parent_category_id' => isset($this->parentCategory) ? $this->parentCategory->getId() : '',
+            'owner' => $this->owner->jsonSerialize(),
+            'parent_category' => !empty($this->parentCategory) ? $this->parentCategory->jsonSerialize() : null,
             'name' => $this->name,
             'color' => $this->color,
             'position' => $this->position,
             'archived' => $this->archived
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        parent::fromRow($row);
+        $this->id = $row->id;
+        // stdClass must have loaded instances of other models
+        $this->owner = $row->owner;
+        $this->parentCategory = $row->parentCategory;
+        $this->name = $row->name;
+        $this->color = $row->color;
+        $this->position = $row->position;
+        $this->archived = boolval($row->archived);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        $row = $this->jsonSerialize();
+        unset($row['parent_category']);
+        $row['parent_category_id'] = !empty($this->parentCategory) ? $this->parentCategory->getId() : null;
+        return $row;
     }
 }

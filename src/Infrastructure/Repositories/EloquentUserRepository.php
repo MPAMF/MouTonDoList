@@ -1,16 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Infrastructure\Persistence\User;
+namespace App\Infrastructure\Repositories;
 
 use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
-use App\Infrastructure\Persistence\Repository;
-use DateTime;
 use Exception;
 use Illuminate\Database\DatabaseManager;
-use stdClass;
 
 class EloquentUserRepository extends Repository implements UserRepository
 {
