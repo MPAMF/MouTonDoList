@@ -6,30 +6,66 @@ function openModalCategory(id)
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel du projet" title="Nom du projet" required>' +
-                '<div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom du projet" title="Nom du projet" required>' +
+                '<div id="error-modal" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
             '</div>' +
             '<div class="col-12 checkbox">' +
-                '<input id="modal-checkbox" class="form-check-input task-checkbox" type="checkbox" value="">' +
-                '<label for="modal-checkbox">Masquer les sections archivées</label>' +
+                '<input id="modal-checkbox-subcategory" class="form-check-input task-checkbox" type="checkbox" value="">' +
+                '<label for="modal-checkbox-subcategory">Masquer les sections archivées</label>' +
             '</div>' +
-            '<hr class="my-2">' +
-            '<div class="row row-cols-1 row-cols-md-3 py-1 text-center align-items-center">' +
-                '<div class="col py-1">' +
-                    '<h6 class="my-0 fw-normal">Victor</h6>' +
+            '<div class="col-12 checkbox">' +
+                '<input id="modal-checkbox-task" class="form-check-input task-checkbox" type="checkbox" value="">' +
+                '<label for="modal-checkbox-task">Masquer les tâches effectuées</label>' +
+            '</div>' +
+            '<div class="accordion accordion-flush">' +
+                '<div class="accordion-item accordion-item-tasks">' +
+                    '<h2 class="accordion-header subcategory-header" id="flush-headingOne">' +
+                        '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">' +
+                            'Liste des membres' +
+                        '</button>' +
+                    '</h2>' +
+                    '<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample"> ' +
+                        '<div class="accordion-body">' +
+                            '<ul class="list-group list-group-flush tasks">' +
+                                '<li class="list-group-item list-member">' +
+                                    '<div class="col py-1">' +
+                                            '<label class="my-0 fw-normal">Victor</label>' +
+                                        '</div>' +
+                                        '<div class="col py-1">' +
+                                            '<select class="btn btn-sm btn-modal-select" data-style="">' +
+                                                '<option>Lecteur</option>' +
+                                                '<option>Editeur</option>' +
+                                                '<option>Propriétaire</option>' +
+                                            '</select>' +
+                                        '</div>' +
+                                        '<div class="col py-1">' +
+                                            '<button type="button" class="btn btn-sm btn-modal-remove">' +
+                                                '<span class="mdi mdi-14px mdi-close-thick"></span> Retirer' +
+                                            '</button>' +
+                                        '</div>' +
+                                '</li>' +
+                                '<li class="list-group-item list-member">' +
+                                    '<div class="col py-1">' +
+                                        '<label class="my-0 fw-normal">Paul</label>' +
+                                    '</div>' +
+                                    '<div class="col py-1">' +
+                                        '<select class="btn btn-sm btn-modal-select" data-style="">' +
+                                            '<option>Lecteur</option>' +
+                                            '<option>Editeur</option>' +
+                                            '<option>Propriétaire</option>' +
+                                        '</select>' +
+                                    '</div>' +
+                                    '<div class="col py-1">' +
+                                        '<button type="button" class="btn btn-sm btn-modal-remove">' +
+                                            '<span class="mdi mdi-14px mdi-close-thick"></span> Retirer' +
+                                        '</button>' +
+                                    '</div>' +
+                                '</li>' +
+                            '</ul>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>' +
-                '<div class="col py-1">' +
-                    '<select class="btn btn-sm btn-secondary" data-style="">' +
-                        '<option>Lecteur</option>' +
-                        '<option>Editeur</option>' +
-                    '</select>' +
-                '</div>' +
-                '<div class="col py-1">' +
-                    '<button type="button" class="btn btn-delete btn-sm">' +
-                        '<span class="mdi mdi-14px mdi-delete-outline"></span>' +
-                    '</button>' +
-                '</div>' +
-           '</div>' +
+            '</div>' +
         '</form>')
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
@@ -43,12 +79,8 @@ function openModalSubCategory(id)
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel de la catégorie" title="Nom de la catégorie" required>' +
-                '<div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
-            '</div>' +
-            '<div class="col-12 checkbox">' +
-                '<input id="modal-checkbox" class="form-check-input task-checkbox" type="checkbox" value="">' +
-                '<label for="modal-checkbox">Masquer les tâches effectuées</label>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom de la catégorie" title="Nom de la catégorie" required>' +
+                '<div id="error-modal" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
             '</div>' +
         '</form>')
     const modal = new bootstrap.Modal('#modal', {})
@@ -63,12 +95,12 @@ function openModalTask(idCat, idTask)
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel de la catégorie" title="Nom de la catégorie" required>' +
-                '<div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom de la tâche" title="Nom de la tâche" required>' +
+                '<div id="error-modal" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
             '</div>' +
             '<div class="col-12">' +
                 '<label for="modal-input-description" class="form-label">Description</label>' +
-                '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="Description actuelle de la tâche" title="Description de la tâche"></textarea>' +
+                '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="Description de la tâche" title="Description de la tâche"></textarea>' +
             '</div>' +
             '<div class="col-12 checkbox">' +
                 '<input id="modal-checkbox" class="form-check-input task-checkbox" type="checkbox" value="">' +
