@@ -28,6 +28,8 @@ class DisplayDashboardAction extends DashboardAction
             return $this->respondWithData($e);
         }*/
 
-        return $this->twig->render($this->response, 'pages/dashboard.twig');
+        return $this->twig->render($this->response, 'pages/dashboard.twig', ['category' => new \App\Domain\Category\Category(
+            2, new \App\Domain\User\User(), null, "Voyage en Corée", "#FFFFFF", 0, false, new DateTime(),  new DateTime()
+        )]);
     }
 }
