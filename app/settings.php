@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use App\Application\Settings\Settings;
-use App\Application\Settings\SettingsInterface;
+use App\Domain\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Monolog\Logger;
 
@@ -30,7 +30,8 @@ return function (ContainerBuilder $containerBuilder) {
                     'charset'   => 'utf8',
                     'collation' => 'utf8_unicode_ci',
                     'prefix'    => '',
-                ]
+                ],
+                'auth_session_key' => 'user_id'
             ]);
         }
     ]);

@@ -11,6 +11,7 @@ use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use Exception;
 use Illuminate\Database\DatabaseManager;
+use stdClass;
 
 class EloquentCategoryRepository extends Repository implements CategoryRepository
 {
@@ -28,41 +29,51 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     }
 
     /**
-     * {@inheritdoc}
+     * @param stdClass $category
+     * @return Category
+     * @throws CategoryNotFoundException
      */
-    public function get($id): Category
+    private function parseCategory(stdClass $category) : Category
     {
-        $found = $this->getDB()->table('categories')->where('id', $id)->first();
-
-        if (empty($found)) {
+        if(empty($category))
+        {
             throw new CategoryNotFoundException();
         }
 
-        if (empty($found->parent_category_id)) {
-            $found->parentCategory = null;
+        if (empty($category->parent_category_id)) {
+            $category->parentCategory = null;
         } else {
             try {
-                $found->parentCategory = $this->get($found->parent_category_id);
+                $category->parentCategory = $this->get($category->parent_category_id);
             } catch (CategoryNotFoundException) {
-                $found->parentCategory = null;
+                $category->parentCategory = null;
             }
         }
 
         try {
-            $found->owner = $this->userRepository->get($found->owner_id);
+            $category->owner = $this->userRepository->get($category->owner_id);
         } catch (UserNotFoundException) {
-            $found->owner = null;
+            $category->owner = null;
         }
 
         $parsed = new Category();
         // If there's a parsing error, just show the user a not found exception.
         try {
-            $parsed->fromRow($found);
+            $parsed->fromRow($category);
         } catch (Exception) {
             throw new CategoryNotFoundException();
         }
 
         return $parsed;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($id): Category
+    {
+        $found = $this->getDB()->table('categories')->where('id', $id)->first();
+        return $this->parseCategory($found);
     }
 
     /**
@@ -97,13 +108,13 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
             ->get();
 
         foreach ($foundCategories as $category) {
-            $catInstance = new Category();
+
             try {
-                $catInstance->fromRow($category);
-            } catch (Exception) {
-                continue;
+                $categories[] = $this->parseCategory($category);
+            } catch (CategoryNotFoundException) {
+                // do nothing
             }
-            $categories[] = $catInstance;
+
         }
 
         return $categories;

@@ -40,8 +40,8 @@ class TestUsersSeeder extends AbstractSeed
             ],
         ];
 
-        $posts = $this->table('users');
-        $posts->insert($data)->saveData();
+        $users = $this->table('users');
+        $users->insert($data)->saveData();
     }
 
 }
