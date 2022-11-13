@@ -6,13 +6,30 @@ function openModalCategory(id)
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel de la catégorie" title="Nom de la catégorie" required>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel du projet" title="Nom du projet" required>' +
                 '<div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
             '</div>' +
             '<div class="col-12 checkbox">' +
                 '<input id="modal-checkbox" class="form-check-input task-checkbox" type="checkbox" value="">' +
                 '<label for="modal-checkbox">Masquer les sections archivées</label>' +
             '</div>' +
+            '<hr class="my-2">' +
+            '<div class="row row-cols-1 row-cols-md-3 py-1 text-center align-items-center">' +
+                '<div class="col py-1">' +
+                    '<h6 class="my-0 fw-normal">Victor</h6>' +
+                '</div>' +
+                '<div class="col py-1">' +
+                    '<select class="btn btn-sm btn-secondary" data-style="">' +
+                        '<option>Lecteur</option>' +
+                        '<option>Editeur</option>' +
+                    '</select>' +
+                '</div>' +
+                '<div class="col py-1">' +
+                    '<button type="button" class="btn btn-delete btn-sm">' +
+                        '<span class="mdi mdi-14px mdi-delete-outline"></span>' +
+                    '</button>' +
+                '</div>' +
+           '</div>' +
         '</form>')
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
@@ -21,8 +38,19 @@ function openModalCategory(id)
 function openModalSubCategory(id)
 {
     // get from categories where id=id
-    $("#modal-title").html('SubCategory ' + id)
-    $("#modal-body").html(id)
+    $("#modal-title").html('Modifier la catégorie ')
+    $("#modal-body").html('' +
+        '<form class="row g-3 form-check">' +
+            '<div class="col-12">' +
+                '<label for="modal-input-name" class="form-label">Nom</label>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel de la catégorie" title="Nom de la catégorie" required>' +
+                '<div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
+            '</div>' +
+            '<div class="col-12 checkbox">' +
+                '<input id="modal-checkbox" class="form-check-input task-checkbox" type="checkbox" value="">' +
+                '<label for="modal-checkbox">Masquer les tâches effectuées</label>' +
+            '</div>' +
+        '</form>')
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -30,11 +58,27 @@ function openModalSubCategory(id)
 function openModalTask(idCat, idTask)
 {
     // get from categories where id=id
-    $("#modal-title").html('Task ' + idCat + "-" + idTask)
-    $("#modal-body").html(idCat + "-" + idTask)
+    $("#modal-title").html('Modifier la tâche ')
+    $("#modal-body").html('' +
+        '<form class="row g-3 form-check">' +
+            '<div class="col-12">' +
+                '<label for="modal-input-name" class="form-label">Nom</label>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom actuel de la catégorie" title="Nom de la catégorie" required>' +
+                '<div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
+            '</div>' +
+            '<div class="col-12">' +
+                '<label for="modal-input-description" class="form-label">Description</label>' +
+                '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="Description actuelle de la tâche" title="Description de la tâche"></textarea>' +
+            '</div>' +
+            '<div class="col-12 checkbox">' +
+                '<input id="modal-checkbox" class="form-check-input task-checkbox" type="checkbox" value="">' +
+                '<label for="modal-checkbox">Cette tâche a été effectuée</label>' +
+            '</div>' +
+        '</form>')
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
+
 $(document).ready(
     $('html').on('click', function (e) {
         $('[data-bs=popover]').each(function () {

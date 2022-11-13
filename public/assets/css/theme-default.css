@@ -76,6 +76,15 @@
 .modal-header, .modal-footer {
   border-color: rgba(255, 255, 255, 0.075);
 }
+.btn-modal-select{
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-bg: #00ADB5;
+  --bs-btn-hover-bg: #5DCBD0;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-active-bg: #A6E3E9;
+  --bs-btn-active-border-color: #A6E3E9;
+}
 
 /* Navbar */
 .btn-abs-nav{
