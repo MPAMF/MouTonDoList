@@ -11,6 +11,41 @@
 ::-webkit-scrollbar-thumb {
     border-radius: 100px;
 }
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+/* Modal */
+.modal-content .form-check {
+    padding-right: 2.5rem;
+}
+.modal-content .checkbox {
+    margin-left: 2.5rem;
+    margin-top: 1.25rem;
+    padding: 0;
+}
+.modal-content .checkbox .form-check-input {
+    width: 1em;
+    height: 1em;
+    float: none;
+    margin-left: -2em;
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
+}
+.modal-content .checkbox label {
+    cursor: pointer;
+    margin-left: 0.5em;
+
+}
+.list-member {
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
 
 /* Navbar */
 .btn-nav{
