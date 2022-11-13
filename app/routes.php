@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
+use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
+use App\Application\Middleware\AuthMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -18,19 +20,21 @@ return function (App $app) {
         return $this->get('view')->render($response, 'home/content.twig', ['content' => 'home']);
     });
 
-    $app->get('/login', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'home/content.twig', ['content' => 'login']);
+    $app->group('/account', function (Group $group) {
+        $group->get('/login', function (Request $request, Response $response) {
+            return $this->get('view')->render($response, 'home/content.twig', ['content' => 'login']);
+        })->setName('account/login');
+
+        $group->get('/register', function (Request $request, Response $response) {
+            return $this->get('view')->render($response, 'home/content.twig', ['content' => 'signin']);
+        });
     });
 
-    $app->get('/signin', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'home/content.twig', ['content' => 'signin']);
-    });
+    $app->get('/account/logout', function (Request $request, Response $response) {
+        return $this->get('view')->render($response, 'account/login-page.twig');
+    })->add(AuthMiddleware::class);
 
-    $app->get('/', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'pages/dashboard.twig', ['category' => new \App\Domain\Category\Category(
-            2, new \App\Domain\User\User(), null, "Voyage en Corée", "#FFFFFF", 0, false, new DateTime(),  new DateTime()
-        )]);
-    });
+    $app->get('/', DisplayDashboardAction::class);
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);

@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
-use App\Domain\EloquentModel;
 use App\Domain\TimeStampedModel;
 use DateTime;
 use JsonSerializable;
 use stdClass;
 
-class User extends TimeStampedModel implements JsonSerializable, EloquentModel
+class User extends TimeStampedModel implements JsonSerializable
 {
     private ?int $id;
 
@@ -156,6 +155,7 @@ class User extends TimeStampedModel implements JsonSerializable, EloquentModel
      */
     public function fromRow(stdClass $row): void
     {
+        parent::fromRow($row);
         $this->id = $row->id;
         $this->email = $row->email;
         $this->username = $row->username;
@@ -163,8 +163,6 @@ class User extends TimeStampedModel implements JsonSerializable, EloquentModel
         $this->image_path = $row->image_path;
         $this->theme = $row->theme;
         $this->language = $row->language;
-        $this->setUpdatedAt(new DateTime($row->updated_at));
-        $this->setCreatedAt(new DateTime($row->created_at));
     }
 
     /**

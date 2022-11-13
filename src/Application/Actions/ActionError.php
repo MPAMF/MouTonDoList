@@ -52,11 +52,9 @@ class ActionError implements JsonSerializable
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
-        $payload = [
+        return [
             'type' => $this->type,
             'description' => $this->description,
         ];
-
-        return $payload;
     }
 }

@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Category;
+namespace App\Domain\UserCategory;
 
+use App\Domain\Category\Category;
 use App\Domain\TimeStampedModel;
 use App\Domain\User\User;
 use DateTime;

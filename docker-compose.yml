@@ -6,6 +6,7 @@ volumes:
 
 services:
   nginx:
+    restart: always
     image: nginx:latest
     ports:
       - "8080:80"
