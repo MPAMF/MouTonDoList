@@ -128,6 +128,21 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}list-group-color: #{$body-color};
     --#{$variable-prefix}list-group-border-color: rgba(0, 0, 0, 0.075)
   }
+  .modal-comment {
+    color: #{$body-color};
+    background-color: #{$secondary};
+  }
+  .modal-delete-comment {
+    --bs-btn-color: #{$body-color};
+    --bs-btn-hover-color: #{$body-color};
+    --bs-btn-active-color: #{$body-color};
+    --bs-btn-bg: #{$secondary};
+    --bs-btn-border-color: #{$secondary};
+    --bs-btn-hover-bg: #{$tertiary};
+    --bs-btn-hover-border-color: #{$tertiary};
+    --bs-btn-active-bg: #{$tertiary};
+    --bs-btn-active-border-color: #{$tertiary};
+  }
 
   /* Navbar */
   .btn-abs-nav{

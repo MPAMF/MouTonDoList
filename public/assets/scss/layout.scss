@@ -1,3 +1,9 @@
+/* Modal */
+.modal-delete-comment {
+  --#{$variable-prefix}btn-padding-x: 0;
+  --#{$variable-prefix}btn-padding-y: 0;
+}
+
 /* Navbar */
 .btn-abs-nav{
   --#{$variable-prefix}btn-hover-color: black;
