@@ -104,6 +104,21 @@
   --bs-list-group-color: #EEEEEE;
   --bs-list-group-border-color: rgba(255, 255, 255, 0.075);
 }
+.modal-comment {
+  color: #EEEEEE;
+  background-color: #393E46;
+}
+.modal-delete-comment {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-bg: #393E46;
+  --bs-btn-border-color: #393E46;
+  --bs-btn-hover-bg: #222831;
+  --bs-btn-hover-border-color: #222831;
+  --bs-btn-active-bg: #222831;
+  --bs-btn-active-border-color: #222831;
+}
 
 /* Navbar */
 .btn-abs-nav{

@@ -46,6 +46,22 @@ input[type="checkbox"] {
     align-items: center;
     text-align: center;
 }
+.modal-comment {
+    padding: 3%;
+    border-radius: 5px;
+    margin-bottom: 3%;
+}
+.modal-delete-comment {
+    opacity: 0;
+}
+.modal-comment:hover .modal-delete-comment {
+    opacity: 1;
+}
+#modal-submit:disabled,
+#modal-submit[disabled]{
+    cursor: not-allowed;
+    pointer-events: all !important;
+}
 
 /* Navbar */
 .btn-nav{
