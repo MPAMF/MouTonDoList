@@ -70,40 +70,14 @@
     padding: 0;
     margin: 0 0 0 5px;
 }
-/* Light */
-.darkPrimary{
-    background-color: #00ADB5;
+
+/* Theme */
+.lightPrimary, .darkPrimary{
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     border-top: 2px solid black;
 }
-.darkSecondary{
-    background-color: #393E46;
-}
-.darkTertiary{
-    background-color: #A6E3E9;
-}
-.darkBG{
-    background-color: #222831;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom: 2px solid black;
-}
-/* Dark */
-.lightPrimary{
-    background-color: #71C9CE;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-top: 2px solid black;
-}
-.lightSecondary{
-    background-color: #CBF1F5;
-}
-.lightTertiary{
-    background-color: #A6E3E9;
-}
-.lightBG{
-    background-color: #67B7BB;
+.lightBG, .darkBG{
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     border-bottom: 2px solid black;

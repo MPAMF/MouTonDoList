@@ -8,6 +8,29 @@
   --#{$variable-prefix}dropdown-box-shadow: none;
 }
 
+/* Theme */
+.lightPrimary{
+  background-color: #71C9CE;
+}
+.lightSecondary{
+  background-color: #CBF1F5;
+}
+.lightTertiary, .darkTertiary{
+  background-color: #A6E3E9;
+}
+.lightBG{
+  background-color: #67B7BB;
+}
+.darkPrimary {
+  background-color: #00ADB5;
+}
+.darkSecondary{
+  background-color: #393E46;
+}
+.darkBG {
+  background-color: #222831;
+}
+
 /* Sidebar */
 .btn-sidebar-add, .btn-todolist-actions {
   --#{$variable-prefix}btn-padding-x: 0.3rem;
