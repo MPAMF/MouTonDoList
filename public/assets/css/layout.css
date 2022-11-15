@@ -265,6 +265,11 @@ input[type="checkbox"] {
     cursor: grabbing !important;
 }
 
+/* Research */
+.list-research .task-view .btn-task-drag {
+    display: none;
+}
+
 /* To-do-list */
 .categories {
     margin-bottom: 5rem;

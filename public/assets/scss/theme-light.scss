@@ -207,6 +207,12 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-active-border-color: #{$primary};
   }
 
+  /* Research */
+  .list-research .task-view {
+    --#{$variable-prefix}list-group-bg: #{$body-bg};
+    --#{$variable-prefix}list-group-border-color: rgba(0, 0, 0, 0.075);
+  }
+
   /* Category */
   .btn-category-actions {
     --#{$variable-prefix}btn-color: #{$body-color};
@@ -320,5 +326,8 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-bg: #{$tertiary};
     --#{$variable-prefix}btn-color: #{$body-color};
     --#{$variable-prefix}btn-hover-bg: #{$tertiary};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
   }
 }

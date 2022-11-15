@@ -9,11 +9,18 @@
         </div>
     </div>
 
-    {% if (default) %}
+    {% if (status == "research") %}
 
-        {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : 0 , 'default' : true } %}
+        <div class="research">
+            <p class="mb-4">Résultat de la recherche : <small class="form-text text-muted" title="Paramètres recherchés">Paul Meyer</small></p>
+            <ul class="list-group list-group-flush tasks list-research">
+                {% for taskId in 0..5 %}
+                    {% include 'pages/components/task/content.twig' with { 'subCatId' : 0, 'taskId': taskId } %}
+                {% endfor %}
+            </ul>
+        </div>
 
-    {% else %}
+    {% elseif (status == "exemple") %}
 
         {% for subCatId in 0..2 %}
             {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : subCatId } %}
@@ -22,6 +29,10 @@
         {% for subCatId in 3..3 %}
             {% include 'pages/components/sub-category/archive.twig' with { 'subCatId' : subCatId } %}
         {% endfor %}
+
+    {% else %}
+
+        {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : 0 , 'status' : 'default' } %}
 
     {% endif %}
 
