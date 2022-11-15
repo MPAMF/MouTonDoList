@@ -22,25 +22,22 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        $("#taskNewName-{{ subCatId }}").keyup(function () {
-            var name = $("#taskNewName-{{ subCatId }}").val();
-
-            if (name.length < 1) {
-                $("#taskNewCreate-{{ subCatId }}").prop('disabled', true);
-            } else {
-                $("#taskNewCreate-{{ subCatId }}").prop('disabled', false);
-            }
-
-        });
+    document.getElementById("taskAdd-{{ subCatId }}").addEventListener('click', function (e) {
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}",
+            "taskNewName-{{ subCatId }}", "taskNewDescription-{{ subCatId }}", "error-taskNew{{ subCatId }}")
+    });
+    document.getElementById("taskNewCancel-{{ subCatId }}").addEventListener('click', function (e) {
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}",
+            "taskNewName-{{ subCatId }}", "taskNewDescription-{{ subCatId }}", "error-taskNew{{ subCatId }}")
     });
 
-    function toggleNewTask() {
-        document.getElementById("taskAdd-{{ subCatId }}").classList.toggle("btn-task-add-unactive");
-        document.getElementById("taskNew-{{ subCatId }}").classList.toggle("task-new-active");
-        document.getElementById("taskNewName-{{ subCatId }}").value = "";
-        document.getElementById("taskNewDescription-{{ subCatId }}").value = "";
-    }
-    document.getElementById("taskAdd-{{ subCatId }}").addEventListener('click', toggleNewTask);
-    document.getElementById("taskNewCancel-{{ subCatId }}").addEventListener('click', toggleNewTask);
+    $(document).ready(
+        $(document).on('click', "#taskNewCreate-{{ subCatId }}", function (e) {
+            checkInputOnSubmit("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}")
+        }),
+        $(document).on('keyup', "#taskNewName-{{ subCatId }}", function (e) {
+            checkInputOnKeyup("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}", "#taskNewCreate-{{ subCatId }}")
+        })
+    )
+
 </script>
