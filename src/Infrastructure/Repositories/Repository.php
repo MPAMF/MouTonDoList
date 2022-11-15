@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Persistence;
+namespace App\Infrastructure\Repositories;
 
 use Illuminate\Database\DatabaseManager;
 
-class Repository
+abstract class Repository
 {
 
     private DatabaseManager $db;

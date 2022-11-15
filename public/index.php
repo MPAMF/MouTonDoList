@@ -4,8 +4,11 @@ declare(strict_types=1);
 use App\Application\Handlers\HttpErrorHandler;
 use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;
-use App\Application\Settings\SettingsInterface;
+use App\Domain\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Views\Twig;
@@ -38,12 +41,12 @@ $dependencies($containerBuilder);
 $repositories = require __DIR__ . '/../app/repositories.php';
 $repositories($containerBuilder);
 
+// Instantiate the app
+$bootstrap = require __DIR__ . '/../app/bootstrap.php';
+$bootstrap($containerBuilder);
+
 // Build PHP-DI Container instance
 $container = $containerBuilder->build();
-
-// Instantiate the app
-AppFactory::setContainer($container);
-
 
 // Set view in Container
 $container->set('view', function () {
@@ -72,7 +75,7 @@ $container->set('view', function () {
     return $twig;
 });
 
-$app = AppFactory::create();
+$app = $container->get(App::class);
 $callableResolver = $app->getCallableResolver();
 
 // Register middleware

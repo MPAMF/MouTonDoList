@@ -16,6 +16,11 @@ $form-check-input-border-radius: 50%;
 $form-check-input-width: 1.5em;
 $form-check-padding-start: $form-check-input-width + 1em;
 
+// Usage
+.container-category {
+  @include make-container();
+}
+
 // Themes
 @import "theme-dark";
 @import "theme-light";

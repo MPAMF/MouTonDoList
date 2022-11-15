@@ -96,6 +96,58 @@ body.default::-webkit-scrollbar-thumb,
     background-color: #00ADB5;
   }
 
+  /* Modal */
+  .modal-edit {
+    --#{$variable-prefix}modal-color: #{$body-color};
+    --#{$variable-prefix}modal-bg: #{$body-bg};
+    --#{$variable-prefix}modal-header-border-color: rgba(255, 255, 255, 0.075);
+    --#{$variable-prefix}modal-footer-border-color: rgba(255, 255, 255, 0.075);
+  }
+  .modal-edit .btn-close {
+    --#{$variable-prefix}btn-color: #{$primary};
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2300ADB5'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  }
+  .btn-modal-select{
+    --#{$variable-prefix}btn-color: #{$body-color};
+    --#{$variable-prefix}btn-border-color: #{$secondary};
+    --#{$variable-prefix}btn-bg: #{$secondary};
+    --#{$variable-prefix}btn-hover-bg: #4B5057;
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-hover-border-color: #4B5057;
+    --#{$variable-prefix}btn-active-bg: #4B5057;
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-active-border-color: #4B5057;
+  }
+  .btn-modal-remove{
+    --#{$variable-prefix}btn-color: #ec5941;
+    --#{$variable-prefix}btn-border-color: #ec5941;
+    --#{$variable-prefix}btn-hover-bg: #660e00;
+    --#{$variable-prefix}btn-hover-border-color: #fcb5aa;
+    --#{$variable-prefix}btn-hover-color: #fcb5aa;
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #8d1300;
+    --#{$variable-prefix}btn-active-border-color: #{$body-color};
+  }
+  .list-member {
+    --#{$variable-prefix}list-group-color: #{$body-color};
+    --#{$variable-prefix}list-group-border-color: rgba(255, 255, 255, 0.075)
+  }
+  .modal-comment {
+    color: #{$body-color};
+    background-color: #{$secondary};
+  }
+  .modal-delete-comment {
+    --bs-btn-color: #{$body-color};
+    --bs-btn-hover-color: #{$body-color};
+    --bs-btn-active-color: #{$body-color};
+    --bs-btn-bg: #{$secondary};
+    --bs-btn-border-color: #{$secondary};
+    --bs-btn-hover-bg: #{$body-bg};
+    --bs-btn-hover-border-color: #{$body-bg};
+    --bs-btn-active-bg: #{$body-bg};
+    --bs-btn-active-border-color: #{$body-bg};
+  }
+
   /* Navbar */
   .btn-abs-nav{
     --#{$variable-prefix}btn-color: #{$body-color};
@@ -189,7 +241,7 @@ body.default::-webkit-scrollbar-thumb,
   }
   .accordion-item-tasks .list-group-item {
     --#{$variable-prefix}list-group-bg: #{$body-bg};
-    --#{$prefix}list-group-border-color: rgba(255, 255, 255, 0.075);
+    --#{$variable-prefix}list-group-border-color: rgba(255, 255, 255, 0.075);
   }
   .accordion-item-tasks .accordion-button {
     --#{$variable-prefix}accordion-btn-color: #{$body-color};

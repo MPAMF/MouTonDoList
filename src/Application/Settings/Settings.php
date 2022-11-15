@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Application\Settings;
 
+use App\Domain\Settings\SettingsInterface;
+
 class Settings implements SettingsInterface
 {
     private array $settings;
@@ -13,10 +15,22 @@ class Settings implements SettingsInterface
     }
 
     /**
+     * @param string $key
      * @return mixed
      */
-    public function get(string $key = '')
+    public function get(string $key = ''): mixed
     {
         return (empty($key)) ? $this->settings : $this->settings[$key];
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getOrDefault(string $key, mixed $default): mixed
+    {
+        $result =$this->settings[$key];
+        return $result ?? $default;
     }
 }

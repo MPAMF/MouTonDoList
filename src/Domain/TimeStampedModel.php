@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace App\Domain;
 
 use DateTime;
+use stdClass;
 
-class TimeStampedModel
+class TimeStampedModel implements EloquentModel
 {
     private DateTime $updated_at;
 
@@ -53,5 +54,28 @@ class TimeStampedModel
         $this->created_at = $created_at;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        if(!empty($row->updated_at))
+        {
+            $this->setUpdatedAt(new DateTime($row->updated_at));
+        }
 
+        if(!empty($row->created_at))
+        {
+            $this->setCreatedAt(new DateTime($row->created_at));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        // Do nothing: tables are auto updated
+        return [];
+    }
 }

@@ -69,6 +69,57 @@
   background-color: #00ADB5;
 }
 
+/* Modal */
+.modal-edit {
+  --bs-modal-bg: #222831;
+  --bs-modal-header-border-color: rgba(255, 255, 255, 0.075);
+  --bs-modal-footer-border-color: rgba(255, 255, 255, 0.075);
+}
+.modal-edit .btn-close {
+  color: #00ADB5;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%2300ADB5'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+}
+.btn-modal-select{
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-bg: #393E46;
+  --bs-btn-border-color: #393E46;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-hover-bg: #4B5057;
+  --bs-btn-hover-border-color: #4B5057;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-active-bg: #4B5057;
+  --bs-btn-active-border-color: #4B5057;
+}
+.btn-modal-remove{
+  --bs-btn-color: #ec5941;
+  --bs-btn-border-color: #ec5941;
+  --bs-btn-hover-color: #fcb5aa;
+  --bs-btn-hover-border-color: #fcb5aa;
+  --bs-btn-hover-bg: #660e00;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-active-border-color: #EEEEEE;
+  --bs-btn-active-bg: #8d1300;
+}
+.list-member {
+  --bs-list-group-color: #EEEEEE;
+  --bs-list-group-border-color: rgba(255, 255, 255, 0.075);
+}
+.modal-comment {
+  color: #EEEEEE;
+  background-color: #393E46;
+}
+.modal-delete-comment {
+  --bs-btn-color: #EEEEEE;
+  --bs-btn-hover-color: #EEEEEE;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-bg: #393E46;
+  --bs-btn-border-color: #393E46;
+  --bs-btn-hover-bg: #222831;
+  --bs-btn-hover-border-color: #222831;
+  --bs-btn-active-bg: #222831;
+  --bs-btn-active-border-color: #222831;
+}
+
 /* Navbar */
 .btn-abs-nav{
   --bs-btn-color: #EEEEEE;

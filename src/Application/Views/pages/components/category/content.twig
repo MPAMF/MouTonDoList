@@ -1,9 +1,9 @@
 <div class="accordion accordion-flush categories">
 
     <div class="category-title">
-        <h3 id="title" data-bs-toggle="modal" data-bs-target="#categoryModal">Catégorie [id]</h3>
+        <h3 id="title" onclick="openEditModalCategory({{ category.id }})">{{ category.name }}</h3>
         <div class="title-actions">
-            <a tabindex="0" class="btn btn-category-actions" role="button" data-bs-popover="category-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
+            <a data-id="{{ category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" data-bs-popover="category-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
                 <span class="mdi mdi-24px mdi-dots-horizontal"></span>
             </a>
         </div>
@@ -11,20 +11,18 @@
 
     {% if (default) %}
 
-        {% include 'pages/components/sub-category/content.twig' with { 'catId' : 0 , 'default' : true } %}
+        {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : 0 , 'default' : true } %}
 
     {% else %}
 
-        {% for catId in 0..2 %}
-            {% include 'pages/components/sub-category/content.twig' with { 'catId' : catId } %}
+        {% for subCatId in 0..2 %}
+            {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : subCatId } %}
         {% endfor %}
 
-        {% for catId in 3..3 %}
-            {% include 'pages/components/sub-category/archive.twig' with { 'catId' : catId } %}
+        {% for subCatId in 3..3 %}
+            {% include 'pages/components/sub-category/archive.twig' with { 'subCatId' : subCatId } %}
         {% endfor %}
 
     {% endif %}
-
-    {% include 'pages/components/category/modal.twig' %}
 
 </div>
