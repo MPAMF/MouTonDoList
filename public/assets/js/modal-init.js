@@ -97,10 +97,10 @@ function openEditModalCategory(id)
                                         '<label class="my-0 fw-normal">Victor</label>' +
                                     '</div>' +
                                     '<div class="col py-1">' +
-                                        '<select class="btn btn-sm btn-modal-select" data-style="">' +
-                                            '<option>Lecteur</option>' +
-                                            '<option>Editeur</option>' +
-                                            '<option>Propriétaire</option>' +
+                                        '<select name="modal-member-select" id="modal-member-select-1" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+                                            '<option value="1">Lecteur</option>' +
+                                            '<option value="2">Editeur</option>' +
+                                            '<option value="3">Propriétaire</option>' +
                                         '</select>' +
                                     '</div>' +
                                     '<div class="col py-1">' +
@@ -114,10 +114,10 @@ function openEditModalCategory(id)
                                         '<label class="my-0 fw-normal">Paul</label>' +
                                     '</div>' +
                                     '<div class="col py-1">' +
-                                        '<select class="btn btn-sm btn-modal-select" data-style="">' +
-                                            '<option>Lecteur</option>' +
-                                            '<option>Editeur</option>' +
-                                            '<option>Propriétaire</option>' +
+                                        '<select name="modal-member-select" id="modal-member-select-2" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+                                            '<option value="1">Lecteur</option>' +
+                                            '<option value="2">Editeur</option>' +
+                                            '<option value="3">Propriétaire</option>' +
                                         '</select>' +
                                     '</div>' +
                                     '<div class="col py-1">' +
@@ -131,6 +131,7 @@ function openEditModalCategory(id)
                     '</div>' +
                 '</div>' +
             '</div>' +
+            '<div id="error-modal-members" class="invalid-feedback" role="alert"> Le rôle d\'un des membres n\'est pas valide. </div>' +
         '</form>')
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
@@ -180,38 +181,33 @@ function openEditModalTask(idCat, idTask)
 
 /* Modal Events */
 
-function toggleNewComment() {
-    document.getElementById("commentAdd").classList.toggle("btn-task-add-unactive");
-    document.getElementById("commentNew").classList.toggle("task-new-active");
-    document.getElementById("commentNewTitle").value = "";
-    document.getElementById("commentNewDescription").value = "";
-}
-
 function toggleNewCommentIfExists() {
     if(document.getElementById("commentAdd").classList.contains("btn-task-add-unactive"))
-        toggleNewComment()
+        toggleForm("commentAdd", "commentNew", "commentNewTitle", "commentNewDescription", null)
 }
 
 $(document).ready(
-    $(document).on('click', "#commentAdd", toggleNewComment),
-    $(document).on('click', "#commentNewCancel", toggleNewComment)
-)
-
-$(document).ready(function () {
+    /* Comments in Modal */
+    $(document).on('click', "#commentAdd", function (e) {
+        toggleForm("commentAdd", "commentNew", "commentNewTitle", "commentNewDescription", null)
+    }),
+    $(document).on('click', "#commentNewCancel", function (e) {
+        toggleForm("commentAdd", "commentNew", "commentNewTitle", "commentNewDescription", "error-commentNew")
+    }),
+    $(document).on('click', "#commentNewCreate", function (e) {
+        checkInputOnSubmit("#commentNewTitle", "error-commentNew")
+    }),
     $(document).on('keyup', "#commentNewTitle", function (e) {
-        var name = $("#commentNewTitle").val();
-        if (name.length < 1) {
-            $("#commentNewCreate").prop('disabled', true);
-        } else {
-            $("#commentNewCreate").prop('disabled', false);
-        }
-    });
+        checkInputOnKeyup("#commentNewTitle", "error-commentNew", "#commentNewCreate")
+    }),
+
+    /* Submit Modal */
+    $(document).on('click', "#modal-submit", function (e) {
+        checkInputOnSubmit("#modal-input-name", "error-modal")
+        let selectsName = document.getElementsByName("modal-member-select")
+        checkSelectValuesOnSubmit(selectsName, "error-modal-members", authModalSelectMemberStatusValues)
+    }),
     $(document).on('keyup', "#modal-input-name", function (e) {
-        var name = $("#modal-input-name").val();
-        if (name.length < 1) {
-            $("#modal-submit").prop('disabled', true);
-        } else {
-            $("#modal-submit").prop('disabled', false);
-        }
-    });
-});
+        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit")
+    })
+);
