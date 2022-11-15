@@ -29,10 +29,10 @@
 <script type="text/javascript">
 
     document.getElementById("taskAdd-{{ subCatId }}").addEventListener('click', function (e) {
-        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", null)
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", "error-taskNew{{ subCatId }}", null)
     });
     document.getElementById("taskNewCancel-{{ subCatId }}").addEventListener('click', function (e) {
-        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", "#taskNewCreate-{{ subCatId }}")
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", null, "#taskNewCreate-{{ subCatId }}")
     });
 
     $(document).ready(

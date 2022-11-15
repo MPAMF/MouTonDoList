@@ -87,10 +87,10 @@ $(document).ready(function () {
             let idCat = $(this)[0].activeElement.getAttribute('data-idCat').toString();
             let idTask = $(this)[0].activeElement.getAttribute('data-idTask').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="openTaskDetails(' + idCat + ',' + idTask + ')"><span class="mdi mdi-application-outline"></span> Ouvrir le détail</button>' +
                 '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalTask(' + idCat + ',' + idTask + ')"><span class="mdi mdi-pencil-outline"></span> Modifier la tâche</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer la tâche</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-trash-can"></span> Supprimer la tâche</button>' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="openTaskDetails(' + idCat + ',' + idTask + ')"><span class="mdi mdi-comment-outline"></span> Voir les commentaires</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-up-bold-outline"> Ajouter une tâche ci-dessus</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-down-bold-outline"> Ajouter une tâche ci-dessous</button>' +
                 '</div>'
