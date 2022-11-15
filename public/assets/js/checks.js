@@ -35,12 +35,12 @@ function checkInputOnKeyup(inputId, errorId, submitId)
     }
 }
 
-function toggleForm(btnId, formId, inputId1, inputId2, errorId)
+function toggleForm(btnId, formId, errorId, secondBtnId)
 {
     document.getElementById(btnId).classList.toggle("btn-task-add-unactive");
     document.getElementById(formId).classList.toggle("task-new-active");
-    document.getElementById(inputId1).value = "";
-    document.getElementById(inputId2).value = "";
-    if (errorId !== null)
+    if(errorId)
         document.getElementById(errorId).style.display = "none";
+    if (secondBtnId !== null)
+        $(secondBtnId).prop('disabled', true);
 }
