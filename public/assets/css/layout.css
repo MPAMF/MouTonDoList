@@ -62,6 +62,13 @@ input[type="checkbox"] {
     cursor: not-allowed;
     pointer-events: all !important;
 }
+.modal-form-label-select {
+    display: flex;
+    flex-direction: column;
+}
+.modal-form-label-select select {
+    text-align: left;
+}
 
 /* Navbar */
 .btn-nav{
@@ -412,6 +419,10 @@ input[type="checkbox"] {
 .btn-task-create:disabled {
     cursor: not-allowed;
     pointer-events: all !important;
+}
+.task-new select {
+    text-align: left;
+    width: 100%;
 }
 
 /* Task modal */

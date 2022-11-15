@@ -13,8 +13,14 @@
         <div class="mb-2">
             <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ subCatId }}" placeholder="Description" title="Description de la nouvelle tâche" ></textarea>
         </div>
+        <div class="mb-2">
+            <select class="btn btn-sm btn-modal-select" aria-label="Membre assigné" required>
+                <option value="0" selected>Non assignée</option>
+                <option value="nomPrenom">NOM Prénom</option>
+            </select>
+        </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-secondary btn-sm me-md-2" type="button" id="taskNewCancel-{{ subCatId }}">Annuler</button>
+            <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="taskNewCancel-{{ subCatId }}">Annuler</button>
             <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="taskNewCreate-{{ subCatId }}" disabled>Ajouter une tâche</button>
         </div>
     </form>
@@ -23,12 +29,10 @@
 <script type="text/javascript">
 
     document.getElementById("taskAdd-{{ subCatId }}").addEventListener('click', function (e) {
-        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}",
-            "taskNewName-{{ subCatId }}", "taskNewDescription-{{ subCatId }}", "error-taskNew{{ subCatId }}")
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", null)
     });
     document.getElementById("taskNewCancel-{{ subCatId }}").addEventListener('click', function (e) {
-        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}",
-            "taskNewName-{{ subCatId }}", "taskNewDescription-{{ subCatId }}", "error-taskNew{{ subCatId }}")
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", "#taskNewCreate-{{ subCatId }}")
     });
 
     $(document).ready(

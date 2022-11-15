@@ -3,7 +3,7 @@ function openTaskDetails(idCat, idTask)
     // get from categories where id=id
     $("#modal-title").html('Commentaires de la tâche ')
     $("#modal-footer").html('' +
-        '<button type="button" id="modal-cancel" class="btn btn-secondary" onclick="toggleNewCommentIfExists()" data-bs-dismiss="modal">Annuler</button>')
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>')
     $("#modal-body").html('<div class="row">' +
         '                    <div class="col">' +
         '                        <div class="modal-comment">' +
@@ -50,7 +50,7 @@ function openTaskDetails(idCat, idTask)
         '                                <textarea class="form-control form-control-sm bg-secondary" rows="3" id="commentNewDescription" placeholder="Description" title="Description du commentaire" ></textarea>' +
         '                            </div>' +
         '                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
-        '                                <button class="btn btn-secondary btn-sm me-md-2" type="button" id="commentNewCancel">Annuler</button>' +
+        '                                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="commentNewCancel">Annuler</button>' +
         '                                <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="commentNewCreate" disabled>Ajouter le commentaire</button>' +
         '                            </div>' +
         '                        </form>' +
@@ -65,7 +65,7 @@ function openEditModalCategory(id)
     // get from categories where id=id
     $("#modal-title").html('Modifier le projet')
     $("#modal-footer").html('' +
-        '<button type="button" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
         '<button type="button" id="modal-submit" class="btn btn-primary">Enregistrer</button>')
     $("#modal-body").html('' +
         '<form class="row g-3 form-check">' +
@@ -142,7 +142,7 @@ function openEditModalSubCategory(id)
     // get from categories where id=id
     $("#modal-title").html('Modifier la catégorie')
     $("#modal-footer").html('' +
-        '<button type="button" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
         '<button type="button" id="modal-submit" class="btn btn-primary">Enregistrer</button>')
     $("#modal-body").html('' +
         '<form class="row g-3 form-check">' +
@@ -161,7 +161,7 @@ function openEditModalTask(idCat, idTask)
     // get from categories where id=id
     $("#modal-title").html('Modifier la tâche')
     $("#modal-footer").html('' +
-        '<button type="button" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
         '<button type="button" id="modal-submit" class="btn btn-primary">Enregistrer</button>')
     $("#modal-body").html('' +
         '<form class="row g-3 form-check">' +
@@ -174,6 +174,13 @@ function openEditModalTask(idCat, idTask)
                 '<label for="modal-input-description" class="form-label">Description</label>' +
                 '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="Description de la tâche" title="Description de la tâche"></textarea>' +
             '</div>' +
+            '<div class="col-12 modal-form-label-select">' +
+                '<label for="modal-assign-member" class="form-label">Assigner</label>' +
+                '<select id="modal-assign-member" class="mb-2 btn btn-sm btn-modal-select" aria-label="Membre assigné" required>' +
+                    '<option value="0" selected>Non assignée</option>' +
+                    '<option value="nomPrenom">NOM Prénom</option>' +
+                '</select>' +
+            '</div>' +
         '</form>')
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
@@ -181,18 +188,13 @@ function openEditModalTask(idCat, idTask)
 
 /* Modal Events */
 
-function toggleNewCommentIfExists() {
-    if(document.getElementById("commentAdd").classList.contains("btn-task-add-unactive"))
-        toggleForm("commentAdd", "commentNew", "commentNewTitle", "commentNewDescription", null)
-}
-
 $(document).ready(
     /* Comments in Modal */
     $(document).on('click', "#commentAdd", function (e) {
-        toggleForm("commentAdd", "commentNew", "commentNewTitle", "commentNewDescription", null)
+        toggleForm("commentAdd", "commentNew", null)
     }),
     $(document).on('click', "#commentNewCancel", function (e) {
-        toggleForm("commentAdd", "commentNew", "commentNewTitle", "commentNewDescription", "error-commentNew")
+        toggleForm("commentAdd", "commentNew", "#commentNewCreate")
     }),
     $(document).on('click', "#commentNewCreate", function (e) {
         checkInputOnSubmit("#commentNewTitle", "error-commentNew")
