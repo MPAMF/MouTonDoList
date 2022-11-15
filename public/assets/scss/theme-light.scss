@@ -326,5 +326,8 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-bg: #{$tertiary};
     --#{$variable-prefix}btn-color: #{$body-color};
     --#{$variable-prefix}btn-hover-bg: #{$tertiary};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
   }
 }
