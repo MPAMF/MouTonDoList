@@ -206,6 +206,12 @@ footer .logo {
   --bs-btn-active-border-color: #222831;
 }
 
+/* Research */
+.list-research .task-view {
+  --bs-list-group-bg: #222831;
+  --bs-list-group-border-color: rgba(255, 255, 255, 0.075);
+}
+
 /* Category */
 .btn-category-actions {
   --bs-btn-color: #EEEEEE;
@@ -217,13 +223,6 @@ footer .logo {
   --bs-btn-hover-border-color: #222831;
   --bs-btn-active-bg: #222831;
   --bs-btn-active-border-color: #222831;
-}
-.list-research .task-view {
-  --bs-list-group-bg: #222831;
-  --bs-list-group-border-color: rgba(255, 255, 255, 0.075);
-}
-.list-research .task-view .btn-task-drag {
-  display: none;
 }
 
 /* Task */
