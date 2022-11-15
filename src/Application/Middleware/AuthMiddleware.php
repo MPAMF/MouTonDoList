@@ -16,13 +16,13 @@ class AuthMiddleware extends Middleware
     public function process(Request $request, RequestHandler $handler): Response
     {
         if (!$this->auth->check()) {
-            return $this->redirect($request, 'account/login');
+            return $this->redirect($request, 'account.login');
         }
 
         try {
             $user = $this->auth->user();
         } catch (UserNotFoundException) {
-            return $this->redirect($request, 'account/login');
+            return $this->redirect($request, 'account.login');
         }
 
         return $handler->handle($request->withAttribute('user', $user));

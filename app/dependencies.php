@@ -15,6 +15,10 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
+use Slim\Views\Twig;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Component\Translation\Loader\JsonFileLoader;
+use Symfony\Component\Translation\Translator;
 use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -32,6 +36,30 @@ return function (ContainerBuilder $containerBuilder) {
             $logger->pushHandler($handler);
 
             return $logger;
+        },
+        Twig::class => function (ContainerInterface $c) {
+            // creates the Translator
+            $translator = new Translator('fr');
+            // somehow load some translations into it
+            $translator->addLoader('json', new JsonFileLoader());
+
+            // Add resources
+            $translator->addResource(
+                'json',
+                __DIR__.'/../resources/translations/translations.en.json',
+                'en'
+            );
+
+            $translator->addResource(
+                'json',
+                __DIR__.'/../resources/translations/translations.fr.json',
+                'fr'
+            );
+
+            // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
+            $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
+            $twig->addExtension(new TranslationExtension($translator));
+            return $twig;
         },
         Manager::class => function (ContainerInterface $c) {
             $settings = $c->get(SettingsInterface::class);

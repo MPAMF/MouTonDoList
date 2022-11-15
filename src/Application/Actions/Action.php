@@ -4,11 +4,17 @@ declare(strict_types=1);
 namespace App\Application\Actions;
 
 use App\Domain\DomainException\DomainRecordNotFoundException;
+use App\Domain\User\User;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Routing\RouteContext;
+use Slim\Views\Twig;
 
 abstract class Action
 {
@@ -20,9 +26,15 @@ abstract class Action
 
     protected array $args;
 
-    public function __construct(LoggerInterface $logger)
+    protected Twig $twig;
+
+    protected ResponseFactoryInterface $responseFactory;
+
+    public function __construct(LoggerInterface $logger, Twig $twig, ResponseFactoryInterface $responseFactory)
     {
         $this->logger = $logger;
+        $this->twig = $twig;
+        $this->responseFactory = $responseFactory;
     }
 
     /**
@@ -79,6 +91,21 @@ abstract class Action
         return $this->respond($payload);
     }
 
+    /**
+     * @param string $viewPath
+     * @param object|array|null $data
+     * @return Response
+     */
+    protected function respondWithView(string $viewPath, object|array $data = null): Response
+    {
+        try {
+            return $this->twig->render($this->response, $viewPath, $data);
+        } catch (\Exception $e)
+        {
+            throw new HttpInternalServerErrorException($this->request, $e->getMessage());
+        }
+    }
+
     protected function respond(ActionPayload $payload): Response
     {
         $json = json_encode($payload, JSON_PRETTY_PRINT);
@@ -88,4 +115,28 @@ abstract class Action
                     ->withHeader('Content-Type', 'application/json')
                     ->withStatus($payload->getStatusCode());
     }
+
+    /**
+     * Get user from attribute (coming from AuthMiddleware)
+     * returns null if user not set in attributes
+     * @return User|null
+     */
+    protected function user(): ?User
+    {
+        return $this->request->getAttribute('user');
+    }
+
+    /**
+     * Redirect to URL
+     * @param string $url
+     * @return Response
+     */
+    protected function redirect(string $url): ResponseInterface
+    {
+        $routeParser = RouteContext::fromRequest($this->request)->getRouteParser();
+        return $this->responseFactory->createResponse()
+            ->withHeader('Location', $routeParser->urlFor($url))
+            ->withStatus(302);
+    }
+
 }

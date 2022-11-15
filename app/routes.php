@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Application\Actions\Auth\Login\DisplayLoginAction;
+use App\Application\Actions\Auth\Login\DisplayRegisterAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
@@ -9,6 +11,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
+use Slim\Views\Twig;
 
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
@@ -17,24 +20,19 @@ return function (App $app) {
     });
 
     $app->get('/home', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'home/content.twig', ['content' => 'home']);
+        return $this->get(Twig::class)->render($response, 'home/content.twig', ['content' => 'home']);
     });
 
     $app->group('/account', function (Group $group) {
-        $group->get('/login', function (Request $request, Response $response) {
-            return $this->get('view')->render($response, 'home/content.twig', ['content' => 'login']);
-        })->setName('account/login');
-
-        $group->get('/register', function (Request $request, Response $response) {
-            return $this->get('view')->render($response, 'home/content.twig', ['content' => 'signin']);
-        });
+        $group->get('/login', DisplayLoginAction::class)->setName('account.login');
+        $group->get('/register', DisplayRegisterAction::class)->setName('account.register');
     });
 
     $app->get('/account/logout', function (Request $request, Response $response) {
-        return $this->get('view')->render($response, 'account/login-page.twig');
+        return $this->get(Twig::class)->render($response, 'account/login-page.twig');
     })->add(AuthMiddleware::class);
 
-    $app->get('/', DisplayDashboardAction::class);
+    $app->get('/', DisplayDashboardAction::class)->setName('dashboard');
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);

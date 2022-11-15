@@ -50,29 +50,6 @@ $container = $containerBuilder->build();
 
 // Set view in Container
 $container->set('view', function () {
-
-    // creates the Translator
-    $translator = new Translator('fr');
-    // somehow load some translations into it
-    $translator->addLoader('json', new JsonFileLoader());
-
-    // Add resources
-    $translator->addResource(
-        'json',
-        __DIR__.'/../resources/translations/translations.en.json',
-        'en'
-    );
-
-    $translator->addResource(
-        'json',
-        __DIR__.'/../resources/translations/translations.fr.json',
-        'fr'
-    );
-
-    // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
-    $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
-    $twig->addExtension(new TranslationExtension($translator));
-    return $twig;
 });
 
 $app = $container->get(App::class);

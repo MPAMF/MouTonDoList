@@ -15,7 +15,7 @@ use DateTime;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 
-class DisplayDashboardAction extends DashboardAction
+class DisplayDashboardAction extends Action
 {
     /**
      * {@inheritdoc}
@@ -39,7 +39,7 @@ class DisplayDashboardAction extends DashboardAction
         $category->setPosition(0);
         $category->setArchived(false);
 
-        return $this->twig->render($this->response, 'pages/dashboard.twig',
+        return $this->respondWithView('pages/dashboard.twig',
             ['category' => $category]);
     }
 }
