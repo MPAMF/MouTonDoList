@@ -12,7 +12,7 @@ class DisplayLoginAction extends Action
     {
         if ($this->user() != null) {
             // Redirect to home page
-            return $this->redirect('dashboard');
+            return $this->withInfo('Already connected!')->redirect('dashboard');
         }
 
         return $this->respondWithView('home/content.twig', [

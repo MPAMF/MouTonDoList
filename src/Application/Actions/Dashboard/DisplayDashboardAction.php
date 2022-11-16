@@ -24,12 +24,12 @@ class DisplayDashboardAction extends Action
     {
 
         $this->logger->info("Dashboard action was viewed.");
-/*
-        try {
-            $user = $this->userRepository->logUser('iperskill@gmail.com', 'test');
-        } catch (UserNotFoundException $e) {
-            return $this->respondWithData($e);
-        }*/
+        /*
+                try {
+                    $user = $this->userRepository->logUser('iperskill@gmail.com', 'test');
+                } catch (UserNotFoundException $e) {
+                    return $this->respondWithData($e);
+                }*/
 
         $category = new Category();
         $category->setId(2);
@@ -40,6 +40,6 @@ class DisplayDashboardAction extends Action
         $category->setArchived(false);
 
         return $this->respondWithView('pages/dashboard.twig',
-            ['category' => $category]);
+                ['category' => $category]);
     }
 }

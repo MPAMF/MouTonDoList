@@ -25,9 +25,11 @@ class FlashMessageExtension extends AbstractExtension
     public function getMessages(string $key = null): array|string
     {
         if ($key !== null) {
-            return $this->flash->getMessage($key);
+            $value = $this->flash->getMessage($key);
+        } else {
+            $value = $this->flash->getMessages();
         }
 
-        return $this->flash->getMessages();
+        return $value ?? [];
     }
 }

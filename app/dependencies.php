@@ -21,6 +21,7 @@ use Slim\Views\Twig;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Loader\JsonFileLoader;
 use Symfony\Component\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -39,7 +40,7 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
-        Twig::class => function (ContainerInterface $c) {
+        TranslatorInterface::class => function (ContainerInterface $c) {
             // creates the Translator
             $translator = new Translator('fr');
             // somehow load some translations into it
@@ -57,10 +58,12 @@ return function (ContainerBuilder $containerBuilder) {
                 __DIR__ . '/../resources/translations/translations.fr.json',
                 'fr'
             );
-
+            return $translator;
+        },
+        Twig::class => function (ContainerInterface $c) {
             // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
             $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
-            $twig->addExtension(new TranslationExtension($translator));
+            $twig->addExtension(new TranslationExtension($c->get(TranslatorInterface::class)));
             $twig->addExtension(new CsrfExtension($c->get(Guard::class)));
             $twig->addExtension(new FlashMessageExtension($c->get(Messages::class)));
             return $twig;

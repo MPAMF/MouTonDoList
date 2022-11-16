@@ -8,6 +8,10 @@
 
         <div class="main-category">
             <div class="container-category">
+                <h1>info</h1>
+                {% for msg in flash('infos') %}
+                    <h1>{{ msg }}</h1>
+                {% endfor %}
                 {% include 'pages/components/category/content.twig' with { 'default' : false } %}
             </div>
         </div>

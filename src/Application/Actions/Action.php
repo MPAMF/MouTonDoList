@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Application\Actions;
 
+use App\Application\Handlers\FlashMessageHandler;
+use App\Application\Handlers\RedirectHandler;
 use App\Domain\DomainException\DomainRecordNotFoundException;
 use App\Domain\User\User;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -14,11 +16,13 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Flash\Messages;
-use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
 abstract class Action
 {
+    use RedirectHandler;
+    use FlashMessageHandler;
+
     protected LoggerInterface $logger;
 
     protected Request $request;
@@ -132,57 +136,6 @@ abstract class Action
     protected function user(): ?User
     {
         return $this->request->getAttribute('user');
-    }
-
-    /**
-     * @param string $key Flash message key
-     * @param string $value Flash message text
-     * @return $this Current Action instance
-     */
-    protected function withMessage(string $key, string $value) : Action
-    {
-        $this->messages->addMessage($key, $value);
-        return $this;
-    }
-
-    /**
-     * @param string $value Error message
-     * @return $this Current Action instance
-     */
-    protected function withError(string $value) : Action
-    {
-        return $this->withMessage('errors', $value);
-    }
-
-    /**
-     * @param string $value Success message
-     * @return $this Current Action instance
-     */
-    protected function withSuccess(string $value) : Action
-    {
-        return $this->withMessage('success', $value);
-    }
-
-    /**
-     * @param string $value Info message
-     * @return $this Current Action instance
-     */
-    protected function withInfo(string $value) : Action
-    {
-        return $this->withMessage('infos', $value);
-    }
-
-    /**
-     * Redirect to URL
-     * @param string $url
-     * @return Response
-     */
-    protected function redirect(string $url): ResponseInterface
-    {
-        $routeParser = RouteContext::fromRequest($this->request)->getRouteParser();
-        return $this->responseFactory->createResponse()
-            ->withHeader('Location', $routeParser->urlFor($url))
-            ->withStatus(302);
     }
 
 }

@@ -2,28 +2,29 @@
 
 namespace App\Application\Middleware;
 
-use App\Domain\Auth\AuthInterface;
+use App\Application\Handlers\FlashMessageHandler;
+use App\Application\Handlers\RedirectHandler;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Routing\RouteContext;
+use Slim\Flash\Messages;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class Middleware implements MiddlewareInterface
 {
-    protected ResponseFactoryInterface $responseFactory;
+    use RedirectHandler;
+    use FlashMessageHandler;
 
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    protected ResponseFactoryInterface $responseFactory;
+    protected TranslatorInterface $translator;
+    protected Messages $messages;
+
+    public function __construct(ResponseFactoryInterface $responseFactory,
+                                TranslatorInterface $translator,
+                                Messages $messages)
     {
         $this->responseFactory = $responseFactory;
-    }
-
-    public function redirect(Request $request, string $url): ResponseInterface
-    {
-        $routeParser = RouteContext::fromRequest($request)->getRouteParser();
-        return $this->responseFactory->createResponse()
-            ->withHeader('Location', $routeParser->urlFor($url))
-            ->withStatus(302);
+        $this->translator = $translator;
+        $this->messages = $messages;
     }
 
 }
