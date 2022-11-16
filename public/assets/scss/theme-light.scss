@@ -128,6 +128,21 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}list-group-color: #{$body-color};
     --#{$variable-prefix}list-group-border-color: rgba(0, 0, 0, 0.075)
   }
+  .modal-comment {
+    color: #{$body-color};
+    background-color: #{$secondary};
+  }
+  .modal-delete-comment {
+    --bs-btn-color: #{$body-color};
+    --bs-btn-hover-color: #{$body-color};
+    --bs-btn-active-color: #{$body-color};
+    --bs-btn-bg: #{$secondary};
+    --bs-btn-border-color: #{$secondary};
+    --bs-btn-hover-bg: #{$tertiary};
+    --bs-btn-hover-border-color: #{$tertiary};
+    --bs-btn-active-bg: #{$tertiary};
+    --bs-btn-active-border-color: #{$tertiary};
+  }
 
   /* Navbar */
   .btn-abs-nav{
@@ -138,6 +153,9 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-hover-bg: #{$tertiary};
     --#{$variable-prefix}btn-active-bg: #{$tertiary};
     --#{$variable-prefix}btn-active-border-color: #{$tertiary};
+  }
+  .btn-abs-nav-g{
+    --#{$variable-prefix}btn-bg: #67B7BB;
   }
   .dd-nav{
     --#{$variable-prefix}dropdown-color: #{$body-color};
@@ -190,6 +208,12 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-hover-border-color: #{$primary};
     --#{$variable-prefix}btn-active-bg: #{$secondary};
     --#{$variable-prefix}btn-active-border-color: #{$primary};
+  }
+
+  /* Research */
+  .list-research .task-view {
+    --#{$variable-prefix}list-group-bg: #{$body-bg};
+    --#{$variable-prefix}list-group-border-color: rgba(0, 0, 0, 0.075);
   }
 
   /* Category */
@@ -305,5 +329,8 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-bg: #{$tertiary};
     --#{$variable-prefix}btn-color: #{$body-color};
     --#{$variable-prefix}btn-hover-bg: #{$tertiary};
+    --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #{$tertiary};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
   }
 }

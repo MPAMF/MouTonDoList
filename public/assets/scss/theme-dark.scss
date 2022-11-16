@@ -124,13 +124,28 @@ body.default::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-hover-bg: #660e00;
     --#{$variable-prefix}btn-hover-border-color: #fcb5aa;
     --#{$variable-prefix}btn-hover-color: #fcb5aa;
-    --#{$variable-prefix}btn-active-color: #EEEEEE;
+    --#{$variable-prefix}btn-active-color: #{$body-color};
     --#{$variable-prefix}btn-active-bg: #8d1300;
-    --#{$variable-prefix}btn-active-border-color: #EEEEEE;
+    --#{$variable-prefix}btn-active-border-color: #{$body-color};
   }
   .list-member {
-    --#{$variable-prefix}list-group-color: #EEEEEE;
+    --#{$variable-prefix}list-group-color: #{$body-color};
     --#{$variable-prefix}list-group-border-color: rgba(255, 255, 255, 0.075)
+  }
+  .modal-comment {
+    color: #{$body-color};
+    background-color: #{$secondary};
+  }
+  .modal-delete-comment {
+    --bs-btn-color: #{$body-color};
+    --bs-btn-hover-color: #{$body-color};
+    --bs-btn-active-color: #{$body-color};
+    --bs-btn-bg: #{$secondary};
+    --bs-btn-border-color: #{$secondary};
+    --bs-btn-hover-bg: #{$body-bg};
+    --bs-btn-hover-border-color: #{$body-bg};
+    --bs-btn-active-bg: #{$body-bg};
+    --bs-btn-active-border-color: #{$body-bg};
   }
 
   /* Navbar */
@@ -143,6 +158,9 @@ body.default::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-hover-color: #{$body-color};
     --#{$variable-prefix}btn-active-bg: #5DCBD0;
     --#{$variable-prefix}btn-active-border-color: #{$tertiary};
+  }
+  .btn-abs-nav-g{
+    --#{$variable-prefix}btn-bg: #5DCBD0;
   }
   .dd-nav{
     --#{$variable-prefix}dropdown-color: #{$body-color};
@@ -202,6 +220,12 @@ body.default::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-hover-border-color: #{$body-bg};
     --#{$variable-prefix}btn-active-bg: #{$secondary};
     --#{$variable-prefix}btn-active-border-color: #{$body-bg};
+  }
+
+  /* Research */
+  .list-research .task-view {
+    --#{$variable-prefix}list-group-bg: #{$body-bg};
+    --#{$variable-prefix}list-group-border-color: rgba(255, 255, 255, 0.075);
   }
 
   /* Category */
@@ -318,5 +342,7 @@ body.default::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-color: #{$body-color};
     --#{$variable-prefix}btn-hover-bg: #{$secondary};
     --#{$variable-prefix}btn-hover-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #{$secondary};
+    --#{$variable-prefix}btn-active-color: #{$body-color};
   }
 }

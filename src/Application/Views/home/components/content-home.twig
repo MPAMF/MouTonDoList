@@ -1,9 +1,9 @@
-<div class="container d-flex flex-column justify-content-center align-items-center">
+<div class="container d-flex flex-column justify-content-center align-items-center mt-5">
     <h1 class="text-center"><b>{% trans %}HomeTitle{% endtrans %}</b></h1>
     <p class="text-center">{% trans with {'%name%': t('AppName')} %}HomeText{% endtrans %}</p>
-    <a class="nav-link active" href="signin">
+    <a class="nav-link active" href="{{ basePath }}/account/register">
         <button class="btn m-2 btn-primary" type="button">{% trans %}HomeSignIn{% endtrans %}</button>
     </a>
 
-    <img src="assets/img/leGang.jpeg" id="ApplyImage" alt="ApplyImage" class="d-inline-block align-text-top m-2">
+    <img src="{{ basePath }}/assets/img/leGang.jpeg" id="ApplyImage" alt="ApplyImage" class="d-inline-block align-text-top m-2">
 </div>

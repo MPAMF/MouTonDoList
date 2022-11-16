@@ -10,6 +10,8 @@
             })
         {% endfor %}
     </script>
+    <script type="text/javascript" src="assets/js/checks.js"></script>
+    <script type="text/javascript" src="assets/js/modal-init.js"></script>
     <script type="text/javascript" src="assets/js/popover-init.js"></script>
 {% endblock %}
 
@@ -18,7 +20,7 @@
 {% endblock %}
 
 {% block main %}
-    {% include 'pages/components/content.twig' %}
+    {% include 'pages/components/content.twig' with { 'status' : 'exemple' } %}
     {% include 'components/modal.twig' %}
 {% endblock %}
 
