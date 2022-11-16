@@ -27,7 +27,7 @@ return function (App $app) {
 
         $group->get('/register', function (Request $request, Response $response) {
             return $this->get('view')->render($response, 'home/content.twig', ['content' => 'signin']);
-        });
+        })->setName('account/register');
     });
 
     $app->get('/account/logout', function (Request $request, Response $response) {

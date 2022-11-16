@@ -78,6 +78,9 @@ input[type="checkbox"] {
 .span-nav{
     font-size: 30px;
 }
+.ul-nav{
+    --bs-nav-link-padding-y : 0px;
+}
 .logo{
     margin-right: 3px;
     height: 40px;

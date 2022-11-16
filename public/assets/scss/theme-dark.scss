@@ -159,6 +159,9 @@ body.default::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-active-bg: #5DCBD0;
     --#{$variable-prefix}btn-active-border-color: #{$tertiary};
   }
+  .btn-abs-nav-g{
+    --#{$variable-prefix}btn-bg: #5DCBD0;
+  }
   .dd-nav{
     --#{$variable-prefix}dropdown-color: #{$body-color};
     --#{$variable-prefix}dropdown-link-active-color: #{$body-color};

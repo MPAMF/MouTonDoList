@@ -130,6 +130,9 @@
   --bs-btn-active-bg: #A6E3E9;
   --bs-btn-active-border-color: #A6E3E9;
 }
+.btn-abs-nav-g{
+  --bs-btn-bg: #5DCBD0;
+}
 .dd-nav{
   --bs-dropdown-color: #EEEEEE;
   --bs-dropdown-link-active-color: #EEEEEE;
