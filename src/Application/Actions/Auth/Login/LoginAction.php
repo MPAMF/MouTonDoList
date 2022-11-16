@@ -10,7 +10,8 @@ class LoginAction extends Action
 
     protected function action(): Response
     {
-        return $this->respondWithView('');
+        return $this->withSuccess($this->translator->trans('AuthLoginSuccess'))
+            ->redirect('dashboard');
     }
 
 }

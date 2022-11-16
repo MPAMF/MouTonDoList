@@ -6,6 +6,7 @@ use App\Domain\Settings\SettingsInterface;
 use App\Infrastructure\Security\Auth;
 use App\Infrastructure\Twig\CsrfExtension;
 use App\Infrastructure\Twig\FlashMessageExtension;
+use Awurth\SlimValidation\ValidatorInterface;
 use DI\ContainerBuilder;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\DatabaseManager;
@@ -97,6 +98,9 @@ return function (ContainerBuilder $containerBuilder) {
             // Session storage is then set in SessionMiddleware
             $storage = [];
             return new Messages($storage);
+        },
+        ValidatorInterface::class => function () {
+            return new Awurth\SlimValidation\Validator();
         },
         AuthInterface::class => autowire(Auth::class)
     ]);

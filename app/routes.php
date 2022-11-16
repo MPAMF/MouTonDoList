@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 use App\Application\Actions\Auth\Login\DisplayLoginAction;
 use App\Application\Actions\Auth\Login\DisplayRegisterAction;
+use App\Application\Actions\Auth\Login\LoginAction;
+use App\Application\Actions\Auth\Register\RegisterAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
@@ -25,7 +27,10 @@ return function (App $app) {
 
     $app->group('/account', function (Group $group) {
         $group->get('/login', DisplayLoginAction::class)->setName('account.login');
+        $group->post('/login', LoginAction::class);
+
         $group->get('/register', DisplayRegisterAction::class)->setName('account.register');
+        $group->post('/register', RegisterAction::class);
     });
 
     $app->get('/account/logout', function (Request $request, Response $response) {

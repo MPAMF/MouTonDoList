@@ -17,6 +17,7 @@ use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Flash\Messages;
 use Slim\Views\Twig;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class Action
 {
@@ -37,12 +38,19 @@ abstract class Action
 
     protected Messages $messages;
 
-    public function __construct(LoggerInterface $logger, Twig $twig, ResponseFactoryInterface $responseFactory, Messages $messages)
+    protected TranslatorInterface $translator;
+
+    public function __construct(LoggerInterface          $logger,
+                                Twig                     $twig,
+                                ResponseFactoryInterface $responseFactory,
+                                Messages                 $messages,
+                                TranslatorInterface      $translator)
     {
         $this->logger = $logger;
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
         $this->messages = $messages;
+        $this->translator = $translator;
     }
 
     /**
@@ -108,8 +116,7 @@ abstract class Action
     {
         try {
             return $this->twig->render($this->response, $viewPath, $data);
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             throw new HttpInternalServerErrorException($this->request, $e->getMessage());
         }
     }
@@ -124,8 +131,8 @@ abstract class Action
         $this->response->getBody()->write($json);
 
         return $this->response
-                    ->withHeader('Content-Type', 'application/json')
-                    ->withStatus($payload->getStatusCode());
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus($payload->getStatusCode());
     }
 
     /**
