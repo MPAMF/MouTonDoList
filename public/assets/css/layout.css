@@ -135,6 +135,14 @@ input[type="checkbox"] {
     }
 }
 
+/* Home Page */
+.div-home{
+    max-width: 50rem;
+}
+.p-home{
+    max-width: 40rem;
+}
+
 /* Modal Theme */
 .theme-modal-color{
     height: 60px;
