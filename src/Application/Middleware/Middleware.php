@@ -11,13 +11,10 @@ use Slim\Routing\RouteContext;
 
 abstract class Middleware implements MiddlewareInterface
 {
-
     protected ResponseFactoryInterface $responseFactory;
-    protected AuthInterface $auth;
 
-    public function __construct(AuthInterface $auth, ResponseFactoryInterface $responseFactory)
+    public function __construct(ResponseFactoryInterface $responseFactory)
     {
-        $this->auth = $auth;
         $this->responseFactory = $responseFactory;
     }
 
