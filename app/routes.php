@@ -19,7 +19,7 @@ return function (App $app) {
         return $response;
     });
 
-    $app->get('/home', function (Request $request, Response $response) {
+    $app->get('/', function (Request $request, Response $response) {
         return $this->get(Twig::class)->render($response, 'home/content.twig', ['content' => 'home']);
     });
 
@@ -32,7 +32,9 @@ return function (App $app) {
         return $this->get(Twig::class)->render($response, 'account/login-page.twig');
     })->add(AuthMiddleware::class);
 
-    $app->get('/', DisplayDashboardAction::class)->setName('dashboard');
+    $app->group('/dashboard', function (Group $group) {
+        $group->get('', DisplayDashboardAction::class)->setName('dashboard');
+    })->add(AuthMiddleware::class);
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
