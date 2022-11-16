@@ -13,6 +13,7 @@ use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Flash\Messages;
 use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
@@ -30,11 +31,14 @@ abstract class Action
 
     protected ResponseFactoryInterface $responseFactory;
 
-    public function __construct(LoggerInterface $logger, Twig $twig, ResponseFactoryInterface $responseFactory)
+    protected Messages $messages;
+
+    public function __construct(LoggerInterface $logger, Twig $twig, ResponseFactoryInterface $responseFactory, Messages $messages)
     {
         $this->logger = $logger;
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
+        $this->messages = $messages;
     }
 
     /**
@@ -106,6 +110,10 @@ abstract class Action
         }
     }
 
+    /**
+     * @param ActionPayload $payload
+     * @return Response
+     */
     protected function respond(ActionPayload $payload): Response
     {
         $json = json_encode($payload, JSON_PRETTY_PRINT);
@@ -124,6 +132,44 @@ abstract class Action
     protected function user(): ?User
     {
         return $this->request->getAttribute('user');
+    }
+
+    /**
+     * @param string $key Flash message key
+     * @param string $value Flash message text
+     * @return $this Current Action instance
+     */
+    protected function withMessage(string $key, string $value) : Action
+    {
+        $this->messages->addMessage($key, $value);
+        return $this;
+    }
+
+    /**
+     * @param string $value Error message
+     * @return $this Current Action instance
+     */
+    protected function withError(string $value) : Action
+    {
+        return $this->withMessage('errors', $value);
+    }
+
+    /**
+     * @param string $value Success message
+     * @return $this Current Action instance
+     */
+    protected function withSuccess(string $value) : Action
+    {
+        return $this->withMessage('success', $value);
+    }
+
+    /**
+     * @param string $value Info message
+     * @return $this Current Action instance
+     */
+    protected function withInfo(string $value) : Action
+    {
+        return $this->withMessage('infos', $value);
     }
 
     /**
