@@ -4,7 +4,8 @@ declare(strict_types=1);
 use App\Domain\Auth\AuthInterface;
 use App\Domain\Settings\SettingsInterface;
 use App\Infrastructure\Security\Auth;
-use App\Infrastructure\Security\CsrfExtension;
+use App\Infrastructure\Twig\CsrfExtension;
+use App\Infrastructure\Twig\FlashMessageExtension;
 use DI\ContainerBuilder;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\DatabaseManager;
@@ -61,6 +62,7 @@ return function (ContainerBuilder $containerBuilder) {
             $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
             $twig->addExtension(new TranslationExtension($translator));
             $twig->addExtension(new CsrfExtension($c->get(Guard::class)));
+            $twig->addExtension(new FlashMessageExtension($c->get(Messages::class)));
             return $twig;
         },
         Manager::class => function (ContainerInterface $c) {
