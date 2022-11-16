@@ -25,6 +25,8 @@ class CsrfExtension extends AbstractExtension implements GlobalsInterface
         $csrfValueKey = $this->csrf->getTokenValueKey();
         $csrfName = $this->csrf->getTokenName();
         $csrfValue = $this->csrf->getTokenValue();
+        $html = '<input type="hidden" name="' . $csrfNameKey . '" value="' . $csrfName . '}}">
+            <input type="hidden" name="' . $csrfValueKey . '" value="' . $csrfValue . '">';
 
         return [
             'csrf' => [
@@ -33,7 +35,8 @@ class CsrfExtension extends AbstractExtension implements GlobalsInterface
                     'value' => $csrfValueKey
                 ],
                 'name' => $csrfName,
-                'value' => $csrfValue
+                'value' => $csrfValue,
+                'html' => $html
             ]
         ];
     }
