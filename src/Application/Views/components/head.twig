@@ -15,7 +15,7 @@
     $(document).ready(() => {
         $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
 
-            var allowedMethod = ["post", "put", "delete"];
+            let allowedMethod = ["post", "put", "delete"];
 
             if (allowedMethod.includes(options.type.toLowerCase())) {
                 // initialize `data` to empty string if it does not exist

@@ -7,7 +7,6 @@ use App\Application\ResponseEmitter\ResponseEmitter;
 use App\Domain\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Slim\App;
-use Slim\Csrf\Guard;
 use Slim\Factory\ServerRequestCreatorFactory;
 
 require __DIR__ . '/../vendor/autoload.php';

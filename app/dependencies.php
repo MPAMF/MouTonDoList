@@ -15,6 +15,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Csrf\Guard;
+use Slim\Flash\Messages;
 use Slim\Views\Twig;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Loader\JsonFileLoader;
@@ -59,7 +60,7 @@ return function (ContainerBuilder $containerBuilder) {
             // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
             $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
             $twig->addExtension(new TranslationExtension($translator));
-            //$twig->addExtension(new CsrfExtension($c->get('csrf')));
+            $twig->addExtension(new CsrfExtension($c->get(Guard::class)));
             return $twig;
         },
         Manager::class => function (ContainerInterface $c) {
@@ -80,11 +81,17 @@ return function (ContainerBuilder $containerBuilder) {
         Guard::class => function (ContainerInterface $c) {
             // Temp array to avoid session_start()
             // Session storage is then set in SessionMiddleware
-            $array = array();
+            $storage = array();
             return new Guard(
                 $c->get(ResponseFactoryInterface::class),
-                storage: $array
+                storage: $storage
             );
+        },
+        Messages::class => function () {
+            // Temp array to avoid session_start()
+            // Session storage is then set in SessionMiddleware
+            $storage = [];
+            return new Messages($storage);
         },
         AuthInterface::class => autowire(Auth::class)
     ]);
