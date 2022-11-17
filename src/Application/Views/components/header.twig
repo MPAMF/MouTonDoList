@@ -13,8 +13,41 @@
         <div class="d-inline-flex">
             <div class="collapse collapse-horizontal" id="collapseSearch">
                 <div class="div-research">
-                    <form class="d-flex" role="search">
-                        <input class="form-control input-research" type="search" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
+                    <form class="dropdown input-group flex-nowrap container-searchbar" role="search">
+                            <div class="d-flex align-items-center searchbar-inputs">
+                                <div id="searchbar-assign" class="searchbar-category">
+                                    <small type="button" id="value-assign" class="form-text text-muted" data-bs-toggle="dropdown" aria-expanded="false">Assign=</small>
+                                    <ul id="dropdown-assign" class="dropdown-menu dd-nav" data-bs="dropdown">
+                                        <li>
+                                            <button class="dropdown-item dropdown-item-nav" type="button">
+                                                None
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item dropdown-item-nav" type="button">
+                                                Any
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item dropdown-item-nav" type="button">
+                                                NOM Prénom
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <input type="text" id="searchbar-input" class="form-control" data-bs-toggle="dropdown" aria-expanded="false" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
+                                    <ul id="dropdown-category" class="dropdown-menu dropdown-menu-end dd-nav" data-bs="dropdown">
+                                        <li>
+                                            <button type="button" onclick="showDropdownAssign(event)" class="dropdown-item dropdown-item-nav">
+                                                <span class="mdi mdi-account me-2"></span>
+                                                Assigné
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button type="reset" onclick="resetSearchbar()" class="btn searchbar-cancel"><span class="mdi mdi-24px mdi-close-circle"></span></button>
                     </form>
                 </div>
             </div>
@@ -86,3 +119,46 @@
         </div>
     </div>
 </div>
+
+<script>
+    function resetSearchbar() {
+        document.getElementById("searchbar-assign").style.display = "none"
+        document.getElementById("value-assign").innerHTML = "Assigné="
+    }
+
+    function showDropdownAssign(e) {
+        let assignDiv = document.getElementById("searchbar-assign")
+        let assignStyle = window.getComputedStyle(assignDiv)
+        if(assignStyle.getPropertyValue('display') === "none")
+            assignDiv.style.display = "block"
+        else
+        {
+            e.stopPropagation();
+
+            /* Hide input dropdown */
+            var dropdownElement = document.getElementById('searchbar-input')
+            var dropdownInstanceBefore = bootstrap.Dropdown.getInstance(dropdownElement)
+            if(dropdownInstanceBefore !== null)
+                dropdownInstanceBefore.dispose()
+            new bootstrap.Dropdown(dropdownElement)
+            var dropdownInstanceAfter = bootstrap.Dropdown.getInstance(dropdownElement)
+            dropdownInstanceAfter.hide()
+
+            /* Show assign dropdown */
+            var dropdownElement2 = document.getElementById('value-assign')
+            var dropdownInstanceBefore2 = bootstrap.Dropdown.getInstance(dropdownElement2)
+            if(dropdownInstanceBefore2 !== null)
+                dropdownInstanceBefore2.dispose()
+            new bootstrap.Dropdown(dropdownElement2)
+            var dropdownInstanceAfter2 = bootstrap.Dropdown.getInstance(dropdownElement2)
+            dropdownInstanceAfter2.show()
+        }
+    }
+
+    /*document.getElementById("searchbar-input").addEventListener('click', function (e) {
+        console.log('test')
+        const dropdownID = document.getElementById("dropdown-input")
+        const dropdown = new bootstrap.Dropdown(dropdownID)
+        dropdown.toggle()
+    });*/
+</script>

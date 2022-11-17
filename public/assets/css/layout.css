@@ -113,10 +113,36 @@ input[type="checkbox"] {
     font-size: 9px;
     z-index: +1;
 }
+.container-searchbar
+{
+    border-radius: 5px;
+}
+.searchbar-inputs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    border-radius: 5px;
+    margin: 0 0.5rem;
+}
+.searchbar-inputs::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+#searchbar-input {
+    min-width: 3rem;
+    width: auto;
+    border-radius: 0;
+    box-shadow: none;
+}
+#searchbar-assign {
+    display: none;
+}
 .input-research{
     border: unset;
     height: 40px;
     margin-right: 5px;
+    cursor: text;
+    position: relative;
 }
 .div-research{
     width: 39vw;
