@@ -93,33 +93,36 @@ $(document).ready(function() {
 function doSearch(assignValue, splitInputs) {
     const result = []
     let correspond = false
-    categories.forEach(function(element) {
 
-        switch (assignValue) {
-            case null:
-                break
-            case element.assigned:
-                correspond = true
-                break
-            case 'None':
-                if(element.assigned === "")
+    categories.forEach(function(category) {
+        category.subs.forEach(function(sub) {
+            sub.tasks.forEach(function(task) {
+                switch (assignValue) {
+                    case null:
+                        break
+                    case task.assigned:
+                        correspond = true
+                        break
+                    case 'None':
+                        if (task.assigned === "")
+                            correspond = true
+                        break
+                    default:
+                        break
+                }
+
+                const name = (task.name.split(" ")).some(r => splitInputs.includes(r))
+                const desc = (task.description.split(" ")).some(r => splitInputs.includes(r))
+
+                if (name || desc)
                     correspond = true
-                break
-            default:
-                break
-        }
 
-        const name = (element.name.split(" ")).some( r => splitInputs.includes(r))
-        const desc = (element.desc.split(" ")).some( r => splitInputs.includes(r))
-
-        if(name || desc)
-            correspond = true
-
-        if(correspond)
-        {
-            result.push(element)
-            correspond = false
-        }
+                if (correspond) {
+                    result.push(task)
+                    correspond = false
+                }
+            })
+        })
     })
     return result
 }
@@ -140,7 +143,7 @@ function toggleResearch(value) {
     }
 }
 
-function buildTaskElement(element) {
+function buildTaskElement(task) {
     let newTask = document.createElement("li")
     newTask.classList.add("list-group-item", "task-view")
     newTask.innerHTML = '' +
@@ -148,16 +151,14 @@ function buildTaskElement(element) {
         '        <span class="mdi mdi-18px mdi-drag"></span>' +
         '    </button>' +
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche">' +
-        '        <div class="task-view-info" id="taskViewInfo-{{ subCatId }}-{{ taskId }}" onclick="openTaskDetails({{ subCatId }},{{ taskId }})">' +
-        '            <label class="form-check-label" title="Nom de la tâche">' +
-        '                Nom de la tâche [{{ subCatId }}-{{ taskId }}]' +
-        '            </label>' +
-        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">@NOM Prénom</small>' +
-        '            <small class="form-text text-muted" title="Description de la tâche">Description</small>' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" ' + (task.checked ? 'checked' : '') + '>' +
+        '        <div class="task-view-info" id="taskViewInfo-' + task.subId + '-' + task.taskId + '" onclick="openTaskDetails(' + task.subId + ',' + task.taskId + ')">' +
+        '            <label class="form-check-label" title="Nom de la tâche">' + task.name + '</label>' +
+        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + task.assigned + '</small>' +
+        '            <small class="form-text text-muted" title="Description de la tâche">' + task.description + '</small>' +
         '        </div>' +
         '    </div>' +
-        '    <a data-idCat="{{ subCatId }}" data-idTask="{{ taskId }}" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">' +
+        '    <a data-idCat="' + task.subId + '" data-idTask="' + task.taskId + '" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">' +
         '        <span class="mdi mdi-dots-horizontal"></span>' +
         '    </a>'
     return newTask
@@ -170,7 +171,7 @@ function displayResult(result) {
     let list = document.getElementById("research").getElementsByTagName("ul")[0]
     list.innerHTML = ""
 
-    result.forEach(function(element) {
-        list.appendChild(buildTaskElement(element))
+    result.forEach(function(task) {
+        list.appendChild(buildTaskElement(task))
     })
 }

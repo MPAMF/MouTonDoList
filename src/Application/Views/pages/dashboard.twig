@@ -2,25 +2,33 @@
 
 {% block javascript_before %}
     <script type="text/javascript">
-        const categories = []
         let i = 0
+
+        const task = []
+        {% for i in 0..4 %}
+        i = {{ i }};
+        task.push({
+            subId: 0,
+            taskId: i,
+            name: "name " + i,
+            description: "desc " + i,
+            checked: i % 2,
+            assigned: i % 2 ? "Any" : "None"
+        });
+        {% endfor %}
+
+        const sub = []
+        sub.push({
+            id: 0,
+            tasks: task,
+        });
+
+        const categories = []
         categories.push({
             id: parseInt("{{ category.id }}"),
             name: "{{ category.name }}",
-            desc: "",
-            done: false,
-            assigned: ""
+            subs: sub,
         })
-        {% for i in 10..20 %}
-            i = {{ i }};
-            categories.push({
-                id: i,
-                name: "test" + i,
-                desc: "test" + i,
-                done: i > 15,
-                assigned: i < 15 ? "Any" : "None"
-            });
-        {% endfor %}
     </script>
     <script type="text/javascript" src="assets/js/checks.js"></script>
     <script type="text/javascript" src="assets/js/modal-init.js"></script>
@@ -32,7 +40,7 @@
 {% endblock %}
 
 {% block main %}
-    {% include 'pages/components/content.twig' with { 'status' : 'exemple' } %}
+    {% include 'pages/components/content.twig' %}
     {% include 'components/modal.twig' %}
 {% endblock %}
 
