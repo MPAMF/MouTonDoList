@@ -2,13 +2,33 @@
 
 {% block javascript_before %}
     <script type="text/javascript">
-        const categories = []
-        {% for i in 0..1 %}
-            categories.push({
-                id: parseInt("{{ category.id }}"),
-                name: "{{ category.name }}"
-            })
+        let i = 0
+
+        const task = []
+        {% for i in 0..4 %}
+        i = {{ i }};
+        task.push({
+            subId: 0,
+            taskId: i,
+            name: "name " + i,
+            description: "desc " + i,
+            checked: i % 2,
+            assigned: i % 2 ? "Any" : "None"
+        });
         {% endfor %}
+
+        const sub = []
+        sub.push({
+            id: 0,
+            tasks: task,
+        });
+
+        const categories = []
+        categories.push({
+            id: parseInt("{{ category.id }}"),
+            name: "{{ category.name }}",
+            subs: sub,
+        })
     </script>
     <script type="text/javascript" src="assets/js/checks.js"></script>
     <script type="text/javascript" src="assets/js/modal-init.js"></script>
@@ -20,7 +40,7 @@
 {% endblock %}
 
 {% block main %}
-    {% include 'pages/components/content.twig' with { 'status' : 'exemple' } %}
+    {% include 'pages/components/content.twig' %}
     {% include 'components/modal.twig' %}
 {% endblock %}
 
@@ -32,6 +52,7 @@
     <script type="text/javascript" src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
     <script type="text/javascript" src="assets/js/popover-setup.js"></script>
     <script type="text/javascript" src="assets/js/dragdrop-setup.js"></script>
+    <script type="text/javascript" src="assets/js/search.js"></script>
     <script type="text/javascript" src="assets/js/theme-switcher.js"></script>
     <script type="text/javascript" src="assets/js/sidebar-event.js"></script>
 {% endblock %}
