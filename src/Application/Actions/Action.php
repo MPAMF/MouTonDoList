@@ -4,14 +4,10 @@ declare(strict_types=1);
 namespace App\Application\Actions;
 
 use App\Application\Handlers\FlashMessageHandler;
-use App\Application\Handlers\OldInputHandler;
 use App\Application\Handlers\RedirectHandler;
 use App\Domain\DomainException\DomainRecordNotFoundException;
 use App\Domain\User\User;
-use Awurth\SlimValidation\Validator;
-use Awurth\SlimValidation\ValidatorInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
@@ -21,6 +17,7 @@ use Slim\Exception\HttpNotFoundException;
 use Slim\Flash\Messages;
 use Slim\Views\Twig;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Tagliatti\SlimValidation\ValidatorInterface;
 
 abstract class Action
 {

@@ -6,8 +6,6 @@ use App\Domain\Settings\SettingsInterface;
 use App\Infrastructure\Security\Auth;
 use App\Infrastructure\Twig\CsrfExtension;
 use App\Infrastructure\Twig\FlashMessageExtension;
-use Awurth\SlimValidation\ValidatorExtension;
-use Awurth\SlimValidation\ValidatorInterface;
 use DI\ContainerBuilder;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\DatabaseManager;
@@ -24,6 +22,9 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Loader\JsonFileLoader;
 use Symfony\Component\Translation\Translator;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Tagliatti\SlimValidation\Validator;
+use Tagliatti\SlimValidation\ValidatorExtension;
+use Tagliatti\SlimValidation\ValidatorInterface;
 use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -94,7 +95,8 @@ return function (ContainerBuilder $containerBuilder) {
             $storage = [];
             return new Guard(
                 $c->get(ResponseFactoryInterface::class),
-                storage: $storage
+                storage: $storage,
+                persistentTokenMode: true // For AJAX requests, persist until csrf check failed.
             );
         },
         Messages::class => function () {
@@ -104,7 +106,7 @@ return function (ContainerBuilder $containerBuilder) {
             return new Messages($storage);
         },
         ValidatorInterface::class => function () {
-            return new Awurth\SlimValidation\Validator();
+            return new Validator();
         },
         AuthInterface::class => autowire(Auth::class)
     ]);

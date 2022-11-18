@@ -4,12 +4,12 @@ namespace App\Application\Actions\Auth;
 
 use App\Application\Actions\Action;
 use App\Domain\User\UserRepository;
-use Awurth\SlimValidation\ValidatorInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Flash\Messages;
 use Slim\Views\Twig;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Tagliatti\SlimValidation\ValidatorInterface;
 
 abstract class AuthAction extends Action
 {
