@@ -9,31 +9,27 @@
         </div>
     </div>
 
-    {% if (status == "research") %}
+    <div id="research" class="research" hidden>
+        <p class="mb-4 form-text text-muted">Résultat de la recherche :</p>
+        <ul class="list-group list-group-flush tasks list-research"></ul>
+    </div>
 
-        <div class="research">
-            <p class="mb-4">Résultat de la recherche : <small class="form-text text-muted" title="Paramètres recherchés">Paul Meyer</small></p>
-            <ul class="list-group list-group-flush tasks list-research">
-                {% for taskId in 0..5 %}
-                    {% include 'pages/components/task/content.twig' with { 'subCatId' : 0, 'taskId': taskId } %}
-                {% endfor %}
-            </ul>
-        </div>
+    <div id="default-category-content">
+        {% if (status == "exemple") %}
 
-    {% elseif (status == "exemple") %}
+            {% for subCatId in 0..2 %}
+                {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : subCatId } %}
+            {% endfor %}
 
-        {% for subCatId in 0..2 %}
-            {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : subCatId } %}
-        {% endfor %}
+            {% for subCatId in 3..3 %}
+                {% include 'pages/components/sub-category/archive.twig' with { 'subCatId' : subCatId } %}
+            {% endfor %}
 
-        {% for subCatId in 3..3 %}
-            {% include 'pages/components/sub-category/archive.twig' with { 'subCatId' : subCatId } %}
-        {% endfor %}
+        {% else %}
 
-    {% else %}
+            {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : 0 , 'status' : 'default' } %}
 
-        {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : 0 , 'status' : 'default' } %}
-
-    {% endif %}
+        {% endif %}
+    </div>
 
 </div>

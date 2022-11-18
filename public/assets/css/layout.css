@@ -116,14 +116,65 @@ input[type="checkbox"] {
     font-size: 9px;
     z-index: +1;
 }
-.input-research{
-    border: unset;
-    height: 40px;
-    margin-right: 5px;
-}
-.div-research{
+
+.container-searchbar  {
+    border-radius: 5px;
     width: 39vw;
 }
+.searchbar {
+    overflow-x: auto;
+    white-space: nowrap;
+    border-radius: 5px;
+    margin: 0 0.5rem;
+    width: 100%;
+}
+.searchbar::-webkit-scrollbar {
+    height: 0.5em;
+    display: none;
+}
+.searchbar-show::-webkit-scrollbar {
+    display: initial;
+}
+.searchbar-cancel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    --bs-btn-padding-x: 0.25rem;
+    --bs-btn-padding-y: 0.125rem;
+}
+.searchbar-input-container {
+    width: 100%;
+}
+.searchbar-input-container input, .searchbar-input-container input:focus {
+    width: 100%;
+    min-width: 10em;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+.searchbar-category-container {
+    padding: 1%;
+    border-radius: 3px;
+    display: none;
+}
+.searchbar-category-container small {
+    white-space: nowrap;
+}
+.searchbar-category-button {
+    margin-right: 0.25rem;
+}
+.searchbar-category-button:hover {
+    cursor: pointer;
+}
+.searchbar-category-cancel {
+    display: none;
+}
+.searchbar-category-cancel:hover {
+    cursor: pointer;
+    border-radius: 3px;
+}
+
 .appName{
     margin-bottom: 0px;
     padding-top: 8px;
