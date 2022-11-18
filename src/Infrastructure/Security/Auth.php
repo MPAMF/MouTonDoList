@@ -36,4 +36,13 @@ class Auth implements AuthInterface
     {
         return $this->userRepository->get(Session::get($this->authId));
     }
+
+    /**
+     * @param mixed $user User Id or User object
+     */
+    public function setUser(int|User $user) : void
+    {
+        $id = $user instanceof User ? $user->getId() : $user;
+        Session::set($this->authId, $id);
+    }
 }

@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 use App\Application\Actions\Auth\Login\DisplayLoginAction;
-use App\Application\Actions\Auth\Login\DisplayRegisterAction;
 use App\Application\Actions\Auth\Login\LoginAction;
+use App\Application\Actions\Auth\Register\DisplayRegisterAction;
 use App\Application\Actions\Auth\Register\RegisterAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;

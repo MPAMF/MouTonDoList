@@ -26,10 +26,13 @@ class LoginAction extends AuthAction
         $data = $this->getFormData();
 
         try {
-            $this->userRepository->logUser($data['email'], $data['password']);
+            $user = $this->userRepository->logUser($data['email'], password_hash($data['password'], PASSWORD_DEFAULT));
         } catch (UserNotFoundException) {
             return $this->withError($this->translator->trans('AuthLoginFailed'))->redirect('account.login');
         }
+
+        // Set user to session
+        $this->auth->setUser($user);
 
         return $this->withSuccess($this->translator->trans('AuthLoginSuccess'))
             ->redirect('dashboard');

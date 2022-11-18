@@ -79,9 +79,9 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-    public function save(Category $category)
+    public function save(Category $category) : bool
     {
-        $this->getDB()->table('categories')->updateOrInsert(
+        return $this->getDB()->table('categories')->updateOrInsert(
             $category->toRow()
         );
     }
