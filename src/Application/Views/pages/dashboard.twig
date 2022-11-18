@@ -3,11 +3,23 @@
 {% block javascript_before %}
     <script type="text/javascript">
         const categories = []
-        {% for i in 0..1 %}
+        let i = 0
+        categories.push({
+            id: parseInt("{{ category.id }}"),
+            name: "{{ category.name }}",
+            desc: "",
+            done: false,
+            assigned: ""
+        })
+        {% for i in 10..20 %}
+            i = {{ i }};
             categories.push({
-                id: parseInt("{{ category.id }}"),
-                name: "{{ category.name }}"
-            })
+                id: i,
+                name: "test" + i,
+                desc: "test" + i,
+                done: i > 15,
+                assigned: i < 15 ? "Any" : "None"
+            });
         {% endfor %}
     </script>
     <script type="text/javascript" src="assets/js/checks.js"></script>
@@ -32,6 +44,7 @@
     <script type="text/javascript" src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
     <script type="text/javascript" src="assets/js/popover-setup.js"></script>
     <script type="text/javascript" src="assets/js/dragdrop-setup.js"></script>
+    <script type="text/javascript" src="assets/js/search.js"></script>
     <script type="text/javascript" src="assets/js/theme-switcher.js"></script>
     <script type="text/javascript" src="assets/js/sidebar-event.js"></script>
 {% endblock %}
