@@ -171,12 +171,31 @@ body.default::-webkit-scrollbar-thumb,
     --#{$variable-prefix}dropdown-link-hover-color: #{$body-color};
     color: #{$body-color};
   }
-  .input-research, .input-research:focus{
-    background-color: #{$tertiary};
-    border-color: #{$tertiary};
-  }
   .modal-theme-close{
     color: #{$body-color};
+  }
+  /* Searchbar */
+  .container-searchbar {
+    background-color: #CBF1F5;
+    border-color: #CBF1F5;
+  }
+  .searchbar-cancel {
+    --bs-btn-color: #{$primary};
+    --bs-btn-bg: #CBF1F5;
+    --bs-btn-hover-color: #{$primary};
+    --bs-btn-hover-bg: #{$tertiary};
+    --bs-btn-active-color: #{$primary};
+    --bs-btn-active-bg: #{$tertiary};
+  }
+  .searchbar-input-container input, .searchbar-input-container input:focus {
+    background-color: #CBF1F5;
+    color: #{$body-bg};
+  }
+  .searchbar-category-container {
+    background-color: #{$tertiary};
+  }
+  .searchbar-category-cancel:hover {
+    background-color: #CBF1F5;
   }
 
   /* Sidebar */
