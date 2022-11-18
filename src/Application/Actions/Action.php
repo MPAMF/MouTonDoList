@@ -4,9 +4,12 @@ declare(strict_types=1);
 namespace App\Application\Actions;
 
 use App\Application\Handlers\FlashMessageHandler;
+use App\Application\Handlers\OldInputHandler;
 use App\Application\Handlers\RedirectHandler;
 use App\Domain\DomainException\DomainRecordNotFoundException;
 use App\Domain\User\User;
+use Awurth\SlimValidation\Validator;
+use Awurth\SlimValidation\ValidatorInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -21,8 +24,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class Action
 {
-    use RedirectHandler;
-    use FlashMessageHandler;
+    use RedirectHandler, FlashMessageHandler;
 
     protected LoggerInterface $logger;
 
@@ -40,17 +42,22 @@ abstract class Action
 
     protected TranslatorInterface $translator;
 
-    public function __construct(LoggerInterface          $logger,
-                                Twig                     $twig,
-                                ResponseFactoryInterface $responseFactory,
-                                Messages                 $messages,
-                                TranslatorInterface      $translator)
-    {
+    protected ValidatorInterface $validator;
+
+    public function __construct(
+        LoggerInterface          $logger,
+        Twig                     $twig,
+        ResponseFactoryInterface $responseFactory,
+        Messages                 $messages,
+        TranslatorInterface      $translator,
+        ValidatorInterface       $validator
+    ) {
         $this->logger = $logger;
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
         $this->messages = $messages;
         $this->translator = $translator;
+        $this->validator = $validator;
     }
 
     /**
@@ -144,5 +151,4 @@ abstract class Action
     {
         return $this->request->getAttribute('user');
     }
-
 }

@@ -6,6 +6,7 @@ use App\Domain\Settings\SettingsInterface;
 use App\Infrastructure\Security\Auth;
 use App\Infrastructure\Twig\CsrfExtension;
 use App\Infrastructure\Twig\FlashMessageExtension;
+use Awurth\SlimValidation\ValidatorExtension;
 use Awurth\SlimValidation\ValidatorInterface;
 use DI\ContainerBuilder;
 use Illuminate\Database\Capsule\Manager;
@@ -64,9 +65,12 @@ return function (ContainerBuilder $containerBuilder) {
         Twig::class => function (ContainerInterface $c) {
             // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
             $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
+
+            // Twig view extensions
             $twig->addExtension(new TranslationExtension($c->get(TranslatorInterface::class)));
             $twig->addExtension(new CsrfExtension($c->get(Guard::class)));
             $twig->addExtension(new FlashMessageExtension($c->get(Messages::class)));
+            $twig->addExtension(new ValidatorExtension($c->get(ValidatorInterface::class)));
             return $twig;
         },
         Manager::class => function (ContainerInterface $c) {
@@ -87,7 +91,7 @@ return function (ContainerBuilder $containerBuilder) {
         Guard::class => function (ContainerInterface $c) {
             // Temp array to avoid session_start()
             // Session storage is then set in SessionMiddleware
-            $storage = array();
+            $storage = [];
             return new Guard(
                 $c->get(ResponseFactoryInterface::class),
                 storage: $storage

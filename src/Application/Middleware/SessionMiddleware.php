@@ -19,11 +19,12 @@ class SessionMiddleware extends Middleware
 {
     private Guard $guard;
 
-    public function __construct(ResponseFactoryInterface $responseFactory,
-                                TranslatorInterface $translator,
-                                Messages $messages,
-                                Guard $guard)
-    {
+    public function __construct(
+        ResponseFactoryInterface $responseFactory,
+        TranslatorInterface      $translator,
+        Messages                 $messages,
+        Guard                    $guard
+    ) {
         parent::__construct($responseFactory, $translator, $messages);
         $this->guard = $guard;
         $this->options([
@@ -233,8 +234,7 @@ class SessionMiddleware extends Middleware
         string            $id,
         int               $now,
         array             $params
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $cookie = urlencode($name) . '=' . urlencode($id);
 
         // if omitted, the cookie will expire at end of the session (ie when the browser closes)

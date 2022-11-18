@@ -2,8 +2,6 @@
 
 namespace App\Application\Handlers;
 
-use App\Application\Actions\Action;
-
 trait FlashMessageHandler
 {
     /**
@@ -43,4 +41,5 @@ trait FlashMessageHandler
     {
         return $this->withMessage('infos', $value);
     }
+
 }
