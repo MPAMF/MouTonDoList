@@ -12,48 +12,46 @@
 
         <div class="d-inline-flex">
             <div class="collapse collapse-horizontal" id="collapseSearch">
-                <div class="div-research">
-                    <form class="dropdown input-group flex-nowrap container-searchbar" role="search">
-                        <div class="d-flex align-items-center searchbar-inputs">
-                            <div id="searchbar-assign" class="searchbar-category">
-                                <div id="assign-button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <small class="form-text text-muted">Assigné=</small>
-                                    <small id="assign-value" class="form-text text-muted"></small>
-                                </div>
-                                <span id="assign-cancel" onclick="resetAssign()" class="text-muted mdi mdi-close-thick"></span>
-                                <ul id="dropdown-assign" class="dropdown-menu dd-nav" data-bs="dropdown">
-                                    <li>
-                                        <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
-                                            None
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
-                                            Any
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
-                                            NOM Prénom
-                                        </button>
-                                    </li>
-                                </ul>
+                <form class="dropdown input-group flex-nowrap container-searchbar" role="search">
+                    <div class="d-flex align-items-center searchbar">
+                        <div id="searchbar-assign" class="searchbar-category-container">
+                            <div id="assign-button" class="searchbar-category-button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <small class="form-text text-muted">Assigné=</small>
+                                <small id="assign-value" class="form-text text-muted"></small>
                             </div>
-                            <div>
-                                <input type="text" id="searchbar-input" class="form-control" data-bs-toggle="dropdown" aria-expanded="false" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
-                                <ul id="dropdown-category" class="dropdown-menu dropdown-menu-end dd-nav" data-bs="dropdown">
-                                    <li>
-                                        <button type="button" onclick="showDropdownAssign(event)" class="dropdown-item dropdown-item-nav">
-                                            <span class="mdi mdi-account me-2"></span>
-                                            Assigné
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
+                            <span id="assign-cancel" onclick="resetAssign()" class="text-muted searchbar-category-cancel mdi mdi-close-thick"></span>
+                            <ul id="dropdown-assign" class="dropdown-menu dd-nav" data-bs="dropdown">
+                                <li>
+                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                        None
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                        Any
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                        NOM Prénom
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
-                        <button type="reset" onclick="resetSearchbar()" class="btn searchbar-cancel"><span class="mdi mdi-24px mdi-close-circle"></span></button>
-                    </form>
-                </div>
+                        <div class="searchbar-input-container">
+                            <input type="text" id="searchbar-input" class="form-control" data-bs-toggle="dropdown" aria-expanded="false" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
+                            <ul id="dropdown-category" class="dropdown-menu dropdown-menu-end dd-nav" data-bs="dropdown">
+                                <li>
+                                    <button type="button" onclick="showDropdownAssign(event)" class="dropdown-item dropdown-item-nav">
+                                        <span class="mdi mdi-account me-2"></span>
+                                        Assigné
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="reset" onclick="resetSearchbar()" class="btn searchbar-cancel"><span class="mdi mdi-24px mdi-close-circle"></span></button>
+                </form>
             </div>
 
             <button class="btn btn-abs-nav btn-nav" type="submit" data-bs-toggle="collapse" data-bs-target="#collapseSearch"
@@ -131,6 +129,23 @@
     - research
      */
 
+    let activeCategories = 0
+
+    function toggleSearchScroll(){
+        let searchbar = $(".searchbar")
+        if(activeCategories === 0)
+        {
+            searchbar.addClass('searchbar-show')
+            activeCategories--
+        }
+        else
+        {
+            searchbar.scrollLeft(0);
+            searchbar.removeClass('searchbar-show')
+            activeCategories++
+        }
+    }
+
     function getModal(dropdownId) {
         var dropdownElement = document.getElementById(dropdownId)
         var dropdownInstanceBefore = bootstrap.Dropdown.getInstance(dropdownElement)
@@ -141,6 +156,8 @@
     }
 
     function resetSearchbar() {
+        activeCategories = 0;
+        toggleSearchScroll()
         resetAssign()
     }
 
@@ -159,17 +176,19 @@
         /* Show assign dropdown */
         let assign = getModal('assign-button')
         bootstrap.Dropdown.getInstance(assign).show()
+
+        toggleSearchScroll()
     }
 
-    function resetAssign()
-    {
+    function resetAssign() {
+        if(activeCategories !== 0)
+            toggleSearchScroll()
         document.getElementById("assign-value").innerHTML = ''
         document.getElementById("assign-cancel").style.display = "none"
         document.getElementById("searchbar-assign").style.display = "none"
     }
 
-    function setAssignedValue(element)
-    {
+    function setAssignedValue(element) {
         document.getElementById('assign-value').innerText = element.innerText
         document.getElementById("assign-cancel").style.display = "initial"
     }

@@ -150,10 +150,6 @@
   background-color: #CBF1F5;
   border-color: #CBF1F5;
 }
-#searchbar-input, #searchbar-input:focus {
-  background-color: #CBF1F5;
-  color: #222831;
-}
 .searchbar-cancel {
   --bs-btn-color: #00ADB5;
   --bs-btn-bg: #CBF1F5;
@@ -162,10 +158,14 @@
   --bs-btn-active-color: #00ADB5;
   --bs-btn-active-bg: #A6E3E9;
 }
-.searchbar-category {
+.searchbar-input-container input, .searchbar-input-container input:focus {
+  background-color: #CBF1F5;
+  color: #222831;
+}
+.searchbar-category-container {
   background-color: #A6E3E9;
 }
-#assign-cancel:hover {
+.searchbar-category-cancel:hover {
   background-color: #CBF1F5;
 }
 

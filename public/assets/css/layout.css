@@ -114,36 +114,23 @@ input[type="checkbox"] {
     z-index: +1;
 }
 
-.input-research{
-    border: unset;
-    height: 40px;
-    margin-right: 5px;
-    cursor: text;
-    position: relative;
-}
-.div-research{
-    width: 39vw;
-}
 .container-searchbar  {
     border-radius: 5px;
+    width: 39vw;
 }
-.searchbar-inputs {
+.searchbar {
     overflow-x: auto;
     white-space: nowrap;
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
     border-radius: 5px;
     margin: 0 0.5rem;
+    width: 100%;
 }
-.searchbar-inputs::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
+.searchbar::-webkit-scrollbar {
+    height: 0.5em;
+    display: none;
 }
-#searchbar-input {
-    min-width: 3rem;
-    width: auto;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
+.searchbar-show::-webkit-scrollbar {
+    display: initial;
 }
 .searchbar-cancel {
     position: absolute;
@@ -153,26 +140,34 @@ input[type="checkbox"] {
     --bs-btn-padding-x: 0.25rem;
     --bs-btn-padding-y: 0.125rem;
 }
-.searchbar-category {
+.searchbar-input-container {
+    width: 100%;
+}
+.searchbar-input-container input, .searchbar-input-container input:focus {
+    width: 100%;
+    min-width: 10em;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+.searchbar-category-container {
     padding: 1%;
     border-radius: 3px;
+    display: none;
 }
-.searchbar-category small {
+.searchbar-category-container small {
     white-space: nowrap;
 }
-#searchbar-assign {
-    display: none;
-}
-#assign-button {
+.searchbar-category-button {
     margin-right: 0.25rem;
 }
-#assign-button:hover {
+.searchbar-category-button:hover {
     cursor: pointer;
 }
-#assign-cancel {
+.searchbar-category-cancel {
     display: none;
 }
-#assign-cancel:hover {
+.searchbar-category-cancel:hover {
     cursor: pointer;
     border-radius: 3px;
 }
