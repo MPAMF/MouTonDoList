@@ -113,8 +113,18 @@ input[type="checkbox"] {
     font-size: 9px;
     z-index: +1;
 }
-.container-searchbar
-{
+
+.input-research{
+    border: unset;
+    height: 40px;
+    margin-right: 5px;
+    cursor: text;
+    position: relative;
+}
+.div-research{
+    width: 39vw;
+}
+.container-searchbar  {
     border-radius: 5px;
 }
 .searchbar-inputs {
@@ -133,20 +143,40 @@ input[type="checkbox"] {
     width: auto;
     border-radius: 0;
     box-shadow: none;
+    border: none;
+}
+.searchbar-cancel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    --bs-btn-padding-x: 0.25rem;
+    --bs-btn-padding-y: 0.125rem;
+}
+.searchbar-category {
+    padding: 1%;
+    border-radius: 3px;
+}
+.searchbar-category small {
+    white-space: nowrap;
 }
 #searchbar-assign {
     display: none;
 }
-.input-research{
-    border: unset;
-    height: 40px;
-    margin-right: 5px;
-    cursor: text;
-    position: relative;
+#assign-button {
+    margin-right: 0.25rem;
 }
-.div-research{
-    width: 39vw;
+#assign-button:hover {
+    cursor: pointer;
 }
+#assign-cancel {
+    display: none;
+}
+#assign-cancel:hover {
+    cursor: pointer;
+    border-radius: 3px;
+}
+
 .appName{
     margin-bottom: 0px;
     padding-top: 8px;

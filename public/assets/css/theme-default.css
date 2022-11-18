@@ -121,6 +121,9 @@
 }
 
 /* Navbar */
+.modal-theme-close{
+  color: #EEEEEE;
+}
 .btn-abs-nav{
   --bs-btn-color: #EEEEEE;
   --bs-btn-active-color: #EEEEEE;
@@ -142,30 +145,16 @@
   --bs-dropdown-link-hover-color: #EEEEEE;
   color: #EEEEEE;
 }
-.container-searchbar, .searchbar-inputs {
+
+.container-searchbar {
   background-color: #CBF1F5;
   border-color: #CBF1F5;
 }
 #searchbar-input, #searchbar-input:focus {
   background-color: #CBF1F5;
-  border: none;
   color: #222831;
 }
-.modal-theme-close{
-  color: #EEEEEE;
-}
-.searchbar-category {
-  background-color: #A6E3E9;
-  padding: 1%;
-  border-radius: 3px;
-}
 .searchbar-cancel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border: none;
-  --bs-btn-padding-x: 0.25rem;
-  --bs-btn-padding-y: 0.125rem;
   --bs-btn-color: #00ADB5;
   --bs-btn-bg: #CBF1F5;
   --bs-btn-hover-color: #00ADB5;
@@ -173,8 +162,11 @@
   --bs-btn-active-color: #00ADB5;
   --bs-btn-active-bg: #A6E3E9;
 }
-.searchbar-category small {
-  white-space: nowrap;
+.searchbar-category {
+  background-color: #A6E3E9;
+}
+#assign-cancel:hover {
+  background-color: #CBF1F5;
 }
 
 /* Footer */
