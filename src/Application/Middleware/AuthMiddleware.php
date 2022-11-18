@@ -16,11 +16,12 @@ class AuthMiddleware extends Middleware
 {
     private AuthInterface $auth;
 
-    public function __construct(ResponseFactoryInterface $responseFactory,
-                                TranslatorInterface      $translator,
-                                Messages                 $messages,
-                                AuthInterface            $auth)
-    {
+    public function __construct(
+        ResponseFactoryInterface $responseFactory,
+        TranslatorInterface      $translator,
+        Messages                 $messages,
+        AuthInterface            $auth
+    ) {
         parent::__construct($responseFactory, $translator, $messages);
         $this->auth = $auth;
     }

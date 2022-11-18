@@ -4,12 +4,25 @@
         {{ csrf.html | raw }}
         <div class="mb-3">
             <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
-            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Il y aura des erreurs si jamais</div>
+            {% if has_error('email') %}
+                <input type="email" id="email" name="email" aria-describedby="validationEmail" class="form-control is-invalid" value="{{ val('email') }}">
+                <div id="validationEmail" class="invalid-feedback">
+                    {{ error('email') }}
+                </div>
+            {% else %}
+            <input type="email" id="email" name="email" class="form-control" value="{{ val('email') }}">
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">{% trans %}FormPwd{% endtrans %}</label>
-            <input type="password" class="form-control" name="password" id="password">
+            {% if has_error('password') %}
+                <input type="password" id="password" name="password" aria-describedby="validationPassword" class="form-control is-invalid">
+                <div id="validationPassword" class="invalid-feedback">
+                    {{ error('password') }}
+                </div>
+            {% else %}
+                <input type="password" id="password" name="password" class="form-control">
+            {% endif %}
         </div>
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
