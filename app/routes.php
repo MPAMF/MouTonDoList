@@ -23,7 +23,7 @@ return function (App $app) {
 
     $app->get('/', function (Request $request, Response $response) {
         return $this->get(Twig::class)->render($response, 'home/content.twig', ['content' => 'home']);
-    });
+    })->setName('home');
 
     $app->group('/account', function (Group $group) {
         $group->get('/login', DisplayLoginAction::class)->setName('account.login');
