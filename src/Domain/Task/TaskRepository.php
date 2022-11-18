@@ -22,8 +22,9 @@ interface TaskRepository
 
     /**
      * @param Task $task
+     * @return bool Save or update is successful
      */
-    public function save(Task $task);
+    public function save(Task $task) : bool;
 
     /**
      * @param Task $task

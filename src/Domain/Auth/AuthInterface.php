@@ -19,4 +19,11 @@ interface AuthInterface
      */
     public function user(): User;
 
+
+    /**
+     * @param int|User $user User Id or User object
+     * @return void
+     */
+    public function setUser(int|User $user): void;
+
 }

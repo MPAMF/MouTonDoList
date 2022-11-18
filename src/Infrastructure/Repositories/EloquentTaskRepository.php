@@ -76,9 +76,9 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         return $parsed;
     }
 
-    public function save(Task $task)
+    public function save(Task $task) : bool
     {
-        $this->getDB()->table('tasks')->updateOrInsert(
+        return $this->getDB()->table('tasks')->updateOrInsert(
             $task->toRow()
         );
     }

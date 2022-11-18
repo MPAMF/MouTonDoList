@@ -23,8 +23,9 @@ interface CategoryRepository
 
     /**
      * @param Category $category
+     * @return bool Save or update is successful
      */
-    public function save(Category $category);
+    public function save(Category $category) : bool;
 
     /**
      * @param Category $category
