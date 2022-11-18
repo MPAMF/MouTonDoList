@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Auth;
+namespace App\Infrastructure\Security;
 
 use App\Domain\Auth\AuthInterface;
 use App\Domain\Settings\SettingsInterface;

@@ -15,7 +15,7 @@ use DateTime;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 
-class DisplayDashboardAction extends DashboardAction
+class DisplayDashboardAction extends Action
 {
     /**
      * {@inheritdoc}
@@ -24,12 +24,12 @@ class DisplayDashboardAction extends DashboardAction
     {
 
         $this->logger->info("Dashboard action was viewed.");
-/*
-        try {
-            $user = $this->userRepository->logUser('iperskill@gmail.com', 'test');
-        } catch (UserNotFoundException $e) {
-            return $this->respondWithData($e);
-        }*/
+        /*
+                try {
+                    $user = $this->userRepository->logUser('iperskill@gmail.com', 'test');
+                } catch (UserNotFoundException $e) {
+                    return $this->respondWithData($e);
+                }*/
 
         $category = new Category();
         $category->setId(2);
@@ -39,7 +39,7 @@ class DisplayDashboardAction extends DashboardAction
         $category->setPosition(0);
         $category->setArchived(false);
 
-        return $this->twig->render($this->response, 'pages/dashboard.twig',
-            ['category' => $category]);
+        return $this->respondWithView('pages/dashboard.twig',
+                ['category' => $category]);
     }
 }

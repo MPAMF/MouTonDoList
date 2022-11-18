@@ -5,11 +5,11 @@
             <p class="appName">{% trans %}AppName{% endtrans %}</p>
         </a>
         {% if (content == 'login') %}
-            <a class="nav-link active d-flex me-2" href="{{ url_for('account/register') }}">
+            <a class="nav-link active d-flex me-2" href="{{ url_for('account.register') }}">
                 <button class="btn me-2 btn-abs-nav" type="button">{% trans %}SignIn{% endtrans %}</button>
             </a>
         {% elseif (content == 'signin') %}
-            <a class="nav-link active d-flex me-2" href="{{ url_for('account/login') }}">
+            <a class="nav-link active d-flex me-2" href="{{ url_for('account.login') }}">
                 <button class="btn me-2 btn-abs-nav" type="button">{% trans %}HomeLogin{% endtrans %}</button>
             </a>
         {% else %}
@@ -19,12 +19,12 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav ul-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('account/login') }}">
+                        <a class="nav-link active" href="{{ url_for('account.login') }}">
                             <button class="btn me-1 btn-abs-nav" type="button">{% trans %}HomeLogin{% endtrans %}</button>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url_for('account/register') }}">
+                        <a class="nav-link active" href="{{ url_for('account.register') }}">
                             <button class="btn me-1 btn-abs-nav btn-abs-nav-g" type="button">{% trans %}HomeSignIn{% endtrans %}</button>
                         </a>
                     </li>

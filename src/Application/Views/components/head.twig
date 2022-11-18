@@ -11,3 +11,22 @@
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="{{ basePath }}/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(() => {
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+
+            let allowedMethod = ["post", "put", "delete"];
+
+            if (allowedMethod.includes(options.type.toLowerCase())) {
+                // initialize `data` to empty string if it does not exist
+                options.data = options.data || "";
+
+                // add leading ampersand if `data` is non-empty
+                options.data += options.data ? "&" : "";
+
+                // add _token entry
+                options.data += "{{ csrf.keys.name }}={{ csrf.name }}&{{ csrf.keys.value }}={{ csrf.value }}";
+            }
+        });
+    });
+</script>
