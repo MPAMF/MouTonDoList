@@ -1,29 +1,55 @@
 <div class="container d-flex flex-column align-items-center mt-5 p-5">
     <h1 class="text-center">{% trans %}FormSignInTitle{% endtrans %}</h1>
-    <form>
+    <form action="{{ url_for('account.register') }}" method="POST" class="d-flex flex-column justify-content-center" id="form_register">
+        {{ csrf.html | raw }}
         <div class="mb-3">
             <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Il y aura des erreurs avec le mail</div>
+            {% if has_error('email') %}
+                <input type="email" id="email" name="email" aria-describedby="validationEmail" class="form-control is-invalid" value="{{ val('email') }}">
+                <div id="validationEmail" class="invalid-feedback">
+                    {{ error('email') }}
+                </div>
+            {% else %}
+                <input type="email" id="email" name="email" class="form-control bg-secondary" value="{{ val('email') }}">
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="pseudo" class="form-label">{% trans %}FormPseudo{% endtrans %}</label>
-            <input type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp">
-            <div id="pseudoHelp" class="form-text">Il y aura des erreurs avec le pseudo</div>
+            {% if has_error('pseudo') %}
+                <input type="text" id="pseudo" name="pseudo" aria-describedby="validationPseudo" class="form-control is-invalid" value="{{ val('pseudo') }}">
+                <div id="validationPseudo" class="invalid-feedback">
+                    {{ error('pseudo') }}
+                </div>
+            {% else %}
+                <input type="text" id="pseudo" name="pseudo" class="form-control bg-secondary" value="{{ val('email') }}">
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">{% trans %}FormPwd{% endtrans %}</label>
-            <input type="password" class="form-control" id="password" aria-describedby="passwordHelp">
-            <div id="passwordHelp" class="form-text">Il y aura des erreurs avec le mdp</div>
+            {% if has_error('password') %}
+                <input type="password" id="password" name="password" aria-describedby="validationPassword" class="form-control is-invalid">
+                <div id="validationPassword" class="invalid-feedback">
+                    {{ error('password') }}
+                </div>
+            {% else %}
+                <input type="password" id="password" name="password" class="form-control bg-secondary">
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="confirmationPassword" class="form-label">{% trans %}FormConfPwd{% endtrans %}</label>
-            <input type="password" class="form-control" id="confirmationPassword">
+            {% if has_error('password-conf') %}
+                <input type="password" id="password-conf" name="password-conf" aria-describedby="validationPasswordConf" class="form-control is-invalid">
+                <div id="validationPasswordConf" class="invalid-feedback">
+                    {{ error('password-conf') }}
+                </div>
+            {% else %}
+                <input type="password" id="password-conf" name="password-conf" class="form-control bg-secondary">
+            {% endif %}
         </div>
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">{% trans %}FormCGV{% endtrans %}</label>
+            <input type="checkbox" class="form-check-input bg-secondary" id="condition">
+            <label class="form-check-label" for="condition">{% trans %}FormCGV{% endtrans %}</label>
         </div>
+        <button type="submit" class="btn btn-primary">{% trans %}FormSubmit{% endtrans %}</button>
     </form>
-    <button type="submit" class="btn btn-primary">{% trans %}FormSubmit{% endtrans %}</button>
 </div>

@@ -4,11 +4,11 @@
             <img src="{{ basePath }}/assets/img/appImg.jpg" alt="Logo" class="d-inline-block align-text-top rounded-circle logo">
             <p class="appName">{% trans %}AppName{% endtrans %}</p>
         </a>
-        {% if (content == 'login') %}
+        {% if (current_url() == url_for('account.login')) %}
             <a class="nav-link active d-flex me-2" href="{{ url_for('account.register') }}">
                 <button class="btn me-2 btn-abs-nav" type="button">{% trans %}SignIn{% endtrans %}</button>
             </a>
-        {% elseif (content == 'signin') %}
+        {% elseif (current_url() == url_for('account.register')) %}
             <a class="nav-link active d-flex me-2" href="{{ url_for('account.login') }}">
                 <button class="btn me-2 btn-abs-nav" type="button">{% trans %}HomeLogin{% endtrans %}</button>
             </a>

@@ -22,7 +22,7 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        return $this->get(Twig::class)->render($response, 'home/content.twig', ['content' => 'home']);
+        return $this->get(Twig::class)->render($response, 'home/content.twig');
     })->setName('home');
 
     $app->group('/account', function (Group $group) {

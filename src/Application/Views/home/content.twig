@@ -1,9 +1,9 @@
 {% extends "layout.twig" %}
 
 {% block title %}
-    {% if (content == 'login') %}
+    {% if (current_url() == url_for('account.login')) %}
         <title>{% trans %}AppName{% endtrans %} · {% trans %}LogInPage{% endtrans %}</title>
-    {% elseif (content == 'signin') %}
+    {% elseif (current_url() == url_for('account.register')) %}
         <title>{% trans %}AppName{% endtrans %} · {% trans %}SignInPage{% endtrans %}</title>
     {% else %}
         <title>{% trans %}AppName{% endtrans %}</title>
@@ -11,14 +11,14 @@
 {% endblock %}
 
 {% block header %}
-    {% include 'home/components/navbar.twig' with { 'content' : content } %}
+    {% include 'home/components/navbar.twig' %}
 {% endblock %}
 
 {% block main %}
     {% include 'components/alert.twig' %}
-    {% if (content == 'login') %}
+    {% if (current_url() == url_for('account.login')) %}
         {% include 'home/components/content-login.twig' %}
-    {% elseif (content == 'signin') %}
+    {% elseif (current_url() == url_for('account.register')) %}
         {% include 'home/components/content-signin.twig' %}
     {% else %}
         {% include 'home/components/content-home.twig' %}
@@ -27,4 +27,15 @@
 
 {% block footer %}
     {% include 'components/footer.twig' with { 'content' : true } %}
+{% endblock %}
+
+{% block javascript_after %}
+    {% if (current_url() == url_for('account.login')) %}
+        <script type="text/javascript" src="{{ basePath }}/assets/js/check-connection.js"></script>
+    {% elseif (current_url() == url_for('account.register')) %}
+        <script type="text/javascript" src="{{ basePath }}/assets/js/check-register.js"></script>
+    {% else %}
+
+    {% endif %}
+
 {% endblock %}

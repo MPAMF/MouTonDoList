@@ -1,6 +1,6 @@
 <div class="container d-flex flex-column align-items-center mt-5 p-5">
     <h1>{% trans %}FormLogInTitle{% endtrans %}</h1>
-    <form action="{{ url_for('account.login') }}" method="POST">
+    <form action="{{ url_for('account.login') }}" method="POST" class="d-flex flex-column justify-content-center" id="form_login">
         {{ csrf.html | raw }}
         <div class="mb-3">
             <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
@@ -10,7 +10,7 @@
                     {{ error('email') }}
                 </div>
             {% else %}
-            <input type="email" id="email" name="email" class="form-control" value="{{ val('email') }}">
+            <input type="email" id="email" name="email" class="form-control bg-secondary" value="{{ val('email') }}">
             {% endif %}
         </div>
         <div class="mb-3">
@@ -21,11 +21,11 @@
                     {{ error('password') }}
                 </div>
             {% else %}
-                <input type="password" id="password" name="password" class="form-control">
+                <input type="password" id="password" name="password" class="form-control bg-secondary">
             {% endif %}
         </div>
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <input type="checkbox" class="form-check-input bg-secondary" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">{% trans %}FormLetConnect{% endtrans %}</label>
         </div>
         <button type="submit" class="btn btn-primary">{% trans %}FormSubmit{% endtrans %}</button>
