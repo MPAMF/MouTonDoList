@@ -25,8 +25,9 @@ class EloquentUserRepository extends Repository implements UserRepository
      */
     public function logUser(string $email, string $password): User
     {
-        $found = $this->getDB()->table('users')->where('email', $email)->where('password', $password)->first();
-        if (empty($found)) {
+        $found = $this->getDB()->table('users')->where('email', $email)->first();
+
+        if (empty($found) || !password_verify($password, $found->password)) {
             throw new UserNotFoundException();
         }
 
