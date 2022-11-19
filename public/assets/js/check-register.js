@@ -40,9 +40,7 @@ registerForm.addEventListener('submit' ,function(e){
     }
 
     if(!condition.checked){
-        console.log("waoou");
         condition.style.border="2px solid red";
         e.preventDefault();
     }
-    console.log("wesh");
 });
