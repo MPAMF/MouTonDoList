@@ -9,7 +9,7 @@ registerForm.addEventListener('submit' ,function(e){
 
     let regex = /^[a-zA-Z-_0-9\S]*@[a-zA-Z-_\S]*\.[a-z\S]*$/;
     let regexPseudo = /^[a-zA-Z0-9-_*.!?#\S]+$/;
-    let regexMdp = /^[a-zA-Z0-9-_*.!?#]+$/;
+    let regexMdp = /^[a-zA-Z0-9-_*.!?#\S]+$/;
 
     if(email.value.trim() === ""){
         e.preventDefault();
@@ -36,6 +36,10 @@ registerForm.addEventListener('submit' ,function(e){
         e.preventDefault();
     }
     else if(!regexMdp.test(passConf.value)){
+        e.preventDefault();
+    }
+
+    if(passConf.value.trim() === pass.value.trim()){
         e.preventDefault();
     }
 
