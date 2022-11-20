@@ -25,8 +25,9 @@ class EloquentUserRepository extends Repository implements UserRepository
      */
     public function logUser(string $email, string $password): User
     {
-        $found = $this->getDB()->table('users')->where('email', $email)->where('password', $password)->first();
-        if (empty($found)) {
+        $found = $this->getDB()->table('users')->where('email', $email)->first();
+
+        if (empty($found) || !password_verify($password, $found->password)) {
             throw new UserNotFoundException();
         }
 
@@ -62,9 +63,9 @@ class EloquentUserRepository extends Repository implements UserRepository
         return $parsed;
     }
 
-    public function save(User $user)
+    public function save(User $user) : bool
     {
-        $this->getDB()->table('users')->updateOrInsert(
+        return $this->getDB()->table('users')->updateOrInsert(
             $user->toRow()
         );
     }
@@ -72,5 +73,10 @@ class EloquentUserRepository extends Repository implements UserRepository
     public function delete(User $user)
     {
         $this->getDB()->table('users')->delete($user->getId());
+    }
+
+    public function exists($id): bool
+    {
+        return $this->getDB()->table('users')->where('id', $id)->exists();
     }
 }

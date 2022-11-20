@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Auth;
+namespace App\Infrastructure\Security;
 
 use App\Domain\Auth\AuthInterface;
 use App\Domain\Settings\SettingsInterface;
@@ -35,5 +35,14 @@ class Auth implements AuthInterface
     public function user(): User
     {
         return $this->userRepository->get(Session::get($this->authId));
+    }
+
+    /**
+     * @param mixed $user User Id or User object
+     */
+    public function setUser(int|User $user) : void
+    {
+        $id = $user instanceof User ? $user->getId() : $user;
+        Session::set($this->authId, $id);
     }
 }

@@ -1,46 +1,47 @@
 <li class="list-group-item task-add">
     <div class="d-grid">
-        <button class="btn btn-task-add" type="button" id="taskAdd-{{ catId }}">
+        <button class="btn btn-task-add" type="button" id="taskAdd-{{ subCatId }}">
             <span class="mdi mdi-plus-circle"></span>
-            Ajouter une tâche [{{ catId }}]
+            Ajouter une tâche [{{ subCatId }}]
         </button>
     </div>
-    <form class="task-new" id="taskNew-{{ catId }}">
+    <form class="task-new" id="taskNew-{{ subCatId }}">
         <div class="mb-2">
-            <input type="text" class="form-control form-control-sm bg-secondary" id="taskNewName-{{ catId }}" placeholder="Nom de la tâche" title="Nom de la nouvelle tâche" required>
-            <div id="error-taskNew{{ catId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>
+            <input type="text" class="form-control form-control-sm bg-secondary" id="taskNewName-{{ subCatId }}" placeholder="Nom de la tâche" title="Nom de la nouvelle tâche" required>
+            <div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>
         </div>
         <div class="mb-2">
-            <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ catId }}" placeholder="Description" title="Description de la nouvelle tâche" ></textarea>
+            <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ subCatId }}" placeholder="Description" title="Description de la nouvelle tâche" ></textarea>
+        </div>
+        <div class="mb-2">
+            <select class="btn btn-sm btn-modal-select" aria-label="Membre assigné" required>
+                <option value="0" selected>Non assignée</option>
+                <option value="nomPrenom">NOM Prénom</option>
+            </select>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-secondary btn-sm me-md-2" type="button" id="taskNewCancel-{{ catId }}">Annuler</button>
-            <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="taskNewCreate-{{ catId }}" disabled>Ajouter une tâche</button>
+            <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="taskNewCancel-{{ subCatId }}">Annuler</button>
+            <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="taskNewCreate-{{ subCatId }}" disabled>Ajouter une tâche</button>
         </div>
     </form>
 </li>
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        $("#taskNewName-{{ catId }}").keyup(function () {
-            var name = $("#taskNewName-{{ catId }}").val();
-
-            if (name.length < 1) {
-                $("#taskNewCreate-{{ catId }}").prop('disabled', true);
-            } else {
-                $("#taskNewCreate-{{ catId }}").prop('disabled', false);
-            }
-
-        });
+    document.getElementById("taskAdd-{{ subCatId }}").addEventListener('click', function (e) {
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", "error-taskNew{{ subCatId }}", null)
+    });
+    document.getElementById("taskNewCancel-{{ subCatId }}").addEventListener('click', function (e) {
+        toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", null, "#taskNewCreate-{{ subCatId }}")
     });
 
-    function toggleNewTask() {
-        document.getElementById("taskAdd-{{ catId }}").classList.toggle("btn-task-add-unactive");
-        document.getElementById("taskNew-{{ catId }}").classList.toggle("task-new-active");
-        document.getElementById("taskNewName-{{ catId }}").value = "";
-        document.getElementById("taskNewDescription-{{ catId }}").value = "";
-    }
-    document.getElementById("taskAdd-{{ catId }}").addEventListener('click', toggleNewTask);
-    document.getElementById("taskNewCancel-{{ catId }}").addEventListener('click', toggleNewTask);
+    $(document).ready(
+        $(document).on('click', "#taskNewCreate-{{ subCatId }}", function (e) {
+            checkInputOnSubmit("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}")
+        }),
+        $(document).on('keyup', "#taskNewName-{{ subCatId }}", function (e) {
+            checkInputOnKeyup("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}", "#taskNewCreate-{{ subCatId }}")
+        })
+    )
+
 </script>

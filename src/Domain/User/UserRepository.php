@@ -26,12 +26,18 @@ interface UserRepository
 
     /**
      * @param User $user
+     * @return bool Save or update is successful
      */
-    public function save(User $user);
+    public function save(User $user): bool;
 
     /**
      * @param User $user
      */
     public function delete(User $user);
 
+    /**
+     * @param $id User id
+     * @return bool User exists
+     */
+    public function exists($id): bool;
 }

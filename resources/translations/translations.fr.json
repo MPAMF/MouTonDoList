@@ -34,5 +34,9 @@
   "SaveModalNav": "Sauvegarder",
   "LabelModalNav": "Cliquez sur le thème de votre choix :",
   "LightModalNav": "Clair",
-  "DarkModalNav": "Sombre"
+  "DarkModalNav": "Sombre",
+
+  "AuthUserNotFoundError": "Votre utilisateur n'a pas été trouvé, veuillez vous reconnecter.",
+  "AuthUserNotConnected": "Veuillez vous connecter pour accéder à cette page.",
+  "AuthLoginSuccess": "Connexion réussie!"
 }

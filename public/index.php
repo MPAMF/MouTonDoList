@@ -6,15 +6,8 @@ use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;
 use App\Domain\Settings\SettingsInterface;
 use DI\ContainerBuilder;
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App;
-use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
-use Slim\Views\Twig;
-use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Symfony\Component\Translation\Loader\JsonFileLoader;
-use Symfony\Component\Translation\Translator;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -48,35 +41,9 @@ $bootstrap($containerBuilder);
 // Build PHP-DI Container instance
 $container = $containerBuilder->build();
 
-// Set view in Container
-$container->set('view', function () {
-
-    // creates the Translator
-    $translator = new Translator('fr');
-    // somehow load some translations into it
-    $translator->addLoader('json', new JsonFileLoader());
-
-    // Add resources
-    $translator->addResource(
-        'json',
-        __DIR__.'/../resources/translations/translations.en.json',
-        'en'
-    );
-
-    $translator->addResource(
-        'json',
-        __DIR__.'/../resources/translations/translations.fr.json',
-        'fr'
-    );
-
-    // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
-    $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
-    $twig->addExtension(new TranslationExtension($translator));
-    return $twig;
-});
-
 $app = $container->get(App::class);
 $callableResolver = $app->getCallableResolver();
+$responseFactory = $app->getResponseFactory();
 
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
@@ -98,7 +65,6 @@ $serverRequestCreator = ServerRequestCreatorFactory::create();
 $request = $serverRequestCreator->createServerRequestFromGlobals();
 
 // Create Error Handler
-$responseFactory = $app->getResponseFactory();
 $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
 
 // Create Shutdown Handler
