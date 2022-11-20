@@ -6,26 +6,29 @@ namespace App\Infrastructure\Repositories;
 use App\Domain\Category\Category;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
-use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
+use App\Domain\UserCategory\UserCategory;
+use App\Domain\UserCategory\UserCategoryRepository;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use stdClass;
 
-class EloquentCategoryRepository extends Repository implements CategoryRepository
+class EloquentUserCategoryRepository extends Repository implements UserCategoryRepository
 {
 
     private UserRepository $userRepository;
+    private CategoryRepository $categoryRepository;
 
     /**
      * @param DatabaseManager $db
      * @param UserRepository $userRepository
      */
-    public function __construct(DatabaseManager $db, UserRepository $userRepository)
+    public function __construct(DatabaseManager $db, UserRepository $userRepository, CategoryRepository $categoryRepository)
     {
         parent::__construct($db);
         $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -34,7 +37,7 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
      * @return Category
      * @throws CategoryNotFoundException
      */
-    private function parseCategory(stdClass $category, array|null $with = ['parentCategory', 'owner']): Category
+    private function parseUserCategory(stdClass $category, array|null $with = ['parentCategory', 'owner']): Category
     {
         if (empty($category)) {
             throw new CategoryNotFoundException();
@@ -74,28 +77,28 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-    public function get($id, array|null $with = ['parentCategory', 'owner']): Category
+    public function get($id, array|null $with = ['user']): UserCategory
     {
         $found = $this->getDB()->table('categories')->where('id', $id)->first();
-        return $this->parseCategory($found, $with);
+        return $this->parseUserCategory($found, $with);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(Category $category): bool
+    public function save(UserCategory $userCategory): bool
     {
-        return $this->getDB()->table('categories')->updateOrInsert(
-            $category->toRow()
+        return $this->getDB()->table('user_categories')->updateOrInsert(
+            $userCategory->toRow()
         );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function delete(Category $category)
+    public function delete(UserCategory $userCategory) : int
     {
-        $this->getDB()->table('categories')->delete($category->getId());
+        return $this->getDB()->table('user_categories')->delete($userCategory->getId());
     }
 
     /**

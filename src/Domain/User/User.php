@@ -35,15 +35,6 @@ class User extends TimeStampedModel implements JsonSerializable
         $this->image_path = "";
         $this->theme = "";
         $this->language = "";
-        /**
-         *
-         * ?int     $id,
-         * string   $email,
-         * string   $username,
-         * string   $password,
-         * DateTime $updated_at,
-         * DateTime $created_at
-         */
     }
 
     public function getId(): ?int
