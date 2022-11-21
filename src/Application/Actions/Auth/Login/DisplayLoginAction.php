@@ -10,8 +10,6 @@ class DisplayLoginAction extends Action
 
     protected function action(): Response
     {
-        return $this->respondWithView('home/content.twig', [
-            'content' => 'login',
-        ]);
+        return $this->respondWithView('home/content.twig', []);
     }
 }

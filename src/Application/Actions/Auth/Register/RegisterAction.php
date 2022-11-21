@@ -2,10 +2,9 @@
 
 namespace App\Application\Actions\Auth\Register;
 
-use App\Application\Actions\Action;
 use App\Application\Actions\Auth\AuthAction;
 use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
+use mysql_xdevapi\Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Validator;
 
@@ -17,23 +16,21 @@ class RegisterAction extends AuthAction
         $validator = $this->validator->validate($this->request, [
             'email' => Validator::notBlank()->email(),
             'pseudo' => Validator::notBlank(),
-            'password' => Validator::notBlank()->regex('/[A-Z]')->regex('/[-_*.!?#@&]'),
-            'password-conf' => Validator::key('password-conf',
-                Validator::equals($_POST['password'] ?? null))
+            'password' => Validator::notBlank()->regex('/[A-Z]/')
+                ->regex('/[a-z]/')->regex('/[1-9]/')->regex('/[-_*.!?#@&]/'),
+            'password-conf' => Validator::equals($_POST['password']),
         ]);
 
         if (!$validator->isValid()) {
-            return $this->respondWithView('home/content.twig');
+            return $this->withError($this->translator->trans('AuthRegisterFailed'))
+                ->respondWithView('home/content.twig',[]);
         }
 
         $data = $this->getFormData();
-        if(!$data['password'] == ($data['password-conf'])){
-            return $this->withError($this->translator->trans('AuthRegisterConfirm'))->redirect('account.register');
-        }
-
         try {
             if($this->userRepository->exists($data['email'])){
-                return $this->withError($this->translator->trans('AuthRegisterUserExist'))->redirect('account.register');
+                return $this->withError($this->translator->trans('AuthRegisterUserExist'))
+                    ->respondWithView('home/content.twig',[]);
             }
 
             $user = new User();
@@ -41,12 +38,14 @@ class RegisterAction extends AuthAction
             $user->setUsername($data['pseudo']);
             $user->setPassword(password_hash($data['password'],PASSWORD_DEFAULT));
 
-            if($this->userRepository->save($user)){
-                return $this->withError($this->translator->trans('AuthRegisterUserExist'))->redirect('account.register');
+            if(!($this->userRepository->save($user))){
+                return $this->withError($this->translator->trans('AuthRegisterUserExist'))
+                    ->respondWithView('home/content.twig',[]);
             }
 
-        } catch (UserNotFoundException) {
-            return $this->withError($this->translator->trans('AuthRegisterFailed'))->redirect('account.register');
+        } catch (Exception) {
+            return $this->withError($this->translator->trans('AuthRegisterFailed'))
+                ->respondWithView('home/content.twig',[]);
         }
 
         return $this->withSuccess($this->translator->trans('AuthRegisterSuccess'))

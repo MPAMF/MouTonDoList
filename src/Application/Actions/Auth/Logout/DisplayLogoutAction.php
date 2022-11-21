@@ -12,9 +12,9 @@ class DisplayLogoutAction extends Action
     {
         if ($this->user() != null) {
             // Redirect to home page
-            return $this->redirect('dashboard');
+            return $this->respondWithView('pages/dashboard',[]);
         }
 
-        return $this->respondWithView('home/content.twig');
+        return $this->redirect('account.login');
     }
 }

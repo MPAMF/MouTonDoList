@@ -15,7 +15,7 @@ class LogoutAction extends AuthAction
     {
         try {
             // Set user to session
-            $this->auth->setUser();
+            $this->auth->removeUser();
 
         } catch (UserNotFoundException) {
             return $this->withError($this->translator->trans('AuthLogOutFailed'))->redirect('dashboard');

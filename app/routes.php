@@ -40,7 +40,7 @@ return function (App $app) {
     $app->group('/account', function (Group $group){
         $group->get('/logout', DisplayLogoutAction::class)->setName('account.logout');
         $group->post('/logout', LogoutAction::class);
-    })->add(UserDisconnectedMiddleware::class);
+    })->add(UserConnectedMiddleware::class);
 
     $app->group('/dashboard', function (Group $group) {
         $group->get('', DisplayDashboardAction::class)->setName('dashboard');

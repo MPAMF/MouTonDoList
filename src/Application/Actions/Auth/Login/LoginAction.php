@@ -18,9 +18,7 @@ class LoginAction extends AuthAction
         ]);
 
         if (!$validator->isValid()) {
-            return $this->respondWithView('home/content.twig', [
-                'content' => 'login',
-            ]);
+            return $this->respondWithView('home/content.twig', []);
         }
 
         $data = $this->getFormData();

@@ -5,7 +5,8 @@
         <div class="mb-3">
             <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
             {% if has_error('email') %}
-                <input type="email" id="email" name="email" aria-describedby="validationEmail" class="form-control is-invalid" value="{{ val('email') }}">
+                <input type="email" id="email" name="email" aria-describedby="validationEmail"
+                       class="form-control is-invalid bg-secondary" value="{{ val('email') }}">
                 <div id="validationEmail" class="invalid-feedback">
                     {{ error('email') }}
                 </div>
@@ -16,7 +17,8 @@
         <div class="mb-3">
             <label for="pseudo" class="form-label">{% trans %}FormPseudo{% endtrans %}</label>
             {% if has_error('pseudo') %}
-                <input type="text" id="pseudo" name="pseudo" aria-describedby="validationPseudo" class="form-control is-invalid" value="{{ val('pseudo') }}">
+                <input type="text" id="pseudo" name="pseudo" aria-describedby="validationPseudo"
+                       class="form-control is-invalid bg-secondary" value="{{ val('pseudo') }}">
                 <div id="validationPseudo" class="invalid-feedback">
                     {{ error('pseudo') }}
                 </div>
@@ -27,7 +29,8 @@
         <div class="mb-3">
             <label for="password" class="form-label">{% trans %}FormPwd{% endtrans %}</label>
             {% if has_error('password') %}
-                <input type="password" id="password" name="password" aria-describedby="validationPassword" class="form-control is-invalid">
+                <input type="password" id="password" name="password" aria-describedby="validationPassword"
+                       class="form-control is-invalid bg-secondary">
                 <div id="validationPassword" class="invalid-feedback">
                     {{ error('password') }}
                 </div>
@@ -38,7 +41,8 @@
         <div class="mb-3">
             <label for="confirmationPassword" class="form-label">{% trans %}FormConfPwd{% endtrans %}</label>
             {% if has_error('password-conf') %}
-                <input type="password" id="password-conf" name="password-conf" aria-describedby="validationPasswordConf" class="form-control is-invalid">
+                <input type="password" id="password-conf" name="password-conf" aria-describedby="validationPasswordConf"
+                       class="form-control is-invalid bg-secondary">
                 <div id="validationPasswordConf" class="invalid-feedback">
                     {{ error('password-conf') }}
                 </div>
