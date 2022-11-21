@@ -38,6 +38,9 @@ $repositories($containerBuilder);
 $bootstrap = require __DIR__ . '/../app/bootstrap.php';
 $bootstrap($containerBuilder);
 
+// Activate annotations
+$containerBuilder->useAnnotations(true);
+
 // Build PHP-DI Container instance
 $container = $containerBuilder->build();
 

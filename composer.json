@@ -24,6 +24,7 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
+        "doctrine/annotations": "^1.13",
         "illuminate/collections": "^9.40",
         "illuminate/database": "^9.34",
         "monolog/monolog": "^2.3",
