@@ -26,4 +26,9 @@ interface AuthInterface
      */
     public function setUser(int|User $user): void;
 
+    /**
+     * @return void
+     */
+    public function removeUser() : void;
+
 }
