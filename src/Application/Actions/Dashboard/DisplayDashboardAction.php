@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace App\Application\Actions\Dashboard;
 
 use App\Application\Actions\Action;
+use App\Domain\Category\Category;
 use App\Domain\Category\CategoryRepository;
 use App\Domain\UserCategory\UserCategory;
 use App\Domain\UserCategory\UserCategoryRepository;
+use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
@@ -35,15 +37,34 @@ class DisplayDashboardAction extends Action
         $this->userCategoryRepository = $userCategoryRepository;
     }
 
+    private function getArgsCategory(Collection $categories) : ?UserCategory
+    {
+        if(!array_key_exists('id', $this->args))
+            return null;
+
+        $id = intval($this->args['id']);
+
+        if ($id > 0) {
+            return $categories->filter(fn(UserCategory $a) => $a->getCategory()->getId() == $id)->first();
+        }
+
+        return null;
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function action(): Response
     {
         $categories = collect($this->userCategoryRepository->getCategories($this->user()));
-        $category = $categories->sort(
-            fn(UserCategory $a, UserCategory $b) => $a->getCategory()->getUpdatedAt() <=> $b->getCategory()->getUpdatedAt()
-        )->first();
+        $category = $this->getArgsCategory($categories);
+
+        if(!isset($category))
+        {
+            $category = $categories->sort(
+                fn(UserCategory $a, UserCategory $b) => $a->getCategory()->getUpdatedAt() <=> $b->getCategory()->getUpdatedAt()
+            )->first();
+        }
 
         if (!isset($category)) {
             return $this->withError($this->translator->trans('DashboardCategoryNotFound'))->redirect('home');
