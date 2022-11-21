@@ -4,12 +4,10 @@ namespace App\Application\Actions\Auth\Register;
 
 use App\Application\Actions\Action;
 use App\Application\Actions\Auth\AuthAction;
+use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
-use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Validator;
-use function PHPUnit\Framework\equalTo;
-use function PHPUnit\Framework\objectEquals;
 
 class RegisterAction extends AuthAction
 {
@@ -20,7 +18,8 @@ class RegisterAction extends AuthAction
             'email' => Validator::notBlank()->email(),
             'pseudo' => Validator::notBlank(),
             'password' => Validator::notBlank()->regex('/[A-Z]')->regex('/[-_*.!?#@&]'),
-            'password-conf' => Validator::notBlank(),
+            'password-conf' => Validator::key('password-conf',
+                Validator::equals($_POST['password'] ?? null))
         ]);
 
         if (!$validator->isValid()) {
@@ -37,7 +36,7 @@ class RegisterAction extends AuthAction
                 return $this->withError($this->translator->trans('AuthRegisterUserExist'))->redirect('account.register');
             }
 
-            $user = new Uses();
+            $user = new User();
             $user->setEmail($data['email']);
             $user->setUsername($data['pseudo']);
             $user->setPassword(password_hash($data['password'],PASSWORD_DEFAULT));
