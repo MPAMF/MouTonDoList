@@ -24,7 +24,7 @@
     </h2>
     <div id="panelsStayOpen-collapse-{{ subCatId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ subCatId }}">
         <div class="accordion-body">
-            <ul class="list-group list-group-flush tasks">
+            <ul class="list-group list-group-flush tasks" data-sortable="tasks">
                 {% if(not(status == "default")) %}
                     {% for taskId in 0..5 %}
                         {% include 'pages/components/task/content.twig' with { 'subCatId' : subCatId, 'taskId': taskId } %}
