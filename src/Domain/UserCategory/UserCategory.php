@@ -8,6 +8,7 @@ use App\Domain\TimeStampedModel;
 use App\Domain\User\User;
 use DateTime;
 use JsonSerializable;
+use stdClass;
 
 class UserCategory extends TimeStampedModel implements JsonSerializable
 {
@@ -15,30 +16,14 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     private User $user;
     private Category $category;
     private bool $accepted;
-    private bool $can_edit;
+    private bool $canEdit;
 
-    /**
-     * @param int|null $id
-     * @param User $user
-     * @param Category $category
-     * @param bool $accepted
-     * @param bool $can_edit
-     */
-    public function __construct(
-        ?int $id,
-        User $user,
-        Category $category,
-        bool $accepted,
-        bool $can_edit,
-        DateTime $updated_at,
-        DateTime $created_at
-    ) {
-        parent::__construct($updated_at, $created_at);
-        $this->id = $id;
-        $this->user = $user;
-        $this->category = $category;
-        $this->accepted = $accepted;
-        $this->can_edit = $can_edit;
+    public function __construct()
+    {
+        parent::__construct(new DateTime(), new DateTime());
+        $this->id = null;
+        $this->accepted = false;
+        $this->canEdit = false;
     }
 
     /**
@@ -110,15 +95,15 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
      */
     public function isCanEdit(): bool
     {
-        return $this->can_edit;
+        return $this->canEdit;
     }
 
     /**
-     * @param bool $can_edit
+     * @param bool $canEdit
      */
-    public function setCanEdit(bool $can_edit): void
+    public function setCanEdit(bool $canEdit): void
     {
-        $this->can_edit = $can_edit;
+        $this->canEdit = $canEdit;
     }
 
 
@@ -130,7 +115,32 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
             'user_id' => $this->user->getId(),
             'category_id' => $this->category->getId(),
             'accepted' => $this->accepted,
-            'can_edit' => $this->can_edit,
+            'can_edit' => $this->canEdit,
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        parent::fromRow($row);
+        $this->id = $row->id;
+
+        if (isset($row->user)) {
+            $this->user = $row->user;
+        }
+
+        $this->category = $row->category;
+        $this->accepted = boolval($row->accepted);
+        $this->canEdit = boolval($row->can_edit);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        return $this->jsonSerialize();
     }
 }

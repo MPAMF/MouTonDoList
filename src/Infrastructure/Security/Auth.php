@@ -45,4 +45,12 @@ class Auth implements AuthInterface
         $id = $user instanceof User ? $user->getId() : $user;
         Session::set($this->authId, $id);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeUser() : void
+    {
+        Session::unset($this->authId);
+    }
 }

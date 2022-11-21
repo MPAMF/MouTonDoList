@@ -160,7 +160,9 @@ class Category extends TimeStampedModel implements JsonSerializable
         parent::fromRow($row);
         $this->id = $row->id;
         // stdClass must have loaded instances of other models
-        $this->owner = $row->owner;
+        if (isset($row->owner)) {
+            $this->owner = $row->owner;
+        } // /!\ if not set, $this->owner will be undefined
         $this->parentCategory = $row->parentCategory;
         $this->name = $row->name;
         $this->color = $row->color;

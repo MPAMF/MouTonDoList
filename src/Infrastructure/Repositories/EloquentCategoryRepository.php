@@ -30,17 +30,17 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
 
     /**
      * @param stdClass $category
+     * @param array|null $with
      * @return Category
      * @throws CategoryNotFoundException
      */
-    private function parseCategory(stdClass $category) : Category
+    private function parseCategory(stdClass $category, array|null $with = ['parentCategory', 'owner']): Category
     {
-        if(empty($category))
-        {
+        if (empty($category)) {
             throw new CategoryNotFoundException();
         }
 
-        if (empty($category->parent_category_id)) {
+        if (empty($category->parent_category_id) || $with == null || !in_array('parentCategory', $with)) {
             $category->parentCategory = null;
         } else {
             try {
@@ -50,10 +50,14 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
             }
         }
 
-        try {
-            $category->owner = $this->userRepository->get($category->owner_id);
-        } catch (UserNotFoundException) {
+        if ($with == null || !in_array('owner', $with)) {
             $category->owner = null;
+        } else {
+            try {
+                $category->owner = $this->userRepository->get($category->owner_id);
+            } catch (UserNotFoundException) {
+                $category->owner = null;
+            }
         }
 
         $parsed = new Category();
@@ -70,16 +74,16 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-    public function get($id): Category
+    public function get($id, array|null $with = ['parentCategory', 'owner']): Category
     {
         $found = $this->getDB()->table('categories')->where('id', $id)->first();
-        return $this->parseCategory($found);
+        return $this->parseCategory($found, $with);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(Category $category) : bool
+    public function save(Category $category): bool
     {
         return $this->getDB()->table('categories')->updateOrInsert(
             $category->toRow()
@@ -89,15 +93,15 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-    public function delete(Category $category)
+    public function delete(Category $category) : int
     {
-        $this->getDB()->table('categories')->delete($category->getId());
+        return $this->getDB()->table('categories')->delete($category->getId());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCategories($user_id): array
+    public function getCategories($user_id, array|null $with = ['parentCategory', 'owner']): array
     {
         $categories = [];
 
@@ -110,7 +114,7 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
         foreach ($foundCategories as $category) {
 
             try {
-                $categories[] = $this->parseCategory($category);
+                $categories[] = $this->parseCategory($category, $with);
             } catch (CategoryNotFoundException) {
                 // do nothing
             }
@@ -118,5 +122,47 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
         }
 
         return $categories;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+/*    public function getSubCategories($category_id, array|null $with = ['parentCategory', 'owner']): array
+    {
+        $categories = [];
+
+        $foundCategories = $this->getDB()->table('categories')
+            ->where('owner_id', $user_id)
+            ->where('parent_category_id', null) // no sub-categories
+            ->orderBy('position')
+            ->get();
+
+        foreach ($foundCategories as $category) {
+
+            try {
+                $categories[] = $this->parseCategory($category, $with);
+            } catch (CategoryNotFoundException) {
+                // do nothing
+            }
+
+        }
+
+        return $categories;
+    }*/
+
+    public function getLastUpdatedCategory(int $user_id, ?array $with = null): ?Category
+    {
+        $found = $this->getDB()->table('categories')
+            ->where('owner_id', $user_id)
+            ->where('parent_category_id', null) // no sub-categories
+            ->latest('updated_at')
+            ->first();
+
+        try {
+            return $this->parseCategory($found, $with);
+        } catch (CategoryNotFoundException) {
+            return null;
+        }
+
     }
 }
