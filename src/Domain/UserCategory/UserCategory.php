@@ -132,8 +132,8 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
         }
 
         $this->category = $row->category;
-        $this->accepted = $row->accepted;
-        $this->canEdit = $row->can_edit;
+        $this->accepted = boolval($row->accepted);
+        $this->canEdit = boolval($row->can_edit);
     }
 
     /**

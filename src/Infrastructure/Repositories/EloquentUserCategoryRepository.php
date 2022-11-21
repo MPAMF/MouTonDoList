@@ -6,9 +6,11 @@ namespace App\Infrastructure\Repositories;
 use App\Domain\Category\Category;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
+use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use App\Domain\UserCategory\UserCategory;
+use App\Domain\UserCategory\UserCategoryNotFoundException;
 use App\Domain\UserCategory\UserCategoryRepository;
 use Exception;
 use Illuminate\Database\DatabaseManager;
@@ -16,7 +18,6 @@ use stdClass;
 
 class EloquentUserCategoryRepository extends Repository implements UserCategoryRepository
 {
-
     private UserRepository $userRepository;
     private CategoryRepository $categoryRepository;
 
@@ -32,43 +33,41 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     }
 
     /**
-     * @param stdClass $category
+     * @param stdClass $userCategory
      * @param array|null $with
-     * @return Category
-     * @throws CategoryNotFoundException
+     * @return UserCategory
+     * @throws UserCategoryNotFoundException
      */
-    private function parseUserCategory(stdClass $category, array|null $with = ['parentCategory', 'owner']): Category
+    private function parseUserCategory(stdClass $userCategory, array|null $with = ['user']): UserCategory
     {
-        if (empty($category)) {
-            throw new CategoryNotFoundException();
+        if (empty($userCategory)) {
+            throw new UserCategoryNotFoundException();
         }
 
-        if (empty($category->parent_category_id) || $with == null || !in_array('parentCategory', $with)) {
-            $category->parentCategory = null;
+        if ($with == null || !in_array('user', $with)) {
+            $userCategory->user = null;
         } else {
             try {
-                $category->parentCategory = $this->get($category->parent_category_id);
-            } catch (CategoryNotFoundException) {
-                $category->parentCategory = null;
-            }
-        }
-
-        if ($with == null || !in_array('owner', $with)) {
-            $category->owner = null;
-        } else {
-            try {
-                $category->owner = $this->userRepository->get($category->owner_id);
+                $userCategory->user = $this->userRepository->get($userCategory->user_id);
             } catch (UserNotFoundException) {
-                $category->owner = null;
+                // Should never happen.
+                throw new UserCategoryNotFoundException();
             }
         }
 
-        $parsed = new Category();
-        // If there's a parsing error, just show the user a not found exception.
         try {
-            $parsed->fromRow($category);
+            $userCategory->category = $this->categoryRepository->get($userCategory->category_id, $with);
+        } catch (CategoryNotFoundException) {
+            // Should never happen.
+            throw new UserCategoryNotFoundException();
+        }
+
+        $parsed = new UserCategory();
+        // If there's a parsing error, just show the usercategory a not found exception.
+        try {
+            $parsed->fromRow($userCategory);
         } catch (Exception) {
-            throw new CategoryNotFoundException();
+            throw new UserCategoryNotFoundException();
         }
 
         return $parsed;
@@ -104,21 +103,19 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     /**
      * {@inheritdoc}
      */
-    public function getCategories($user_id, array|null $with = ['parentCategory', 'owner']): array
+    public function getCategories(User|int $user, array|null $with = null) : array
     {
         $categories = [];
-
-        $foundCategories = $this->getDB()->table('categories')
-            ->where('owner_id', $user_id)
-            ->where('parent_category_id', null) // no sub-categories
-            ->orderBy('position')
+        $id = $user instanceof User ? $user->getId() : $user;
+        $foundCategories = $this->getDB()->table('user_categories')
+            ->where('user_id', $id)
             ->get();
 
         foreach ($foundCategories as $category) {
 
             try {
-                $categories[] = $this->parseCategory($category, $with);
-            } catch (CategoryNotFoundException) {
+                $categories[] = $this->parseUserCategory($category, $with);
+            } catch (UserCategoryNotFoundException) {
                 // do nothing
             }
 
@@ -127,45 +124,4 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
         return $categories;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-/*    public function getSubCategories($category_id, array|null $with = ['parentCategory', 'owner']): array
-    {
-        $categories = [];
-
-        $foundCategories = $this->getDB()->table('categories')
-            ->where('owner_id', $user_id)
-            ->where('parent_category_id', null) // no sub-categories
-            ->orderBy('position')
-            ->get();
-
-        foreach ($foundCategories as $category) {
-
-            try {
-                $categories[] = $this->parseCategory($category, $with);
-            } catch (CategoryNotFoundException) {
-                // do nothing
-            }
-
-        }
-
-        return $categories;
-    }*/
-
-    public function getLastUpdatedCategory(int $user_id, ?array $with = null): ?Category
-    {
-        $found = $this->getDB()->table('categories')
-            ->where('owner_id', $user_id)
-            ->where('parent_category_id', null) // no sub-categories
-            ->latest('updated_at')
-            ->first();
-
-        try {
-            return $this->parseCategory($found, $with);
-        } catch (CategoryNotFoundException) {
-            return null;
-        }
-
-    }
 }

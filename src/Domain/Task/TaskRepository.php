@@ -28,7 +28,8 @@ interface TaskRepository
 
     /**
      * @param Task $task
+     * @return int Number of records deleted
      */
-    public function delete(Task $task);
+    public function delete(Task $task) : int;
 
 }

@@ -70,9 +70,9 @@ class EloquentUserRepository extends Repository implements UserRepository
         );
     }
 
-    public function delete(User $user)
+    public function delete(User $user) : int
     {
-        $this->getDB()->table('users')->delete($user->getId());
+        return $this->getDB()->table('users')->delete($user->getId());
     }
 
     public function exists($id): bool

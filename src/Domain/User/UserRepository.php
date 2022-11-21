@@ -31,9 +31,10 @@ interface UserRepository
     public function save(User $user): bool;
 
     /**
-     * @param User $user
+     * @param User $user User
+     * @return int Number of records deleted
      */
-    public function delete(User $user);
+    public function delete(User $user) : int;
 
     /**
      * @param $id User id

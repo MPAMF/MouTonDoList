@@ -29,8 +29,9 @@ interface CategoryRepository
 
     /**
      * @param Category $category
+     * @return int Number of records deleted
      */
-    public function delete(Category $category);
+    public function delete(Category $category) : int;
 
     /**
      * @param int $user_id

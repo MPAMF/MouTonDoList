@@ -93,9 +93,9 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-    public function delete(Category $category)
+    public function delete(Category $category) : int
     {
-        $this->getDB()->table('categories')->delete($category->getId());
+        return $this->getDB()->table('categories')->delete($category->getId());
     }
 
     /**
