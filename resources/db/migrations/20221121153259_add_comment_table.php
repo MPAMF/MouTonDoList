@@ -18,11 +18,11 @@ final class AddCommentTable extends AbstractMigration
         $task_comments_table
             ->addColumn('content', 'text')
             //
-            ->addColumn('author_id', 'integer', ['signed' => false])
-            ->addForeignKey('author_id', 'users', 'id', ['delete' => 'NO_ACTION'])
+            ->addColumn('author_id', 'integer', ['null' => true, 'default' => null, 'signed' => false])
+            ->addForeignKey('author_id', 'users', 'id', ['delete' => 'SET_NULL'])
             //
             ->addColumn('task_id', 'integer', ['signed' => false])
-            ->addForeignKey('task_id', 'tasks', 'id', ['delete' => 'SET_NULL'])
+            ->addForeignKey('task_id', 'tasks', 'id', ['delete' => 'CASCADE'])
             //
             ->addTimestamps()
             ->create();
