@@ -29,8 +29,8 @@ class Auth implements AuthInterface
     }
 
     /**
-     * @throws UserNotFoundException
      * @return User object of current session
+     * @throws UserNotFoundException
      */
     public function user(): User
     {

@@ -6,12 +6,12 @@ interface CategoryRepository
 {
 
     /**
-     * Fetch only categories, not sub-categories
-     * @param $user_id
+     * Get all sub-categories from a parent category
+     * @param $parentCategoryId
      * @param array|null $with Load parentCategory or owner from db, example: ['parentCategory, 'owner']
      * @return array
      */
-    public function getCategories($user_id, array|null $with = null) : array;
+    public function getSubCategories($parentCategoryId, array|null $with = null) : array;
 
     /**
      * @param $id

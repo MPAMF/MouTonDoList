@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repositories;
 
-use App\Domain\Category\Category;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
 use App\Domain\User\User;
@@ -24,6 +23,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     /**
      * @param DatabaseManager $db
      * @param UserRepository $userRepository
+     * @param CategoryRepository $categoryRepository
      */
     public function __construct(DatabaseManager $db, UserRepository $userRepository, CategoryRepository $categoryRepository)
     {

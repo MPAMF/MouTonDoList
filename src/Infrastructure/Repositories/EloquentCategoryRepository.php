@@ -127,13 +127,12 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-/*    public function getSubCategories($category_id, array|null $with = ['parentCategory', 'owner']): array
+    public function getSubCategories($parentCategoryId, array|null $with = null): array
     {
         $categories = [];
 
         $foundCategories = $this->getDB()->table('categories')
-            ->where('owner_id', $user_id)
-            ->where('parent_category_id', null) // no sub-categories
+            ->where('parent_category_id', $parentCategoryId)
             ->orderBy('position')
             ->get();
 
@@ -148,7 +147,7 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
         }
 
         return $categories;
-    }*/
+    }
 
     public function getLastUpdatedCategory(int $user_id, ?array $with = null): ?Category
     {

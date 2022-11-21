@@ -14,8 +14,8 @@ interface AuthInterface
     public function check(): bool;
 
     /**
-     * @throws UserNotFoundException
      * @return User object of current session
+     * @throws UserNotFoundException
      */
     public function user(): User;
 

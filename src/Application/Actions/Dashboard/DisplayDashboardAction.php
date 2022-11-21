@@ -37,9 +37,9 @@ class DisplayDashboardAction extends Action
         $this->userCategoryRepository = $userCategoryRepository;
     }
 
-    private function getArgsCategory(Collection $categories) : ?UserCategory
+    private function getArgsCategory(Collection $categories): ?UserCategory
     {
-        if(!array_key_exists('id', $this->args))
+        if (!array_key_exists('id', $this->args))
             return null;
 
         $id = intval($this->args['id']);
@@ -59,8 +59,7 @@ class DisplayDashboardAction extends Action
         $categories = collect($this->userCategoryRepository->getCategories($this->user()));
         $category = $this->getArgsCategory($categories);
 
-        if(!isset($category))
-        {
+        if (!isset($category)) {
             $category = $categories->sort(
                 fn(UserCategory $a, UserCategory $b) => $a->getCategory()->getUpdatedAt() <=> $b->getCategory()->getUpdatedAt()
             )->first();
@@ -70,9 +69,21 @@ class DisplayDashboardAction extends Action
             return $this->withError($this->translator->trans('DashboardCategoryNotFound'))->redirect('home');
         }
 
-        $category->subCategories = [];
+        if (!$category->isAccepted()) {
+            // TODO: Send message : accept invite and redirect maybe to notifications page ?
+        }
 
-        return $this->respondWithView('pages/dashboard.twig',
-            ['category' => $category, 'categories' => $categories]);
+        $category->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
+
+        // Filter categories: archives / normal
+        // TODO: utile de faire deux collections?
+        $archivedCategories = $categories->filter(fn(UserCategory $a) => $a->getCategory()->isArchived());
+        $categories = $categories->filter(fn(UserCategory $a) => !$a->getCategory()->isArchived());
+
+        return $this->respondWithView('pages/dashboard.twig', [
+            'category' => $category,
+            'categories' => $categories,
+            'archivedCategories' => $archivedCategories
+        ]);
     }
 }
