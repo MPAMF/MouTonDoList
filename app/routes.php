@@ -8,7 +8,9 @@ use App\Application\Actions\Auth\Register\RegisterAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
-use App\Application\Middleware\AuthMiddleware;
+use App\Application\Middleware\Auth\AuthMiddleware;
+use App\Application\Middleware\Auth\UserConnectedMiddleware;
+use App\Application\Middleware\Auth\UserDisconnectedMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -31,7 +33,7 @@ return function (App $app) {
 
         $group->get('/register', DisplayRegisterAction::class)->setName('account.register');
         $group->post('/register', RegisterAction::class);
-    });
+    })->add(UserDisconnectedMiddleware::class);
 
     $app->get('/account/logout', function (Request $request, Response $response) {
         return $this->get(Twig::class)->render($response, 'account/login-page.twig');
@@ -39,7 +41,7 @@ return function (App $app) {
 
     $app->group('/dashboard', function (Group $group) {
         $group->get('', DisplayDashboardAction::class)->setName('dashboard');
-    })->add(AuthMiddleware::class);
+    })->add(UserConnectedMiddleware::class);
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
