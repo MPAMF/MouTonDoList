@@ -343,6 +343,22 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-bg: #{$secondary};
     --#{$variable-prefix}btn-border-color: #{$secondary};
   }
+  .drag-dragging .accordion-item, .drag-ghost .accordion-item {
+    background: #{$secondary};
+  }
+  .drag-dragging .btn-subcategory-drag .btn-category-actions, .drag-ghost .btn-subcategory-drag .btn-category-actions {
+    --#{$variable-prefix}btn-color: #{$body-color};
+  }
+  .drag-dragging .task-new .invalid-feedback, .drag-ghost .task-new .invalid-feedback {
+    background: #{$secondary};
+  }
+  .drag-dragging .task-new .btn-secondary, .drag-ghost .task-new .btn-secondary {
+    --#{$variable-prefix}btn-bg: #{$body-bg};
+  }
+  .drag-dragging .task-new .bg-secondary, .drag-dragging .task-new .btn-modal-select,
+  .drag-ghost .task-new .bg-secondary, .drag-ghost .task-new .btn-modal-select {
+    background-color: #{$body-bg} !important;
+  }
 
   /* Popover */
   .popover {

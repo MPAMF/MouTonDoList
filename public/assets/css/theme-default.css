@@ -333,6 +333,22 @@ footer .logo {
   --bs-btn-bg: #393E46;
   --bs-btn-border-color: #393E46;
 }
+.drag-dragging .accordion-item, .drag-ghost .accordion-item {
+  background: #393E46;
+}
+.drag-dragging .btn-subcategory-drag .btn-category-actions, .drag-ghost .btn-subcategory-drag .btn-category-actions {
+  --bs-btn-color: #EEEEEE;
+}
+.drag-dragging .task-new .invalid-feedback, .drag-ghost .task-new .invalid-feedback {
+  background: #393E46;
+}
+.drag-dragging .task-new .btn-secondary, .drag-ghost .task-new .btn-secondary {
+  --bs-btn-bg: #222831;
+}
+.drag-dragging .task-new .bg-secondary, .drag-dragging .task-new .btn-modal-select,
+.drag-ghost .task-new .bg-secondary, .drag-ghost .task-new .btn-modal-select {
+  background-color: #222831 !important;
+}
 
 /* Popover */
 .popover {

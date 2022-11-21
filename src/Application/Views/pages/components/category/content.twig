@@ -14,8 +14,8 @@
         <ul class="list-group list-group-flush tasks list-research"></ul>
     </div>
 
-    <div id="default-category-content">
-        {% if (status == "exemple") %}
+    <div id="default-category-content" data-sortable="categories">
+        {% if (status != "exemple") %}
 
             {% for subCatId in 0..2 %}
                 {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : subCatId } %}
