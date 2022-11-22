@@ -15,7 +15,7 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
     private ?int $id;
     private string $content;
     private int $task_id;
-    private Task $task;
+    private ?Task $task;
     private ?int $author_id;
     private ?User $author;
 
@@ -26,6 +26,8 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
         $this->content = "";
         $this->author = null;
         $this->author_id = null;
+        $this->task = null;
+        $this->task_id = 0;
     }
 
     public function getId(): ?int
@@ -50,17 +52,18 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
     }
 
     /**
-     * @param User $author
+     * @param User|null $author
      */
-    public function setAuthor(User $author): void
+    public function setAuthor(?User $author): void
     {
         $this->author = $author;
+        $this->author_id = $author?->getId();
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
@@ -71,12 +74,13 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
     public function setTask(Task $task): void
     {
         $this->task = $task;
+        $this->task_id = $task->getId();
     }
 
     /**
-     * @return Task
+     * @return Task|null
      */
-    public function getTask(): Task
+    public function getTask(): ?Task
     {
         return $this->task;
     }
@@ -104,9 +108,9 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
             'id' => $this->id,
             'content' => $this->content,
             'author_id' => $this->author_id,
-            'author' => !empty($this->author) ? $this->author->jsonSerialize() : null,
+            'author' => isset($this->author) ? $this->author->jsonSerialize() : null,
             'task_id' => $this->task_id,
-            'task' => !empty($this->task) ? $this->task->jsonSerialize() : null,
+            'task' => isset($this->task) ? $this->task->jsonSerialize() : null,
         ];
     }
 
@@ -118,16 +122,10 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
         parent::fromRow($row);
         $this->id = $row->id;
         $this->content = $row->content;
-        $this->author = $row->author;
-        $this->author_id = $row->author_id;
+        $this->author = $row->author ?? null;
+        $this->author_id = $row->author_id ?? null;
         $this->task_id = $row->task_id;
-
-        // Not nullable: should stay undefined
-        if(isset($row->task))
-        {
-            $this->task = $row->task;
-        }
-
+        $this->task = $row->task ?? null;
     }
 
     /**

@@ -26,6 +26,10 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
         $this->id = null;
         $this->accepted = false;
         $this->canEdit = false;
+        $this->category_id = 0;
+        $this->category = null;
+        $this->user_id = 0;
+        $this->user = null;
     }
 
     /**
@@ -45,9 +49,9 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -62,9 +66,9 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     }
 
     /**
-     * @return Category
+     * @return Category|null
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
