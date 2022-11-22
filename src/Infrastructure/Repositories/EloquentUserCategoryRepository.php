@@ -120,6 +120,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
         $id = $user instanceof User ? $user->getId() : $user;
         $foundCategories = $this->getTable()
             ->where('user_id', $id)
+            ->latest('updated_at')
             ->get();
 
         foreach ($foundCategories as $category) {

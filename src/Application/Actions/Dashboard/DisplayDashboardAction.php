@@ -62,9 +62,7 @@ class DisplayDashboardAction extends Action
         $category = $this->getArgsCategory($categories);
 
         if (!isset($category)) {
-            $category = $categories->sort(
-                fn(UserCategory $a, UserCategory $b) => $a->getCategory()->getUpdatedAt() <=> $b->getCategory()->getUpdatedAt()
-            )->first();
+            $category = $categories->first();
         }
 
         if (isset($category)) {
@@ -73,9 +71,9 @@ class DisplayDashboardAction extends Action
                 // TODO: Send message : accept invite and redirect maybe to notifications page ?
             }
 
-            $category->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
+            $category->getCategory()->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
 
-            foreach ($category->subCategories as $subCategory) {
+            foreach ($category->getCategory()->subCategories as $subCategory) {
                 $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId());
 
                 foreach ($subCategory->tasks as $task) {

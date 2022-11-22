@@ -15,6 +15,7 @@ class Task extends TimeStampedModel implements JsonSerializable
 {
     private ?int $id;
     private int $category_id;
+    private string $name;
     private ?Category $category;
     private string $description;
     private DateTime $due_date;
@@ -31,6 +32,7 @@ class Task extends TimeStampedModel implements JsonSerializable
         $this->id = null;
         $this->category = null;
         $this->category_id = 0;
+        $this->name = "";
         $this->description = "";
         $this->due_date = new DateTime();
         $this->checked = false;
@@ -72,6 +74,22 @@ class Task extends TimeStampedModel implements JsonSerializable
     {
         $this->category = $category;
         $this->category_id = $category->getId();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -211,6 +229,7 @@ class Task extends TimeStampedModel implements JsonSerializable
             'id' => $this->id,
             'category_id' => $this->category_id,
             'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
+            'name' => $this->name,
             'description' => $this->description,
             'due_date' => $this->due_date,
             'checked' => $this->checked,
@@ -232,6 +251,7 @@ class Task extends TimeStampedModel implements JsonSerializable
         // stdClass must have loaded instances of other models
         $this->category = $row->category ?? null;
         $this->category_id = $row->category_id;
+        $this->name = $row->name;
         $this->description = $row->description;
         $this->due_date = isset($row->due_date) ? new DateTime($row->due_date) : null;
         $this->checked = boolval($row->checked);
