@@ -4,27 +4,15 @@
         {{ csrf.html | raw }}
         <div class="mb-3">
             <label for="email" class="form-label">{% trans %}FormEmail{% endtrans %}</label>
-            {% if has_error('email') %}
-                <input type="email" id="email" name="email" aria-describedby="validationEmail"
-                       class="form-control is-invalid bg-secondary" value="{{ val('email') }}">
-            {% else %}
-            <input type="email" id="email" name="email" class="form-control bg-secondary" value="{{ val('email') }}">
-            {% endif %}
-            <div id="validationEmail" class="invalid-feedback">
-                {{ error('email') }}
-            </div>
+            <input type="email" id="email" name="email" aria-describedby="validationEmail"
+                   class="form-control bg-secondary" value="{{ val('email') }}">
+            <div id="validation-email" class="invalid-feedback"></div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">{% trans %}FormPwd{% endtrans %}</label>
-            {% if has_error('password') %}
-                <input type="password" id="password" name="password" aria-describedby="validationPassword"
-                       class="form-control is-invalid bg-secondary">
-                <div id="validationPassword" class="invalid-feedback">
-                    {{ error('password') }}
-                </div>
-            {% else %}
-                <input type="password" id="password" name="password" class="form-control bg-secondary">
-            {% endif %}
+            <input type="password" id="password" name="password" aria-describedby="validationPassword"
+                   class="form-control bg-secondary">
+            <div id="validation-password" class="invalid-feedback"></div>
         </div>
         <div class="mb-3 form-check d-flex justify-content-center">
             <input type="checkbox" class="form-check-input bg-secondary me-2" id="exampleCheck1">
@@ -38,25 +26,26 @@
 
 
 <script>
-    const listTranslations = [`{{ 'RegexEmpty'|trans|raw }}`,`{{ 'RegexEmail'|trans|raw }}`,`{{ 'RegexPass'|trans|raw }}`,
-        `{{ 'RegexPassConf'|trans|raw }}`];
+    const translations = `{{ 'ConnectionFailed'|trans|raw }}`;
 
-    function setInvalid(element)
+    function setInvalid()
     {
-        let input = document.getElementById(element)
-        if(input == null) return
-        input.classList.add("is-invalid");
+        let email = $('#email');
+        let pass = $('#password');
+        if((email == null)||(pass == null)) return
+
+        email.addClass("is-invalid");
+        pass.addClass("is-invalid");
     }
 
-    function displayError(div,index,size) {
-        $('#validation-'+div).html(listTranslations[index] + size);
-        setInvalid(div);
+    function displayError() {
+        $('#validation-email').html(translations);
+        setInvalid();
     }
 
     $(document).ready(() => {
-        {% if has_error('email') %}displayError('email',1,"254");{% endif %}
-        {% if has_error('pseudo') %}displayError('pseudo',0,"64");{% endif %}
-        {% if has_error('password') %}displayError('password',2,"128");{% endif %}
-        {% if has_error('password-conf') %}displayError('password-conf',3,"");{% endif %}
+        {% if has_error('email') %}displayError();{% endif %}
+        {% if has_error('password') %}displayError();{% endif %}
+        {% if hasFlash('errors') %}displayError();{% endif %}
     })
 </script>

@@ -15,7 +15,6 @@
 {% endblock %}
 
 {% block main %}
-    {% include 'components/alert.twig' %}
     {% if (current_url() == url_for('account.login')) %}
         {% include 'home/components/content-login.twig' %}
     {% elseif (current_url() == url_for('account.register')) %}

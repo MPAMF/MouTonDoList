@@ -53,7 +53,7 @@ registerForm.addEventListener('submit' ,function(e){
     }
 
     if(!condition.checked){
-        condition.style.border="2px solid blue";
+        condition.style.border="2px solid red";
         e.preventDefault();
     }
 });

@@ -42,9 +42,10 @@
 
     function setInvalid(element)
     {
-        let input = document.getElementById(element)
+        let input = $('#'+element)
         if(input == null) return
-        input.classList.add("is-invalid");
+
+        input.addClass("is-invalid");
     }
 
     function displayError(div,index,size) {
