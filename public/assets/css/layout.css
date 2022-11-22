@@ -484,7 +484,7 @@ input[type="checkbox"] {
 }
 
 /* Category/Task drag */
-.drag-dragging {
+.drag-dragging, .drag-dragging .btn-subcategory-drag, .drag-ghost .btn-subcategory-drag {
     opacity: 1 !important;
 }
 .drag-ghost {
