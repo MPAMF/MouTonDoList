@@ -14,11 +14,13 @@ use stdClass;
 class Task extends TimeStampedModel implements JsonSerializable
 {
     private ?int $id;
-    private Category $category;
+    private int $category_id;
+    private ?Category $category;
     private string $description;
     private DateTime $due_date;
     private bool $checked;
     private int $position;
+    private ?int $last_editor_id;
     private ?User $last_editor;
 
     public function __construct()
@@ -31,6 +33,7 @@ class Task extends TimeStampedModel implements JsonSerializable
         $this->checked = false;
         $this->position = 0;
         $this->last_editor = null;
+        $this->last_editor_id = null;
     }
 
     /**
@@ -143,6 +146,39 @@ class Task extends TimeStampedModel implements JsonSerializable
     public function setLastEditor(?User $last_editor): void
     {
         $this->last_editor = $last_editor;
+        $this->last_editor_id = $last_editor?->getId();
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLastEditorId(): ?int
+    {
+        return $this->last_editor_id;
+    }
+
+    /**
+     * @param int|null $last_editor_id
+     */
+    public function setLastEditorId(?int $last_editor_id): void
+    {
+        $this->last_editor_id = $last_editor_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param int $category_id
+     */
+    public function setCategoryId(int $category_id): void
+    {
+        $this->category_id = $category_id;
     }
 
     #[\ReturnTypeWillChange]
@@ -150,12 +186,14 @@ class Task extends TimeStampedModel implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'category' => $this->category->jsonSerialize(),
+            'category_id' => $this->category_id,
+            'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
             'description' => $this->description,
             'due_date' => $this->due_date,
             'checked' => $this->checked,
             'position' => $this->position,
-            'last_editor' => !empty($this->last_editor) ? $this->last_editor->jsonSerialize() : null,
+            'last_editor_id' => $this->last_editor_id,
+            'last_editor' => isset($this->last_editor) ? $this->last_editor->jsonSerialize() : null,
         ];
     }
 
@@ -183,8 +221,6 @@ class Task extends TimeStampedModel implements JsonSerializable
         $row = $this->jsonSerialize();
         unset($row['category']);
         unset($row['last_editor']);
-        $row['category_id'] = $this->category->getId();
-        $row['last_editor_id'] = !empty($this->last_editor) ? $this->last_editor->getId() : null;
         return $row;
     }
 }

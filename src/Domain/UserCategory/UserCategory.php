@@ -13,8 +13,10 @@ use stdClass;
 class UserCategory extends TimeStampedModel implements JsonSerializable
 {
     private ?int $id;
-    private User $user;
-    private Category $category;
+    private int $user_id;
+    private ?User $user;
+    private int $category_id;
+    private ?Category $category;
     private bool $accepted;
     private bool $canEdit;
 
@@ -56,6 +58,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     public function setUser(User $user): void
     {
         $this->user = $user;
+        $this->user_id = $user->getId();
     }
 
     /**
@@ -72,6 +75,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     public function setCategory(Category $category): void
     {
         $this->category = $category;
+        $this->category_id = $category->getId();
     }
 
     /**
@@ -106,14 +110,47 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
         $this->canEdit = $canEdit;
     }
 
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     */
+    public function setUserId(int $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param int $category_id
+     */
+    public function setCategoryId(int $category_id): void
+    {
+        $this->category_id = $category_id;
+    }
 
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user->getId(),
-            'category_id' => $this->category->getId(),
+            'user_id' => $this->user_id,
+            'user' => isset($this->user) ? $this->user->jsonSerialize() : null,
+            'category_id' => $this->category_id,
+            'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
             'accepted' => $this->accepted,
             'can_edit' => $this->canEdit,
         ];
@@ -126,11 +163,9 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     {
         parent::fromRow($row);
         $this->id = $row->id;
-
-        if (isset($row->user)) {
-            $this->user = $row->user;
-        }
-
+        $this->user_id = $row->user_id;
+        $this->user = $row->user;
+        $this->category_id = $row->category_id;
         $this->category = $row->category;
         $this->accepted = boolval($row->accepted);
         $this->canEdit = boolval($row->can_edit);
@@ -141,6 +176,9 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
      */
     public function toRow(): array
     {
-        return $this->jsonSerialize();
+        $result = $this->jsonSerialize();
+        unset($result['user']);
+        unset($result['category']);
+        return $result;
     }
 }

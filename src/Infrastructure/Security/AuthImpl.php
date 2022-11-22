@@ -9,7 +9,7 @@ use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use App\Infrastructure\Lib\Session;
 
-class Auth implements AuthInterface
+class AuthImpl implements AuthInterface
 {
     private UserRepository $userRepository;
     private string $authId;

@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Repositories;
 
+use App\Domain\DbCacheInterface;
 use App\Domain\Task\TaskNotFoundException;
 use App\Domain\Task\TaskRepository;
 use App\Domain\TaskComment\TaskComment;
@@ -9,21 +10,34 @@ use App\Domain\TaskComment\TaskCommentNotFoundException;
 use App\Domain\TaskComment\TaskCommentRepository;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
-use Illuminate\Database\DatabaseManager;
 use stdClass;
 
 class EloquentTaskCommentRepository extends Repository implements TaskCommentRepository
 {
 
+    /**
+     * @Inject
+     * @var UserRepository
+     */
     private UserRepository $userRepository;
+
+    /**
+     * @Inject
+     * @var TaskRepository
+     */
     private TaskRepository $taskRepository;
 
-    public function __construct(DatabaseManager $db, UserRepository $userRepository, TaskRepository $taskRepository)
+    /**
+     * @Inject
+     * @var DbCacheInterface
+     */
+    private DbCacheInterface $dbCache;
+
+    public function __construct()
     {
-        parent::__construct($db, 'tasks_comments');
-        $this->userRepository = $userRepository;
-        $this->taskRepository = $taskRepository;
+        parent::__construct('tasks_comments');
     }
 
     /**
@@ -42,7 +56,7 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
             $taskComment->author = null;
         } else {
             try {
-                $taskComment->author = $this->userRepository->get($taskComment->author_id);
+                $taskComment->author = $this->userRepository->get($taskComment->author_id, $with);
             } catch (UserNotFoundException) {
                 $taskComment->author = null;
             }
@@ -65,6 +79,9 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
         } catch (Exception) {
             throw new TaskCommentNotFoundException();
         }
+
+        // only save stdClass representation of model
+        $this->dbCache->save($this->tableName, $parsed->getId(), $parsed->toRow());
 
         return $parsed;
     }
@@ -118,7 +135,7 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
      */
     public function get($id, array|null $with = null): TaskComment
     {
-        $found = $this->getTable()->where('id', $id)->first();
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
         return $this->parseTaskComment($found, $with);
     }
 

@@ -19,10 +19,11 @@ interface UserRepository
 
     /**
      * @param $id
+     * @param array|null $with
      * @return User
      * @throws UserNotFoundException
      */
-    public function get($id): User;
+    public function get($id, array|null $with = null): User;
 
     /**
      * @param User $user

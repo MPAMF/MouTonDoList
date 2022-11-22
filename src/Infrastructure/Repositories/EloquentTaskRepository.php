@@ -6,39 +6,45 @@ namespace App\Infrastructure\Repositories;
 use App\Domain\Category\Category;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
+use App\Domain\DbCacheInterface;
 use App\Domain\Task\Task;
 use App\Domain\Task\TaskNotFoundException;
 use App\Domain\Task\TaskRepository;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 
 class EloquentTaskRepository extends Repository implements TaskRepository
 {
 
+    /**
+     * @Inject()
+     * @var UserRepository
+     */
     private UserRepository $userRepository;
+
+    /**
+     * @Inject()
+     * @var CategoryRepository
+     */
     private CategoryRepository $categoryRepository;
 
     /**
-     * @param DatabaseManager $db
-     * @param UserRepository $userRepository
-     * @param CategoryRepository $categoryRepository
+     * @Inject()
+     * @var DbCacheInterface
      */
-    public function __construct(
-        DatabaseManager $db,
-        UserRepository $userRepository,
-        CategoryRepository $categoryRepository
-    ) {
-        parent::__construct($db);
-        $this->userRepository = $userRepository;
-        $this->categoryRepository = $categoryRepository;
+    private DbCacheInterface $dbCache;
+
+    public function __construct() {
+        parent::__construct('tasks');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get($id): Task
+    public function get($id, array|null $with = null): Task
     {
         // to chiant to make two left joins : 3 requests are better
         $task = $this->getDB()->table('tasks')

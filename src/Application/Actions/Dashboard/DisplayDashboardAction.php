@@ -4,38 +4,40 @@ declare(strict_types=1);
 namespace App\Application\Actions\Dashboard;
 
 use App\Application\Actions\Action;
-use App\Domain\Category\Category;
 use App\Domain\Category\CategoryRepository;
+use App\Domain\Task\TaskRepository;
+use App\Domain\TaskComment\TaskCommentRepository;
 use App\Domain\UserCategory\UserCategory;
 use App\Domain\UserCategory\UserCategoryRepository;
+use DI\Annotation\Inject;
 use Illuminate\Support\Collection;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Log\LoggerInterface;
-use Slim\Flash\Messages;
-use Slim\Views\Twig;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Tagliatti\SlimValidation\ValidatorInterface;
 
 class DisplayDashboardAction extends Action
 {
+    /**
+     * @Inject
+     * @var CategoryRepository
+     */
     private CategoryRepository $categoryRepository;
+
+    /**
+     * @Inject
+     * @var UserCategoryRepository
+     */
     private UserCategoryRepository $userCategoryRepository;
 
-    public function __construct(
-        LoggerInterface          $logger,
-        Twig                     $twig,
-        ResponseFactoryInterface $responseFactory,
-        Messages                 $messages,
-        TranslatorInterface      $translator,
-        ValidatorInterface       $validator,
-        CategoryRepository       $categoryRepository,
-        UserCategoryRepository   $userCategoryRepository)
-    {
-        parent::__construct($logger, $twig, $responseFactory, $messages, $translator, $validator);
-        $this->categoryRepository = $categoryRepository;
-        $this->userCategoryRepository = $userCategoryRepository;
-    }
+    /**
+     * @Inject
+     * @var TaskRepository
+     */
+    private TaskRepository $taskRepository;
+
+    /**
+     * @Inject
+     * @var TaskCommentRepository
+     */
+    private TaskCommentRepository $taskCommentRepository;
 
     private function getArgsCategory(Collection $categories): ?UserCategory
     {
@@ -65,15 +67,24 @@ class DisplayDashboardAction extends Action
             )->first();
         }
 
-        if (!isset($category)) {
-            return $this->withError($this->translator->trans('DashboardCategoryNotFound'))->redirect('home');
-        }
+        if (isset($category)) {
 
-        if (!$category->isAccepted()) {
-            // TODO: Send message : accept invite and redirect maybe to notifications page ?
-        }
+            if (!$category->isAccepted()) {
+                // TODO: Send message : accept invite and redirect maybe to notifications page ?
+            }
 
-        $category->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
+            $category->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
+
+            foreach ($category->subCategories as $subCategory) {
+                $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId());
+
+                foreach ($subCategory->tasks as $task) {
+                    $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['user']);
+                }
+
+            }
+
+        }
 
         // Filter categories: archives / normal
         // TODO: utile de faire deux collections?

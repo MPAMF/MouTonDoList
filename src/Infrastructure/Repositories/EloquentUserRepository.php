@@ -12,12 +12,9 @@ use Illuminate\Database\DatabaseManager;
 class EloquentUserRepository extends Repository implements UserRepository
 {
 
-    /**
-     * @param DatabaseManager $db
-     */
-    public function __construct(DatabaseManager $db)
+    public function __construct()
     {
-        parent::__construct($db);
+        parent::__construct('users');
     }
 
     /**
@@ -25,7 +22,7 @@ class EloquentUserRepository extends Repository implements UserRepository
      */
     public function logUser(string $email, string $password): User
     {
-        $found = $this->getDB()->table('users')->where('email', $email)->first();
+        $found = $this->getTable()->where('email', $email)->first();
 
         if (empty($found) || !password_verify($password, $found->password)) {
             throw new UserNotFoundException();
@@ -45,9 +42,14 @@ class EloquentUserRepository extends Repository implements UserRepository
     /**
      * {@inheritdoc}
      */
-    public function get($id): User
+    public function get($id, array|null $with = null, array|null &$cache = null): User
     {
-        $found = $this->getDB()->table('users')->where('id', $id)->first();
+        // Return cached values to avoid multiple db requests
+        if (isset($cache['users'][$id]))
+            return $cache['users'][$id];
+
+        $found = $this->getTable()->where('id', $id)->first();
+
         if (empty($found)) {
             throw new UserNotFoundException();
         }
@@ -60,23 +62,29 @@ class EloquentUserRepository extends Repository implements UserRepository
             throw new UserNotFoundException();
         }
 
+        // Write to cache
+        if (!isset($cache))
+            $cache = [];
+
+        $cache['users'][$id] = $parsed;
+
         return $parsed;
     }
 
-    public function save(User $user) : bool
+    public function save(User $user): bool
     {
-        return $this->getDB()->table('users')->updateOrInsert(
+        return $this->getTable()->updateOrInsert(
             $user->toRow()
         );
     }
 
-    public function delete(User $user) : int
+    public function delete(User $user): int
     {
-        return $this->getDB()->table('users')->delete($user->getId());
+        return $this->getTable()->delete($user->getId());
     }
 
     public function exists($id): bool
     {
-        return $this->getDB()->table('users')->where('id', $id)->exists();
+        return $this->getTable()->where('id', $id)->exists();
     }
 }

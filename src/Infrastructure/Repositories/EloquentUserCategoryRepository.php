@@ -5,31 +5,40 @@ namespace App\Infrastructure\Repositories;
 
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
+use App\Domain\DbCacheInterface;
 use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use App\Domain\UserCategory\UserCategory;
 use App\Domain\UserCategory\UserCategoryNotFoundException;
 use App\Domain\UserCategory\UserCategoryRepository;
+use DI\Annotation\Inject;
 use Exception;
-use Illuminate\Database\DatabaseManager;
 use stdClass;
 
 class EloquentUserCategoryRepository extends Repository implements UserCategoryRepository
 {
+    /**
+     * @Inject
+     * @var UserRepository
+     */
     private UserRepository $userRepository;
+
+    /**
+     * @Inject
+     * @var CategoryRepository
+     */
     private CategoryRepository $categoryRepository;
 
     /**
-     * @param DatabaseManager $db
-     * @param UserRepository $userRepository
-     * @param CategoryRepository $categoryRepository
+     * @Inject
+     * @var DbCacheInterface
      */
-    public function __construct(DatabaseManager $db, UserRepository $userRepository, CategoryRepository $categoryRepository)
+    private DbCacheInterface $dbCache;
+
+    public function __construct()
     {
-        parent::__construct($db);
-        $this->userRepository = $userRepository;
-        $this->categoryRepository = $categoryRepository;
+        parent::__construct('user_categories');
     }
 
     /**
@@ -48,7 +57,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
             $userCategory->user = null;
         } else {
             try {
-                $userCategory->user = $this->userRepository->get($userCategory->user_id);
+                $userCategory->user = $this->userRepository->get($userCategory->user_id, $with);
             } catch (UserNotFoundException) {
                 // Should never happen.
                 throw new UserCategoryNotFoundException();
@@ -70,15 +79,17 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
             throw new UserCategoryNotFoundException();
         }
 
+        $this->dbCache->save($this->tableName, $parsed->getId(), $parsed->toRow());
+
         return $parsed;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get($id, array|null $with = ['user']): UserCategory
+    public function get($id, array|null $with = null): UserCategory
     {
-        $found = $this->getDB()->table('categories')->where('id', $id)->first();
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getDB()->table('categories')->where('id', $id)->first();
         return $this->parseUserCategory($found, $with);
     }
 
@@ -87,7 +98,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
      */
     public function save(UserCategory $userCategory): bool
     {
-        return $this->getDB()->table('user_categories')->updateOrInsert(
+        return $this->getTable()->updateOrInsert(
             $userCategory->toRow()
         );
     }
@@ -95,19 +106,19 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     /**
      * {@inheritdoc}
      */
-    public function delete(UserCategory $userCategory) : int
+    public function delete(UserCategory $userCategory): int
     {
-        return $this->getDB()->table('user_categories')->delete($userCategory->getId());
+        return $this->getTable()->delete($userCategory->getId());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCategories(User|int $user, array|null $with = null) : array
+    public function getCategories(User|int $user, array|null $with = null): array
     {
         $categories = [];
         $id = $user instanceof User ? $user->getId() : $user;
-        $foundCategories = $this->getDB()->table('user_categories')
+        $foundCategories = $this->getTable()
             ->where('user_id', $id)
             ->get();
 

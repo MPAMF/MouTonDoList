@@ -2,18 +2,22 @@
 
 namespace App\Infrastructure\Repositories;
 
+use DI\Annotation\Inject;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Query\Builder;
 
 abstract class Repository
 {
 
+    /**
+     * @Inject
+     * @var DatabaseManager
+     */
     private DatabaseManager $db;
-    private string $tableName;
+    protected string $tableName;
 
-    public function __construct(DatabaseManager $db, string $tableName = null)
+    public function __construct(string $tableName)
     {
-        $this->db = $db;
         $this->tableName = $tableName;
     }
 

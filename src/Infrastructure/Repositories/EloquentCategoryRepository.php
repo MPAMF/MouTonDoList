@@ -6,9 +6,11 @@ namespace App\Infrastructure\Repositories;
 use App\Domain\Category\Category;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
+use App\Domain\DbCacheInterface;
 use App\Domain\User\User;
 use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use stdClass;
@@ -16,16 +18,21 @@ use stdClass;
 class EloquentCategoryRepository extends Repository implements CategoryRepository
 {
 
+    /**
+     * @Inject()
+     * @var UserRepository
+     */
     private UserRepository $userRepository;
 
     /**
-     * @param DatabaseManager $db
-     * @param UserRepository $userRepository
+     * @Inject()
+     * @var DbCacheInterface
      */
-    public function __construct(DatabaseManager $db, UserRepository $userRepository)
+    private DbCacheInterface $dbCache;
+
+    public function __construct()
     {
-        parent::__construct($db);
-        $this->userRepository = $userRepository;
+        parent::__construct('categories');
     }
 
     /**
@@ -44,7 +51,7 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
             $category->parentCategory = null;
         } else {
             try {
-                $category->parentCategory = $this->get($category->parent_category_id);
+                $category->parentCategory = $this->get($category->parent_category_id, $with);
             } catch (CategoryNotFoundException) {
                 $category->parentCategory = null;
             }
@@ -54,7 +61,7 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
             $category->owner = null;
         } else {
             try {
-                $category->owner = $this->userRepository->get($category->owner_id);
+                $category->owner = $this->userRepository->get($category->owner_id, $with);
             } catch (UserNotFoundException) {
                 $category->owner = null;
             }
@@ -68,15 +75,17 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
             throw new CategoryNotFoundException();
         }
 
+        $this->dbCache->save($this->tableName, $parsed->getId(), $parsed->toRow());
+
         return $parsed;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get($id, array|null $with = ['parentCategory', 'owner']): Category
+    public function get($id, array|null $with = null): Category
     {
-        $found = $this->getDB()->table('categories')->where('id', $id)->first();
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getDB()->table('categories')->where('id', $id)->first();
         return $this->parseCategory($found, $with);
     }
 
@@ -93,7 +102,7 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-    public function delete(Category $category) : int
+    public function delete(Category $category): int
     {
         return $this->getDB()->table('categories')->delete($category->getId());
     }

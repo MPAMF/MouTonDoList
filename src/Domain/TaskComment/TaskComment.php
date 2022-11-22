@@ -122,6 +122,7 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
         $this->author_id = $row->author_id;
         $this->task_id = $row->task_id;
 
+        // Not nullable: should stay undefined
         if(isset($row->task))
         {
             $this->task = $row->task;
@@ -134,6 +135,9 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
      */
     public function toRow(): array
     {
-        return $this->jsonSerialize();
+        $result = $this->jsonSerialize();
+        unset($result['author']);
+        unset($result['task']);
+        return $result;
     }
 }

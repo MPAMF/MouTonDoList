@@ -12,7 +12,7 @@ interface UserCategoryRepository
 
     /**
      * @param User|int $user User or user_id
-     * @param array|null $with ['user'] load user object
+     * @param array|null $with ['user', 'category'] load objects
      * @return array Categories from user
      */
     public function getCategories(User|int $user, array|null $with = null) : array;
@@ -30,10 +30,11 @@ interface UserCategoryRepository
     public function save(UserCategory $userCategory): bool;
 
     /**
-     * @param $id
+     * @param int $id
+     * @param array|null $with ['user', 'category'] load objects
      * @return UserCategory
      * @throws UserCategoryNotFoundException
      */
-    public function get($id): UserCategory;
+    public function get(int $id, array|null $with = null): UserCategory;
 
 }
