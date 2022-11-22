@@ -114,14 +114,13 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     /**
      * {@inheritdoc}
      */
-    public function getCategories(User|int $user, array|null $with = null): array
+    public function getCategories(User|int $user, ?bool $accepted = null, array|null $with = null): array
     {
         $categories = [];
         $id = $user instanceof User ? $user->getId() : $user;
-        $foundCategories = $this->getTable()
-            ->where('user_id', $id)
-            ->latest('updated_at')
-            ->get();
+        $foundCategories = $this->getTable()->where('user_id', $id);
+        if(isset($accepted)) $foundCategories = $foundCategories->where('accepted', $accepted);
+        $foundCategories = $foundCategories->latest('updated_at')->get();
 
         foreach ($foundCategories as $category) {
 

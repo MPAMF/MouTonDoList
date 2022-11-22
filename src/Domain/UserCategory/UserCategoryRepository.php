@@ -12,10 +12,11 @@ interface UserCategoryRepository
 
     /**
      * @param User|int $user User or user_id
+     * @param bool|null $accepted Categories including invited categories
      * @param array|null $with ['user', 'category'] load objects
      * @return array Categories from user
      */
-    public function getCategories(User|int $user, array|null $with = null) : array;
+    public function getCategories(User|int $user, ?bool $accepted = null, array|null $with = null) : array;
 
     /**
      * @param UserCategory $userCategory User category
