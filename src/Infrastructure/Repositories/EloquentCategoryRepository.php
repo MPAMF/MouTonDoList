@@ -85,7 +85,7 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
      */
     public function get($id, array|null $with = null): Category
     {
-        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getDB()->table('categories')->where('id', $id)->first();
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
         return $this->parseCategory($found, $with);
     }
 

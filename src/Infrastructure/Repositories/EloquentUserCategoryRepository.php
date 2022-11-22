@@ -89,7 +89,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
      */
     public function get($id, array|null $with = null): UserCategory
     {
-        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getDB()->table('categories')->where('id', $id)->first();
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
         return $this->parseUserCategory($found, $with);
     }
 
