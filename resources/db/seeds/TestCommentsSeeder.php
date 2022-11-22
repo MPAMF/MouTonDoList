@@ -134,7 +134,11 @@ class TestCommentsSeeder extends AbstractSeed
 
         for ($i = 1; $i <= 216; $i++)
         {
-            $data[] = $this->generateRandomComment($i);
+            $r = rand(0, 8);
+            for ($j = 0; $j < $r; $j++)
+            {
+                $data[] = $this->generateRandomComment($i);
+            }
         }
 
         $task_comments = $this->table('task_comments');
