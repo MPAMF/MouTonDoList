@@ -20,114 +20,147 @@ class TestUserCategoriesSeeder extends AbstractSeed
         $data = [
             // Paul
             [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 1,
                 'category_id' => 1
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 1,
                 'category_id' => 6
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 1,
                 'category_id' => 11
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 1,
                 'category_id' => 16
             ],
             // Matthieu
             [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 2,
                 'category_id' => 21
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 2,
                 'category_id' => 26
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 2,
                 'category_id' => 31
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 2,
                 'category_id' => 36
             ],
             // Quentin
             [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 3,
                 'category_id' => 41
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 3,
                 'category_id' => 46
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 3,
                 'category_id' => 51
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 3,
                 'category_id' => 56
             ],
             // Victor
             [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 4,
                 'category_id' => 61
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 4,
                 'category_id' => 66
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 4,
                 'category_id' => 71
             ], [
-                'accepted' => false,
-                'can_edit' => false,
+                'accepted' => true,
+                'can_edit' => true,
                 'user_id' => 4,
                 'category_id' => 76
             ],
-            // Create shared tasks
+            // Create shared categories
             // Paul => Matthieu
             [
                 'accepted' => true,
                 'can_edit' => true,
                 'user_id' => 1,
-                'category_id' => 26
+                'category_id' => 26 // Matthieu
             ],
-            // All without Paul => Paul
+            // Matthieu => Paul
             [
                 'accepted' => true,
                 'can_edit' => true,
                 'user_id' => 2,
                 'category_id' => 1
-            ], [
+            ],
+            // Quentin => Victor
+            [
                 'accepted' => true,
                 'can_edit' => true,
                 'user_id' => 3,
-                'category_id' => 1
-            ], [
+                'category_id' => 66
+            ],
+            // Victor => Quentin
+            [
                 'accepted' => true,
                 'can_edit' => true,
+                'user_id' => 4,
+                'category_id' => 41
+            ],
+            // Accepted readonly
+            // Paul => Victor
+            [
+                'accepted' => true,
+                'can_edit' => false,
+                'user_id' => 1,
+                'category_id' => 76 // Victor
+            ],
+            // Matthieu => Quentin
+            [
+                'accepted' => true,
+                'can_edit' => false,
+                'user_id' => 2,
+                'category_id' => 41
+            ],
+            // Quentin => Matthieu
+            [
+                'accepted' => true,
+                'can_edit' => false,
+                'user_id' => 3,
+                'category_id' => 21
+            ],
+            // Victor => Paul
+            [
+                'accepted' => true,
+                'can_edit' => false,
                 'user_id' => 4,
                 'category_id' => 1
             ],
@@ -136,25 +169,29 @@ class TestUserCategoriesSeeder extends AbstractSeed
             [
                 'accepted' => false,
                 'can_edit' => false,
-                'user_id' => 4,
+                'user_id' => 1,
                 'category_id' => 31
             ],
-            // All without Paul => Paul
+            // Matthieu => Paul
             [
                 'accepted' => false,
                 'can_edit' => false,
                 'user_id' => 2,
                 'category_id' => 6
-            ], [
+            ],
+            // Quentin => Victor
+            [
                 'accepted' => false,
                 'can_edit' => false,
                 'user_id' => 3,
-                'category_id' => 6
-            ], [
+                'category_id' => 61
+            ],
+            // Victor => Quentin
+            [
                 'accepted' => false,
                 'can_edit' => false,
                 'user_id' => 4,
-                'category_id' => 6
+                'category_id' => 71
             ],
 
         ];
