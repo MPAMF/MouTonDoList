@@ -10,7 +10,7 @@ function openTaskDetails(subCatId, taskId)
     let content = '' +
         '<div>' +
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche">' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" ' + (task.checked ? "checked" : "") +'>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="Nom de la tâche">' + task.name + '</label>' +
         '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + (task.assigned === null ? '' : task.assigned) + '</small>' +
@@ -74,8 +74,10 @@ function openTaskDetails(subCatId, taskId)
     modal.show(document)
 }
 
-function openEditModalCategory(id)
+function openEditModalCategory()
 {
+    let category = getCurrentCategory()
+
     // get from categories where id=id
     $("#modal-title").html('Modifier le projet')
     $("#modal-footer").html('' +
@@ -85,7 +87,7 @@ function openEditModalCategory(id)
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom du projet" title="Nom du projet" required>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom du projet" title="Nom du projet" value="' + category.name + '" required>' +
                 '<div id="error-modal" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
             '</div>' +
             '<div class="col-12 checkbox">' +
@@ -151,8 +153,10 @@ function openEditModalCategory(id)
     modal.show(document)
 }
 
-function openEditModalSubCategory(id)
+function openEditModalSubCategory(catId)
 {
+    let sub = getSubInCurrentById(catId)
+
     // get from categories where id=id
     $("#modal-title").html('Modifier la catégorie')
     $("#modal-footer").html('' +
@@ -162,7 +166,7 @@ function openEditModalSubCategory(id)
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom de la catégorie" title="Nom de la catégorie" required>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" value="' + sub.name + '" placeholder="Nom de la catégorie" title="Nom de la catégorie" required>' +
                 '<div id="error-modal" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
             '</div>' +
         '</form>')
@@ -170,8 +174,10 @@ function openEditModalSubCategory(id)
     modal.show(document)
 }
 
-function openEditModalTask(idCat, idTask)
+function openEditModalTask(subCatId, taskId)
 {
+    let task = getTaskInCurrentById(subCatId, taskId)
+
     // get from categories where id=id
     $("#modal-title").html('Modifier la tâche')
     $("#modal-footer").html('' +
@@ -181,12 +187,12 @@ function openEditModalTask(idCat, idTask)
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="Nom de la tâche" title="Nom de la tâche" required>' +
+                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" value="' + task.name + '" placeholder="Nom de la tâche" title="Nom de la tâche" required>' +
                 '<div id="error-modal" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>' +
             '</div>' +
             '<div class="col-12">' +
                 '<label for="modal-input-description" class="form-label">Description</label>' +
-                '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="Description de la tâche" title="Description de la tâche"></textarea>' +
+                '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="Description de la tâche" title="Description de la tâche">' + task.description + '</textarea>' +
             '</div>' +
             '<div class="col-12 modal-form-label-select">' +
                 '<label for="modal-assign-member" class="form-label">Assigner</label>' +
