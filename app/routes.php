@@ -39,7 +39,7 @@ return function (App $app) {
         return $this->get(Twig::class)->render($response, 'account/login-page.twig');
     })->add(AuthMiddleware::class);
 
-    $app->group('/dashboard', function (Group $group) {
+    $app->group('/dashboard[/{id}]', function (Group $group) {
         $group->get('', DisplayDashboardAction::class)->setName('dashboard');
     })->add(UserConnectedMiddleware::class);
 
