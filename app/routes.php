@@ -5,6 +5,9 @@ use App\Application\Actions\Auth\Login\DisplayLoginAction;
 use App\Application\Actions\Auth\Login\LoginAction;
 use App\Application\Actions\Auth\Register\DisplayRegisterAction;
 use App\Application\Actions\Auth\Register\RegisterAction;
+use App\Application\Actions\Categories\CreateCategoryAction;
+use App\Application\Actions\Categories\DeleteCategoryAction;
+use App\Application\Actions\Categories\UpdateCategoryAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
@@ -47,4 +50,12 @@ return function (App $app) {
         $group->get('', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
     });
+
+    $app->group('actions', function (Group $group) {
+        $group->group('/categories', function (Group $group) {
+            $group->post('', CreateCategoryAction::class);
+            $group->put('/{id}', UpdateCategoryAction::class);
+            $group->delete('/{id}', DeleteCategoryAction::class);
+        });
+    })->add(UserConnectedMiddleware::class);
 };

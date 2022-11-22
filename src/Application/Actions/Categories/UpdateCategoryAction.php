@@ -7,7 +7,7 @@ use App\Domain\Category\CategoryRepository;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class CreateCategoryAction extends Action
+class UpdateCategoryAction extends Action
 {
 
     /**
