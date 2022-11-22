@@ -79,9 +79,7 @@ class DisplayDashboardAction extends Action
                 foreach ($subCategory->tasks as $task) {
                     $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['user']);
                 }
-
             }
-
         }
 
         // Filter categories: archives / normal
