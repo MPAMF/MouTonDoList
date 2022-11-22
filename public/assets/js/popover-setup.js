@@ -29,6 +29,38 @@ $(document).ready(function () {
                 '</div>'
         }
     })
+    $("[data-bs-popover=category-shared-popover]").popover({
+        trigger: 'click',
+        placement: 'left',
+        customClass: 'popover',
+        offset: [0, 0],
+        html: true,
+        sanitize: false,
+        content: () => {
+            let id = $(this)[0].activeElement.getAttribute('data-id').toString();
+            return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
+                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une tâche</button>' +
+                '</div>'
+        }
+    })
+    $("[data-bs-popover=category-shared-readonly-popover]").popover({
+        trigger: 'click',
+        placement: 'left',
+        customClass: 'popover',
+        offset: [0, 0],
+        html: true,
+        sanitize: false,
+        content: () => {
+            let id = $(this)[0].activeElement.getAttribute('data-id').toString();
+            return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
+                '</div>'
+        }
+    })
     $("[data-bs-popover=category-archive-popover]").popover({
         trigger: 'click',
         placement: 'left',

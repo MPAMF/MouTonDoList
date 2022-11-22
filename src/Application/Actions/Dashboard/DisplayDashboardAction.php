@@ -58,7 +58,7 @@ class DisplayDashboardAction extends Action
      */
     protected function action(): Response
     {
-        $categories = collect($this->userCategoryRepository->getCategories($this->user()));
+        $categories = collect($this->userCategoryRepository->getCategories($this->user(), accepted: true));
         $category = $this->getArgsCategory($categories);
 
         if (!isset($category)) {
@@ -90,7 +90,8 @@ class DisplayDashboardAction extends Action
         return $this->respondWithView('pages/dashboard.twig', [
             'category' => $category,
             'categories' => $categories,
-            'archivedCategories' => $archivedCategories
+            'archivedCategories' => $archivedCategories,
+            'user' => $this->user()
         ]);
     }
 }
