@@ -194,6 +194,15 @@ input[type="checkbox"] {
     max-width: 40rem;
 }
 
+/* Account Pages */
+.form-account{
+    max-width: 500px;
+    min-width: 350px;
+}
+.btn-account{
+    max-width: fit-content;
+}
+
 /* Modal Theme */
 .theme-modal-color{
     height: 60px;

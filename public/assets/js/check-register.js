@@ -8,13 +8,13 @@ registerForm.addEventListener('submit' ,function(e){
     let condition = document.getElementById("condition");
 
     let regex = /^[a-zA-Z-_0-9\S]*@[a-zA-Z-_\S]*\.[a-z\S]*$/;
-    let regexPseudo = /^[a-zA-Z0-9-_*.!?#\S]+$/;
     let regexMdpSpe = /^[-_*.!?#\S]+$/;
     let regexMdpMin = /^[a-z\S]+$/;
     let regexMdpMaj = /^[A-Z\S]+$/;
     let regexMdpNum = /^[0-9\S]+$/;
 
     if(email.value.trim() === ""){
+        displayError("email",0,"254")
         e.preventDefault();
     }
     else if(!regex.test(email.value)){
@@ -22,30 +22,33 @@ registerForm.addEventListener('submit' ,function(e){
     }
 
     if(pseudo.value.trim() === ""){
-        e.preventDefault();
-    }
-    else if(!regexPseudo.test(pseudo.value)){
+        displayError("pseudo",0,"64")
         e.preventDefault();
     }
 
     if(pass.value.trim() === ""){
+        displayError("password",0,"128")
         e.preventDefault();
     }
     else if(!regexMdpSpe.test(pass.value)){
+        displayError('password',2)
         e.preventDefault();
     }
     else if(!regexMdpMin.test(pass.value)){
+        displayError('password',2)
         e.preventDefault();
     }
     else if(!regexMdpMaj.test(pass.value)){
+        displayError('password',2)
         e.preventDefault();
     }
     else if(!regexMdpNum.test(pass.value)){
+        displayError('password',2)
         e.preventDefault();
     }
 
     if(passConf.value !== pass.value){
-        console.log("test");
+        displayError("password-conf",3)
         e.preventDefault();
     }
 

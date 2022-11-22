@@ -42,5 +42,10 @@
 
   "AuthRegisterFailed": "Erreur lors de la création de l'utilisateur.",
   "AuthRegisterUserExist": "Un utilisateur possède déjà un compte avec cette adresse mail.",
-  "AuthRegisterSuccess": "Création réussie!"
+  "AuthRegisterSuccess": "Création réussie!",
+
+  "RegexEmpty": "Ce champ ne peut pas être vide. Le nombre de caractère maximum est : ",
+  "RegexEmail": "L'adresse mail doit être de la forme : 'exemple@exemple.exemple'. Le nombre de caractère maximum est : ",
+  "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère maximum est : ",
+  "RegexPassConf": "Les deux mots de passe sont différents."
 }

@@ -4,7 +4,7 @@ namespace App\Application\Actions\Auth\Register;
 
 use App\Application\Actions\Auth\AuthAction;
 use App\Domain\User\User;
-use mysql_xdevapi\Exception;
+use App\Domain\UserCategory\UserCategoryNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Validator;
 
@@ -14,10 +14,10 @@ class RegisterAction extends AuthAction
     protected function action(): Response
     {
         $validator = $this->validator->validate($this->request, [
-            'email' => Validator::notBlank()->email(),
-            'pseudo' => Validator::notBlank(),
-            'password' => Validator::notBlank()->regex('/[A-Z]/')
-                ->regex('/[a-z]/')->regex('/[1-9]/')->regex('/[-_*.!?#@&]/'),
+            'email' => Validator::notBlank()->email()->length(0,254),
+            'pseudo' => Validator::notBlank()->length(0,64),
+            'password' => Validator::notBlank()->regex('/[A-Z]/')->regex('/[a-z]/')
+                ->regex('/[1-9]/')->regex('/[-_*.!?#@&]/')->length(0,128),
             'password-conf' => Validator::equals($_POST['password']),
         ]);
 
@@ -43,7 +43,7 @@ class RegisterAction extends AuthAction
                     ->respondWithView('home/content.twig',[]);
             }
 
-        } catch (Exception) {
+        } catch (UserCategoryNotFoundException) {
             return $this->withError($this->translator->trans('AuthRegisterFailed'))
                 ->respondWithView('home/content.twig',[]);
         }
@@ -51,5 +51,4 @@ class RegisterAction extends AuthAction
         return $this->withSuccess($this->translator->trans('AuthRegisterSuccess'))
             ->redirect('account.login');
     }
-
 }

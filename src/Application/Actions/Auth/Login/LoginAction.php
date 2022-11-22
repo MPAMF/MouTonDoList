@@ -13,8 +13,8 @@ class LoginAction extends AuthAction
     protected function action(): Response
     {
         $validator = $this->validator->validate($this->request, [
-            'email' => Validator::notBlank()->email(),
-            'password' => Validator::notBlank(),
+            'email' => Validator::notBlank()->email()->length(0,254),
+            'password' => Validator::notBlank()->length(0,128),
         ]);
 
         if (!$validator->isValid()) {
