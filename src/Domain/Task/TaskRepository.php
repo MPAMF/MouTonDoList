@@ -8,11 +8,11 @@ interface TaskRepository
 {
 
     /**
-     * @param Category $category
+     * @param int|Category $category Id or category object
      * @param array|null $with ['category', 'last_editor', 'assigned'] load objects
      * @return array
      */
-    public function getTasks(Category $category, array|null $with = null) : array;
+    public function getTasks(int|Category $category, array|null $with = null) : array;
 
     /**
      * @param $id
