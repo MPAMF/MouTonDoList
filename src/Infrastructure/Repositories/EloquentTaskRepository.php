@@ -15,6 +15,7 @@ use App\Domain\User\UserRepository;
 use DI\Annotation\Inject;
 use Exception;
 use Illuminate\Database\DatabaseManager;
+use stdClass;
 
 class EloquentTaskRepository extends Repository implements TaskRepository
 {
@@ -39,6 +40,64 @@ class EloquentTaskRepository extends Repository implements TaskRepository
 
     public function __construct() {
         parent::__construct('tasks');
+    }
+
+    /**
+     * @param stdClass $task
+     * @param array|null $with
+     * @return Task
+     * @throws TaskNotFoundException
+     */
+    private function parseTask(stdClass $task, array|null $with = ['category', 'lastEditor', 'assigned']): Task
+    {
+        if (empty($task)) {
+            throw new TaskNotFoundException();
+        }
+
+        if ($with == null || !in_array('category', $with)) {
+            $task->category = null;
+        } else {
+            try {
+                $task->category = $this->categoryRepository->get($task->category_id, $with);
+            } catch (CategoryNotFoundException) {
+                // Should never happen.
+                throw new TaskNotFoundException();
+            }
+        }
+
+        if (!isset($task->assigned_id) || $with == null || !in_array('assigned', $with)) {
+            $task->assigned = null;
+        } else {
+            try {
+                $task->assigned = $this->userRepository->get($task->assigned_id, $with);
+            } catch (UserNotFoundException) {
+                $task->assigned = null;
+                $task->assigned_id = null;
+            }
+        }
+
+        if (!isset($task->last_editor_id) || $with == null || !in_array('lastEditor', $with)) {
+            $task->last_editor = null;
+        } else {
+            try {
+                $task->last_editor = $this->userRepository->get($task->last_editor_id, $with);
+            } catch (UserNotFoundException) {
+                $task->last_editor = null;
+                $task->last_editor_id = null;
+            }
+        }
+
+        $parsed = new Task();
+        // If there's a parsing error, just show the usercategory a not found exception.
+        try {
+            $parsed->fromRow($task);
+        } catch (Exception) {
+            throw new TaskNotFoundException();
+        }
+
+        $this->dbCache->save($this->tableName, $parsed->getId(), $parsed->toRow());
+
+        return $parsed;
     }
 
     /**
@@ -94,7 +153,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         return $this->getDB()->table('tasks')->delete($task->getId());
     }
 
-    public function getTasks(Category $category): array
+    public function getTasks(Category $category, array|null $with = null): array
     {
         return [];
     }
