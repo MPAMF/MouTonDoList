@@ -185,7 +185,8 @@ class Category extends TimeStampedModel implements JsonSerializable
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
-        return [
+
+        $result = [
             'id' => $this->id,
             'owner' => isset($this->owner)  ? $this->owner->jsonSerialize() : null,
             'owner_id' => $this->owner_id,
@@ -196,6 +197,18 @@ class Category extends TimeStampedModel implements JsonSerializable
             'position' => $this->position,
             'archived' => $this->archived
         ];
+
+        if(isset($this->subCategories))
+        {
+            $result['subCategories'] = $this->subCategories;
+        }
+
+        if(isset($this->tasks))
+        {
+            $result['tasks'] = $this->tasks;
+        }
+
+        return $result;
     }
 
     /**
@@ -223,6 +236,8 @@ class Category extends TimeStampedModel implements JsonSerializable
         $row = $this->jsonSerialize();
         unset($row['parent_category']);
         unset($row['owner']);
+        unset($row['subCategories']);
+        unset($row['tasks']);
         return $row;
     }
 }
