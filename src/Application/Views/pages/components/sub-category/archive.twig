@@ -1,5 +1,5 @@
 <div class="accordion-item accordion-item-tasks subcategory-archive">
-    <h2 class="accordion-header subcategory-header" id="panelsStayOpen-heading-{{ subCatId }}">
+    <h2 class="accordion-header subcategory-header" id="panelsStayOpen-heading-{{ subCategory.id }}">
         <span class="category-button">
             <span class="accordion-button btn-subcategory-drag">
                 <button class="btn btn-category-actions" type="button" title="Attrape la sous-catégorie pour la changer d'emplacement">
@@ -7,8 +7,8 @@
                 </button>
             </span>
         </span>
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ subCatId }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ subCatId }}">
-            Sous-catégorie #{{ subCatId }}
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse-{{ subCategory.id }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse-{{ subCategory.id }}">
+            {{ subCategory.name }}
         </button>
         <span class="category-button">
             <span class="accordion-button">
@@ -18,11 +18,11 @@
             </span>
         </span>
     </h2>
-    <div id="panelsStayOpen-collapse-{{ subCatId }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ subCatId }}">
+    <div id="panelsStayOpen-collapse-{{ subCategory.id }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ subCategory.id }}">
         <div class="accordion-body">
             <ul class="list-group list-group-flush">
-                {% for taskId in 0..5 %}
-                    {% include 'pages/components/task/archive.twig' with { 'subCatId' : subCatId, 'taskId': taskId } %}
+                {% for task in tasks %}
+                    {% include 'pages/components/task/archive.twig' with { 'taskId': taskId } %}
                 {% endfor %}
             </ul>
         </div>

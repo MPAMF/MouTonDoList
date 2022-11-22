@@ -3,16 +3,16 @@
         <span class="mdi mdi-18px mdi-drag"></span>
     </button>
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche">
-        <div class="task-view-info" id="taskViewInfo-{{ subCatId }}-{{ taskId }}" onclick="openTaskDetails({{ subCatId }},{{ taskId }})">
+        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="1"' : '' }}">
+        <div class="task-view-info" id="taskViewInfo-{{ task.categoryId }}-{{ task.id }}" onclick="openTaskDetails({{ task.categoryId }},{{ task.id }})">
             <label class="form-check-label" title="Nom de la tâche">
-                Nom de la tâche [{{ subCatId }}-{{ taskId }}]
+                {{ task.name }}
             </label>
-            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">@NOM Prénom</small>
-            <small class="form-text text-muted" title="Description de la tâche">Description</small>
+            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">{{ task.assigned }}</small>
+            <small class="form-text text-muted" title="Description de la tâche">{{ task.description }}</small>
         </div>
     </div>
-    <a data-idCat="{{ subCatId }}" data-idTask="{{ taskId }}" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
+    <a data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
         <span class="mdi mdi-dots-horizontal"></span>
     </a>
 </li>
