@@ -37,7 +37,7 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
 
     public function __construct()
     {
-        parent::__construct('tasks_comments');
+        parent::__construct('task_comments');
     }
 
     /**

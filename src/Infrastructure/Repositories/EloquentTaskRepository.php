@@ -105,56 +105,42 @@ class EloquentTaskRepository extends Repository implements TaskRepository
      */
     public function get($id, array|null $with = null): Task
     {
-        // to chiant to make two left joins : 3 requests are better
-        $task = $this->getDB()->table('tasks')
-            ->where('id', $id)
-            ->first();
-
-        if (empty($task)) {
-            throw new TaskNotFoundException();
-        }
-
-        try {
-            $task->category = $this->categoryRepository->get($task->category_id);
-        } catch (CategoryNotFoundException) {
-            $task->category = null; // Should never happen.
-        }
-
-        if (empty($task->last_editor_id)) {
-            $task->last_editor = null;
-        } else {
-            try {
-                $task->last_editor = $this->userRepository->get($task->last_editor_id);
-            } catch (UserNotFoundException) {
-                $task->last_editor = null;
-            }
-        }
-
-        $parsed = new Task();
-        // If there's a parsing error, just show the user a not found exception.
-        try {
-            $parsed->fromRow($task);
-        } catch (Exception) {
-            throw new TaskNotFoundException();
-        }
-
-        return $parsed;
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        return $this->parseTask($found, $with);
     }
 
     public function save(Task $task) : bool
     {
-        return $this->getDB()->table('tasks')->updateOrInsert(
+        return $this->getTable()->updateOrInsert(
             $task->toRow()
         );
     }
 
     public function delete(Task $task) : int
     {
-        return $this->getDB()->table('tasks')->delete($task->getId());
+        return $this->getTable()->delete($task->getId());
     }
 
     public function getTasks(int|Category $category, array|null $with = null): array
     {
-        return [];
+        $tasks = [];
+        $id = $category instanceof Category ? $category->getId() : $category;
+
+        $foundTasks = $this->getTable()
+            ->where('category_id', $id)
+            ->orderBy('position')
+            ->get();
+
+        foreach ($foundTasks as $task) {
+
+            try {
+                $tasks[] = $this->parseTask($task, $with);
+            } catch (TaskNotFoundException) {
+                // do nothing
+            }
+
+        }
+
+        return $tasks;
     }
 }
