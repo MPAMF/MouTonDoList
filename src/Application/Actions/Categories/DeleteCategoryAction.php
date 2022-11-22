@@ -41,7 +41,7 @@ class DeleteCategoryAction extends Action
 
         $parent = $category->getParentCategoryId() == null;
 
-        // Check if user has delete permission
+        // Check if user has permission to delete
         if ($category->getOwnerId() != $this->user()->getId()) {
 
             if ($parent) {
@@ -54,6 +54,7 @@ class DeleteCategoryAction extends Action
 
         }
 
+        // Useless to check if something was deleted
         $this->categoryRepository->delete($category);
 
         return $this->respondWithData(null, 204);
