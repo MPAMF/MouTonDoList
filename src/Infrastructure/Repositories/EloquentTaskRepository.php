@@ -153,7 +153,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         return $this->getDB()->table('tasks')->delete($task->getId());
     }
 
-    public function getTasks(Category $category, array|null $with = null): array
+    public function getTasks(int|Category $category, array|null $with = null): array
     {
         return [];
     }
