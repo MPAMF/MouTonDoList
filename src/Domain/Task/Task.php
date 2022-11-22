@@ -225,7 +225,7 @@ class Task extends TimeStampedModel implements JsonSerializable
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
-        return [
+        $result = [
             'id' => $this->id,
             'category_id' => $this->category_id,
             'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
@@ -239,6 +239,13 @@ class Task extends TimeStampedModel implements JsonSerializable
             'assigned_id' => $this->assigned_id,
             'assigned' => isset($this->assigned) ? $this->assigned->jsonSerialize() : null
         ];
+
+        if(isset($this->comments))
+        {
+            $result['comments'] = $this->comments;
+        }
+
+        return $result;
     }
 
     /**
@@ -271,6 +278,7 @@ class Task extends TimeStampedModel implements JsonSerializable
         unset($row['category']);
         unset($row['last_editor']);
         unset($row['assigned']);
+        unset($row['comments']);
         return $row;
     }
 }
