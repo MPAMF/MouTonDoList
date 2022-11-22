@@ -13,7 +13,9 @@ class Category extends TimeStampedModel implements JsonSerializable
 {
 
     private ?int $id;
-    private User $owner;
+    private int $owner_id;
+    private ?User $owner;
+    private ?int $parent_category_id;
     private ?Category $parentCategory;
     private string $name;
     private string $color;
@@ -23,6 +25,15 @@ class Category extends TimeStampedModel implements JsonSerializable
     public function __construct()
     {
         parent::__construct(new DateTime(), new DateTime());
+        $this->id = null;
+        $this->owner_id = 0;
+        $this->owner = null;
+        $this->parent_category_id = null;
+        $this->parentCategory = null;
+        $this->name = "";
+        $this->color = "";
+        $this->position = 0;
+        $this->archived = false;
     }
 
     /**
@@ -42,19 +53,20 @@ class Category extends TimeStampedModel implements JsonSerializable
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getOwner(): User
+    public function getOwner(): ?User
     {
         return $this->owner;
     }
 
     /**
-     * @param User $owner
+     * @param User|null $owner
      */
-    public function setOwner(User $owner): void
+    public function setOwner(?User $owner): void
     {
         $this->owner = $owner;
+        $this->owner_id = $owner?->getId();
     }
 
     /**
@@ -71,6 +83,7 @@ class Category extends TimeStampedModel implements JsonSerializable
     public function setParentCategory(?Category $parentCategory): void
     {
         $this->parentCategory = $parentCategory;
+        $this->parent_category_id = $parentCategory?->getId();
     }
 
     /**
@@ -137,14 +150,47 @@ class Category extends TimeStampedModel implements JsonSerializable
         $this->archived = $archived;
     }
 
+    /**
+     * @return int
+     */
+    public function getOwnerId(): int
+    {
+        return $this->owner_id;
+    }
+
+    /**
+     * @param int $owner_id
+     */
+    public function setOwnerId(int $owner_id): void
+    {
+        $this->owner_id = $owner_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getParentCategoryId(): ?int
+    {
+        return $this->parent_category_id;
+    }
+
+    /**
+     * @param int|null $parent_category_id
+     */
+    public function setParentCategoryId(?int $parent_category_id): void
+    {
+        $this->parent_category_id = $parent_category_id;
+    }
 
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
-            'owner' => $this->owner->jsonSerialize(),
-            'parent_category' => !empty($this->parentCategory) ? $this->parentCategory->jsonSerialize() : null,
+            'owner' => isset($this->owner)  ? $this->owner->jsonSerialize() : null,
+            'owner_id' => $this->owner_id,
+            'parent_category' => isset($this->parentCategory) ? $this->parentCategory->jsonSerialize() : null,
+            'parent_category_id' => $this->parent_category_id,
             'name' => $this->name,
             'color' => $this->color,
             'position' => $this->position,
@@ -159,9 +205,10 @@ class Category extends TimeStampedModel implements JsonSerializable
     {
         parent::fromRow($row);
         $this->id = $row->id;
-        // stdClass must have loaded instances of other models
-        $this->owner = $row->owner;
-        $this->parentCategory = $row->parentCategory;
+        $this->owner_id = $row->owner_id;
+        $this->owner = $row->owner ?? null;
+        $this->parentCategory = $row->parentCategory ?? null;
+        $this->parent_category_id = $row->parent_category_id;
         $this->name = $row->name;
         $this->color = $row->color;
         $this->position = $row->position;
@@ -175,7 +222,7 @@ class Category extends TimeStampedModel implements JsonSerializable
     {
         $row = $this->jsonSerialize();
         unset($row['parent_category']);
-        $row['parent_category_id'] = !empty($this->parentCategory) ? $this->parentCategory->getId() : null;
+        unset($row['owner']);
         return $row;
     }
 }

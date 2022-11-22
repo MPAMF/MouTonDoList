@@ -9,7 +9,7 @@ use App\Domain\User\UserNotFoundException;
 use App\Domain\User\UserRepository;
 use App\Infrastructure\Lib\Session;
 
-class Auth implements AuthInterface
+class AuthImpl implements AuthInterface
 {
     private UserRepository $userRepository;
     private string $authId;
@@ -29,8 +29,8 @@ class Auth implements AuthInterface
     }
 
     /**
-     * @throws UserNotFoundException
      * @return User object of current session
+     * @throws UserNotFoundException
      */
     public function user(): User
     {
@@ -44,5 +44,13 @@ class Auth implements AuthInterface
     {
         $id = $user instanceof User ? $user->getId() : $user;
         Session::set($this->authId, $id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeUser() : void
+    {
+        Session::unset($this->authId);
     }
 }

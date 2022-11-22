@@ -14,8 +14,8 @@ interface AuthInterface
     public function check(): bool;
 
     /**
-     * @throws UserNotFoundException
      * @return User object of current session
+     * @throws UserNotFoundException
      */
     public function user(): User;
 
@@ -25,5 +25,10 @@ interface AuthInterface
      * @return void
      */
     public function setUser(int|User $user): void;
+
+    /**
+     * @return void
+     */
+    public function removeUser() : void;
 
 }
