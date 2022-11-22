@@ -6,8 +6,13 @@ namespace Tests\Application\Actions;
 use App\Application\Actions\Action;
 use App\Application\Actions\ActionPayload;
 use DateTimeImmutable;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
+use Slim\Flash\Messages;
+use Slim\Views\Twig;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Tagliatti\SlimValidation\ValidatorInterface;
 use Tests\TestCase;
 
 class ActionTest extends TestCase
@@ -17,12 +22,22 @@ class ActionTest extends TestCase
         $app = $this->getAppInstance();
         $container = $app->getContainer();
         $logger = $container->get(LoggerInterface::class);
+        $twig = $container->get(Twig::class);
+        $responseFactory = $container->get(ResponseFactoryInterface::class);
+        $messages = $container->get(Messages::class);
+        $translator = $container->get(TranslatorInterface::class);
+        $validator = $container->get(ValidatorInterface::class);
 
-        $testAction = new class($logger) extends Action {
+        $testAction = new class($logger, $twig, $responseFactory, $messages, $translator, $validator) extends Action {
             public function __construct(
-                LoggerInterface $loggerInterface
+                LoggerInterface          $logger,
+                Twig                     $twig,
+                ResponseFactoryInterface $responseFactory,
+                Messages                 $messages,
+                TranslatorInterface      $translator,
+                ValidatorInterface       $validator
             ) {
-                parent::__construct($loggerInterface);
+                parent::__construct($logger, $twig, $responseFactory, $messages, $translator, $validator);
             }
 
             public function action(): Response
@@ -50,12 +65,22 @@ class ActionTest extends TestCase
         $app = $this->getAppInstance();
         $container = $app->getContainer();
         $logger = $container->get(LoggerInterface::class);
+        $twig = $container->get(Twig::class);
+        $responseFactory = $container->get(ResponseFactoryInterface::class);
+        $messages = $container->get(Messages::class);
+        $translator = $container->get(TranslatorInterface::class);
+        $validator = $container->get(ValidatorInterface::class);
 
-        $testAction = new class($logger) extends Action {
+        $testAction = new class($logger, $twig, $responseFactory, $messages, $translator, $validator) extends Action {
             public function __construct(
-                LoggerInterface $loggerInterface
+                LoggerInterface          $logger,
+                Twig                     $twig,
+                ResponseFactoryInterface $responseFactory,
+                Messages                 $messages,
+                TranslatorInterface      $translator,
+                ValidatorInterface       $validator
             ) {
-                parent::__construct($loggerInterface);
+                parent::__construct($logger, $twig, $responseFactory, $messages, $translator, $validator);
             }
 
             public function action(): Response

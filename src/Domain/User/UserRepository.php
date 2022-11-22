@@ -19,10 +19,11 @@ interface UserRepository
 
     /**
      * @param $id
+     * @param array|null $with
      * @return User
      * @throws UserNotFoundException
      */
-    public function get($id): User;
+    public function get($id, array|null $with = null): User;
 
     /**
      * @param User $user
@@ -31,9 +32,10 @@ interface UserRepository
     public function save(User $user): bool;
 
     /**
-     * @param User $user
+     * @param User $user User
+     * @return int Number of records deleted
      */
-    public function delete(User $user);
+    public function delete(User $user) : int;
 
     /**
      * @param $id User id

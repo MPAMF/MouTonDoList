@@ -40,4 +40,12 @@ class Session
         $_SESSION[$key] = $value;
     }
 
+    /**
+     * @param string $key session key to be unset: $_SESSION[$key]
+     */
+    public static function unset(string $key): void
+    {
+        unset($_SESSION[$key]);
+    }
+
 }

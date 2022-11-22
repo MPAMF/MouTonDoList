@@ -11,47 +11,57 @@ class UserTest extends TestCase
     public function userProvider()
     {
         return [
-            [1, 'bill.gates', 'Bill', 'Gates'],
-            [2, 'steve.jobs', 'Steve', 'Jobs'],
-            [3, 'mark.zuckerberg', 'Mark', 'Zuckerberg'],
-            [4, 'evan.spiegel', 'Evan', 'Spiegel'],
-            [5, 'jack.dorsey', 'Jack', 'Dorsey'],
+            [1, 'paul', 'contact@schawnndev.fr', 'bla', 'fr', 'pomme', 'dark'],
+            [2, 'matthieu', 'contact@matthieu-freitag.com', 'bla', 'en', 'poire', 'dark'],
+            [3, 'quentin', 'contact@quentin-gerling.fr', 'bla', 'fr', 'moi', 'dark'],
+            [4, 'victor', 'contact@victor-hahn.fr', 'bla', 'fr', 'letsgo', 'dark'],
         ];
     }
 
     /**
      * @dataProvider userProvider
-     * @param int    $id
-     * @param string $username
-     * @param string $firstName
-     * @param string $lastName
      */
-    public function testGetters(int $id, string $username, string $firstName, string $lastName)
+    public function testGetters(int $id, string $username, string $email, string $imagePath, string $language, string $password, string $theme): void
     {
-        $user = new User($id, $username, $firstName, $lastName);
+        $user = new User();
+        $user->setId($id);
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setImagePath($imagePath);
+        $user->setLanguage($language);
+        $user->setPassword($password);
+        $user->setTheme($theme);
 
         $this->assertEquals($id, $user->getId());
         $this->assertEquals($username, $user->getUsername());
-        $this->assertEquals($firstName, $user->getFirstName());
-        $this->assertEquals($lastName, $user->getLastName());
+        $this->assertEquals($email, $user->getEmail());
+        $this->assertEquals($imagePath, $user->getImagePath());
+        $this->assertEquals($language, $user->getLanguage());
+        $this->assertEquals($password, $user->getPassword());
+        $this->assertEquals($theme, $user->getTheme());
     }
 
     /**
      * @dataProvider userProvider
-     * @param int    $id
-     * @param string $username
-     * @param string $firstName
-     * @param string $lastName
      */
-    public function testJsonSerialize(int $id, string $username, string $firstName, string $lastName)
+    public function testJsonSerialize(int $id, string $username, string $email, string $imagePath, string $language, string $password, string $theme)
     {
-        $user = new User($id, $username, $firstName, $lastName);
+        $user = new User();
+        $user->setId($id);
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setImagePath($imagePath);
+        $user->setLanguage($language);
+        $user->setPassword($password);
+        $user->setTheme($theme);
 
         $expectedPayload = json_encode([
             'id' => $id,
+            'email' => $email,
             'username' => $username,
-            'firstName' => $firstName,
-            'lastName' => $lastName,
+            'image_path' => $imagePath,
+            'theme' => $theme,
+            'language' => $language,
         ]);
 
         $this->assertEquals($expectedPayload, json_encode($user));

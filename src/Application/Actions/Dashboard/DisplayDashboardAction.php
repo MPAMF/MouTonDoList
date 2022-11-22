@@ -4,42 +4,93 @@ declare(strict_types=1);
 namespace App\Application\Actions\Dashboard;
 
 use App\Application\Actions\Action;
-use App\Application\Actions\User\UserAction;
-use App\Domain\Category\Category;
 use App\Domain\Category\CategoryRepository;
 use App\Domain\Task\TaskRepository;
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
-use App\Domain\User\UserRepository;
-use DateTime;
+use App\Domain\TaskComment\TaskCommentRepository;
+use App\Domain\UserCategory\UserCategory;
+use App\Domain\UserCategory\UserCategoryRepository;
+use DI\Annotation\Inject;
+use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Log\LoggerInterface;
 
 class DisplayDashboardAction extends Action
 {
+    /**
+     * @Inject
+     * @var CategoryRepository
+     */
+    private CategoryRepository $categoryRepository;
+
+    /**
+     * @Inject
+     * @var UserCategoryRepository
+     */
+    private UserCategoryRepository $userCategoryRepository;
+
+    /**
+     * @Inject
+     * @var TaskRepository
+     */
+    private TaskRepository $taskRepository;
+
+    /**
+     * @Inject
+     * @var TaskCommentRepository
+     */
+    private TaskCommentRepository $taskCommentRepository;
+
+    private function getArgsCategory(Collection $categories): ?UserCategory
+    {
+        if (!array_key_exists('id', $this->args))
+            return null;
+
+        $id = intval($this->args['id']);
+
+        if ($id > 0) {
+            return $categories->filter(fn(UserCategory $a) => $a->getCategory()->getId() == $id)->first();
+        }
+
+        return null;
+    }
+
     /**
      * {@inheritdoc}
      */
     protected function action(): Response
     {
+        $categories = collect($this->userCategoryRepository->getCategories($this->user()));
+        $category = $this->getArgsCategory($categories);
 
-        $this->logger->info("Dashboard action was viewed.");
-        /*
-                try {
-                    $user = $this->userRepository->logUser('iperskill@gmail.com', 'test');
-                } catch (UserNotFoundException $e) {
-                    return $this->respondWithData($e);
-                }*/
+        if (!isset($category)) {
+            $category = $categories->first();
+        }
 
-        $category = new Category();
-        $category->setId(2);
-        $category->setOwner(new User());
-        $category->setName("Voyage en Corée");
-        $category->setColor("#FFFFFF");
-        $category->setPosition(0);
-        $category->setArchived(false);
+        if (isset($category)) {
 
-        return $this->respondWithView('pages/dashboard.twig',
-                ['category' => $category]);
+            if (!$category->isAccepted()) {
+                // TODO: Send message : accept invite and redirect maybe to notifications page ?
+            }
+
+            $category->getCategory()->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
+
+            foreach ($category->getCategory()->subCategories as $subCategory) {
+                $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId());
+
+                foreach ($subCategory->tasks as $task) {
+                    $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['user']);
+                }
+            }
+        }
+
+        // Filter categories: archives / normal
+        // TODO: utile de faire deux collections?
+        $archivedCategories = $categories->filter(fn(UserCategory $a) => $a->getCategory()->isArchived());
+        $categories = $categories->filter(fn(UserCategory $a) => !$a->getCategory()->isArchived());
+
+        return $this->respondWithView('pages/dashboard.twig', [
+            'category' => $category,
+            'categories' => $categories,
+            'archivedCategories' => $archivedCategories
+        ]);
     }
 }
