@@ -36,14 +36,14 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     }
 
     /**
-     * @param stdClass $category
+     * @param stdClass|null $category
      * @param array|null $with
      * @return Category
      * @throws CategoryNotFoundException
      */
-    private function parseCategory(stdClass $category, array|null $with = ['parentCategory', 'owner']): Category
+    private function parseCategory(stdClass|null $category, array|null $with = ['parentCategory', 'owner']): Category
     {
-        if (empty($category)) {
+        if (!isset($category)) {
             throw new CategoryNotFoundException();
         }
 

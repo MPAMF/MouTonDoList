@@ -48,9 +48,9 @@ class EloquentTaskRepository extends Repository implements TaskRepository
      * @return Task
      * @throws TaskNotFoundException
      */
-    private function parseTask(stdClass $task, array|null $with = ['category', 'lastEditor', 'assigned']): Task
+    private function parseTask(stdClass|null $task, array|null $with = ['category', 'lastEditor', 'assigned']): Task
     {
-        if (empty($task)) {
+        if (!isset($task)) {
             throw new TaskNotFoundException();
         }
 

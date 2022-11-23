@@ -47,9 +47,9 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
      * @return UserCategory
      * @throws UserCategoryNotFoundException
      */
-    private function parseUserCategory(stdClass $userCategory, array|null $with = ['user']): UserCategory
+    private function parseUserCategory(stdClass|null $userCategory, array|null $with = ['user']): UserCategory
     {
-        if (empty($userCategory)) {
+        if (!isset($userCategory)) {
             throw new UserCategoryNotFoundException();
         }
 
