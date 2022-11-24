@@ -25,7 +25,7 @@ Tests:
   allow_failure: false
   script:
     - vendor/bin/phpunit --coverage-clover clover.xml
-    - composer require php-coveralls/php-coveralls -n -W
+    - composer.phar require php-coveralls/php-coveralls -n -W
     - vendor/bin/php-coveralls --coverage_clover=clover.xml -v
   artifacts:
     when: always
