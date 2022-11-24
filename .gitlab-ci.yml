@@ -12,9 +12,7 @@ cache:
 
 before_script:
   - test -d vendor || apt-get update -yqq
-  - test -d vendor || apt-get install -yqq curl git libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev libonig-dev libzip-dev
-  - test -d vendor || pecl install xdebug
-  - test -d vendor || docker-php-ext-enable xdebug
+  - test -d vendor || apt-get install -yqq curl git unzip libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev libonig-dev libzip-dev
   - test -d vendor || docker-php-ext-install mbstring pdo_pgsql curl intl gd xml zip bz2
   - test -d vendor || curl -sS https://getcomposer.org/installer | php
   - test -d vendor || php composer.phar install
