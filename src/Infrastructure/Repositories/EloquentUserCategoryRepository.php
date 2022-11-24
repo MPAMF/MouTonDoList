@@ -42,7 +42,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     }
 
     /**
-     * @param stdClass $userCategory
+     * @param stdClass|null $userCategory
      * @param array|null $with
      * @return UserCategory
      * @throws UserCategoryNotFoundException

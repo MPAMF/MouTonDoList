@@ -51,11 +51,11 @@ return function (App $app) {
         $group->get('/{id}', ViewUserAction::class);
     });
 
-    $app->group('actions', function (Group $group) {
+    $app->group('/actions', function (Group $group) {
         $group->group('/categories', function (Group $group) {
-            $group->post('', CreateCategoryAction::class);
-            $group->put('/{id}', UpdateCategoryAction::class);
-            $group->delete('/{id}', DeleteCategoryAction::class);
+            $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
+            $group->put('/{id}', UpdateCategoryAction::class)->setName('actions.categories.update');
+            $group->delete('/{id}', DeleteCategoryAction::class)->setName('actions.categories.delete');
         });
     })->add(UserConnectedMiddleware::class);
 };

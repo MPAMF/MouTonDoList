@@ -42,9 +42,8 @@ class UpdateCategoryAction extends Action
             'parent_category_id' => Validator::nullable(Validator::intVal()->positive())
         ]);
 
-        if($validator->isValid())
-        {
-            // TODO:
+        if (!$validator->isValid()) {
+            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
         }
 
         // validate data ;

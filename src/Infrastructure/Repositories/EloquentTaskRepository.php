@@ -38,12 +38,13 @@ class EloquentTaskRepository extends Repository implements TaskRepository
      */
     private DbCacheInterface $dbCache;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct('tasks');
     }
 
     /**
-     * @param stdClass $task
+     * @param stdClass|null $task
      * @param array|null $with
      * @return Task
      * @throws TaskNotFoundException
@@ -132,13 +133,11 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             ->get();
 
         foreach ($foundTasks as $task) {
-
             try {
                 $tasks[] = $this->parseTask($task, $with);
             } catch (TaskNotFoundException) {
                 // do nothing
             }
-
         }
 
         return $tasks;
