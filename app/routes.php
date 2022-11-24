@@ -38,8 +38,7 @@ return function (App $app) {
     })->add(UserDisconnectedMiddleware::class);
 
     $app->group('/account', function (Group $group){
-        $group->get('/logout', DisplayLogoutAction::class)->setName('account.logout');
-        $group->post('/logout', LogoutAction::class);
+        $group->post('/logout', LogoutAction::class)->setName('account.logout');
     })->add(UserConnectedMiddleware::class);
 
     $app->group('/dashboard', function (Group $group) {

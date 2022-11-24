@@ -46,7 +46,7 @@
 
   "RegexEmpty": "Ce champ ne peut pas être vide. Le nombre de caractère maximum est : ",
   "RegexEmail": "L'adresse mail doit être de la forme : 'exemple@exemple.exemple'. Le nombre de caractère maximum est : ",
-  "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère maximum est : ",
+  "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère doit être entre ",
   "RegexPassConf": "Les deux mots de passe sont différents.",
 
   "ConnectionFailed": "Adresse e-mail ou mot de passe erronés."

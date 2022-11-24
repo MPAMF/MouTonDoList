@@ -4,7 +4,7 @@ namespace App\Application\Actions\Auth\Register;
 
 use App\Application\Actions\Auth\AuthAction;
 use App\Domain\User\User;
-use App\Domain\UserCategory\UserCategoryNotFoundException;
+use PHPUnit\Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Validator;
 
@@ -17,7 +17,7 @@ class RegisterAction extends AuthAction
             'email' => Validator::notBlank()->email()->length(0,254),
             'pseudo' => Validator::notBlank()->length(0,64),
             'password' => Validator::notBlank()->regex('/[A-Z]/')->regex('/[a-z]/')
-                ->regex('/[1-9]/')->regex('/[-_*.!?#@&]/')->length(0,128),
+                ->regex('/[1-9]/')->regex('/[-_*.!?#@&]/')->length(10,128),
             'password-conf' => Validator::equals($_POST['password']),
         ]);
 
@@ -39,11 +39,11 @@ class RegisterAction extends AuthAction
             $user->setPassword(password_hash($data['password'],PASSWORD_DEFAULT));
 
             if(!($this->userRepository->save($user))){
-                return $this->withError($this->translator->trans('AuthRegisterUserExist'))
+                return $this->withError($this->translator->trans('AuthRegisterFailed'))
                     ->respondWithView('home/content.twig',[]);
             }
 
-        } catch (UserCategoryNotFoundException) {
+        } catch (Exception) {
             return $this->withError($this->translator->trans('AuthRegisterFailed'))
                 ->respondWithView('home/content.twig',[]);
         }
