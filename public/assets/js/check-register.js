@@ -46,6 +46,10 @@ registerForm.addEventListener('submit' ,function(e){
         displayError('password',2)
         e.preventDefault();
     }
+    else if((pass.value.length < 6)||(pass.value.length > 128)){
+        displayError('password',2)
+        e.preventDefault();
+    }
 
     if(passConf.value !== pass.value){
         displayError("password-conf",3)
