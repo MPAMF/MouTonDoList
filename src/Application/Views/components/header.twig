@@ -81,8 +81,11 @@
                             {% trans %}DropDownShareNav{% endtrans %}</button></li>
                     <li><hr class="dropdown-divider"></li>
 
-                    <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-exit-run me-2"></span>
-                            {% trans %}DropDownDisconnectNav{% endtrans %}</button>
+                    <li><form action="{{ url_for('account.logout') }}" method="post">
+                            {{ csrf.html | raw }}
+                            <button class="dropdown-item dropdown-item-nav" type="submit"> <span class="mdi mdi-exit-run me-2"></span>
+                                {% trans %}DropDownDisconnectNav{% endtrans %}</button>
+                        </form>
                     </li>
                 </ul>
             </div>
