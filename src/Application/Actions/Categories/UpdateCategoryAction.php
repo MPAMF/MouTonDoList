@@ -39,7 +39,7 @@ class UpdateCategoryAction extends Action
             'position' => Validator::intVal()->positive()->max(1e6), // limit
             'name' => Validator::stringType()->length(min: 3, max: 63),
             'color' => Validator::stringType()->length(max: 15),
-            'parent_category_id' => Validator::nullable(Validator::intVal()->positive())
+            'parent_category_id' => Validator::oneOf(Validator::nullType(), Validator::intVal()->positive())
         ]);
 
         if (!$validator->isValid()) {
