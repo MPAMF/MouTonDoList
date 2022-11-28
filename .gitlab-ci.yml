@@ -30,6 +30,7 @@ Tests:
   script:
     - vendor/bin/phpunit --colors=never --log-junit phpunit-report.xml tests
     - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage-cobertura.xml
+  coverage: ^\s*Lines:\s*\d+.\d+\%/
   artifacts:
     when: always
     reports:
