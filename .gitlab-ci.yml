@@ -35,5 +35,5 @@ Tests:
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: vendor/bin/phpunit/coverage-cobertura.xml
+        path: coverage-cobertura.xml
       junit: phpunit-report.xml
