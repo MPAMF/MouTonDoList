@@ -27,11 +27,11 @@ Tests:
   allow_failure: false
   script:
     - vendor/bin/phpunit --colors=never --log-junit phpunit-report.xml tests
-    - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage.cobertura.xml
+    - php ./vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage-cobertura.xml
   artifacts:
     when: always
     reports:
-      junit: phpunit-report.xml
       coverage_report:
         coverage_format: cobertura
-        path: coverage.cobertura.xml
+        path: vendor/bin/phpunit/coverage-cobertura.xml
+      junit: phpunit-report.xml
