@@ -6,6 +6,7 @@ use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;
 use App\Domain\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -46,7 +47,7 @@ $container = $containerBuilder->build();
 
 $app = $container->get(App::class);
 $callableResolver = $app->getCallableResolver();
-$responseFactory = $app->getResponseFactory();
+$responseFactory = $container->get(ResponseFactoryInterface::class);
 
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';

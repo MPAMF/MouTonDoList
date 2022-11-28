@@ -27,14 +27,14 @@ class EloquentUserRepository extends Repository implements UserRepository
     }
 
     /**
-     * @param stdClass $user
+     * @param stdClass|null $user
      * @param array|null $with
      * @return User
      * @throws UserNotFoundException
      */
-    private function parseUser(stdClass $user, array|null $with = null): User
+    private function parseUser(stdClass|null $user, array|null $with = null): User
     {
-        if (empty($user)) {
+        if (!isset($user)) {
             throw new UserNotFoundException();
         }
 

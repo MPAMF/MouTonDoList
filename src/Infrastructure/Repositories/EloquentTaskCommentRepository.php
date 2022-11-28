@@ -41,14 +41,14 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
     }
 
     /**
-     * @param stdClass $taskComment
+     * @param stdClass|null $taskComment
      * @param array|null $with
      * @return TaskComment
      * @throws TaskCommentNotFoundException
      */
-    private function parseTaskComment(stdClass $taskComment, array|null $with = ['author', 'task']): TaskComment
+    private function parseTaskComment(stdClass|null $taskComment, array|null $with = ['author', 'task']): TaskComment
     {
-        if (empty($taskComment)) {
+        if (!isset($taskComment)) {
             throw new TaskCommentNotFoundException();
         }
 
