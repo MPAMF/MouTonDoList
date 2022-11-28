@@ -28,8 +28,7 @@ Tests:
   variables:
     XDEBUG_MODE: coverage
   script:
-    - vendor/bin/phpunit --colors=never --log-junit phpunit-report.xml tests
-    - vendor/bin/phpunit --coverage-text --coverage-cobertura coverage-cobertura.xml
+    vendor/bin/phpunit --do-not-cache-result --log-junit phpunit-report.xml --coverage-cobertura phpunit-coverage.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
     when: always
