@@ -25,11 +25,15 @@ Tests:
     - if: $CI_PIPELINE_SOURCE == "push"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   allow_failure: false
+  variables:
+    XDEBUG_MODE: coverage
   script:
-    - vendor/bin/phpunit --coverage-clover clover.xml
-    - php composer.phar require php-coveralls/php-coveralls -n -W
-    - vendor/bin/php-coveralls --coverage_clover=clover.xml -v
+    vendor/bin/phpunit --do-not-cache-result --log-junit phpunit-report.xml --coverage-cobertura phpunit-coverage.xml --coverage-text --colors=never
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   artifacts:
     when: always
     reports:
       junit: phpunit-report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: phpunit-coverage.xml
