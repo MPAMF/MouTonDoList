@@ -76,9 +76,15 @@ class EloquentUserRepository extends Repository implements UserRepository
 
     public function save(User $user): bool
     {
-        return $this->getTable()->updateOrInsert(
-            $user->toRow()
-        );
+        // Create
+        if ($user->getId() == null) {
+            $id = $this->getTable()->insertGetId($user->toRow());
+            $user->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $user->getId())
+                ->update($user->toRow()) != 0;
     }
 
     public function delete(User $user): int
