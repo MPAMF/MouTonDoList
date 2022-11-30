@@ -77,7 +77,7 @@ class DisplayDashboardAction extends Action
                 $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId(), ['assigned']);
 
                 foreach ($subCategory->tasks as $task) {
-                    $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['user']);
+                    $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['author']);
                 }
             }
         }
