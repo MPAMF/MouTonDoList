@@ -74,7 +74,7 @@ class DisplayDashboardAction extends Action
             $category->getCategory()->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
 
             foreach ($category->getCategory()->subCategories as $subCategory) {
-                $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId());
+                $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId(), ['assigned']);
 
                 foreach ($subCategory->tasks as $task) {
                     $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['user']);
@@ -86,6 +86,9 @@ class DisplayDashboardAction extends Action
         // TODO: utile de faire deux collections?
         $archivedCategories = $categories->filter(fn(UserCategory $a) => $a->getCategory()->isArchived());
         $categories = $categories->filter(fn(UserCategory $a) => !$a->getCategory()->isArchived());
+
+        // Get members of category
+        $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
 
         return $this->respondWithView('pages/dashboard.twig', [
             'category' => $category,

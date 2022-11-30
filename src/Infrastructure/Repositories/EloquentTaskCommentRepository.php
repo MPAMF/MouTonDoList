@@ -136,6 +136,7 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
     public function get($id, array|null $with = null): TaskComment
     {
         $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if(is_array($found)) $found = (object) $found;
         return $this->parseTaskComment($found, $with);
     }
 

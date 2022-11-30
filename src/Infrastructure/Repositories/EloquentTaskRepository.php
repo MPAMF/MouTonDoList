@@ -106,6 +106,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
     public function get($id, array|null $with = null): Task
     {
         $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if(is_array($found)) $found = (object) $found;
         return $this->parseTask($found, $with);
     }
 

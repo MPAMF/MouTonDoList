@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repositories;
 
+use App\Domain\Category\Category;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
 use App\Domain\DbCacheInterface;
@@ -90,6 +91,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     public function get($id, array|null $with = null): UserCategory
     {
         $found = $this->dbCache->load($this->tableName, $id) ?? $this->getDB()->table('categories')->where('id', $id)->first();
+        if(is_array($found)) $found = (object) $found;
         return $this->parseUserCategory($found, $with);
     }
 
@@ -119,7 +121,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
         $categories = [];
         $id = $user instanceof User ? $user->getId() : $user;
         $foundCategories = $this->getTable()->where('user_id', $id);
-        if(isset($accepted)) $foundCategories = $foundCategories->where('accepted', $accepted);
+        if (isset($accepted)) $foundCategories = $foundCategories->where('accepted', $accepted);
         $foundCategories = $foundCategories->latest('updated_at')->get();
 
         foreach ($foundCategories as $category) {
@@ -133,6 +135,35 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
         }
 
         return $categories;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUsers(int|Category $category, array|null $with = null): array
+    {
+        $id = $category instanceof Category ? $category->getId() : $category;
+        $foundUserCategories = $this->getTable()->where('category_id', $id)->where('accepted', true)->get();
+
+        if (!isset($with)) {
+            $with = ['user'];
+        } else if (!array_key_exists('user', $with)) {
+            $with[] = 'user';
+        }
+
+        $users = [];
+
+        foreach ($foundUserCategories as $userCategory) {
+
+            try {
+                $users[] = $this->parseUserCategory($userCategory, $with)->getUser();
+            } catch (UserCategoryNotFoundException) {
+                // do nothing
+            }
+
+        }
+
+        return $users;
     }
 
 }

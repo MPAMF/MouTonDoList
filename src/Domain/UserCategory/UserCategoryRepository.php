@@ -38,4 +38,11 @@ interface UserCategoryRepository
      */
     public function get(int $id, array|null $with = null): UserCategory;
 
+    /**
+     * @param int|Category $category
+     * @param array|null $with
+     * @return array
+     */
+    public function getUsers(int|Category $category, array|null $with = null): array;
+
 }
