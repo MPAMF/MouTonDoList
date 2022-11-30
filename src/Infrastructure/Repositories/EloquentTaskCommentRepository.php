@@ -41,14 +41,14 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
     }
 
     /**
-     * @param stdClass $taskComment
+     * @param stdClass|null $taskComment
      * @param array|null $with
      * @return TaskComment
      * @throws TaskCommentNotFoundException
      */
-    private function parseTaskComment(stdClass $taskComment, array|null $with = ['author', 'task']): TaskComment
+    private function parseTaskComment(stdClass|null $taskComment, array|null $with = ['author', 'task']): TaskComment
     {
-        if (empty($taskComment)) {
+        if (!isset($taskComment)) {
             throw new TaskCommentNotFoundException();
         }
 
@@ -145,9 +145,15 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
      */
     public function save(TaskComment $taskComment): bool
     {
-        return $this->getTable()->updateOrInsert(
-            $taskComment->toRow()
-        );
+        // Create
+        if ($taskComment->getId() == null) {
+            $id = $this->getTable()->insertGetId($taskComment->toRow());
+            $taskComment->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $taskComment->getId())
+                ->update($taskComment->toRow()) != 0;
     }
 
     /**

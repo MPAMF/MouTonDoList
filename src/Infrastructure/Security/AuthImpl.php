@@ -38,7 +38,7 @@ class AuthImpl implements AuthInterface
     }
 
     /**
-     * @param mixed $user User Id or User object
+     * {@inheritDoc}
      */
     public function setUser(int|User $user) : void
     {

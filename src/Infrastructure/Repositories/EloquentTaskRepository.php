@@ -38,19 +38,20 @@ class EloquentTaskRepository extends Repository implements TaskRepository
      */
     private DbCacheInterface $dbCache;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct('tasks');
     }
 
     /**
-     * @param stdClass $task
+     * @param stdClass|null $task
      * @param array|null $with
      * @return Task
      * @throws TaskNotFoundException
      */
-    private function parseTask(stdClass $task, array|null $with = ['category', 'lastEditor', 'assigned']): Task
+    private function parseTask(stdClass|null $task, array|null $with = ['category', 'lastEditor', 'assigned']): Task
     {
-        if (empty($task)) {
+        if (!isset($task)) {
             throw new TaskNotFoundException();
         }
 
@@ -112,9 +113,15 @@ class EloquentTaskRepository extends Repository implements TaskRepository
 
     public function save(Task $task) : bool
     {
-        return $this->getTable()->updateOrInsert(
-            $task->toRow()
-        );
+        // Create
+        if ($task->getId() == null) {
+            $id = $this->getTable()->insertGetId($task->toRow());
+            $task->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $task->getId())
+                ->update($task->toRow()) != 0;
     }
 
     public function delete(Task $task) : int
@@ -133,13 +140,11 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             ->get();
 
         foreach ($foundTasks as $task) {
-
             try {
                 $tasks[] = $this->parseTask($task, $with);
             } catch (TaskNotFoundException) {
                 // do nothing
             }
-
         }
 
         return $tasks;

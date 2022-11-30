@@ -45,4 +45,12 @@ interface UserCategoryRepository
      */
     public function getUsers(int|Category $category, array|null $with = null): array;
 
+    /**
+     * @param int|null $id
+     * @param int|null $categoryId
+     * @param int|null $userId
+     * @return bool
+     */
+    public function exists(?int $id, ?int $categoryId = null, ?int $userId = null, ?bool $accepted = null, ?bool $canEdit = null) : bool;
+
 }

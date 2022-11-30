@@ -25,7 +25,7 @@
                 options.data += options.data ? "&" : "";
 
                 // add _token entry
-                options.data += "{{ csrf.keys.name }}={{ csrf.name }}&{{ csrf.keys.value }}={{ csrf.value }}";
+                options.data += "{{ csrf.keys.name }}={{ csrf.name }}&{{ csrf.keys.value }}={{ csrf.value|url_encode()}}";
             }
         });
     });

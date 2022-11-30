@@ -8,6 +8,7 @@ use App\Domain\User\User;
 use DateTime;
 use JsonSerializable;
 use stdClass;
+use Respect\Validation\Validator;
 
 class Category extends TimeStampedModel implements JsonSerializable
 {
@@ -240,4 +241,5 @@ class Category extends TimeStampedModel implements JsonSerializable
         unset($row['tasks']);
         return $row;
     }
+
 }

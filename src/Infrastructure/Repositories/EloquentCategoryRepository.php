@@ -36,14 +36,14 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     }
 
     /**
-     * @param stdClass $category
+     * @param stdClass|null $category
      * @param array|null $with
      * @return Category
      * @throws CategoryNotFoundException
      */
-    private function parseCategory(stdClass $category, array|null $with = ['parentCategory', 'owner']): Category
+    private function parseCategory(stdClass|null $category, array|null $with = ['parentCategory', 'owner']): Category
     {
-        if (empty($category)) {
+        if (!isset($category)) {
             throw new CategoryNotFoundException();
         }
 
@@ -95,9 +95,15 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
      */
     public function save(Category $category): bool
     {
-        return $this->getDB()->table('categories')->updateOrInsert(
-            $category->toRow()
-        );
+        // Create
+        if ($category->getId() == null) {
+            $id = $this->getTable()->insertGetId($category->toRow());
+            $category->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $category->getId())
+                ->update($category->toRow()) != 0;
     }
 
     /**

@@ -15,8 +15,6 @@ class DisplayRegisterAction extends Action
             return $this->redirect('dashboard');
         }
 
-        return $this->respondWithView('home/content.twig', [
-            'content' => 'register',
-        ]);
+        return $this->respondWithView('home/content.twig', []);
     }
 }
