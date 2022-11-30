@@ -30,6 +30,14 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
         $this->task_id = 0;
     }
 
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

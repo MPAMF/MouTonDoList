@@ -27,14 +27,14 @@ class EloquentUserRepository extends Repository implements UserRepository
     }
 
     /**
-     * @param stdClass $user
+     * @param stdClass|null $user
      * @param array|null $with
      * @return User
      * @throws UserNotFoundException
      */
-    private function parseUser(stdClass $user, array|null $with = null): User
+    private function parseUser(stdClass|null $user, array|null $with = null): User
     {
-        if (empty($user)) {
+        if (!isset($user)) {
             throw new UserNotFoundException();
         }
 
@@ -76,9 +76,15 @@ class EloquentUserRepository extends Repository implements UserRepository
 
     public function save(User $user): bool
     {
-        return $this->getTable()->updateOrInsert(
-            $user->toRow()
-        );
+        // Create
+        if ($user->getId() == null) {
+            $id = $this->getTable()->insertGetId($user->toRow());
+            $user->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $user->getId())
+                ->update($user->toRow()) != 0;
     }
 
     public function delete(User $user): int

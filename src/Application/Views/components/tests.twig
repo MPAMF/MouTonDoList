@@ -1,0 +1,92 @@
+<div style="margin-top: 18%">
+    <div class="input-group">
+        <input type="text" class="form-control" oninput="testInputRoute(this.value)" value="actions/categories" style="color: black">
+        <input type="number" class="form-control" oninput="testInputId(this.value)" value="1" style="color: black">
+    </div>
+
+    <div class="btn-group">
+
+        <button class="btn btn-success" onclick="testCreate()">Test create</button>
+        <button class="btn btn-success" onclick="testUpdate()">Test update</button>
+        <button class="btn btn-success" onclick="testGet()">Test get</button>
+        <button class="btn btn-success" onclick="testDelete()">Test delete</button>
+    </div>
+</div>
+<script>
+    const url = '{{ full_url_for('home') }}'
+    let route = 'actions/categories', id = '1';
+
+    function testDelete() {
+        $.ajax({
+            url: url + route + '/' + id,
+            type: 'DELETE',
+            dataType: 'json', // added data type
+            success: function (res) {
+                console.log(res);
+                alert(res);
+            },
+            error: function (err) {
+                console.log(err);
+                alert(err);
+            }
+        });
+    }
+
+    function testUpdate() {
+        $.ajax({
+            url: url + route + '/' + id,
+            type: 'PUT',
+            dataType: 'json', // added data type
+            data: {},
+            success: function (res) {
+                console.log(res);
+                alert(res);
+            },
+            error: function (err) {
+                console.log(err);
+                alert(err);
+            }
+        });
+    }
+
+    function testGet() {
+        $.ajax({
+            url: url + route,
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function (res) {
+                console.log(res);
+                alert(res);
+            },
+            error: function (err) {
+                console.log(err);
+                alert(err);
+            }
+        });
+    }
+
+    function testCreate() {
+        $.ajax({
+            url: url + route,
+            type: 'POST',
+            dataType: 'json', // added data type
+            data: {},
+            success: function (res) {
+                console.log(res);
+                alert(res);
+            },
+            error: function (err) {
+                console.log(err);
+                alert(err);
+            }
+        });
+    }
+
+    function testInputRoute(a) {
+        route = a;
+    }
+
+    function testInputId(a) {
+        id = a;
+    }
+</script>

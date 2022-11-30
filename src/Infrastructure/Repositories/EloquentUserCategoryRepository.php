@@ -42,14 +42,14 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     }
 
     /**
-     * @param stdClass $userCategory
+     * @param stdClass|null $userCategory
      * @param array|null $with
      * @return UserCategory
      * @throws UserCategoryNotFoundException
      */
-    private function parseUserCategory(stdClass $userCategory, array|null $with = ['user']): UserCategory
+    private function parseUserCategory(stdClass|null $userCategory, array|null $with = ['user']): UserCategory
     {
-        if (empty($userCategory)) {
+        if (!isset($userCategory)) {
             throw new UserCategoryNotFoundException();
         }
 
@@ -98,9 +98,15 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
      */
     public function save(UserCategory $userCategory): bool
     {
-        return $this->getTable()->updateOrInsert(
-            $userCategory->toRow()
-        );
+        // Create
+        if ($userCategory->getId() == null) {
+            $id = $this->getTable()->insertGetId($userCategory->toRow());
+            $userCategory->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $userCategory->getId())
+                ->update($userCategory->toRow()) != 0;
     }
 
     /**
@@ -134,6 +140,20 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
         }
 
         return $categories;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function exists(?int $id, ?int $categoryId = null, ?int $userId = null, ?bool $accepted = null, ?bool $canEdit = null): bool
+    {
+        $builder = $this->getTable();
+        if (isset($id)) $builder = $builder->where('id', $id);
+        if (isset($categoryId)) $builder = $builder->where('category_id', $categoryId);
+        if (isset($userId)) $builder = $builder->where('user_id', $userId);
+        if (isset($accepted)) $builder = $builder->where('accepted', $accepted);
+        if (isset($canEdit)) $builder = $builder->where('can_edit', $canEdit);
+        return $builder->exists();
     }
 
 }

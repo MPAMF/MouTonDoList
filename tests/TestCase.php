@@ -42,12 +42,17 @@ class TestCase extends PHPUnit_TestCase
         $repositories = require __DIR__ . '/../app/repositories.php';
         $repositories($containerBuilder);
 
+        // Instantiate the app
+        $bootstrap = require __DIR__ . '/../app/bootstrap.php';
+        $bootstrap($containerBuilder);
+
+        // Activate annotations
+        $containerBuilder->useAnnotations(true);
+
         // Build PHP-DI Container instance
         $container = $containerBuilder->build();
 
-        // Instantiate the app
-        AppFactory::setContainer($container);
-        $app = AppFactory::create();
+        $app = $container->get(App::class);
 
         // Register middleware
         $middleware = require __DIR__ . '/../app/middleware.php';

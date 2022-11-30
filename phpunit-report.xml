@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests" tests="8" assertions="32" errors="0" warnings="0" failures="0" skipped="0" time="0.132953">
+    <testsuite name="Tests\Domain\User\UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" tests="8" assertions="32" errors="0" warnings="0" failures="0" skipped="0" time="0.132953">
+      <testsuite name="Tests\Domain\User\UserTest::testGetters" tests="4" assertions="28" errors="0" warnings="0" failures="0" skipped="0" time="0.132848">
+        <testcase name="testGetters with data set #0" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="24" assertions="7" time="0.132778"/>
+        <testcase name="testGetters with data set #1" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="24" assertions="7" time="0.000033"/>
+        <testcase name="testGetters with data set #2" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="24" assertions="7" time="0.000020"/>
+        <testcase name="testGetters with data set #3" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="24" assertions="7" time="0.000017"/>
+      </testsuite>
+      <testsuite name="Tests\Domain\User\UserTest::testJsonSerialize" tests="4" assertions="4" errors="0" warnings="0" failures="0" skipped="0" time="0.000104">
+        <testcase name="testJsonSerialize with data set #0" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="47" assertions="1" time="0.000063"/>
+        <testcase name="testJsonSerialize with data set #1" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="47" assertions="1" time="0.000013"/>
+        <testcase name="testJsonSerialize with data set #2" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="47" assertions="1" time="0.000015"/>
+        <testcase name="testJsonSerialize with data set #3" class="Tests\Domain\User\UserTest" classname="Tests.Domain.User.UserTest" file="/mnt/c/Users/matth/OneDrive/Bureau/Code/MouTonDoList/tests/Domain/User/UserTest.php" line="47" assertions="1" time="0.000014"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
