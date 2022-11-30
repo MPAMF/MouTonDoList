@@ -98,9 +98,15 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
      */
     public function save(UserCategory $userCategory): bool
     {
-        return $this->getTable()->updateOrInsert(
-            $userCategory->toRow()
-        );
+        // Create
+        if ($userCategory->getId() == null) {
+            $id = $this->getTable()->insertGetId($userCategory->toRow());
+            $userCategory->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $userCategory->getId())
+                ->update($userCategory->toRow()) != 0;
     }
 
     /**

@@ -144,9 +144,15 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
      */
     public function save(TaskComment $taskComment): bool
     {
-        return $this->getTable()->updateOrInsert(
-            $taskComment->toRow()
-        );
+        // Create
+        if ($taskComment->getId() == null) {
+            $id = $this->getTable()->insertGetId($taskComment->toRow());
+            $taskComment->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $taskComment->getId())
+                ->update($taskComment->toRow()) != 0;
     }
 
     /**

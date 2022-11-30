@@ -112,9 +112,15 @@ class EloquentTaskRepository extends Repository implements TaskRepository
 
     public function save(Task $task) : bool
     {
-        return $this->getTable()->updateOrInsert(
-            $task->toRow()
-        );
+        // Create
+        if ($task->getId() == null) {
+            $id = $this->getTable()->insertGetId($task->toRow());
+            $task->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $task->getId())
+                ->update($task->toRow()) != 0;
     }
 
     public function delete(Task $task) : int

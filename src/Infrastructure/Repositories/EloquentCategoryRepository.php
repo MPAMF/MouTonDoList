@@ -94,9 +94,15 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
      */
     public function save(Category $category): bool
     {
-        return $this->getDB()->table('categories')->updateOrInsert(
-            $category->toRow()
-        );
+        // Create
+        if ($category->getId() == null) {
+            $id = $this->getTable()->insertGetId($category->toRow());
+            $category->setId($id);
+            return $id != 0;
+        }
+
+        return $this->getTable()->where('id', $category->getId())
+                ->update($category->toRow()) != 0;
     }
 
     /**

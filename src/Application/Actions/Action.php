@@ -89,8 +89,8 @@ abstract class Action
     }
 
     /**
+     * @param string $name
      * @return mixed
-     * @throws HttpBadRequestException
      */
     protected function resolveArg(string $name): mixed
     {
