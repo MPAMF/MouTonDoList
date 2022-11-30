@@ -2,17 +2,15 @@
 
 namespace App\Application\Actions\Categories;
 
-use App\Application\Actions\Action;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
 use App\Domain\UserCategory\UserCategoryRepository;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
-use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 
-class UpdateCategoryAction extends Action
+class UpdateCategoryAction extends CategoryAction
 {
 
     /**
@@ -32,21 +30,7 @@ class UpdateCategoryAction extends Action
     protected function action(): Response
     {
         $categoryId = (int)$this->resolveArg('id');
-        $data = $this->getFormData();
-
-        $validator = $this->validator->validate($data, [
-            'archived' => Validator::boolVal(),
-            'position' => Validator::intVal()->positive()->max(1e6), // limit
-            'name' => Validator::stringType()->length(min: 3, max: 63),
-            'color' => Validator::stringType()->length(max: 15),
-            'parent_category_id' => Validator::oneOf(Validator::nullType(), Validator::intVal()->positive())
-        ]);
-
-        if (!$validator->isValid()) {
-            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
-        }
-
-        // validate data ;
+        $data = $this->validate();
 
         try {
             $category = $this->categoryRepository->get($categoryId);
@@ -69,9 +53,16 @@ class UpdateCategoryAction extends Action
 
         }
 
+        // replace values
+        $category->setArchived($data->archived);
+        $category->setColor($data->color);
+        $category->setName($data->name);
+        $category->setPosition($data->position);
+
         // Useless to check if something was deleted
         if (!$this->categoryRepository->save($category)) {
             // return with error?
+            return $this->respondWithData(['error' => $this->translator->trans('CategoryUpdateDBError')], 500);
         }
 
         return $this->respondWithData($category, 200);
