@@ -111,6 +111,7 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
             'author' => isset($this->author) ? $this->author->jsonSerialize() : null,
             'task_id' => $this->task_id,
             'task' => isset($this->task) ? $this->task->jsonSerialize() : null,
+            'date' => $this->getCreatedAt()->format('c')
         ];
     }
 
