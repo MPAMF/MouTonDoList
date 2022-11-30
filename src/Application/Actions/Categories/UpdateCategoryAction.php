@@ -14,44 +14,12 @@ class UpdateCategoryAction extends CategoryAction
 {
 
     /**
-     * @Inject CategoryRepository
-     */
-    private CategoryRepository $categoryRepository;
-
-    /**
-     * @Inject
-     * @var UserCategoryRepository
-     */
-    private UserCategoryRepository $userCategoryRepository;
-
-    /**
      * @inheritDoc
      */
     protected function action(): Response
     {
-        $categoryId = (int)$this->resolveArg('id');
         $data = $this->validate();
-
-        try {
-            $category = $this->categoryRepository->get($categoryId);
-        } catch (CategoryNotFoundException $e) {
-            throw new HttpBadRequestException($this->request, $e->getMessage());
-        }
-
-        $parent = $category->getParentCategoryId() == null;
-
-        // Check if user has permission to edit
-        if ($category->getOwnerId() != $this->user()->getId()) {
-
-            if ($parent) {
-                throw new HttpForbiddenException($this->request);
-            }
-
-            if (!$this->userCategoryRepository->exists(null, categoryId: $categoryId, userId: $this->user()->getId(), canEdit: true)) {
-                throw new HttpForbiddenException($this->request);
-            }
-
-        }
+        $category = $this->getCategoryWithPermissionCheck();
 
         // replace values
         $category->setArchived($data->archived);
@@ -65,6 +33,6 @@ class UpdateCategoryAction extends CategoryAction
             return $this->respondWithData(['error' => $this->translator->trans('CategoryUpdateDBError')], 500);
         }
 
-        return $this->respondWithData($category, 200);
+        return $this->respondWithData($category);
     }
 }

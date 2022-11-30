@@ -14,17 +14,6 @@ class CreateCategoryAction extends CategoryAction
 {
 
     /**
-     * @Inject CategoryRepository
-     */
-    private CategoryRepository $categoryRepository;
-
-    /**
-     * @Inject
-     * @var UserCategoryRepository
-     */
-    private UserCategoryRepository $userCategoryRepository;
-
-    /**
      * @inheritDoc
      */
     protected function action(): Response
