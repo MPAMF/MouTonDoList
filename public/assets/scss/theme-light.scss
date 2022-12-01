@@ -169,6 +169,9 @@ body.light::-webkit-scrollbar-thumb,
     --#{$variable-prefix}dropdown-link-hover-color: #{$body-color};
     color: #{$body-color};
   }
+  .btn-user-modal{
+    color: #{$body-color};
+  }
   /* Searchbar */
   .container-searchbar {
     background-color: #CBF1F5;
