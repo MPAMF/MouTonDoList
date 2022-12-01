@@ -330,6 +330,9 @@ input[type="checkbox"] {
         width:960px;
     }
 }
+.container-category{
+    margin-top: 5rem;
+}
 
 /* Global */
 .grabbing * {
@@ -351,7 +354,6 @@ input[type="checkbox"] {
 }
 .category-title {
     margin-bottom: 32px;
-    margin-top: 6rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
