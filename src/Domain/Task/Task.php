@@ -222,6 +222,22 @@ class Task extends TimeStampedModel implements JsonSerializable
         $this->assigned_id = $assigned?->getId();
     }
 
+    /**
+     * @return int|null
+     */
+    public function getAssignedId(): ?int
+    {
+        return $this->assigned_id;
+    }
+
+    /**
+     * @param int|null $assigned_id
+     */
+    public function setAssignedId(?int $assigned_id): void
+    {
+        $this->assigned_id = $assigned_id;
+    }
+
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
