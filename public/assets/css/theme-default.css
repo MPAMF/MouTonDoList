@@ -148,6 +148,9 @@
   --bs-dropdown-link-hover-color: #EEEEEE;
   color: #EEEEEE;
 }
+.btn-user-modal{
+  color: #EEEEEE;
+}
 /* Searchbar */
 .container-searchbar {
   background-color: #CBF1F5;

@@ -96,39 +96,43 @@
 <div class="modal fade userModal" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-secondary">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitreModalNav{% endtrans %}</h1>
-                <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid d-flex">
-                    <div class="modalNav">
-                        <ul>
-                            <li> test</li>
-                        </ul>
+            <div class="container-fluid d-flex">
+                <div class="modalNav mt-3 mb-2">
+                    <h1 class="modal-title fs-5 mb-4">{% trans %}ParamLiModalNav{% endtrans %}</h1>
+                    <ul class="list-group">
+                        <li class="sidebar-li rounded"><button class="btn-user-modal">{% trans %}GeneralLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded"><button class="btn-user-modal">{% trans %}ThemeLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded"><button class="btn-user-modal">{% trans %}NotifLiModalNav{% endtrans %}</button> </li>
+                    </ul>
+                </div>
+                <div class="container-fluid p-0">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitreModalNav{% endtrans %}</h1>
+                        <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div>
-                        <h5>{% trans %}LabelModalNav{% endtrans %}</h5>
-                        <div class="d-flex align-items-center">
-                            <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="Thème clair">
-                                <div class="theme-modal-color">
-                                    <div class="theme-color lightPrimary"></div>
-                                    <div class="theme-color lightSecondary"></div>
-                                    <div class="theme-color lightTertiary"></div>
-                                    <div class="theme-color lightBG"></div>
+                    <div class="modal-body">
+                        <div>
+                            <h5>{% trans %}LabelThemeModalNav{% endtrans %}</h5>
+                            <div class="d-flex align-items-center">
+                                <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="Thème clair">
+                                    <div class="theme-modal-color">
+                                        <div class="theme-color lightPrimary"></div>
+                                        <div class="theme-color lightSecondary"></div>
+                                        <div class="theme-color lightTertiary"></div>
+                                        <div class="theme-color lightBG"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="btn btn-modal-theme" role="button" onclick="setToDarkMode()" title="Thème sombre">
-                                <div class="theme-modal-color">
-                                    <div class="theme-color darkPrimary"></div>
-                                    <div class="theme-color darkSecondary"></div>
-                                    <div class="theme-color darkTertiary"></div>
-                                    <div class="theme-color darkBG"></div>
+                                <div class="btn btn-modal-theme" role="button" onclick="setToDarkMode()" title="Thème sombre">
+                                    <div class="theme-modal-color">
+                                        <div class="theme-color darkPrimary"></div>
+                                        <div class="theme-color darkSecondary"></div>
+                                        <div class="theme-color darkTertiary"></div>
+                                        <div class="theme-color darkBG"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
