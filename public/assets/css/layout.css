@@ -210,6 +210,12 @@ input[type="checkbox"] {
     margin: 5px;
 }
 /* Modal Theme */
+.userModal{
+
+}
+.modalNav{
+    border-right: 1px solid white;
+}
 .theme-color{
     height: 15px;
     width: 60px;
