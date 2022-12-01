@@ -93,16 +93,19 @@
     </div>
 </nav>
 
-<div class="modal fade userModal" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+<div class="modal fade userModal" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content bg-secondary">
             <div class="container-fluid d-flex">
-                <div class="modalNav mt-3 mb-2">
-                    <h1 class="modal-title fs-5 mb-4">{% trans %}ParamLiModalNav{% endtrans %}</h1>
+                <div class="modalNav mt-3 mb-2 pe-2">
+                    <h1 class="modal-title fs-5 mb-4 text-center">{% trans %}ParamLiModalNav{% endtrans %}</h1>
                     <ul class="list-group">
-                        <li class="sidebar-li rounded"><button class="btn-user-modal">{% trans %}GeneralLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded"><button class="btn-user-modal">{% trans %}ThemeLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded"><button class="btn-user-modal">{% trans %}NotifLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded"><button class="btn-user-modal"> <span class="mdi mdi-cog-outline me-2"></span>
+                                {% trans %}GeneralLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded"><button class="btn-user-modal"> <span class="mdi mdi-palette-outline me-2"></span>
+                                {% trans %}ThemeLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded"><button class="btn-user-modal"><span class="mdi mdi-bell me-2"></span>
+                                {% trans %}NotifLiModalNav{% endtrans %}</button> </li>
                     </ul>
                 </div>
                 <div class="container-fluid p-0">
@@ -132,6 +135,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}CloseModalNav{% endtrans %}</button>
+                        <button type="button" class="btn btn-primary">{% trans %}SaveModalNav{% endtrans %}</button>
                     </div>
                 </div>
             </div>
