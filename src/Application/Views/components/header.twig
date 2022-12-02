@@ -60,7 +60,8 @@
             </button>
 
             <div class="btn-group-nav">
-                <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false" title="Notification">
+                <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false" title="Notification"
+                        data-bs-toggle="modal" data-bs-target="#userModal" onclick="modalNotification()">
                     <span class="mdi mdi-bell span-nav"></span>
                     <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification">99+</span>
                 </button>
@@ -71,12 +72,15 @@
                     <span class="mdi mdi-account-circle span-nav"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end dd-nav">
-                    <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-cog-outline me-2"></span>
+                    <li><button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
+                                data-bs-target="#userModal" onclick="modalGeneral()"> <span class="mdi mdi-cog-outline me-2"></span>
                             {% trans %}DropDownParameters{% endtrans %}</button></li>
                     <li><hr class="dropdown-divider"></li>
 
-                    <li><button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal" data-bs-target="#userModal"> <span class="mdi mdi-palette-outline me-2"></span>
+                    <li><button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
+                                data-bs-target="#userModal" onclick="modalTheme()"> <span class="mdi mdi-palette-outline me-2"></span>
                             {% trans %}DropDownThemeNav{% endtrans %}</button></li>
+
                     <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-share me-2"></span>
                             {% trans %}DropDownShareNav{% endtrans %}</button></li>
                     <li><hr class="dropdown-divider"></li>
@@ -100,12 +104,12 @@
                 <div class="mt-3 mb-2 pe-2">
                     <h1 class="modal-title fs-5 mb-4 text-center">{% trans %}ParamLiModalNav{% endtrans %}</h1>
                     <ul class="list-group">
-                        <li class="sidebar-li rounded"><button class="btn-user-modal"> <span class="mdi mdi-cog-outline me-2"></span>
-                                {% trans %}GeneralLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded"><button class="btn-user-modal"> <span class="mdi mdi-palette-outline me-2"></span>
-                                {% trans %}ThemeLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded"><button class="btn-user-modal"><span class="mdi mdi-bell me-2"></span>
-                                {% trans %}NotifLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded" id="modal-btn-general"><button class="btn-user-modal" onclick="modalGeneral()">
+                                <span class="mdi mdi-cog-outline me-2"></span> {% trans %}GeneralLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded" id="modal-btn-theme"><button class="btn-user-modal" onclick="modalTheme()">
+                                <span class="mdi mdi-palette-outline me-2"></span> {% trans %}ThemeLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded" id="modal-btn-notif"><button class="btn-user-modal" onclick="modalNotification()">
+                                <span class="mdi mdi-bell me-2"></span> {% trans %}NotifLiModalNav{% endtrans %}</button> </li>
                     </ul>
                 </div>
                 <div class="container-fluid p-0">
@@ -115,24 +119,9 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <h5>{% trans %}LabelThemeModalNav{% endtrans %}</h5>
-                            <div class="d-flex align-items-center">
-                                <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="Thème clair">
-                                    <div class="theme-modal-color">
-                                        <div class="theme-color lightPrimary"></div>
-                                        <div class="theme-color lightSecondary"></div>
-                                        <div class="theme-color lightTertiary"></div>
-                                        <div class="theme-color lightBG"></div>
-                                    </div>
-                                </div>
-                                <div class="btn btn-modal-theme" role="button" onclick="setToDarkMode()" title="Thème sombre">
-                                    <div class="theme-modal-color">
-                                        <div class="theme-color darkPrimary"></div>
-                                        <div class="theme-color darkSecondary"></div>
-                                        <div class="theme-color darkTertiary"></div>
-                                        <div class="theme-color darkBG"></div>
-                                    </div>
-                                </div>
+                            <h5 id="modal-title-body"></h5>
+                            <div class="d-flex align-items-center" id="modal-div-body">
+
                             </div>
                         </div>
                     </div>
@@ -145,3 +134,56 @@
         </div>
     </div>
 </div>
+
+<script>
+    let lastPage = "";
+
+    function setActiveModal(newPage){
+        if(lastPage !== ""){
+            $('#'+lastPage).classList;
+            console.log($('#'+lastPage).removeClass("active"));
+        }
+
+        lastPage = newPage;
+        $('#'+newPage).addClass("active");
+    }
+
+    function modalTheme(){
+        setActiveModal("modal-btn-theme");
+        $('#modal-title-body').html(`{{ 'LabelThemeModalNav'|trans|raw }}`);
+        $('#modal-div-body').html(`
+            <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="Thème clair">
+                <div class="theme-modal-color">
+                    <div class="theme-color lightPrimary"></div>
+                    <div class="theme-color lightSecondary"></div>
+                    <div class="theme-color lightTertiary"></div>
+                    <div class="theme-color lightBG"></div>
+                </div>
+            </div>
+            <div class="btn btn-modal-theme" role="button" onclick="setToDarkMode()" title="Thème sombre">
+                <div class="theme-modal-color">
+                    <div class="theme-color darkPrimary"></div>
+                    <div class="theme-color darkSecondary"></div>
+                    <div class="theme-color darkTertiary"></div>
+                    <div class="theme-color darkBG"></div>
+                </div>
+            </div>
+        `);
+    }
+
+    function modalGeneral() {
+        setActiveModal("modal-btn-general");
+        $('#modal-title-body').html(`test`);
+        $('#modal-div-body').html(`
+
+        `);
+    }
+
+    function modalNotification() {
+        setActiveModal("modal-btn-notif");
+        $('#modal-title-body').html(`test2`);
+        $('#modal-div-body').html(`
+
+        `);
+    }
+</script>
