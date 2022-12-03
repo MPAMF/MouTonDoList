@@ -58,7 +58,6 @@ abstract class TaskAction extends Action
         $data->position = intval($data->position);
         $data->assigned_id = isset($data->assigned_id) ? intval($data->assigned_id) : null;
 
-
         return $data;
     }
 

@@ -22,6 +22,7 @@ class CreateTaskAction extends TaskAction
     protected function action(): Response
     {
         $data = $this->validate();
+        $userId = $this->user()->getId();
         //
         $task = new Task();
         $task->setCategoryId($data->category_id);
@@ -32,36 +33,37 @@ class CreateTaskAction extends TaskAction
         $task->setPosition($data->position);
         $task->setLastEditorId($data->last_editor_id ?? null);
         $task->setAssignedId($data->parent_category_id ?? null);
+        $task->setLastEditorId($userId);
 
         // Check category validity
         try {
-            $category = $this->categoryRepository->get($task->getId());
+            $task->setCategory($this->categoryRepository->get($task->getId()));
         } catch (CategoryNotFoundException) {
             throw new HttpBadRequestException($this->request, $this->translator->trans('CategoryNotFoundException'));
         }
 
+        // Only accept to create tasks in subcategories
+        if ($task->getCategory()->getParentCategoryId() == null) {
+            throw new HttpBadRequestException($this->request, $this->translator->trans('CategoryParentException'));
+        }
+
+        // Check can edit
+        if ($task->getCategory()->getOwnerId() != $userId) {
+            if (!$this->userCategoryRepository->exists(null, $task->getCategoryId(), $userId, accepted: true, canEdit: true)) {
+                throw new HttpForbiddenException($this->request);
+            }
+        }
+
         // Check assigned_id
-        if (isset($data->assigned_id)) {
-            $assigned_id = intval($data->assigned_id);
+        if ($task->getAssignedId() != null) {
 
-            if ($this->userCategoryRepository->exists(null, categoryId: $assigned_id)) {
-
+            // Check if assigned user has access to the project
+            if (!$this->userCategoryRepository->exists(null, $task->getCategoryId(), $task->getAssignedId(), accepted: true)) {
+                throw new HttpBadRequestException($this->request, $this->translator->trans('AssignedUserNotFoundException'));
             }
 
         }
 
-
-        // TODO: Check if category exists & if user has permission
-
-        /* $parent = $task->getParentCategoryId() == null;
-
-        // Parent category isn't none, check if user has permission to create a new subCategory
-        if (!$parent && !$this->userCategoryRepository->exists(null, categoryId: $task->getParentCategoryId(),
-                userId: $userId, accepted: true, canEdit: true)) {
-            throw new HttpForbiddenException($this->request);
-        } */
-
-        // Useless to check if something was deleted
         if (!$this->taskRepository->save($task)) {
             // return with error?
             return $this->respondWithData(['error' => $this->translator->trans('TaskCreateDBError')], 500);
