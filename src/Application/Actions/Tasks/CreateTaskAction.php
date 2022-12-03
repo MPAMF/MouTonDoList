@@ -10,6 +10,7 @@ use App\Domain\UserCategory\UserCategory;
 use App\Domain\UserCategory\UserCategoryRepository;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
+use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 
@@ -21,18 +22,21 @@ class CreateTaskAction extends TaskAction
      */
     protected function action(): Response
     {
-        $data = $this->validate();
+
+        $data = $this->getFormData();
+        $task = new Task();
+
+        $validator = $this->validator->validate($data, $task->getValidatorRules());
+
+        if (!$validator->isValid()) {
+            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
+        }
+
+        $data = $validator->getValues();
+
         $userId = $this->user()->getId();
         //
-        $task = new Task();
-        $task->setCategoryId($data->category_id);
-        $task->setName($data->name);
-        $task->setDescription($data->description);
-        $task->setDueDate($data->due_date);
-        $task->setChecked($data->checked);
-        $task->setPosition($data->position);
-        $task->setLastEditorId($data->last_editor_id ?? null);
-        $task->setAssignedId($data->parent_category_id ?? null);
+        $task->fromValidator($data);
         $task->setLastEditorId($userId);
 
         // Check category validity

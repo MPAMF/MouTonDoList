@@ -179,4 +179,15 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
         }
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function exists(?int $id, ?int $parentCategoryId = null): bool
+    {
+        $builder = $this->getTable();
+        if (isset($id)) $builder = $builder->where('id', $id);
+        if (isset($parentCategoryId)) $builder = $builder->where('parent_category_id', $parentCategoryId);
+        return $builder->exists();
+    }
 }
