@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 use App\Application\Actions\Auth\Login\DisplayLoginAction;
 use App\Application\Actions\Auth\Login\LoginAction;
-use App\Application\Actions\Auth\Logout\DisplayLogoutAction;
 use App\Application\Actions\Auth\Logout\LogoutAction;
 use App\Application\Actions\Auth\Register\DisplayRegisterAction;
 use App\Application\Actions\Auth\Register\RegisterAction;
@@ -11,9 +10,11 @@ use App\Application\Actions\Categories\CreateCategoryAction;
 use App\Application\Actions\Categories\DeleteCategoryAction;
 use App\Application\Actions\Categories\UpdateCategoryAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
+use App\Application\Actions\Tasks\CreateTaskAction;
+use App\Application\Actions\Tasks\DeleteTaskAction;
+use App\Application\Actions\Tasks\UpdateTaskAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
-use App\Application\Middleware\Auth\AuthMiddleware;
 use App\Application\Middleware\Auth\UserConnectedMiddleware;
 use App\Application\Middleware\Auth\UserDisconnectedMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -58,6 +59,12 @@ return function (App $app) {
             $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
             $group->put('/{id}', UpdateCategoryAction::class)->setName('actions.categories.update');
             $group->delete('/{id}', DeleteCategoryAction::class)->setName('actions.categories.delete');
+        });
+
+        $group->group('/tasks', function (Group $group) {
+            $group->post('', CreateTaskAction::class)->setName('actions.tasks.create');
+            $group->put('/{id}', UpdateTaskAction::class)->setName('actions.tasks.update');
+            $group->delete('/{id}', DeleteTaskAction::class)->setName('actions.tasks.delete');
         });
     })->add(UserConnectedMiddleware::class);
 };
