@@ -30,7 +30,6 @@ function openTaskDetails(subCatId, taskId)
         '                       <ul class="list-group list-group-flush">';
 
     (task.comments).forEach(function(comment) {
-        let date =
         content +=
         '            <li class="list-group-item modal-comment">' +
         '                <div class="d-flex justify-content-between align-items-center">' +
@@ -80,7 +79,8 @@ function openEditModalCategory()
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
         '<button type="button" id="modal-submit" class="btn btn-primary">Enregistrer</button>')
-    $("#modal-body").html('' +
+
+    let content =
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
@@ -104,48 +104,39 @@ function openEditModalCategory()
                     '</h2>' +
                     '<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample"> ' +
                         '<div class="accordion-body">' +
-                            '<ul class="list-group list-group-flush tasks">' +
-                                '<li class="list-group-item list-member">' +
-                                    '<div class="col py-1">' +
-                                        '<label class="my-0 fw-normal">Victor</label>' +
-                                    '</div>' +
-                                    '<div class="col py-1">' +
-                                        '<select name="modal-member-select" id="modal-member-select-1" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
-                                            '<option value="1">Lecteur</option>' +
-                                            '<option value="2">Editeur</option>' +
-                                            '<option value="3">Propriétaire</option>' +
-                                        '</select>' +
-                                    '</div>' +
-                                    '<div class="col py-1">' +
-                                        '<button type="button" class="btn btn-sm btn-modal-remove">' +
-                                            '<span class="mdi mdi-14px mdi-close-thick"></span> Retirer' +
-                                        '</button>' +
-                                    '</div>' +
-                                '</li>' +
-                                '<li class="list-group-item list-member">' +
-                                    '<div class="col py-1">' +
-                                        '<label class="my-0 fw-normal">Paul</label>' +
-                                    '</div>' +
-                                    '<div class="col py-1">' +
-                                        '<select name="modal-member-select" id="modal-member-select-2" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
-                                            '<option value="1">Lecteur</option>' +
-                                            '<option value="2">Editeur</option>' +
-                                            '<option value="3">Propriétaire</option>' +
-                                        '</select>' +
-                                    '</div>' +
-                                    '<div class="col py-1">' +
-                                        '<button type="button" class="btn btn-sm btn-modal-remove">' +
-                                            '<span class="mdi mdi-14px mdi-close-thick"></span> Retirer' +
-                                        '</button>' +
-                                    '</div>' +
-                                '</li>' +
+                            '<ul class="list-group list-group-flush tasks">';
+
+    getCurrentCategoryMembers().forEach(function(member) {
+        content +=
+            '<li class="list-group-item list-member">' +
+                '<div class="col py-1">' +
+                    '<label class="my-0 fw-normal">' + member.username + '</label>' +
+                '</div>' +
+                '<div class="col py-1">' +
+                    '<select name="modal-member-select" id="modal-member-select-1" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+                        '<option value="1">Lecteur</option>' +
+                        '<option value="2">Editeur</option>' +
+                        '<option value="3">Propriétaire</option>' +
+                    '</select>' +
+                '</div>' +
+                '<div class="col py-1">' +
+                    '<button type="button" class="btn btn-sm btn-modal-remove">' +
+                        '<span class="mdi mdi-14px mdi-close-thick"></span> Retirer' +
+                    '</button>' +
+                '</div>' +
+            '</li>'
+    })
+
+    content +=
                             '</ul>' +
                         '</div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
             '<div id="error-modal-members" class="invalid-feedback" role="alert"> Le rôle d\'un des membres n\'est pas valide. </div>' +
-        '</form>')
+        '</form>'
+
+    $("#modal-body").html(content)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -180,7 +171,8 @@ function openEditModalTask(subCatId, taskId)
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
         '<button type="button" id="modal-submit" class="btn btn-primary">Enregistrer</button>')
-    $("#modal-body").html('' +
+
+    let content =
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
                 '<label for="modal-input-name" class="form-label">Nom</label>' +
@@ -192,13 +184,20 @@ function openEditModalTask(subCatId, taskId)
                 '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="Description de la tâche" title="Description de la tâche">' + task.description + '</textarea>' +
             '</div>' +
             '<div class="col-12 modal-form-label-select">' +
-                '<label for="modal-assign-member" class="form-label">Assigner</label>' +
+                '<label for="modal-assign-member" class="form-label">Assigné</label>' +
                 '<select id="modal-assign-member" class="mb-2 btn btn-sm btn-modal-select" aria-label="Membre assigné" required>' +
-                    '<option value="0" selected>Non assignée</option>' +
-                    '<option value="nomPrenom">NOM Prénom</option>' +
+                    '<option value="0" selected>Non assignée</option>';
+
+    getCurrentCategoryMembers().forEach(function(member) {
+        content += '<option value="' + member.id + '">' + member.username + '</option>'
+    })
+
+    content +=
                 '</select>' +
             '</div>' +
-        '</form>')
+        '</form>'
+
+    $("#modal-body").html(content)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }

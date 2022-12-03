@@ -1,3 +1,7 @@
+function getCurrentCategoryMembers() {
+    return data.categories[data.currentCategoryIdx].members
+}
+
 function getCurrentCategory() {
     return data.categories[data.currentCategoryIdx].category
 }

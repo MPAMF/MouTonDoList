@@ -16,7 +16,9 @@
         <div class="mb-2">
             <select class="btn btn-sm btn-modal-select" aria-label="Membre assigné" required>
                 <option value="0" selected>Non assignée</option>
-                <option value="nomPrenom">NOM Prénom</option>
+                {% for member in category.members %}
+                    <option value="{{ member.id }}"> {{ member.username }}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
