@@ -92,7 +92,6 @@ abstract class CategoryAction extends Action
                 }
             }
 
-
         }
 
         return $category;

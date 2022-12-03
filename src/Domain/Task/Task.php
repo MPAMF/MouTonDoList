@@ -256,8 +256,7 @@ class Task extends TimeStampedModel implements JsonSerializable
             'assigned' => isset($this->assigned) ? $this->assigned->jsonSerialize() : null
         ];
 
-        if(isset($this->comments))
-        {
+        if (isset($this->comments)) {
             $result['comments'] = $this->comments;
         }
 
@@ -273,16 +272,16 @@ class Task extends TimeStampedModel implements JsonSerializable
         $this->id = $row->id;
         // stdClass must have loaded instances of other models
         $this->category = $row->category ?? null;
-        $this->category_id = $row->category_id;
+        $this->category_id = intval($row->category_id);
         $this->name = $row->name;
         $this->description = $row->description;
         $this->due_date = isset($row->due_date) ? new DateTime($row->due_date) : null;
         $this->checked = boolval($row->checked);
-        $this->position = $row->position;
+        $this->position = intval($row->position);
         $this->last_editor = $row->last_editor ?? null;
-        $this->last_editor_id = $row->last_editor_id ?? null;
+        $this->last_editor_id = isset($row->last_editor_id) ? intval($row->last_editor_id) : null;
         $this->assigned = $row->assigned ?? null;
-        $this->assigned_id = $row->assigned_id ?? null;
+        $this->assigned_id = isset($row->assigned_id) ? intval($row->assigned_id) : null;
     }
 
     /**

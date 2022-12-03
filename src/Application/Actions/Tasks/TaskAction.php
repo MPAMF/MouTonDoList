@@ -3,6 +3,7 @@
 namespace App\Application\Actions\Tasks;
 
 use App\Application\Actions\Action;
+use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
 use App\Domain\Task\Task;
 use App\Domain\Task\TaskNotFoundException;
@@ -36,29 +37,27 @@ abstract class TaskAction extends Action
      */
     protected function validate(): array|object
     {
-        // TODO:
         $data = $this->getFormData();
 
         $validator = $this->validator->validate($data, [
-            'archived' => Validator::boolVal(),
-            'position' => Validator::intType(), // limit
+            'category_id' => Validator::intType(),
             'name' => Validator::notEmpty()->stringType()->length(min: 3, max: 63),
-            'color' => Validator::notEmpty()->stringType()->length(max: 15),
-            'parent_category_id' => Validator::oneOf(Validator::nullType(), Validator::intType())
+            'description' => Validator::stringType()->length(max: 1024),
+            'due_date' => Validator::dateTime(),
+            'checked' => Validator::boolVal(),
+            'position' => Validator::intType(), // limit
+            // 'last_editor_id' => Validator::oneOf(Validator::nullType(), Validator::intType()),
+            'assigned_id' => Validator::oneOf(Validator::nullType(), Validator::intType()),
         ]);
 
         if (!$validator->isValid()) {
             throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
         }
 
-        // Validator library is not up-to-date with intType: throwing deprecated error
+        $data->category_id = intval($data->category_id);
         $data->position = intval($data->position);
-        $subCategory = isset($data->parent_category_id);
-        if ($subCategory) $data->parent_category_id = intval($data->parent_category_id);
+        $data->assigned_id = isset($data->assigned_id) ? intval($data->assigned_id) : null;
 
-        if ($data->position < 0 || $data->position > 1e6 || ($subCategory && $data->parent_category_id <= 0)) {
-            throw new HttpBadRequestException($this->request, "Wrong position or parentCategoryId (should be positive)");
-        }
 
         return $data;
     }
@@ -105,5 +104,4 @@ abstract class TaskAction extends Action
 
         return $task;
     }
-
 }
