@@ -186,10 +186,10 @@ function openEditModalTask(subCatId, taskId)
             '<div class="col-12 modal-form-label-select">' +
                 '<label for="modal-assign-member" class="form-label">Assigné</label>' +
                 '<select id="modal-assign-member" class="mb-2 btn btn-sm btn-modal-select" aria-label="Membre assigné" required>' +
-                    '<option value="0" selected>Non assignée</option>';
+                    '<option value="0">Non assignée</option>';
 
     getCurrentCategoryMembers().forEach(function(member) {
-        content += '<option value="' + member.id + '">' + member.username + '</option>'
+            content += '<option value="' + member.id + '">' + member.username + '</option>'
     })
 
     content +=
@@ -198,6 +198,9 @@ function openEditModalTask(subCatId, taskId)
         '</form>'
 
     $("#modal-body").html(content)
+    let select = document.getElementById("modal-assign-member")
+    select.value = task.assigned_id === null ? '0' : task.assigned_id.toString()
+
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
