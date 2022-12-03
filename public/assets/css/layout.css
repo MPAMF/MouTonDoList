@@ -88,6 +88,11 @@ input[type="checkbox"] {
     -webkit-box-orient: initial;
     overflow: initial;
 }
+@media (max-width: 576px) {
+    .modal .hideMobile {
+        display: none;
+    }
+}
 
 /* Navbar */
 .btn-nav{

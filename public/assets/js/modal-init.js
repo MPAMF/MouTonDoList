@@ -54,7 +54,7 @@ function openTaskDetails(subCatId, taskId)
         '        </div>' +
         '        <form class="task-new" id="commentNew">' +
         '            <div class="mb-2">' +
-        '                <textarea class="form-control form-control-sm bg-secondary" rows="3" id="commentNewDescription" placeholder="Description" title="Description du commentaire" ></textarea>' +
+        '                <textarea class="form-control form-control-sm bg-secondary" rows="3" id="commentNewDescription" placeholder="Description" title="Description du commentaire" required></textarea>' +
         '                <div id="error-commentNew" class="invalid-feedback" role="alert"> Veuillez indiquer un commentaire. </div>' +
         '            </div>' +
         '            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
@@ -113,27 +113,52 @@ function openEditModalCategory()
                     '<label class="my-0 fw-normal">' + member.username + '</label>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                    '<select name="modal-member-select" id="modal-member-select-1" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
-                        '<option value="1">Lecteur</option>' +
-                        '<option value="2">Editeur</option>' +
-                        '<option value="3">Propriétaire</option>' +
+                    '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+                        '<option value="READ">Lecteur</option>' +
+                        '<option value="WRITE">Editeur</option>' +
+                        '<option value="OWN">Propriétaire</option>' +
                     '</select>' +
                 '</div>' +
                 '<div class="col py-1">' +
                     '<button type="button" class="btn btn-sm btn-modal-remove">' +
-                        '<span class="mdi mdi-14px mdi-close-thick"></span> Retirer' +
+                        '<span class="mdi mdi-14px mdi-close-thick"></span> <span class="hideMobile">Retirer</span>' +
                     '</button>' +
                 '</div>' +
             '</li>'
     })
 
     content +=
+                                '<li class="list-group-item list-member"></li>' +
                             '</ul>' +
+        '<div id="error-modal-members" class="invalid-feedback" role="alert"> Le rôle d\'un des membres n\'est pas valide. </div>' +
+        '        <div>' +
+        '            <button class="btn btn-task-add" type="button" id="memberAdd">' +
+        '                <span class="mdi mdi-plus-circle"></span>' +
+        '                Ajouter un membre' +
+        '            </button>' +
+        '        </div>' +
+        '        <div class="task-new" id="memberNew">' +
+        '            <div class="mb-2">' +
+        '                <input class="form-control form-control-sm bg-secondary" id="memberNewName" placeholder="Mail du membre" title="Mail du membre" required></input>' +
+        '                <div id="error-memberNew" class="invalid-feedback" role="alert"> L\'email indiqué n\'est pas valide. </div>' +
+        '            </div>' +
+        '            <div class="mb-2">' +
+        '                <select id="modal-member-select-new" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+        '                    <option value="READ">Lecteur</option>' +
+        '                    <option value="WRITE">Editeur</option>' +
+        '                    <option value="OWN">Propriétaire</option>' +
+        '                </select>' +
+        '                <div id="error-memberStatusNew" class="invalid-feedback" role="alert"> Le statut indiqué n\'est pas valide. </div>' +
+        '            </div>' +
+        '            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
+        '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="memberNewCancel">Annuler</button>' +
+        '                <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="memberNewCreate" disabled>Ajouter le membre</button>' +
+        '            </div>' +
+        '        </div>' +
                         '</div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
-            '<div id="error-modal-members" class="invalid-feedback" role="alert"> Le rôle d\'un des membres n\'est pas valide. </div>' +
         '</form>'
 
     $("#modal-body").html(content)
@@ -208,6 +233,26 @@ function openEditModalTask(subCatId, taskId)
 /* Modal Events */
 
 $(document).ready(
+    /* Member in Modal */
+    $(document).on('click', "#memberAdd", function (e) {
+        toggleForm("memberAdd", "memberNew", "error-memberNew", null)
+    }),
+    $(document).on('click', "#memberNewCancel", function (e) {
+        toggleForm("memberAdd", "memberNew", null, "#memberNewCreate")
+    }),
+    $(document).on('click', "#memberNewCreate", function (e) {
+        e.preventDefault()
+        checkEmailOnSubmit("#memberNewName", "error-memberNew")
+        let select = document.getElementById("modal-member-select-new")
+        if(authModalSelectMemberStatusValues.includes(select.value.toString()))
+            document.getElementById("error-memberStatusNew").style.display = "none";
+        else
+            document.getElementById("error-memberStatusNew").style.display = "block";
+    }),
+    $(document).on('keyup', "#memberNewName", function (e) {
+        checkEmailOnKeyup("#memberNewName", "error-memberNew", "#memberNewCreate")
+    }),
+
     /* Comments in Modal */
     $(document).on('click', "#commentAdd", function (e) {
         toggleForm("commentAdd", "commentNew", "error-commentNew", null)
@@ -225,8 +270,9 @@ $(document).ready(
     /* Submit Modal */
     $(document).on('click', "#modal-submit", function (e) {
         checkInputOnSubmit("#modal-input-name", "error-modal")
-        let selectsName = document.getElementsByName("modal-member-select")
-        checkSelectValuesOnSubmit(selectsName, "error-modal-members", authModalSelectMemberStatusValues)
+        let memberSelectsName = document.getElementsByName("modal-member-select")
+        if(memberSelectsName.length !== 0)
+            checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {
         checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit")
