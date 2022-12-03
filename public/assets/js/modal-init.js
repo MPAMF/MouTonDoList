@@ -29,13 +29,13 @@ function openTaskDetails(subCatId, taskId)
         '                   <div class="accordion-body">' +
         '                       <ul class="list-group list-group-flush">';
 
-
     (task.comments).forEach(function(comment) {
+        let date =
         content +=
         '            <li class="list-group-item modal-comment">' +
         '                <div class="d-flex justify-content-between align-items-center">' +
         '                    <p class="mb-1">' +
-        '                        ' + (comment.author === null ? 'Unknown' : comment.author) + ' <small class="form-text text-muted" title="Date du commentaire">13/11/2022 17:37</small>' +
+        '                        ' + (comment.author === null ? 'Unknown' : comment.author.username) + ' <small class="form-text text-muted" title="Date du commentaire">' + timeSince(Date.parse(comment.date)) + ' ago </small>' +
         '                    </p>' +
         '                    <button class="btn btn-sm modal-delete-comment" type="button" title="Suppression du commentaire">' +
         '                        <span class="mdi mdi-18px mdi-trash-can"></span>' +
@@ -55,11 +55,8 @@ function openTaskDetails(subCatId, taskId)
         '        </div>' +
         '        <form class="task-new" id="commentNew">' +
         '            <div class="mb-2">' +
-        '                <input type="text" class="form-control form-control-sm bg-secondary" id="commentNewTitle" placeholder="Titre du commentaire" title="Nom du commentaire" required>' +
-        '                <div id="error-commentNew" class="invalid-feedback" role="alert"> Veuillez indiquer un titre. </div>' +
-        '            </div>' +
-        '            <div class="mb-2">' +
         '                <textarea class="form-control form-control-sm bg-secondary" rows="3" id="commentNewDescription" placeholder="Description" title="Description du commentaire" ></textarea>' +
+        '                <div id="error-commentNew" class="invalid-feedback" role="alert"> Veuillez indiquer un commentaire. </div>' +
         '            </div>' +
         '            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
         '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="commentNewCancel">Annuler</button>' +
@@ -217,10 +214,10 @@ $(document).ready(
         toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
     }),
     $(document).on('click', "#commentNewCreate", function (e) {
-        checkInputOnSubmit("#commentNewTitle", "error-commentNew")
+        checkInputOnSubmit("#commentNewDescription", "error-commentNew")
     }),
-    $(document).on('keyup', "#commentNewTitle", function (e) {
-        checkInputOnKeyup("#commentNewTitle", "error-commentNew", "#commentNewCreate")
+    $(document).on('keyup', "#commentNewDescription", function (e) {
+        checkInputOnKeyup("#commentNewDescription", "error-commentNew", "#commentNewCreate")
     }),
 
     /* Submit Modal */
