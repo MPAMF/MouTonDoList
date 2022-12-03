@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}CloseModalNav{% endtrans %}</button>
+                        <button type="button" class="btn btn-secondary" id="btn-close-modal" data-bs-dismiss="modal">{% trans %}CloseModalNav{% endtrans %}</button>
                         <button type="button" class="btn btn-primary">{% trans %}SaveModalNav{% endtrans %}</button>
                     </div>
                 </div>
@@ -139,15 +139,24 @@
     let lastPage = "";
 
     function setActiveModal(newPage){
+        let element = document.getElementById('notif-popover-' + idCat + '-' + idTask);
+        if(element !== null) {
+            let parent = element.parentElement;
+            if (parent !== null) {
+                let parent_parent = parent.parentElement;
+                if(parent_parent !== null){
+                    parent_parent.remove();
+                }
+            }
+        }
         if(lastPage !== ""){
-            $('#'+lastPage).classList;
-            console.log($('#'+lastPage).removeClass("active"));
+            $('#'+lastPage).removeClass("active")
         }
 
         lastPage = newPage;
         $('#'+newPage).addClass("active");
     }
-
+    /*  Theme */
     function modalTheme(){
         setActiveModal("modal-btn-theme");
         $('#modal-title-body').html(`{{ 'LabelThemeModalNav'|trans|raw }}`);
@@ -171,19 +180,84 @@
         `);
     }
 
+    /*  General */
     function modalGeneral() {
         setActiveModal("modal-btn-general");
         $('#modal-title-body').html(`test`);
         $('#modal-div-body').html(`
+            <div>
 
+            </div>
         `);
     }
 
+    /*  Notification */
     function modalNotification() {
         setActiveModal("modal-btn-notif");
-        $('#modal-title-body').html(`test2`);
-        $('#modal-div-body').html(`
+        $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
+        $('#modal-div-body').html(loadAllNotifications());
+        addEventNotif();
+    }
 
-        `);
+    function loadAllNotifications(){
+        let values = [[2,5, "03/12/2022"]];
+        let res =`<ul class="list-group list-group-flush tasks" data-sortable="tasks">`;
+
+        values.forEach(value =>{
+            res += createNotification(value[0],value[1],`{{ 'LabelNotifModalNav'|trans|raw }}` + value[2]);
+        });
+        res += `</ul>`;
+        return res;
+    }
+
+    function createNotification(subCatId, taskId, date){
+        return `
+        <li class="sidebar-li rounded p-2" id="notif-` + subCatId + `-` + taskId +`">
+            <div class="d-flex">
+                <div class="" onclick="openTaskDetails(`+ subCatId +`,`+ taskId +`)">
+                    <label>
+                        Nom de la tâche [` + subCatId + `-` + taskId +`], ` + date +`
+                    </label>
+                </div>
+                    <a class="ms-2" data-idCat="` + subCatId + `" data-idTask="` + taskId + `" role="button"
+                            data-bs="popover" data-bs-popover="notif-popover" aria-label="Actions de la tâche" onclick="setNotifPopoverValues(`+ subCatId +`,`+ taskId +`)">
+                        <span class="mdi mdi-dots-horizontal"></span>
+                    </a>
+            </div>
+        </li>
+        `;
+    }
+
+    let idCat = "";
+    let idTask = "";
+    function setNotifPopoverValues(subCatId, taskId){
+        idCat = subCatId;idTask = taskId;
+    }
+
+    function addEventNotif(){
+        $("[data-bs-popover=notif-popover]").popover({
+            trigger: 'click',
+            placement: 'right',
+            customClass: 'popover',
+            offset: [0, 0],
+            html: true,
+            sanitize: false,
+            content: () => {
+                let moveTrad = `{{'NotifMoveToTaskModalNav'|trans|raw }}`;
+                let deleteTrad = `{{'NotifDeleteToTaskModalNav'|trans|raw }}`;
+                return `
+                <div class="btn-group-vertical" id="notif-popover-` + idCat + `-` + idTask +`" role="group" aria-label="Vertical button group">
+                    <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(`+ idCat +`,`+ idTask +`)">
+                    <span class="mdi mdi-archive-outline"></span>` + moveTrad +`</button>
+                    <button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-trash-can"></span> `+ deleteTrad +` </button>
+                </div>`;
+            }
+        })
+    }
+
+    function moveToSubCategory(subCatId, taskId){
+        if((idCat === "")||(idTask === "")) return;
+        let element = document.getElementById('taskViewInfo-' + subCatId + '-' + taskId);
+        element.scrollIntoView({block:"center"});
     }
 </script>
