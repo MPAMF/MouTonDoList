@@ -177,6 +177,9 @@ body.default::-webkit-scrollbar-thumb,
   .modal-theme-close{
     color: #{$body-color};
   }
+  .btn-user-modal{
+    color: #{$body-color};
+  }
   /* Searchbar */
   .container-searchbar {
     background-color: #CBF1F5;
