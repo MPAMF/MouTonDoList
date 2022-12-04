@@ -221,11 +221,6 @@ class Category extends TimeStampedModel implements JsonSerializable, ValidatorMo
         $this->owner_id = $row->owner_id;
         $this->owner = $row->owner ?? null;
         $this->parentCategory = $row->parentCategory ?? null;
-        $this->parent_category_id = $row->parent_category_id;
-        $this->name = $row->name;
-        $this->color = $row->color;
-        $this->position = $row->position;
-        $this->archived = boolval($row->archived);
         $this->fromValidator($row);
     }
 
@@ -257,7 +252,7 @@ class Category extends TimeStampedModel implements JsonSerializable, ValidatorMo
     {
         $this->name = $data->name;
         $this->color = $data->color;
-        $this->parent_category_id = isset($row->parent_category_id) ? intval($data->parent_category_id) : null;
+        $this->parent_category_id = isset($data->parent_category_id) ? intval($data->parent_category_id) : null;
         $this->position = intval($data->position);
         $this->archived = boolval($data->archived);
     }
