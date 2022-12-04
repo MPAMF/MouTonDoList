@@ -58,7 +58,7 @@ class DisplayDashboardAction extends Action
      */
     protected function action(): Response
     {
-        $categories = collect($this->userCategoryRepository->getCategories($this->user()));
+        $categories = collect($this->userCategoryRepository->getCategories($this->user(), accepted: true));
         $category = $this->getArgsCategory($categories);
 
         if (!isset($category)) {
@@ -74,10 +74,10 @@ class DisplayDashboardAction extends Action
             $category->getCategory()->subCategories = $this->categoryRepository->getSubCategories($category->getCategory()->getId());
 
             foreach ($category->getCategory()->subCategories as $subCategory) {
-                $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId());
+                $subCategory->tasks = $this->taskRepository->getTasks($subCategory->getId(), ['assigned']);
 
                 foreach ($subCategory->tasks as $task) {
-                    $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['user']);
+                    $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['author']);
                 }
             }
         }
@@ -87,10 +87,14 @@ class DisplayDashboardAction extends Action
         $archivedCategories = $categories->filter(fn(UserCategory $a) => $a->getCategory()->isArchived());
         $categories = $categories->filter(fn(UserCategory $a) => !$a->getCategory()->isArchived());
 
+        // Get members of category
+        $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
+
         return $this->respondWithView('pages/dashboard.twig', [
             'category' => $category,
             'categories' => $categories,
-            'archivedCategories' => $archivedCategories
+            'archivedCategories' => $archivedCategories,
+            'user' => $this->user()
         ]);
     }
 }

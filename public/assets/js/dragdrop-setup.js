@@ -11,7 +11,13 @@ Array.prototype.forEach.call($("[data-sortable=tasks]"), function(el) {
         onChoose: addGrabbing,
         onUnchoose: remoteGrabbing,
         onStart: addGrabbing,
-        onEnd: remoteGrabbing,
+        onEnd: function (e) {
+            remoteGrabbing()
+            let taskId = e.item.getAttribute("data-idTask")
+            let oldSubCategoryId = e.from.getAttribute("data-subcategory-id")
+            let newSubCategoryId = e.to.getAttribute("data-subcategory-id")
+            moveTask(taskId, oldSubCategoryId, e.oldIndex, newSubCategoryId, e.newIndex)
+        },
         onMove: addGrabbing,
     })
 });
@@ -29,7 +35,11 @@ Array.prototype.forEach.call($("[data-sortable=categories]"), function(el) {
         onChoose: addGrabbing,
         onUnchoose: remoteGrabbing,
         onStart: addGrabbing,
-        onEnd: remoteGrabbing,
+        onEnd: function (e) {
+            remoteGrabbing()
+            let subCatId = e.item.getAttribute("data-idSubCat")
+            moveSubCategory(subCatId, e.oldIndex, e.newIndex)
+        },
         onMove: addGrabbing,
     })
 });

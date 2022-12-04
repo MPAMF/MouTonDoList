@@ -12,10 +12,11 @@ interface UserCategoryRepository
 
     /**
      * @param User|int $user User or user_id
+     * @param bool|null $accepted Categories including invited categories
      * @param array|null $with ['user', 'category'] load objects
      * @return array Categories from user
      */
-    public function getCategories(User|int $user, array|null $with = null) : array;
+    public function getCategories(User|int $user, ?bool $accepted = null, array|null $with = null) : array;
 
     /**
      * @param UserCategory $userCategory User category
@@ -36,6 +37,13 @@ interface UserCategoryRepository
      * @throws UserCategoryNotFoundException
      */
     public function get(int $id, array|null $with = null): UserCategory;
+
+    /**
+     * @param int|Category $category
+     * @param array|null $with
+     * @return array
+     */
+    public function getUsers(int|Category $category, array|null $with = null): array;
 
     /**
      * @param int|null $id

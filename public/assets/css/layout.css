@@ -71,7 +71,7 @@ input[type="checkbox"] {
     text-align: left;
 }
 .modal .task-view-info, .modal .task-view-info label {
-    cursor: default;
+    cursor: text;
 }
 .modal .accordion-item {
     margin-bottom: 0;
@@ -87,6 +87,11 @@ input[type="checkbox"] {
     -webkit-line-clamp: initial;
     -webkit-box-orient: initial;
     overflow: initial;
+}
+@media (max-width: 576px) {
+    .modal .hideMobile {
+        display: none;
+    }
 }
 
 /* Navbar */
