@@ -4,7 +4,7 @@ namespace App\Application\Actions\Categories;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ViewCategoryAction extends CategoryAction
+class ReadCategoryAction extends CategoryAction
 {
 
     protected function action(): Response

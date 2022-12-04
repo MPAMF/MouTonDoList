@@ -4,7 +4,7 @@ namespace App\Application\Actions\TaskComments;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ViewTaskCommentAction extends TaskCommentAction
+class ReadTaskCommentAction extends TaskCommentAction
 {
 
     protected function action(): Response

@@ -4,7 +4,7 @@ namespace App\Application\Actions\Tasks;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ViewTaskAction extends TaskAction
+class ReadTaskAction extends TaskAction
 {
 
     protected function action(): Response
