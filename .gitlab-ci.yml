@@ -21,9 +21,9 @@ before_script:
 
 
 Tests:
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  only:
+    - merge_requests
+    - main
   allow_failure: false
   variables:
     XDEBUG_MODE: coverage

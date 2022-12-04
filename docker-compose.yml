@@ -42,4 +42,4 @@ services:
       - .:/var/www/html
     links:
       - db
-    command: bash -c "composer install && composer update && composer make-static && php-fpm"
+    command: bash -c "composer install && composer make-static && php-fpm"
