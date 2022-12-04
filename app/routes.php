@@ -63,21 +63,21 @@ return function (App $app) {
     $app->group('/actions', function (Group $group) {
         $group->group('/categories', function (Group $group) {
             $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
-            $group->get('', ReadCategoryAction::class)->setName('actions.categories.read');
+            $group->get('/{id}', ReadCategoryAction::class)->setName('actions.categories.read');
             $group->put('/{id}', UpdateCategoryAction::class)->setName('actions.categories.update');
             $group->delete('/{id}', DeleteCategoryAction::class)->setName('actions.categories.delete');
         });
 
         $group->group('/tasks', function (Group $group) {
             $group->post('', CreateTaskAction::class)->setName('actions.tasks.create');
-            $group->get('', ReadTaskAction::class)->setName('actions.tasks.read');
+            $group->get('/{id}', ReadTaskAction::class)->setName('actions.tasks.read');
             $group->put('/{id}', UpdateTaskAction::class)->setName('actions.tasks.update');
             $group->delete('/{id}', DeleteTaskAction::class)->setName('actions.tasks.delete');
         });
 
         $group->group('/comments', function (Group $group) {
             $group->post('', CreateTaskCommentAction::class)->setName('actions.comments.create');
-            $group->get('', ReadTaskCommentAction::class)->setName('actions.comments.read');
+            $group->get('/{id}', ReadTaskCommentAction::class)->setName('actions.comments.read');
             $group->put('/{id}', UpdateTaskCommentAction::class)->setName('actions.comments.update');
             $group->delete('/{id}', DeleteTaskCommentAction::class)->setName('actions.comments.delete');
         });

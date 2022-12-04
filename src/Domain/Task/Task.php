@@ -249,7 +249,7 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
             'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
             'name' => $this->name,
             'description' => $this->description,
-            'due_date' => $this->due_date,
+            'due_date' => $this->due_date->format('Y-m-d H:i:s'),
             'checked' => $this->checked,
             'position' => $this->position,
             'last_editor_id' => $this->last_editor_id,
@@ -313,7 +313,7 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
         $this->due_date = DateTime::createFromFormat('Y-m-d H:i:s', $data->due_date);
         $this->checked = boolval($data->checked);
         $this->position = intval($data->position);
-        $this->last_editor_id = isset($row->last_editor_id) ? intval($row->last_editor_id) : null;
-        $this->assigned_id = isset($row->assigned_id) ? intval($row->assigned_id) : null;
+        $this->last_editor_id = isset($data->last_editor_id) ? intval($data->last_editor_id) : null;
+        $this->assigned_id = isset($data->assigned_id) ? intval($data->assigned_id) : null;
     }
 }

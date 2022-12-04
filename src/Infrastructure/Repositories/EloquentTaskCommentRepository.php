@@ -66,7 +66,7 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
             $taskComment->task = null;
         } else {
             try {
-                $taskComment->task = $this->taskRepository->get($taskComment->task_id);
+                $taskComment->task = $this->taskRepository->get($taskComment->task_id, $with);
             } catch (TaskNotFoundException) {
                 $taskComment->task = null;
             }
