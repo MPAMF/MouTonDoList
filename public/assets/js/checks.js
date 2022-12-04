@@ -1,4 +1,4 @@
-const authModalSelectMemberStatusValues = ['READ', 'WRITE', 'OWN'];
+const authModalSelectMemberStatusValues = ['READ', 'WRITE'];
 const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 function checkSelectValuesOnSubmit(selectsName, errorId, authValues)

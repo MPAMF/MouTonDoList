@@ -17,7 +17,7 @@
             <select class="btn btn-sm btn-modal-select" aria-label="Membre assigné" required>
                 <option value="0" selected>Non assignée</option>
                 {% for member in category.members %}
-                    <option value="{{ member.id }}"> {{ member.username }}</option>
+                    <option value="{{ member.user.id }}"> {{ member.user.username }}</option>
                 {% endfor %}
             </select>
         </div>

@@ -110,13 +110,12 @@ function openEditModalCategory()
         content +=
             '<li class="list-group-item list-member">' +
                 '<div class="col py-1">' +
-                    '<label class="my-0 fw-normal">' + member.username + '</label>' +
+                    '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
                 '<div class="col py-1">' +
                     '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
-                        '<option value="READ">Lecteur</option>' +
-                        '<option value="WRITE">Editeur</option>' +
-                        '<option value="OWN">Propriétaire</option>' +
+                        '<option value="READ"' + (member.canEdit ? "selected" : "") + '>Lecteur</option>' +
+                        '<option value="WRITE"' + (member.canEdit ? "" : "selected") + '>Editeur</option>' +
                     '</select>' +
                 '</div>' +
                 '<div class="col py-1">' +
@@ -146,7 +145,6 @@ function openEditModalCategory()
         '                <select id="modal-member-select-new" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
         '                    <option value="READ">Lecteur</option>' +
         '                    <option value="WRITE">Editeur</option>' +
-        '                    <option value="OWN">Propriétaire</option>' +
         '                </select>' +
         '                <div id="error-memberStatusNew" class="invalid-feedback" role="alert"> Le statut indiqué n\'est pas valide. </div>' +
         '            </div>' +
@@ -214,7 +212,7 @@ function openEditModalTask(subCatId, taskId)
                     '<option value="0">Non assignée</option>';
 
     getCurrentCategoryMembers().forEach(function(member) {
-            content += '<option value="' + member.id + '">' + member.username + '</option>'
+            content += '<option value="' + member.user.id + '">' + member.user.username + '</option>'
     })
 
     content +=

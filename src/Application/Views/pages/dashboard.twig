@@ -12,6 +12,7 @@
         data.currentCategoryIdx = data.categories.findIndex(c => c.id === data.currentUserCategoryId)
         let temp = JSON.parse(`{{ category|json_encode|raw }}`)
         temp.members = JSON.parse(`{{ category.members|json_encode|raw }}`)
+        console.log(temp)
         data.categories[data.currentCategoryIdx] = temp
     </script>
     <script type="text/javascript" src="/assets/js/utils-category.js"></script>
