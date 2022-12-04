@@ -7,7 +7,8 @@
             currentUserCategoryId: {{ category.id }},
             currentCategoryId: {{ category.category.id }},
             currentCategoryIdx: 0,
-            canEdit: {{ canEdit|json_encode|raw }}
+            canEdit: {{ canEdit|json_encode|raw }},
+            id: {{ user.id }}
         }
         data.categories = data.categories.concat(JSON.parse(`{{ archivedCategories.values()|json_encode|raw }}`))
         data.currentCategoryIdx = data.categories.findIndex(c => c.id === data.currentUserCategoryId)

@@ -59,3 +59,6 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
     console.log("oldIndex :" + oldIndex)
     console.log("newIndex :" + newIndex)
 }
+
+function isCanEdit() { return data.canEdit }
+function isOwner() { return data.id === getCurrentCategory().owner_id}

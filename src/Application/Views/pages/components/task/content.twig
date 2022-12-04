@@ -14,7 +14,12 @@
             <small class="form-text text-muted" title="Description de la tâche">{{ task.description }}</small>
         </div>
     </div>
-    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
+    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="Actions de la tâche"
+        {% if (canEdit) %}
+            data-bs-popover="task-popover">
+        {% else %}
+            data-bs-popover="task-readonly-popover">
+        {% endif %}
         <span class="mdi mdi-dots-horizontal"></span>
     </a>
 </li>

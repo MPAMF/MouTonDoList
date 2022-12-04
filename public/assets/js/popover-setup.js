@@ -128,4 +128,19 @@ $(document).ready(function () {
                 '</div>'
         }
     })
+    $("[data-bs-popover=task-readonly-popover]").popover({
+        trigger: 'click',
+        placement: 'left',
+        customClass: 'popover',
+        offset: [0, 0],
+        html: true,
+        sanitize: false,
+        content: () => {
+            let idCat = $(this)[0].activeElement.parentElement.getAttribute('data-idCat').toString();
+            let idTask = $(this)[0].activeElement.parentElement.getAttribute('data-idTask').toString();
+            return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="openTaskDetails(' + idCat + ',' + idTask + ')"><span class="mdi mdi-application-outline"></span> Ouvrir le détail</button>' +
+                '</div>'
+        }
+    })
 })
