@@ -149,7 +149,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
-        return [
+        $result = [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'user' => isset($this->user) ? $this->user->jsonSerialize() : null,
@@ -158,6 +158,12 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
             'accepted' => $this->accepted,
             'can_edit' => $this->canEdit,
         ];
+
+        if(isset($this->members)) {
+            $result['members'] = $this->members;
+        }
+
+        return $result;
     }
 
     /**
@@ -183,6 +189,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
         $result = $this->jsonSerialize();
         unset($result['user']);
         unset($result['category']);
+        unset($result['members']);
         return $result;
     }
 }

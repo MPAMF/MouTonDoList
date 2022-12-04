@@ -2,8 +2,21 @@ function getCurrentCategoryMembers() {
     return data.categories[data.currentCategoryIdx].members
 }
 
+function getCategoryMembersById(catId) {
+    return getCategoryContainerById(catId).members
+}
+
 function getCurrentCategory() {
     return data.categories[data.currentCategoryIdx].category
+}
+
+function getCategoryContainerById(catId) {
+    let catIdx = data.categories.findIndex(c => c.category_id === catId)
+    return data.categories[catIdx]
+}
+
+function getCategoryById(catId) {
+    return getCategoryContainerById(catId).category
 }
 
 function getSubInCurrentById(subCatId) {
@@ -59,3 +72,9 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
     console.log("oldIndex :" + oldIndex)
     console.log("newIndex :" + newIndex)
 }
+
+function isCanEdit() { return data.canEdit }
+function isCanEditById(catId) { return getCategoryContainerById(catId).can_edit }
+
+function isOwner() { return data.id === getCurrentCategory().owner_id }
+function isOwnerById(catId) { return data.id === getCategoryById(catId).owner_id }

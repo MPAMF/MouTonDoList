@@ -20,7 +20,7 @@ $(document).ready(function () {
         content: () => {
             let id = $(this)[0].activeElement.getAttribute('data-id').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalCategory()"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>' +
@@ -125,6 +125,21 @@ $(document).ready(function () {
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-trash-can"></span> Supprimer la tâche</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-up-bold-outline"> Ajouter une tâche ci-dessus</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-arrow-down-bold-outline"> Ajouter une tâche ci-dessous</button>' +
+                '</div>'
+        }
+    })
+    $("[data-bs-popover=task-readonly-popover]").popover({
+        trigger: 'click',
+        placement: 'left',
+        customClass: 'popover',
+        offset: [0, 0],
+        html: true,
+        sanitize: false,
+        content: () => {
+            let idCat = $(this)[0].activeElement.parentElement.getAttribute('data-idCat').toString();
+            let idTask = $(this)[0].activeElement.parentElement.getAttribute('data-idTask').toString();
+            return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="openTaskDetails(' + idCat + ',' + idTask + ')"><span class="mdi mdi-application-outline"></span> Ouvrir le détail</button>' +
                 '</div>'
         }
     })

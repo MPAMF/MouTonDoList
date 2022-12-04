@@ -1,17 +1,15 @@
 <div class="accordion accordion-flush categories">
 
     <div class="category-title">
-        <h3 id="title" onclick="openEditModalCategory()">{{ category.category.name }}</h3>
+        <h3 id="title" onclick="openEditModalCategory({{ category.category.id }})">{{ category.category.name }}</h3>
         <div class="title-actions">
             <a data-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="Ouvre une liste d'actions pour une catégorie"
-                {% if (category.category.ownerId == user.id) and (category.category.archived) %}
+                {% if (canEdit) and (category.category.archived) %}
                     data-bs-popover="category-archive-popover">
-                {% elseif (category.category.ownerId == user.id) %}
+                {% elseif (canEdit) %}
                     data-bs-popover="category-popover">
-                {% elseif (category.category.archived) %}
-                    data-bs-popover="category-shared-readonly-popover">
                 {% else %}
-                    data-bs-popover="category-shared-popover">
+                    data-bs-popover="category-shared-readonly-popover">
                 {% endif %}
                 <span class="mdi mdi-24px mdi-dots-horizontal"></span>
             </a>

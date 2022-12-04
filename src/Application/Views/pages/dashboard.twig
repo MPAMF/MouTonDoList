@@ -6,20 +6,18 @@
             categories: JSON.parse(`{{ categories.values()|json_encode|raw }}`),
             currentUserCategoryId: {{ category.id }},
             currentCategoryId: {{ category.category.id }},
-            currentCategoryIdx: 0
+            currentCategoryIdx: 0,
+            canEdit: {{ canEdit|json_encode|raw }},
+            id: {{ user.id }}
         }
         data.categories = data.categories.concat(JSON.parse(`{{ archivedCategories.values()|json_encode|raw }}`))
         data.currentCategoryIdx = data.categories.findIndex(c => c.id === data.currentUserCategoryId)
-        let temp = JSON.parse(`{{ category|json_encode|raw }}`)
-        temp.members = JSON.parse(`{{ category.members|json_encode|raw }}`)
-        console.log(temp)
-        data.categories[data.currentCategoryIdx] = temp
+        console.log(data)
     </script>
     <script type="text/javascript" src="/assets/js/utils-category.js"></script>
     <script type="text/javascript" src="/assets/js/checks.js"></script>
     <script type="text/javascript" src="/assets/js/modal-init.js"></script>
     <script type="text/javascript" src="/assets/js/popover-init.js"></script>
-    <script type="text/javascript" src="/assets/js/repositories.js"></script>
 {% endblock %}
 
 {% block header %}

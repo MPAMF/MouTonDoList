@@ -1,9 +1,11 @@
 <li class="list-group-item task-view" data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}">
-    <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d'emplacement">
-        <span class="mdi mdi-18px mdi-drag"></span>
-    </button>
+    {% if (canEdit) %}
+        <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d'emplacement">
+            <span class="mdi mdi-18px mdi-drag"></span>
+        </button>
+    {% endif %}
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="true"' : '' }}">
+        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="true"' : '' }} {{ canEdit ? '' : 'disabled="true"' }}>
         <div class="task-view-info" id="taskViewInfo-{{ task.categoryId }}-{{ task.id }}" onclick="openTaskDetails({{ task.categoryId }},{{ task.id }})">
             <label class="form-check-label" title="Nom de la tâche">
                 {{ task.name }}
@@ -12,7 +14,12 @@
             <small class="form-text text-muted" title="Description de la tâche">{{ task.description }}</small>
         </div>
     </div>
-    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
+    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="Actions de la tâche"
+        {% if (canEdit) %}
+            data-bs-popover="task-popover">
+        {% else %}
+            data-bs-popover="task-readonly-popover">
+        {% endif %}
         <span class="mdi mdi-dots-horizontal"></span>
     </a>
 </li>
