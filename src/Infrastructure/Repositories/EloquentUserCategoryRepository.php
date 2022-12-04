@@ -162,7 +162,7 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
         foreach ($foundUserCategories as $userCategory) {
 
             try {
-                $users[] = $this->parseUserCategory($userCategory, $with)->getUser();
+                $users[] = $this->parseUserCategory($userCategory, $with);
             } catch (UserCategoryNotFoundException) {
                 // do nothing
             }
