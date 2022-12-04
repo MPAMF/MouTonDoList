@@ -6,11 +6,13 @@ namespace App\Domain\TaskComment;
 use App\Domain\Task\Task;
 use App\Domain\TimeStampedModel;
 use App\Domain\User\User;
+use App\Domain\ValidatorModel;
 use DateTime;
 use JsonSerializable;
+use Respect\Validation\Validator;
 use stdClass;
 
-class TaskComment extends TimeStampedModel implements JsonSerializable
+class TaskComment extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
     private ?int $id;
     private string $content;
@@ -130,11 +132,9 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
     {
         parent::fromRow($row);
         $this->id = $row->id;
-        $this->content = $row->content;
         $this->author = $row->author ?? null;
-        $this->author_id = $row->author_id ?? null;
-        $this->task_id = $row->task_id;
         $this->task = $row->task ?? null;
+        $this->fromValidator($row);
     }
 
     /**
@@ -147,4 +147,21 @@ class TaskComment extends TimeStampedModel implements JsonSerializable
         unset($result['task']);
         return $result;
     }
+
+    public static function getValidatorRules(): array
+    {
+        return [
+            'content' => Validator::stringType()->length(min: 1),
+            'author_id' => Validator::intType(),
+            'assigned_id' => Validator::intType()
+        ];
+    }
+
+    public function fromValidator(object|array $data)
+    {
+        $this->content = $data->content;
+        $this->author_id = isset($row->author_id) ? intval($row->author_id) : null;
+        $this->task_id = isset($row->task_id) ? intval($row->task_id) : null;
+    }
+
 }

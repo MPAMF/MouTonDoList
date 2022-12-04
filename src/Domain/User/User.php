@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace App\Domain\User;
 
 use App\Domain\TimeStampedModel;
+use App\Domain\ValidatorModel;
 use DateTime;
 use JsonSerializable;
+use Respect\Validation\Validator;
 use stdClass;
 
-class User extends TimeStampedModel implements JsonSerializable
+class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
     private ?int $id;
 
@@ -170,12 +172,8 @@ class User extends TimeStampedModel implements JsonSerializable
     {
         parent::fromRow($row);
         $this->id = $row->id;
-        $this->email = $row->email;
-        $this->username = $row->username;
         $this->password = $row->password;
-        $this->image_path = $row->image_path;
-        $this->theme = $row->theme;
-        $this->language = $row->language;
+        $this->fromValidator($row);
     }
 
     /**
@@ -186,5 +184,25 @@ class User extends TimeStampedModel implements JsonSerializable
         $row = $this->jsonSerialize();
         $row['password'] = $this->password;
         return $row;
+    }
+
+    public static function getValidatorRules(): array
+    {
+        return [
+            'email' => Validator::notBlank()->email()->length(0,254),
+            'username' => Validator::notBlank()->length(0,64),
+            'image_path' => Validator::url(),
+            'theme' => Validator::stringType()->length(max: 16),
+            'language' => Validator::stringType()->length(max: 16)
+        ];
+    }
+
+    public function fromValidator(object|array $data)
+    {
+        $this->email = $data->email;
+        $this->username = $data->username;
+        $this->image_path = $data->image_path;
+        $this->theme = $data->theme;
+        $this->language = $data->language;
     }
 }

@@ -5,8 +5,15 @@ namespace App\Domain;
 interface ValidatorModel
 {
 
+    /**
+     * @return array
+     */
     public static function getValidatorRules(): array;
 
-    public function fromValidator(array $data);
+    /**
+     * @param array|object $data
+     * @return mixed
+     */
+    public function fromValidator(array|object $data);
 
 }
