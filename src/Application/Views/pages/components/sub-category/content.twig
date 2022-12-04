@@ -20,7 +20,7 @@
     </h2>
     <div id="panelsStayOpen-collapse-{{ subCategory.id }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading-{{ subCategory.id }}">
         <div class="accordion-body">
-            <ul class="list-group list-group-flush tasks" data-sortable="tasks">
+            <ul class="list-group list-group-flush tasks" data-sortable="tasks" data-subcategory-id="{{ subCategory.id }}">
                 {% for task in tasks %}
                     {% include 'pages/components/task/content.twig' with { 'task' : task } %}
                 {% endfor %}

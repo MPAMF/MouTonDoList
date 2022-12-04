@@ -1,4 +1,4 @@
-<li class="list-group-item task-view">
+<li class="list-group-item task-view" data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}">
     <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d'emplacement">
         <span class="mdi mdi-18px mdi-drag"></span>
     </button>
@@ -12,7 +12,7 @@
             <small class="form-text text-muted" title="Description de la tâche">{{ task.description }}</small>
         </div>
     </div>
-    <a data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
+    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
         <span class="mdi mdi-dots-horizontal"></span>
     </a>
 </li>

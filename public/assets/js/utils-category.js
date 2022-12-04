@@ -45,3 +45,11 @@ function timeSince(date) {
     }
     return Math.floor(seconds) + " seconds";
 }
+
+function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
+    console.log("taskId :" + taskId)
+    console.log("oldCatId :" + oldSubCategoryId)
+    console.log("oldIndex :" + oldIndex)
+    console.log("newCatId :" + newSubCategoryId)
+    console.log("newIndex :" + newIndex)
+}
