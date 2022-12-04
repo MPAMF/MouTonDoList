@@ -1,9 +1,18 @@
 <div class="accordion accordion-flush categories">
 
     <div class="category-title">
-        <h3 id="title" onclick="openEditModalCategory({{ category.id }})">{{ category.category.name }}</h3>
+        <h3 id="title" onclick="openEditModalCategory()">{{ category.category.name }}</h3>
         <div class="title-actions">
-            <a data-id="{{ category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" data-bs-popover="category-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
+            <a data-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="Ouvre une liste d'actions pour une catégorie"
+                {% if (category.category.ownerId == user.id) and (category.category.archived) %}
+                    data-bs-popover="category-archive-popover">
+                {% elseif (category.category.ownerId == user.id) %}
+                    data-bs-popover="category-popover">
+                {% elseif (category.category.archived) %}
+                    data-bs-popover="category-shared-readonly-popover">
+                {% else %}
+                    data-bs-popover="category-shared-popover">
+                {% endif %}
                 <span class="mdi mdi-24px mdi-dots-horizontal"></span>
             </a>
         </div>
@@ -15,21 +24,13 @@
     </div>
 
     <div id="default-category-content" data-sortable="categories">
-        {% if (status != "exemple") %}
-
-            {% for subCatId in 0..2 %}
-                {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : subCatId } %}
-            {% endfor %}
-
-            {% for subCatId in 3..3 %}
-                {% include 'pages/components/sub-category/archive.twig' with { 'subCatId' : subCatId } %}
-            {% endfor %}
-
-        {% else %}
-
-            {% include 'pages/components/sub-category/content.twig' with { 'subCatId' : 0 , 'status' : 'default' } %}
-
-        {% endif %}
+        {% for subCategory in category.category.subCategories %}
+            {% if subCategory.archived %}
+                {% include 'pages/components/sub-category/archive.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
+            {% else %}
+                {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
+            {% endif %}
+        {% endfor %}
     </div>
 
 </div>

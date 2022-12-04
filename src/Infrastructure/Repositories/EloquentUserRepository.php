@@ -71,6 +71,7 @@ class EloquentUserRepository extends Repository implements UserRepository
     public function get($id, array|null $with = null): User
     {
         $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if (is_array($found)) $found = (object)$found;
         return $this->parseUser($found, $with);
     }
 

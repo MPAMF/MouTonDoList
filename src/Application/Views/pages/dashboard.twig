@@ -2,34 +2,20 @@
 
 {% block javascript_before %}
     <script type="text/javascript">
-        let i = 0
-
-        const task = []
-        {% for i in 0..4 %}
-        i = {{ i }};
-        task.push({
-            subId: 0,
-            taskId: i,
-            name: "name " + i,
-            description: "desc " + i,
-            checked: i % 2,
-            assigned: i % 2 ? "Any" : "None"
-        });
-        {% endfor %}
-
-        const sub = []
-        sub.push({
-            id: 0,
-            tasks: task,
-        });
-
-        const categories = []
-        categories.push({
-            id: parseInt("{{ category.id }}"),
-            name: "{{ category.name }}",
-            subs: sub,
-        })
+        const data = {
+            categories: JSON.parse(`{{ categories.values()|json_encode|raw }}`),
+            currentUserCategoryId: {{ category.id }},
+            currentCategoryId: {{ category.category.id }},
+            currentCategoryIdx: 0
+        }
+        data.categories = data.categories.concat(JSON.parse(`{{ archivedCategories.values()|json_encode|raw }}`))
+        data.currentCategoryIdx = data.categories.findIndex(c => c.id === data.currentUserCategoryId)
+        let temp = JSON.parse(`{{ category|json_encode|raw }}`)
+        temp.members = JSON.parse(`{{ category.members|json_encode|raw }}`)
+        console.log(temp)
+        data.categories[data.currentCategoryIdx] = temp
     </script>
+    <script type="text/javascript" src="/assets/js/utils-category.js"></script>
     <script type="text/javascript" src="/assets/js/checks.js"></script>
     <script type="text/javascript" src="/assets/js/modal-init.js"></script>
     <script type="text/javascript" src="/assets/js/popover-init.js"></script>
@@ -49,7 +35,7 @@
 {% endblock %}
 
 {% block javascript_after %}
-    <script type="text/javascript" src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+    <script type="text/javascript" src="/assets/js/Sortable.min.js"></script>
     <script type="text/javascript" src="/assets/js/popover-setup.js"></script>
     <script type="text/javascript" src="/assets/js/dragdrop-setup.js"></script>
     <script type="text/javascript" src="/assets/js/search.js"></script>

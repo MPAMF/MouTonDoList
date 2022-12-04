@@ -1,12 +1,12 @@
 <li class="list-group-item task-view">
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" disabled>
-        <div class="task-view-info" id="taskViewInfo-{{ subCatId }}-{{ taskId }}" data-bs-toggle="modal" data-bs-target="#taskModal-{{ subCatId }}-{{ taskId }}">
+        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" disabled {{ task.checked ? 'checked="1"' : '' }}>
+        <div class="task-view-info" id="taskViewInfo-{{ task.categoryId }}-{{ task.id }}" data-bs-toggle="modal" data-bs-target="#taskModal-{{ task.categoryId }}-{{ task.id }}">
             <label class="form-check-label" title="Nom de la tâche">
-                Nom de la tâche [{{ subCatId }}-{{ taskId }}]
+                {{ task.name }}
             </label>
-            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">@NOM Prénom</small>
-            <small class="form-text text-muted" title="Description de la tâche">Description</small>
+            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">{{ task.assigned }}</small>
+            <small class="form-text text-muted" title="Description de la tâche">{{ task.description }}</small>
         </div>
     </div>
     <button class="btn btn-sm btn-task-actions" type="button" title="Suppression de la tâche archivée">
