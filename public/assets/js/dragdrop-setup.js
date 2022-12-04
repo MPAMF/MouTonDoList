@@ -35,7 +35,11 @@ Array.prototype.forEach.call($("[data-sortable=categories]"), function(el) {
         onChoose: addGrabbing,
         onUnchoose: remoteGrabbing,
         onStart: addGrabbing,
-        onEnd: remoteGrabbing,
+        onEnd: function (e) {
+            remoteGrabbing()
+            let subCatId = e.item.getAttribute("data-idSubCat")
+            moveSubCategory(subCatId, e.oldIndex, e.newIndex)
+        },
         onMove: addGrabbing,
     })
 });
