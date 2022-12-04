@@ -32,6 +32,7 @@
 
   "TitreModalNav": "Données du compte",
   "CloseModalNav": "Fermer",
+  "AnnulationModalNav": "Annuler",
   "SaveModalNav": "Sauvegarder",
   "LabelThemeModalNav": "Cliquez sur le thème de votre choix :",
   "TitleNotifModalNav": "Centre de notification :",
@@ -46,9 +47,14 @@
   "NotifMoveToTaskModalNav": " Se déplacer vers la tâche",
   "NotifDeleteToTaskModalNav": " Supprimer la notification",
 
-  "PseudoAccount": "Pseudo",
-  "MailAccount": "E-amil",
+  "LabelAccount": "Vos informations :",
+  "PseudoAccount": "Pseudo : ",
+  "MailAccount": "E-mail : ",
   "PasswordAccount": "Mot de passe",
+  "ModificationPasswordAccount": "Modifier le mot de passe",
+  "LastPasswordAccount": "Mot de passe actuel",
+  "NewPasswordAccount": "Nouveau mot de passe",
+  "ConfPasswordAccount": "Confirmer le nouveau mot de passe",
 
   "AuthUserNotFoundError": "Votre utilisateur n'a pas été trouvé, veuillez vous reconnecter.",
   "AuthUserNotConnected": "Veuillez vous connecter pour accéder à cette page.",
