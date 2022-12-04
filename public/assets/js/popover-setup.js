@@ -18,7 +18,7 @@ $(document).ready(function () {
         html: true,
         sanitize: false,
         content: () => {
-            let id = $(this)[0].activeElement.parentElement.getAttribute('data-id').toString();
+            let id = $(this)[0].activeElement.getAttribute('data-id').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
                 '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalCategory()"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
@@ -37,7 +37,7 @@ $(document).ready(function () {
         html: true,
         sanitize: false,
         content: () => {
-            let id = $(this)[0].activeElement.parentElement.getAttribute('data-id').toString();
+            let id = $(this)[0].activeElement.getAttribute('data-id').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
