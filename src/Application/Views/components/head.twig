@@ -14,18 +14,17 @@
 <script type="text/javascript">
     $(document).ready(() => {
         $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-
             let allowedMethod = ["post", "put", "delete"];
 
             if (allowedMethod.includes(options.type.toLowerCase())) {
-                // initialize `data` to empty string if it does not exist
-                options.data = options.data || "";
+                let newData = options.data
+                if(!newData) newData = {};
 
-                // add leading ampersand if `data` is non-empty
-                options.data += options.data ? "&" : "";
+                newData['{{ csrf.keys.name }}'] = '{{ csrf.name }}'
+                newData['{{ csrf.keys.value }}'] = '{{ csrf.value}}'
 
-                // add _token entry
-                options.data += "{{ csrf.keys.name }}={{ csrf.name }}&{{ csrf.keys.value }}={{ csrf.value|url_encode()}}";
+                options.data = JSON.stringify(newData)
+                console.log(options)
             }
         });
     });
