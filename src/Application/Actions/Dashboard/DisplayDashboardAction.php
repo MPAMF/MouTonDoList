@@ -84,13 +84,14 @@ class DisplayDashboardAction extends Action
 
         // Filter categories: archives / normal
         // TODO: utile de faire deux collections?
+        $categories->each(function (UserCategory $a) {
+            $a->members = $this->userCategoryRepository->getUsers($a->getCategoryId());
+        });
         $archivedCategories = $categories->filter(fn(UserCategory $a) => $a->getCategory()->isArchived());
         $categories = $categories->filter(fn(UserCategory $a) => !$a->getCategory()->isArchived());
 
-        // Get members of category
-        $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
-
         // Get current member
+        $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
         $canEdit = $category->getCategory()->getOwnerId() == $this->user()->getId() || collect($category->members)->contains(fn(UserCategory $a) => $a->getUserId() == $this->user()->getId() && $a->isCanEdit());
 
         return $this->respondWithView('pages/dashboard.twig', [

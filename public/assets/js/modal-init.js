@@ -80,9 +80,9 @@ function openTaskDetails(subCatId, taskId)
     modal.show(document)
 }
 
-function openEditModalCategory()
+function openEditModalCategory(catId)
 {
-    let category = getCurrentCategory()
+    let category = getCategoryById(catId)
 
     // get from categories where id=id
     $("#modal-title").html('Modifier le projet')
@@ -92,7 +92,7 @@ function openEditModalCategory()
 
     let content = '<form class="row g-3 form-check">'
 
-    if(isCanEdit())
+    if(isCanEditById(catId))
     {
         content +=
             '<div class="col-12">' +
@@ -112,7 +112,7 @@ function openEditModalCategory()
                 '<label for="modal-checkbox-task">Masquer les tâches effectuées</label>' +
             '</div>'
 
-    if(isOwner()) {
+    if(isOwnerById(catId)) {
         content +=
             '<div class="accordion accordion-flush">' +
             '<div class="accordion-item accordion-item-tasks">' +
@@ -125,7 +125,7 @@ function openEditModalCategory()
             '<div class="accordion-body">' +
             '<ul class="list-group list-group-flush tasks">';
 
-        getCurrentCategoryMembers().forEach(function(member) {
+        getCategoryMembersById(catId).forEach(function(member) {
             content +=
                 '<li class="list-group-item list-member">' +
                 '<div class="col py-1">' +

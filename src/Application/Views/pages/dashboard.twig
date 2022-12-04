@@ -12,9 +12,7 @@
         }
         data.categories = data.categories.concat(JSON.parse(`{{ archivedCategories.values()|json_encode|raw }}`))
         data.currentCategoryIdx = data.categories.findIndex(c => c.id === data.currentUserCategoryId)
-        let temp = JSON.parse(`{{ category|json_encode|raw }}`)
-        temp.members = JSON.parse(`{{ category.members|json_encode|raw }}`)
-        data.categories[data.currentCategoryIdx] = temp
+        console.log(data)
     </script>
     <script type="text/javascript" src="/assets/js/utils-category.js"></script>
     <script type="text/javascript" src="/assets/js/checks.js"></script>
