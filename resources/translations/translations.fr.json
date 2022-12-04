@@ -18,7 +18,7 @@
 
   "SignInPage": "SingInMouton",
   "FormSignInTitle": "Créez votre compte",
-  "FormPseudo": "Votre pseudonyme",
+  "FormUsername": "Votre pseudonyme",
   "FormConfPwd": "Confirmez votre mot de passe",
   "FormCGV": "J'accepte les conditions générales de ventes.",
 
