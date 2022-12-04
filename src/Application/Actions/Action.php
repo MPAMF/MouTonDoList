@@ -7,6 +7,7 @@ use App\Application\Handlers\FlashMessageHandler;
 use App\Application\Handlers\RedirectHandler;
 use App\Domain\DomainException\DomainRecordNotFoundException;
 use App\Domain\User\User;
+use Exception;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -48,7 +49,8 @@ abstract class Action
         Messages                 $messages,
         TranslatorInterface      $translator,
         ValidatorInterface       $validator
-    ) {
+    )
+    {
         $this->logger = $logger;
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
@@ -112,20 +114,6 @@ abstract class Action
     }
 
     /**
-     * @param string $viewPath
-     * @param object|array|null $data
-     * @return Response
-     */
-    protected function respondWithView(string $viewPath, object|array $data = null): Response
-    {
-        try {
-            return $this->twig->render($this->response, $viewPath, $data);
-        } catch (\Exception $e) {
-            throw new HttpInternalServerErrorException($this->request, $e->getMessage());
-        }
-    }
-
-    /**
      * @param ActionPayload $payload
      * @return Response
      */
@@ -137,6 +125,20 @@ abstract class Action
         return $this->response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus($payload->getStatusCode());
+    }
+
+    /**
+     * @param string $viewPath
+     * @param object|array|null $data
+     * @return Response
+     */
+    protected function respondWithView(string $viewPath, object|array $data = null): Response
+    {
+        try {
+            return $this->twig->render($this->response, $viewPath, $data);
+        } catch (Exception $e) {
+            throw new HttpInternalServerErrorException($this->request, $e->getMessage());
+        }
     }
 
     /**

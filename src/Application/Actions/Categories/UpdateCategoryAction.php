@@ -2,13 +2,8 @@
 
 namespace App\Application\Actions\Categories;
 
-use App\Domain\Category\CategoryNotFoundException;
-use App\Domain\Category\CategoryRepository;
-use App\Domain\UserCategory\UserCategoryRepository;
-use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
-use Slim\Exception\HttpForbiddenException;
 
 class UpdateCategoryAction extends CategoryAction
 {

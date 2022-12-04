@@ -2,11 +2,6 @@
 
 namespace App\Application\Actions\Tasks;
 
-use App\Domain\Category\CategoryNotFoundException;
-use App\Domain\Category\CategoryRepository;
-use App\Domain\Task\Task;
-use App\Domain\UserCategory\UserCategoryRepository;
-use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;

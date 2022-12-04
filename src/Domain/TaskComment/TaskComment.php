@@ -111,6 +111,22 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
         $this->author_id = $author_id;
     }
 
+    /**
+     * @return int|null
+     */
+    public function getAuthorId(): ?int
+    {
+        return $this->author_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTaskId(): int
+    {
+        return $this->task_id;
+    }
+
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
@@ -160,8 +176,8 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
     public function fromValidator(object|array $data)
     {
         $this->content = $data->content;
-        $this->author_id = isset($row->author_id) ? intval($row->author_id) : null;
-        $this->task_id = isset($row->task_id) ? intval($row->task_id) : null;
+        $this->author_id = isset($data->author_id) ? intval($data->author_id) : null;
+        $this->task_id = isset($data->task_id) ? intval($data->task_id) : null;
     }
 
 }

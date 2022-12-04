@@ -9,7 +9,7 @@ class ViewTaskAction extends TaskAction
 
     protected function action(): Response
     {
-        $category = $this->getTaskWithPermissionCheck(checkCanEdit: false);
-        return $this->respondWithData($category);
+        $task = $this->getTaskWithPermissionCheck(checkCanEdit: false);
+        return $this->respondWithData($task);
     }
 }
