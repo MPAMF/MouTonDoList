@@ -24,6 +24,7 @@
 
   "InputSearchNav": "Recherche",
   "BtnNotif": "Notification",
+  "DropDownAccount": "Compte",
   "DropDownParameters": "Paramètres",
   "DropDownDisconnectNav": "Déconnexion",
   "DropDownThemeNav": "Thèmes",
@@ -38,11 +39,16 @@
   "LightModalNav": "Clair",
   "DarkModalNav": "Sombre",
   "ParamLiModalNav": "Paramètres",
+  "UserLiModalNav": "Compte",
   "GeneralLiModalNav": "Général",
   "ThemeLiModalNav": "Thèmes",
   "NotifLiModalNav": "Notifications",
   "NotifMoveToTaskModalNav": " Se déplacer vers la tâche",
   "NotifDeleteToTaskModalNav": " Supprimer la notification",
+
+  "PseudoAccount": "Pseudo",
+  "MailAccount": "E-amil",
+  "PasswordAccount": "Mot de passe",
 
   "AuthUserNotFoundError": "Votre utilisateur n'a pas été trouvé, veuillez vous reconnecter.",
   "AuthUserNotConnected": "Veuillez vous connecter pour accéder à cette page.",
