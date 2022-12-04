@@ -5,12 +5,13 @@ namespace App\Domain\Category;
 
 use App\Domain\TimeStampedModel;
 use App\Domain\User\User;
+use App\Domain\ValidatorModel;
 use DateTime;
 use JsonSerializable;
 use stdClass;
 use Respect\Validation\Validator;
 
-class Category extends TimeStampedModel implements JsonSerializable
+class Category extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
 
     private ?int $id;
@@ -189,7 +190,7 @@ class Category extends TimeStampedModel implements JsonSerializable
 
         $result = [
             'id' => $this->id,
-            'owner' => isset($this->owner)  ? $this->owner->jsonSerialize() : null,
+            'owner' => isset($this->owner) ? $this->owner->jsonSerialize() : null,
             'owner_id' => $this->owner_id,
             'parent_category' => isset($this->parentCategory) ? $this->parentCategory->jsonSerialize() : null,
             'parent_category_id' => $this->parent_category_id,
@@ -199,13 +200,11 @@ class Category extends TimeStampedModel implements JsonSerializable
             'archived' => $this->archived
         ];
 
-        if(isset($this->subCategories))
-        {
+        if (isset($this->subCategories)) {
             $result['subCategories'] = $this->subCategories;
         }
 
-        if(isset($this->tasks))
-        {
+        if (isset($this->tasks)) {
             $result['tasks'] = $this->tasks;
         }
 
@@ -227,6 +226,7 @@ class Category extends TimeStampedModel implements JsonSerializable
         $this->color = $row->color;
         $this->position = $row->position;
         $this->archived = boolval($row->archived);
+        $this->fromValidator($row);
     }
 
     /**
@@ -242,4 +242,23 @@ class Category extends TimeStampedModel implements JsonSerializable
         return $row;
     }
 
+    public static function getValidatorRules(): array
+    {
+        return [
+            'archived' => Validator::boolVal(),
+            'position' => Validator::intType(), // limit
+            'name' => Validator::notEmpty()->stringType()->length(min: 3, max: 63),
+            'color' => Validator::notEmpty()->stringType()->length(max: 15),
+            'parent_category_id' => Validator::oneOf(Validator::nullType(), Validator::intType())
+        ];
+    }
+
+    public function fromValidator(array|object $data)
+    {
+        $this->name = $data->name;
+        $this->color = $data->color;
+        $this->parent_category_id = isset($row->parent_category_id) ? intval($data->parent_category_id) : null;
+        $this->position = intval($data->position);
+        $this->archived = boolval($data->archived);
+    }
 }

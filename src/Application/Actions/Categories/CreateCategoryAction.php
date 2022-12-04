@@ -20,16 +20,20 @@ class CreateCategoryAction extends CategoryAction
      */
     protected function action(): Response
     {
-        $data = $this->validate();
+        $data = $this->getFormData();
+        $category = new Category();
+
+        $validator = $this->validator->validate($data, $category->getValidatorRules());
+
+        if (!$validator->isValid()) {
+            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
+        }
+
+        $data = $validator->getValues();
 
         $userId = $this->user()->getId();
         //
-        $category = new Category();
-        $category->setArchived($data->archived);
-        $category->setColor($data->color);
-        $category->setName($data->name);
-        $category->setPosition($data->position);
-        $category->setParentCategoryId($data->parent_category_id);
+        $category->fromValidator($data);
 
         $parent = $category->getParentCategoryId() == null;
 

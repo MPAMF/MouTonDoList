@@ -18,14 +18,21 @@ class UpdateCategoryAction extends CategoryAction
      */
     protected function action(): Response
     {
-        $data = $this->validate();
+        $data = $this->getFormData();
         $category = $this->getCategoryWithPermissionCheck();
 
-        // replace values
-        $category->setArchived($data->archived);
-        $category->setColor($data->color);
-        $category->setName($data->name);
-        $category->setPosition($data->position);
+        $validator = $this->validator->validate($data, $category->getValidatorRules());
+
+        if (!$validator->isValid()) {
+            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
+        }
+
+        $data = $validator->getValues();
+
+        // cannot change parent_category_id
+        $data->parent_category_id = $category->getParentCategoryId();
+
+        $category->fromValidator($data);
 
         // Useless to check if something was deleted
         if (!$this->categoryRepository->save($category)) {
