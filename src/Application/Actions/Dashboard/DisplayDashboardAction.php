@@ -90,11 +90,17 @@ class DisplayDashboardAction extends Action
         // Get members of category
         $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
 
+        // Get current member
+        $member = collect($category->members)->filter(fn(UserCategory $a) => $a->getUserId() == $this->user()->getId());
+        $canEdit = $member[0]->isCanEdit();
+        $canEdit = false;
+
         return $this->respondWithView('pages/dashboard.twig', [
             'category' => $category,
             'categories' => $categories,
             'archivedCategories' => $archivedCategories,
-            'user' => $this->user()
+            'user' => $this->user(),
+            'canEdit' => $canEdit
         ]);
     }
 }
