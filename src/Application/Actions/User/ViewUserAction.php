@@ -12,7 +12,7 @@ class ViewUserAction extends UserAction
      */
     protected function action(): Response
     {
-        $userId = (int) $this->resolveArg('id');
+        $userId = (int)$this->resolveArg('id');
         $user = $this->categoryRepository->getCategories($userId);
 
         $this->logger->info("User of id `${userId}` was viewed.");

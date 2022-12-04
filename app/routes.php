@@ -8,10 +8,16 @@ use App\Application\Actions\Auth\Register\DisplayRegisterAction;
 use App\Application\Actions\Auth\Register\RegisterAction;
 use App\Application\Actions\Categories\CreateCategoryAction;
 use App\Application\Actions\Categories\DeleteCategoryAction;
+use App\Application\Actions\Categories\ReadCategoryAction;
 use App\Application\Actions\Categories\UpdateCategoryAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
+use App\Application\Actions\TaskComments\CreateTaskCommentAction;
+use App\Application\Actions\TaskComments\DeleteTaskCommentAction;
+use App\Application\Actions\TaskComments\ReadTaskCommentAction;
+use App\Application\Actions\TaskComments\UpdateTaskCommentAction;
 use App\Application\Actions\Tasks\CreateTaskAction;
 use App\Application\Actions\Tasks\DeleteTaskAction;
+use App\Application\Actions\Tasks\ReadTaskAction;
 use App\Application\Actions\Tasks\UpdateTaskAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
@@ -41,7 +47,7 @@ return function (App $app) {
         $group->post('/register', RegisterAction::class);
     })->add(UserDisconnectedMiddleware::class);
 
-    $app->group('/account', function (Group $group){
+    $app->group('/account', function (Group $group) {
         $group->post('/logout', LogoutAction::class)->setName('account.logout');
     })->add(UserConnectedMiddleware::class);
 
@@ -57,14 +63,23 @@ return function (App $app) {
     $app->group('/actions', function (Group $group) {
         $group->group('/categories', function (Group $group) {
             $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
+            $group->get('', ReadCategoryAction::class)->setName('actions.categories.read');
             $group->put('/{id}', UpdateCategoryAction::class)->setName('actions.categories.update');
             $group->delete('/{id}', DeleteCategoryAction::class)->setName('actions.categories.delete');
         });
 
         $group->group('/tasks', function (Group $group) {
             $group->post('', CreateTaskAction::class)->setName('actions.tasks.create');
+            $group->get('', ReadTaskAction::class)->setName('actions.tasks.read');
             $group->put('/{id}', UpdateTaskAction::class)->setName('actions.tasks.update');
             $group->delete('/{id}', DeleteTaskAction::class)->setName('actions.tasks.delete');
+        });
+
+        $group->group('/comments', function (Group $group) {
+            $group->post('', CreateTaskCommentAction::class)->setName('actions.comments.create');
+            $group->get('', ReadTaskCommentAction::class)->setName('actions.comments.read');
+            $group->put('/{id}', UpdateTaskCommentAction::class)->setName('actions.comments.update');
+            $group->delete('/{id}', DeleteTaskCommentAction::class)->setName('actions.comments.delete');
         });
     })->add(UserConnectedMiddleware::class);
 };

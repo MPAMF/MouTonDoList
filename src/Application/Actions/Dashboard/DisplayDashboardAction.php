@@ -39,20 +39,6 @@ class DisplayDashboardAction extends Action
      */
     private TaskCommentRepository $taskCommentRepository;
 
-    private function getArgsCategory(Collection $categories): ?UserCategory
-    {
-        if (!array_key_exists('id', $this->args))
-            return null;
-
-        $id = intval($this->args['id']);
-
-        if ($id > 0) {
-            return $categories->filter(fn(UserCategory $a) => $a->getCategory()->getId() == $id)->first();
-        }
-
-        return null;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -96,5 +82,19 @@ class DisplayDashboardAction extends Action
             'archivedCategories' => $archivedCategories,
             'user' => $this->user()
         ]);
+    }
+
+    private function getArgsCategory(Collection $categories): ?UserCategory
+    {
+        if (!array_key_exists('id', $this->args))
+            return null;
+
+        $id = intval($this->args['id']);
+
+        if ($id > 0) {
+            return $categories->filter(fn(UserCategory $a) => $a->getCategory()->getId() == $id)->first();
+        }
+
+        return null;
     }
 }

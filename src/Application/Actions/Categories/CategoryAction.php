@@ -7,7 +7,6 @@ use App\Domain\Category\Category;
 use App\Domain\Category\CategoryNotFoundException;
 use App\Domain\Category\CategoryRepository;
 use App\Domain\UserCategory\UserCategoryRepository;
-use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 

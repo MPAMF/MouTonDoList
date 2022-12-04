@@ -16,11 +16,12 @@ abstract class UserAction extends Action
     protected CategoryRepository $categoryRepository;
 
     public function __construct(
-        LoggerInterface $logger,
-        UserRepository $userRepository,
-        TaskRepository $tempRepo,
+        LoggerInterface    $logger,
+        UserRepository     $userRepository,
+        TaskRepository     $tempRepo,
         CategoryRepository $categoryRepository
-    ) {
+    )
+    {
         parent::__construct($logger);
         $this->userRepository = $userRepository;
         $this->tempRepo = $tempRepo;

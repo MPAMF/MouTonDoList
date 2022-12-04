@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\Actions\Categories;
+namespace App\Application\Actions\TaskComments;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-class DeleteCategoryAction extends CategoryAction
+class DeleteTaskCommentAction extends TaskCommentAction
 {
 
     /**
@@ -12,9 +12,9 @@ class DeleteCategoryAction extends CategoryAction
      */
     protected function action(): Response
     {
-        $category = $this->getCategoryWithPermissionCheck();
+        $task = $this->getTaskCommentWithPermissionCheck();
         // Useless to check if something was deleted
-        $this->categoryRepository->delete($category);
+        $this->taskCommentRepository->delete($task);
 
         return $this->respondWithData(null, 204);
     }

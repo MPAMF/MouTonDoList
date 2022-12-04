@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Application\Actions\Tasks;
+namespace App\Application\Actions\TaskComments;
 
 use App\Application\Actions\Action;
 use App\Domain\Category\CategoryRepository;
-use App\Domain\Task\Task;
-use App\Domain\Task\TaskNotFoundException;
 use App\Domain\Task\TaskRepository;
+use App\Domain\TaskComment\TaskComment;
+use App\Domain\TaskComment\TaskCommentNotFoundException;
+use App\Domain\TaskComment\TaskCommentRepository;
 use App\Domain\UserCategory\UserCategoryRepository;
+use DI\Annotation\Inject;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 
-abstract class TaskAction extends Action
+abstract class TaskCommentAction extends Action
 {
 
     /**
@@ -30,37 +32,41 @@ abstract class TaskAction extends Action
      */
     protected UserCategoryRepository $userCategoryRepository;
 
+    /**
+     * @Inject
+     * @var TaskCommentRepository
+     */
+    protected TaskCommentRepository $taskCommentRepository;
+
 
     /**
      * @param bool $checkCanEdit
      * @param array|null $with
-     * @return Task
+     * @return TaskComment
      */
-    protected function getTaskWithPermissionCheck(bool $checkCanEdit = true, array|null $with = null): Task
+    protected function getTaskCommentWithPermissionCheck(bool $checkCanEdit = true, array|null $with = null): TaskComment
     {
-        $taskId = (int)$this->resolveArg('id');
+        $taskCommentId = (int)$this->resolveArg('id');
 
         if (!isset($with)) {
-            $with = ['category'];
+            $with = ['category', 'task'];
         } else if (!array_key_exists('category', $with)) {
             $with[] = 'category';
+        } else if (!array_key_exists('task', $with)) {
+            $with[] = 'task';
         }
 
         try {
-            $task = $this->taskRepository->get($taskId, $with);
-        } catch (TaskNotFoundException $e) {
+            $taskComment = $this->taskCommentRepository->get($taskCommentId, $with);
+        } catch (TaskCommentNotFoundException $e) {
             throw new HttpBadRequestException($this->request, $e->getMessage());
         }
 
-        if ($task->getCategory() == null) {
-            throw new HttpBadRequestException($this->request, $this->translator->trans('CategoryNotFoundException'));
-        }
-
-        $categoryId = $task->getCategory()->getParentCategoryId();
-
-        if ($categoryId == null) {
+        if ($taskComment->getTask() == null || $taskComment->getTask()->getCategory() == null) {
             throw new HttpBadRequestException($this->request, $this->translator->trans('TaskNotFoundException'));
         }
+
+        $categoryId = $taskComment->getTask()->getCategory()->getParentCategoryId();
 
         if ($checkCanEdit) {
             if (!$this->userCategoryRepository->exists(null, categoryId: $categoryId,
@@ -74,6 +80,6 @@ abstract class TaskAction extends Action
             }
         }
 
-        return $task;
+        return $taskComment;
     }
 }
