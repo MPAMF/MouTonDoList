@@ -138,7 +138,7 @@
 <script>
     let lastPage = "";
 
-    function setActiveModal(newPage){
+    function closePopover(){
         let element = document.getElementById('notif-popover-' + idCat + '-' + idTask);
         if(element !== null) {
             let parent = element.parentElement;
@@ -149,6 +149,10 @@
                 }
             }
         }
+    }
+
+    function setActiveModal(newPage){
+        closePopover();
         if(lastPage !== ""){
             $('#'+lastPage).removeClass("active")
         }
@@ -248,16 +252,22 @@
                 return `
                 <div class="btn-group-vertical" id="notif-popover-` + idCat + `-` + idTask +`" role="group" aria-label="Vertical button group">
                     <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(`+ idCat +`,`+ idTask +`)">
-                    <span class="mdi mdi-archive-outline"></span>` + moveTrad +`</button>
-                    <button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-trash-can"></span> `+ deleteTrad +` </button>
+                            <span class="mdi mdi-archive-outline"></span>` + moveTrad +`</button>
+                    <button type="button" class="btn btn-sm btn-popover" onclick="deleteNotification(`+ idCat +`,`+ idTask +`)">
+                            <span class="mdi mdi-trash-can"></span> `+ deleteTrad +` </button>
                 </div>`;
             }
         })
     }
 
     function moveToSubCategory(subCatId, taskId){
-        if((idCat === "")||(idTask === "")) return;
         let element = document.getElementById('taskViewInfo-' + subCatId + '-' + taskId);
         element.scrollIntoView({block:"center"});
     }
+
+    function deleteNotification(subCatId, taskId){
+        $('#notif-' + subCatId + '-' + taskId).remove();
+        closePopover();
+    }
+
 </script>
