@@ -33,6 +33,7 @@
     <script type="text/javascript" src="/assets/js/checks.js"></script>
     <script type="text/javascript" src="/assets/js/modal-init.js"></script>
     <script type="text/javascript" src="/assets/js/popover-init.js"></script>
+    <script type="text/javascript" src="/assets/js/repositories.js"></script>
 {% endblock %}
 
 {% block header %}
@@ -40,6 +41,7 @@
 {% endblock %}
 
 {% block main %}
+    {% include 'components/tests.twig' %}
     {% include 'pages/components/content.twig' %}
     {% include 'components/modal.twig' %}
 {% endblock %}
