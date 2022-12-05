@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Domain\Task;
+namespace App\Domain\Repositories;
 
-use App\Domain\Category\Category;
+use App\Domain\Models\Category\Category;
+use App\Domain\Models\Task\Task;
+use App\Domain\Models\Task\TaskNotFoundException;
 
 interface TaskRepository
 {

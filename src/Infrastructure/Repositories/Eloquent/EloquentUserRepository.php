@@ -1,15 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Infrastructure\Repositories;
+namespace App\Infrastructure\Repositories\Eloquent;
 
 use App\Domain\DbCacheInterface;
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
-use App\Domain\User\UserRepository;
-use DI\Annotation\Inject;
+use App\Domain\Models\User\User;
+use App\Domain\Models\User\UserNotFoundException;
+use App\Domain\Repositories\UserRepository;
+use App\Infrastructure\Repositories\Repository;
 use Exception;
-use Illuminate\Database\DatabaseManager;
 use stdClass;
 
 class EloquentUserRepository extends Repository implements UserRepository

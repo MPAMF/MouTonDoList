@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\UserCategory;
+namespace App\Domain\Repositories;
 
-use App\Domain\Category\Category;
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
+use App\Domain\Models\Category\Category;
+use App\Domain\Models\User\User;
+use App\Domain\Models\UserCategory\UserCategory;
+use App\Domain\Models\UserCategory\UserCategoryNotFoundException;
 
 interface UserCategoryRepository
 {

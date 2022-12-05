@@ -3,10 +3,10 @@
 namespace App\Infrastructure\Security;
 
 use App\Domain\Auth\AuthInterface;
+use App\Domain\Models\User\User;
+use App\Domain\Models\User\UserNotFoundException;
+use App\Domain\Repositories\UserRepository;
 use App\Domain\Settings\SettingsInterface;
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
-use App\Domain\User\UserRepository;
 use App\Infrastructure\Lib\Session;
 
 class AuthImpl implements AuthInterface

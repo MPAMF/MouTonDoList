@@ -2,9 +2,9 @@
 
 namespace App\Application\Actions\Categories;
 
-use App\Domain\Category\Category;
-use App\Domain\Category\CategoryNotFoundException;
-use App\Domain\UserCategory\UserCategory;
+use App\Domain\Models\Category\Category;
+use App\Domain\Models\Category\CategoryNotFoundException;
+use App\Domain\Models\UserCategory\UserCategory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;

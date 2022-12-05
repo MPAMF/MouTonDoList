@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\TaskComment;
+namespace App\Domain\Models\TaskComment;
 
 use App\Domain\DomainException\DomainRecordNotFoundException;
 

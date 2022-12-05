@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Infrastructure\Repositories;
+namespace App\Infrastructure\Repositories\Eloquent;
 
 use App\Domain\DbCacheInterface;
-use App\Domain\Task\TaskNotFoundException;
-use App\Domain\Task\TaskRepository;
-use App\Domain\TaskComment\TaskComment;
-use App\Domain\TaskComment\TaskCommentNotFoundException;
-use App\Domain\TaskComment\TaskCommentRepository;
-use App\Domain\User\UserNotFoundException;
-use App\Domain\User\UserRepository;
-use DI\Annotation\Inject;
+use App\Domain\Models\Task\TaskNotFoundException;
+use App\Domain\Models\TaskComment\TaskComment;
+use App\Domain\Models\TaskComment\TaskCommentNotFoundException;
+use App\Domain\Models\User\UserNotFoundException;
+use App\Domain\Repositories\TaskCommentRepository;
+use App\Domain\Repositories\TaskRepository;
+use App\Domain\Repositories\UserRepository;
+use App\Infrastructure\Repositories\Repository;
 use Exception;
 use stdClass;
 

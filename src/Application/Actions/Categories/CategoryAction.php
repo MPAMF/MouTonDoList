@@ -3,10 +3,10 @@
 namespace App\Application\Actions\Categories;
 
 use App\Application\Actions\Action;
-use App\Domain\Category\Category;
-use App\Domain\Category\CategoryNotFoundException;
-use App\Domain\Category\CategoryRepository;
-use App\Domain\UserCategory\UserCategoryRepository;
+use App\Domain\Models\Category\Category;
+use App\Domain\Models\Category\CategoryNotFoundException;
+use App\Domain\Repositories\CategoryRepository;
+use App\Domain\Repositories\UserCategoryRepository;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 

@@ -2,8 +2,8 @@
 
 namespace App\Application\Actions\TaskComments;
 
-use App\Domain\Task\TaskNotFoundException;
-use App\Domain\TaskComment\TaskComment;
+use App\Domain\Models\Task\TaskNotFoundException;
+use App\Domain\Models\TaskComment\TaskComment;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;

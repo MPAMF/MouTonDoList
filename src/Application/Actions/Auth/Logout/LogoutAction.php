@@ -3,7 +3,7 @@
 namespace App\Application\Actions\Auth\Logout;
 
 use App\Application\Actions\Auth\AuthAction;
-use App\Domain\User\UserNotFoundException;
+use App\Domain\Models\User\UserNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class LogoutAction extends AuthAction

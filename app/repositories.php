@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-use App\Domain\Category\CategoryRepository;
-use App\Domain\Task\TaskRepository;
-use App\Domain\TaskComment\TaskCommentRepository;
-use App\Domain\User\UserRepository;
-use App\Domain\UserCategory\UserCategoryRepository;
-use App\Infrastructure\Repositories\EloquentCategoryRepository;
-use App\Infrastructure\Repositories\EloquentTaskCommentRepository;
-use App\Infrastructure\Repositories\EloquentTaskRepository;
-use App\Infrastructure\Repositories\EloquentUserCategoryRepository;
-use App\Infrastructure\Repositories\EloquentUserRepository;
+use App\Domain\Repositories\CategoryRepository;
+use App\Domain\Repositories\TaskCommentRepository;
+use App\Domain\Repositories\TaskRepository;
+use App\Domain\Repositories\UserCategoryRepository;
+use App\Domain\Repositories\UserRepository;
+use App\Infrastructure\Repositories\Eloquent\EloquentCategoryRepository;
+use App\Infrastructure\Repositories\Eloquent\EloquentTaskCommentRepository;
+use App\Infrastructure\Repositories\Eloquent\EloquentTaskRepository;
+use App\Infrastructure\Repositories\Eloquent\EloquentUserCategoryRepository;
+use App\Infrastructure\Repositories\Eloquent\EloquentUserRepository;
 use DI\ContainerBuilder;
 use function DI\autowire;
 

@@ -2,8 +2,8 @@
 
 namespace App\Application\Actions\Tasks;
 
-use App\Domain\Category\CategoryNotFoundException;
-use App\Domain\Task\Task;
+use App\Domain\Models\Category\CategoryNotFoundException;
+use App\Domain\Models\Task\Task;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;

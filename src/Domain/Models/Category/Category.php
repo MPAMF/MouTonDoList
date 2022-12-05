@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Category;
+namespace App\Domain\Models\Category;
 
+use App\Domain\Models\User\User;
 use App\Domain\TimeStampedModel;
-use App\Domain\User\User;
 use App\Domain\ValidatorModel;
 use DateTime;
 use JsonSerializable;
-use stdClass;
 use Respect\Validation\Validator;
+use stdClass;
 
 class Category extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {

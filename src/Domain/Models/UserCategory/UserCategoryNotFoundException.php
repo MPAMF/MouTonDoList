@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\UserCategory;
+namespace App\Domain\Models\UserCategory;
 
 use App\Domain\DomainException\DomainRecordNotFoundException;
 

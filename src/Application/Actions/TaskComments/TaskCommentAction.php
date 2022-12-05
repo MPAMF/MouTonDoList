@@ -3,13 +3,12 @@
 namespace App\Application\Actions\TaskComments;
 
 use App\Application\Actions\Action;
-use App\Domain\Category\CategoryRepository;
-use App\Domain\Task\TaskRepository;
-use App\Domain\TaskComment\TaskComment;
-use App\Domain\TaskComment\TaskCommentNotFoundException;
-use App\Domain\TaskComment\TaskCommentRepository;
-use App\Domain\UserCategory\UserCategoryRepository;
-use DI\Annotation\Inject;
+use App\Domain\Models\TaskComment\TaskComment;
+use App\Domain\Models\TaskComment\TaskCommentNotFoundException;
+use App\Domain\Repositories\CategoryRepository;
+use App\Domain\Repositories\TaskCommentRepository;
+use App\Domain\Repositories\TaskRepository;
+use App\Domain\Repositories\UserCategoryRepository;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 

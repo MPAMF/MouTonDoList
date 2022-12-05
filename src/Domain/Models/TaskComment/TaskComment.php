@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\TaskComment;
+namespace App\Domain\Models\TaskComment;
 
-use App\Domain\Task\Task;
+use App\Domain\Models\Task\Task;
+use App\Domain\Models\User\User;
 use App\Domain\TimeStampedModel;
-use App\Domain\User\User;
 use App\Domain\ValidatorModel;
 use DateTime;
 use JsonSerializable;

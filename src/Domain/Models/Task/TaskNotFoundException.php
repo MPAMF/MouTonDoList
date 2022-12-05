@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Task;
+namespace App\Domain\Models\Task;
 
 use App\Domain\DomainException\DomainRecordNotFoundException;
 

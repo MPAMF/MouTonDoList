@@ -1,20 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Infrastructure\Repositories;
+namespace App\Infrastructure\Repositories\Eloquent;
 
-use App\Domain\Category\Category;
-use App\Domain\Category\CategoryNotFoundException;
-use App\Domain\Category\CategoryRepository;
 use App\Domain\DbCacheInterface;
-use App\Domain\Task\Task;
-use App\Domain\Task\TaskNotFoundException;
-use App\Domain\Task\TaskRepository;
-use App\Domain\User\UserNotFoundException;
-use App\Domain\User\UserRepository;
-use DI\Annotation\Inject;
+use App\Domain\Models\Category\Category;
+use App\Domain\Models\Category\CategoryNotFoundException;
+use App\Domain\Models\Task\Task;
+use App\Domain\Models\Task\TaskNotFoundException;
+use App\Domain\Models\User\UserNotFoundException;
+use App\Domain\Repositories\CategoryRepository;
+use App\Domain\Repositories\TaskRepository;
+use App\Domain\Repositories\UserRepository;
+use App\Infrastructure\Repositories\Repository;
 use Exception;
-use Illuminate\Database\DatabaseManager;
 use stdClass;
 
 class EloquentTaskRepository extends Repository implements TaskRepository

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\User;
+namespace App\Domain\Models\User;
 
 use App\Domain\TimeStampedModel;
 use App\Domain\ValidatorModel;
