@@ -1,6 +1,7 @@
 {% extends 'layout.twig' %}
 
 {% block javascript_before %}
+    <script type="text/javascript" src="/assets/js/local-storage.js"></script>
     <script type="text/javascript">
         const data = {
             categories: JSON.parse(`{{ categories.values()|json_encode|raw }}`),
@@ -13,6 +14,7 @@
         data.categories = data.categories.concat(JSON.parse(`{{ archivedCategories.values()|json_encode|raw }}`))
         data.currentCategoryIdx = data.categories.findIndex(c => c.id === data.currentUserCategoryId)
         console.log(data)
+        loadStorage()
     </script>
     <script type="text/javascript" src="/assets/js/utils-category.js"></script>
     <script type="text/javascript" src="/assets/js/checks.js"></script>
