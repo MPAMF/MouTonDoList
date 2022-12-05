@@ -2,9 +2,8 @@
 
 namespace App\Infrastructure\Repositories\InMemory;
 
-use App\Domain\Models\Task\Task;
 use App\Domain\Models\TaskComment\TaskComment;
-use App\Domain\Repositories\TaskCommentRepository;
+use App\Domain\Models\TaskComment\TaskCommentRepository;
 
 class InMemoryTaskCommentRepository implements TaskCommentRepository
 {

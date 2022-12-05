@@ -5,7 +5,7 @@ namespace App\Infrastructure\Security;
 use App\Domain\Auth\AuthInterface;
 use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserNotFoundException;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Models\User\UserRepository;
 use App\Domain\Settings\SettingsInterface;
 use App\Infrastructure\Lib\Session;
 

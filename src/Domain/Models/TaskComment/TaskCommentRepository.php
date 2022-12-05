@@ -1,10 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Repositories;
-
-use App\Domain\Models\TaskComment\TaskComment;
-use App\Domain\Models\TaskComment\TaskCommentNotFoundException;
+namespace App\Domain\Models\TaskComment;
 
 interface TaskCommentRepository
 {

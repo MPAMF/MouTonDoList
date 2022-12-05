@@ -6,7 +6,7 @@ namespace App\Infrastructure\Repositories\Eloquent;
 use App\Domain\DbCacheInterface;
 use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserNotFoundException;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Models\User\UserRepository;
 use App\Infrastructure\Repositories\Repository;
 use Exception;
 use stdClass;

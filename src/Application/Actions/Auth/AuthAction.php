@@ -4,7 +4,7 @@ namespace App\Application\Actions\Auth;
 
 use App\Application\Actions\Action;
 use App\Domain\Auth\AuthInterface;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Models\User\UserRepository;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Flash\Messages;

@@ -3,11 +3,11 @@
 namespace App\Application\Actions\Tasks;
 
 use App\Application\Actions\Action;
+use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Models\Task\Task;
 use App\Domain\Models\Task\TaskNotFoundException;
-use App\Domain\Repositories\CategoryRepository;
-use App\Domain\Repositories\TaskRepository;
-use App\Domain\Repositories\UserCategoryRepository;
+use App\Domain\Models\Task\TaskRepository;
+use App\Domain\Models\UserCategory\UserCategoryRepository;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Application\Actions\Dashboard;
 
 use App\Application\Actions\Action;
+use App\Domain\Models\Category\CategoryRepository;
+use App\Domain\Models\Task\TaskRepository;
+use App\Domain\Models\TaskComment\TaskCommentRepository;
 use App\Domain\Models\UserCategory\UserCategory;
-use App\Domain\Repositories\CategoryRepository;
-use App\Domain\Repositories\TaskCommentRepository;
-use App\Domain\Repositories\TaskRepository;
-use App\Domain\Repositories\UserCategoryRepository;
+use App\Domain\Models\UserCategory\UserCategoryRepository;
 use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface as Response;
 

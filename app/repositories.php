@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use App\Domain\Repositories\CategoryRepository;
-use App\Domain\Repositories\TaskCommentRepository;
-use App\Domain\Repositories\TaskRepository;
-use App\Domain\Repositories\UserCategoryRepository;
-use App\Domain\Repositories\UserRepository;
+use App\Domain\Models\Category\CategoryRepository;
+use App\Domain\Models\Task\TaskRepository;
+use App\Domain\Models\TaskComment\TaskCommentRepository;
+use App\Domain\Models\User\UserRepository;
+use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Infrastructure\Repositories\Eloquent\EloquentCategoryRepository;
 use App\Infrastructure\Repositories\Eloquent\EloquentTaskCommentRepository;
 use App\Infrastructure\Repositories\Eloquent\EloquentTaskRepository;

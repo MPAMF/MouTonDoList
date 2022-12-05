@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Repositories\InMemory;
 
 use App\Domain\Models\Category\Category;
-use App\Domain\Repositories\CategoryRepository;
+use App\Domain\Models\Category\CategoryRepository;
 
 class InMemoryCategoryRepository implements CategoryRepository
 {
