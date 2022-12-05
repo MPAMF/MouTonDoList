@@ -22,13 +22,13 @@ class CreateCategoryServiceImpl extends Service implements CreateCategoryService
      * @Inject
      * @var UserCategoryRepository
      */
-    private UserCategoryRepository $userCategoryRepository;
+    public UserCategoryRepository $userCategoryRepository;
 
     /**
      * @Inject
      * @var CategoryRepository
      */
-    private CategoryRepository $categoryRepository;
+    public CategoryRepository $categoryRepository;
 
     /**
      * {@inheritDoc}
