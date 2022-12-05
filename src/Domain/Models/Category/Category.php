@@ -250,6 +250,7 @@ class Category extends TimeStampedModel implements JsonSerializable, ValidatorMo
 
     public function fromValidator(array|object $data)
     {
+        $data = (object)$data;
         $this->name = $data->name;
         $this->color = $data->color;
         $this->parent_category_id = isset($data->parent_category_id) ? intval($data->parent_category_id) : null;

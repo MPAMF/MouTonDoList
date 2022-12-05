@@ -21,6 +21,10 @@ class CreateCategoryServiceTest extends TestCase
 
     public function setUp(): void
     {
+        class_alias(
+            'Symfony\\Contracts\\Translation\\TranslatorInterface',
+            'Symfony\\Component\\Translation\\TranslatorInterface'
+        );
         $this->categoryRepository = $this->createMock(CategoryRepository::class);
         $this->userCategoryRepository = $this->createMock(UserCategoryRepository::class);
         $this->translator = $this->createMock(TranslatorInterface::class);
@@ -31,30 +35,42 @@ class CreateCategoryServiceTest extends TestCase
 
     public function testCreateCategory(): void
     {
-        $this->userCategoryRepository->expects($this->once())->method('save');
+        $this->userCategoryRepository->expects($this->once())
+            ->method('save');
 
-        $category = new Category();
-        $category->setOwnerId(1);
-        $category->setName('Test');
-        $category->setArchived(false);
-        $category->setColor('test');
-        $category->setPosition(0);
-        $category->setParentCategoryId(null);
+        $expected = new Category();
+        $expected->setId(1);
+        $expected->setOwnerId(1);
+        $expected->setName('Test');
+        $expected->setArchived(false);
+        $expected->setColor('test');
+        $expected->setPosition(0);
+        $expected->setParentCategoryId(null);
 
-        $rows = $category->toRow();
-        unset($rows['id']);
+        $data = [
+            'owner_id' => 1,
+            'parent_category_id' => NULL,
+            'name' => 'Test',
+            'color' => 'test',
+            'position' => 0,
+            'archived' => false,
+        ];
 
-        $request = new CreateCategoryRequest(1, $rows);
-
-        $category->setId(1);
+        $request = new CreateCategoryRequest(1, $data);
 
         $this->categoryRepository->expects($this->once())
-            ->method('save')->willReturn(true);
-
+            ->method('save')->with(self::callback(function (Category $c) {
+                $c->setId(1);
+                return true;
+            }))->willReturn(true);
 
         $createdCategory = $this->createCategoryService->create($request);
 
-        $this->assertEquals($createdCategory, $category);
+        // Ignore dates
+        $createdCategory->setCreatedAt($expected->getCreatedAt());
+        $createdCategory->setUpdatedAt($expected->getUpdatedAt());
+
+        $this->assertEquals($createdCategory, $expected);
     }
 
 
