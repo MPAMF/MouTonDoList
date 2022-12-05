@@ -76,5 +76,5 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
 function isCanEdit() { return data.canEdit }
 function isCanEditById(catId) { return getCategoryContainerById(catId).can_edit }
 
-function isOwner() { return data.id === getCurrentCategory().owner_id }
-function isOwnerById(catId) { return data.id === getCategoryById(catId).owner_id }
+function isOwner() { return data.userId === getCurrentCategory().owner_id }
+function isOwnerById(catId) { return data.userId === getCategoryById(catId).owner_id }

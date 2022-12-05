@@ -29,12 +29,19 @@ function storagePushToCategories(id, hideArchived, hideChecked) {
 }
 
 function storageUpdateCategory(id, hideArchived, hideChecked) {
-    let index = currentStorage.categories.findIndex(c => c.id === id)
-    currentStorage.categories[index].hideArchived = hideArchived
-    currentStorage.categories[index].hideChecked = hideChecked
+    let index = currentStorage.categories.findIndex(c => c.id.toString() === id.toString())
+    currentStorage.categories[index] = {
+        id: parseInt(id), hideArchived: hideArchived, hideChecked: hideChecked
+    }
+    storageSetCategories()
 }
 
-function storageRemoveFromCategories(id) {
+function storageGetCategory(id) {
+    let index = currentStorage.categories.findIndex(c => c.id.toString() === id.toString())
+    return currentStorage.categories[index]
+}
+
+function storageRemoveCategory(id) {
     currentStorage.categories.filter(function(value, index, arr){
         return value.id !== id.toString();
     });
