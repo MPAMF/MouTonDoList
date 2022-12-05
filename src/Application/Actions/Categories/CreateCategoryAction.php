@@ -45,19 +45,6 @@ class CreateCategoryAction extends CategoryAction
             throw new HttpBadRequestException($this->request, json_encode($e->getErrors()));
         }
 
-        // Add service impl
-        $parent = $category->getParentCategoryId() == null;
-
-        if ($parent) {
-            // Don't forget to create usercategory
-            $userCategory = new UserCategory();
-            $userCategory->setAccepted(true);
-            $userCategory->setCanEdit(true);
-            $userCategory->setCategoryId($category->getId());
-            $userCategory->setUserId($userId);
-            $this->userCategoryRepository->save($userCategory);
-        }
-
         return $this->respondWithData($category);
     }
 }

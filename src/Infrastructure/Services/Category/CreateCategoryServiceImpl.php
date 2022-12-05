@@ -11,6 +11,7 @@ use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Models\Category\Requests\CreateCategoryRequest;
 use App\Domain\Models\Category\Services\CreateCategoryService;
+use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Infrastructure\Services\Service;
 
@@ -78,6 +79,16 @@ class CreateCategoryServiceImpl extends Service implements CreateCategoryService
         if (!$this->categoryRepository->save($category)) {
             // return with error?
             throw new RepositorySaveException($this->translator->trans('CategoryCreateDBError'));
+        }
+
+        if ($parent) {
+            // Don't forget to create usercategory
+            $userCategory = new UserCategory();
+            $userCategory->setAccepted(true);
+            $userCategory->setCanEdit(true);
+            $userCategory->setCategoryId($category->getId());
+            $userCategory->setUserId($userId);
+            $this->userCategoryRepository->save($userCategory);
         }
 
         return $category;
