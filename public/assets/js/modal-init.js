@@ -13,7 +13,7 @@ function openTaskDetails(subCatId, taskId)
         '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + '>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="Nom de la tâche">' + task.name + '</label>' +
-        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + (task.assigned === null ? '' : task.assigned) + '</small>' +
+        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + (task.assigned === null ? '' : task.assigned.name) + '</small>' +
         '            <small class="form-text text-muted" title="Description de la tâche">' + (task.description == null ? '' : task.description) + '</small>' +
         '        </div>' +
         '    </div>' +
