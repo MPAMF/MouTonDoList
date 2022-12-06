@@ -46,7 +46,8 @@ class TestTasksSeeder extends AbstractSeed
                 'checked' => false,
                 'position' => 0,
                 'last_editor_id' => null,
-                'due_date' => $this->generateRandomDate()
+                'assigned_id' => $user_id,
+                'due_date' => '2022-12-03'
             ],
             [
                 'category_id' => $idx + 1,
