@@ -5,17 +5,17 @@
                href={% if (content) %} "/home" {% else %} "." {% endif %}>
                 <img src="/assets/img/appImg.jpg" alt="Logo" class="rounded-circle logo">
             </a>
-            <span class="mb-md-0 footer-text">&copy; 2022 Mouton Group 🐑</span>
+            <span class="mb-md-0 footer-text">{% trans %}FooterName{% endtrans %}</span>
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
             <li class="ms-3">
-                <a class="footer-links" href="https://git.unistra.fr/mouton/MouTonDoList" title="Page GitLab du projet">
+                <a class="footer-links" href="https://git.unistra.fr/mouton/MouTonDoList" title="{{ 'FooterGitalb'|trans|raw }}">
                     <span class="mdi mdi-24px mdi-gitlab"></span>
                 </a>
             </li>
             <li class="ms-3">
-                <a class="footer-links" href="https://github.com/" title="Page GitHub du projet">
+                <a class="footer-links" href="https://github.com/" title="{{ 'FooterGithub'|trans|raw }}">
                     <span class="mdi mdi-24px mdi-github"></span>
                 </a>
             </li>

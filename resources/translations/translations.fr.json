@@ -2,8 +2,17 @@
   "AppName" : "MouTonDoList",
   "TodoList": "TodoList francais",
 
-  "Cancel": "Annuler",
+  "HeaderAriaLabel": "Actions et barre de navigation",
 
+  "ThemeDarkName": "Thème sombre",
+  "ThemeLightName": "Thème clair",
+
+  "CloseAriaLabel": "Close",
+
+  "SearchTypeAssigned": "Assigné",
+  "SearchAssigned": "Assigné=",
+  "SearchAssignedNone": "Aucun",
+  "SearchAssignedAny": "N'importe",
 
   "HomePresentation": "Présentation",
   "HomeLogin": "Connexion",
@@ -102,5 +111,9 @@
   "NewTaskNamePlaceholder": "Nom",
   "NewTaskNameError": "Veuillez indiquer un nom.",
   "NewTaskDescriptionAriaLabel": "Description de la nouvelle tâche",
-  "NewTaskDescriptionPlaceholder": "Description"
+  "NewTaskDescriptionPlaceholder": "Description",
+
+  "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
+  "FooterGitalb": "Page GitLab du projet",
+  "FooterGithub": "Page GitHub du projet"
 }

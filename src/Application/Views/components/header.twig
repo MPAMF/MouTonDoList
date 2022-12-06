@@ -1,4 +1,4 @@
-<nav role="navigation" class="navbar navbar-expand-lg fixed-top bg-primary" aria-label="Actions principales et accès aux autres pages">
+<nav role="navigation" class="navbar navbar-expand-lg fixed-top bg-primary" aria-label="{{ 'HeaderAriaLabel'|trans|raw }}">
     <div class="container p-0">
         <div class="d-inline-flex">
             <button type="button" class="btn btn-abs-nav btn-nav me-1 ms-1" data-bs-toggle="collapse" data-bs-target="#verticalNavbar" aria-expanded="false" aria-controls="verticalNavbar">
@@ -16,26 +16,28 @@
                     <div class="d-flex align-items-center searchbar">
                         <div id="searchbar-assign" class="searchbar-category-container">
                             <div id="assign-button" class="searchbar-category-button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <small class="form-text text-muted">Assigné=</small>
+                                <small class="form-text text-muted">{% trans %}SearchAssigned{% endtrans %}</small>
                                 <small id="assign-value" class="form-text text-muted"></small>
                             </div>
                             <span id="assign-cancel" onclick="resetAssign()" class="text-muted searchbar-category-cancel mdi mdi-close-thick"></span>
                             <ul id="dropdown-assign" class="dropdown-menu dd-nav" data-bs="dropdown">
                                 <li>
                                     <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
-                                        None
+                                        {% trans %}SearchAssignedNone{% endtrans %}
                                     </button>
                                 </li>
                                 <li>
                                     <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
-                                        Any
+                                        {% trans %}SearchAssignedAny{% endtrans %}
                                     </button>
                                 </li>
-                                <li>
-                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
-                                        NOM Prénom
-                                    </button>
-                                </li>
+                                {% for member in category.members %}
+                                    <li>
+                                        <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                            {{ member.user.username }}
+                                        </button>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <div class="searchbar-input-container">
@@ -44,7 +46,7 @@
                                 <li>
                                     <button type="button" onclick="showDropdownAssign(event)" class="dropdown-item dropdown-item-nav">
                                         <span class="mdi mdi-account me-2"></span>
-                                        Assigné
+                                        {% trans %}SearchTypeAssigned{% endtrans %}
                                     </button>
                                 </li>
                             </ul>
@@ -120,7 +122,7 @@
                 <div class="container-fluid p-0">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitreModalNav{% endtrans %}</h1>
-                        <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="{{ 'CloseAriaLabel'|trans|raw }}"></button>
                     </div>
                     <div class="modal-body">
                         <div>
@@ -156,10 +158,12 @@
     }
     /*  Theme */
     function modalTheme(){
+        let darkTheme = `{{'ThemeDarkName'|trans|raw }}`;
+        let lightTheme = `{{'ThemeLightName'|trans|raw }}`;
         setActiveModal("modal-btn-theme");
         $('#modal-title-body').html(`{{ 'LabelThemeModalNav'|trans|raw }}`);
         $('#modal-div-body').html(`
-            <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="Thème clair">
+            <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="`+ lightTheme +`">
                 <div class="theme-modal-color">
                     <div class="theme-color lightPrimary"></div>
                     <div class="theme-color lightSecondary"></div>
@@ -167,7 +171,7 @@
                     <div class="theme-color lightBG"></div>
                 </div>
             </div>
-            <div class="btn btn-modal-theme" role="button" onclick="setToDarkMode()" title="Thème sombre">
+            <div class="btn btn-modal-theme" role="button" onclick="setToDarkMode()" title="`+ darkTheme +`">
                 <div class="theme-modal-color">
                     <div class="theme-color darkPrimary"></div>
                     <div class="theme-color darkSecondary"></div>
@@ -300,7 +304,7 @@
                 let moveTrad = `{{'NotifMoveToTaskModalNav'|trans|raw }}`;
                 let deleteTrad = `{{'NotifDeleteToTaskModalNav'|trans|raw }}`;
                 return `
-                <div class="btn-group-vertical" id="notif-popover-` + idCat + `-` + idTask +`" role="group" aria-label="Vertical button group">
+                <div class="btn-group-vertical" id="notif-popover-` + idCat + `-` + idTask +`" role="group">
                     <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(`+ idCat +`,`+ idTask +`)">
                             <span class="mdi mdi-archive-outline"></span>` + moveTrad +`</button>
                     <button type="button" class="btn btn-sm btn-popover" onclick="deleteNotification(`+ idCat +`,`+ idTask +`)">
