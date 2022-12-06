@@ -14,6 +14,7 @@ use App\Domain\Models\Category\Services\CreateCategoryService;
 use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Infrastructure\Services\Service;
+use DI\Annotation\Inject;
 
 class CreateCategoryServiceImpl extends Service implements CreateCategoryService
 {
