@@ -80,9 +80,12 @@ class DisplayDashboardAction extends Action
         $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
         $canEdit = $category->getCategory()->getOwnerId() == $this->user()->getId() || collect($category->members)->contains(fn(UserCategory $a) => $a->getUserId() == $this->user()->getId() && $a->isCanEdit());
 
+        $notifications = collect($this->userCategoryRepository->getCategories($this->user(), accepted: false));
+
         return $this->respondWithView('pages/dashboard.twig', [
             'category' => $category,
             'categories' => $categories,
+            'notifications' => $notifications,
             'archivedCategories' => $archivedCategories,
             'user' => $this->user(),
             'canEdit' => $canEdit
