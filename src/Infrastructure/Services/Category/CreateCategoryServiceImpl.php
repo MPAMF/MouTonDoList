@@ -3,20 +3,17 @@
 namespace App\Infrastructure\Services\Category;
 
 use App\Domain\Exceptions\BadRequestException;
-use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Models\UserCategory\UserCategory;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\Category\CreateCategoryRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Category\CreateCategoryService;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
 use App\Infrastructure\Services\Service;
-use DI\Annotation\Inject;
 
 class CreateCategoryServiceImpl extends Service implements CreateCategoryService
 {
@@ -56,7 +53,6 @@ class CreateCategoryServiceImpl extends Service implements CreateCategoryService
             // owner id => parent category owner
             $category->setOwnerId($userId);
         } else {
-
             // Parent category isn't none, check if user has permission to create a new subCategory
             // Throws exception if no permission
             $this->userCategoryCheckPermissionService->exists(new UserCategoryCheckPermissionRequest(
@@ -72,7 +68,6 @@ class CreateCategoryServiceImpl extends Service implements CreateCategoryService
             }
 
             $category->setOwnerId($parentCategory->getOwnerId());
-
         }
 
         // TODO: Maybe check two same names?

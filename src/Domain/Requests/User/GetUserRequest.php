@@ -44,5 +44,4 @@ class GetUserRequest
     {
         return $this->canEdit;
     }
-
 }

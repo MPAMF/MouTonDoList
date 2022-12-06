@@ -12,7 +12,6 @@ use App\Domain\Requests\Category\UpdateCategoryRequest;
 use App\Domain\Services\Category\GetCategoryService;
 use App\Domain\Services\Category\UpdateCategoryService;
 use App\Infrastructure\Services\Service;
-use DI\Annotation\Inject;
 
 class UpdateCategoryServiceImpl extends Service implements UpdateCategoryService
 {
@@ -65,5 +64,4 @@ class UpdateCategoryServiceImpl extends Service implements UpdateCategoryService
 
         return $category;
     }
-
 }

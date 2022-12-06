@@ -22,6 +22,5 @@ interface CreateTaskService
      * @throws RepositorySaveException
      * @throws ValidationException
      */
-    public function create(CreateTaskRequest $request) : Task;
-
+    public function create(CreateTaskRequest $request): Task;
 }

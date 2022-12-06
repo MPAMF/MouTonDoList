@@ -21,5 +21,4 @@ interface UpdateUserService
      * @throws CategoryNotFoundException
      */
     public function update(UpdateUserRequest $request): User;
-
 }

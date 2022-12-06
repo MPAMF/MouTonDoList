@@ -21,5 +21,4 @@ interface UpdateCategoryService
      * @throws CategoryNotFoundException
      */
     public function update(UpdateCategoryRequest $request): Category;
-
 }

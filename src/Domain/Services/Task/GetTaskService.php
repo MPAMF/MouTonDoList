@@ -18,6 +18,5 @@ interface GetTaskService
      * @throws NoPermissionException
      * @throws TaskNotFoundException
      */
-    public function get(GetTaskRequest $request) : Task;
-
+    public function get(GetTaskRequest $request): Task;
 }

@@ -44,6 +44,4 @@ class UpdateTaskCommentRequest
     {
         return $this->formData;
     }
-
-
 }

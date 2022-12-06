@@ -33,6 +33,4 @@ class CreateCategoryRequest
     {
         return $this->formData;
     }
-
-
 }

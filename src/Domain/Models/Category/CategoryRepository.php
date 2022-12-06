@@ -46,5 +46,4 @@ interface CategoryRepository
      * @return bool
      */
     public function exists(?int $id, ?int $parentCategoryId = null): bool;
-
 }

@@ -55,5 +55,4 @@ class GetTaskCommentRequest
     {
         return $this->with;
     }
-
 }

@@ -54,5 +54,4 @@ class GetTaskRequest
     {
         return $this->with;
     }
-
 }

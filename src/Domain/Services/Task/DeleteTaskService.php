@@ -18,5 +18,4 @@ interface DeleteTaskService
      * @throws TaskNotFoundException
      */
     public function delete(DeleteTaskRequest $request): bool;
-
 }

@@ -33,5 +33,4 @@ class DeleteUserRequest
     {
         return $this->categoryId;
     }
-
 }

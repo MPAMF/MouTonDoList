@@ -20,6 +20,4 @@ abstract class Service
         $this->validator = $validator;
         $this->translator = $translator;
     }
-
-
 }

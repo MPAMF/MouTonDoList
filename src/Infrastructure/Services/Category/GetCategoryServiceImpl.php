@@ -10,7 +10,6 @@ use App\Domain\Requests\Category\GetCategoryRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Category\GetCategoryService;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
-use DI\Annotation\Inject;
 
 class GetCategoryServiceImpl implements GetCategoryService
 {
@@ -46,7 +45,6 @@ class GetCategoryServiceImpl implements GetCategoryService
 
         // Check if user has permission to delete
         if ($category->getOwnerId() != $userId) {
-
             if ($parent) {
                 throw new NoPermissionException();
             }
@@ -57,7 +55,6 @@ class GetCategoryServiceImpl implements GetCategoryService
                 categoryId: $id,
                 canEdit: $request->isCanEdit()
             ));
-
         }
 
         return $category;

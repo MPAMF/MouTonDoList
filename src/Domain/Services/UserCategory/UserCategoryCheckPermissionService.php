@@ -13,6 +13,5 @@ interface UserCategoryCheckPermissionService
      * @return void
      * @throws NoPermissionException
      */
-    public function exists(UserCategoryCheckPermissionRequest $request) : void;
-
+    public function exists(UserCategoryCheckPermissionRequest $request): void;
 }

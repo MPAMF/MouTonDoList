@@ -12,5 +12,4 @@ interface DisplayDashboardService
      * @return array
      */
     public function display(DisplayDashboardRequest $request): array;
-
 }

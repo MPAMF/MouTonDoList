@@ -33,6 +33,4 @@ class CreateTaskCommentRequest
     {
         return $this->formData;
     }
-
-
 }

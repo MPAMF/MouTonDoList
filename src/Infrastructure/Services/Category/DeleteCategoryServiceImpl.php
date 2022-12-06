@@ -7,7 +7,6 @@ use App\Domain\Requests\Category\DeleteCategoryRequest;
 use App\Domain\Requests\Category\GetCategoryRequest;
 use App\Domain\Services\Category\DeleteCategoryService;
 use App\Domain\Services\Category\GetCategoryService;
-use DI\Annotation\Inject;
 
 class DeleteCategoryServiceImpl implements DeleteCategoryService
 {

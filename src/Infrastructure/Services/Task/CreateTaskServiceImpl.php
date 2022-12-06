@@ -15,7 +15,6 @@ use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Task\CreateTaskService;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
 use App\Infrastructure\Services\Service;
-use DI\Annotation\Inject;
 
 class CreateTaskServiceImpl extends Service implements CreateTaskService
 {
@@ -72,17 +71,14 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
 
         // Check can edit
         if ($task->getCategory()->getOwnerId() != $request->getUserId()) {
-
             $this->userCategoryCheckPermissionService->exists(new UserCategoryCheckPermissionRequest(
                 userId: $request->getUserId(),
                 categoryId: $task->getCategoryId(),
             ));
-
         }
 
         // Check assigned_id
         if ($task->getAssignedId() != null) {
-
             // Check if assigned user has access to the project
             if (!$this->userCategoryRepository->exists(null, $task->getCategoryId(), $task->getAssignedId(), accepted: true)) {
                 throw new BadRequestException($this->translator->trans('AssignedUserNotFoundException'));
@@ -93,7 +89,6 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
                 categoryId: $task->getCategoryId(),
                 checkAccepted: false
             ));
-
         }
 
         if (!$this->taskRepository->save($task)) {

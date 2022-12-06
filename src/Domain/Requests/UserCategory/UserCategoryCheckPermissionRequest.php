@@ -66,5 +66,4 @@ class UserCategoryCheckPermissionRequest
     {
         return $this->canEdit;
     }
-
 }

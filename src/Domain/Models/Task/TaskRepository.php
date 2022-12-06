@@ -12,7 +12,7 @@ interface TaskRepository
      * @param array|null $with ['category', 'last_editor', 'assigned'] load objects
      * @return array
      */
-    public function getTasks(int|Category $category, array|null $with = null) : array;
+    public function getTasks(int|Category $category, array|null $with = null): array;
 
     /**
      * @param $id
@@ -26,12 +26,11 @@ interface TaskRepository
      * @param Task $task
      * @return bool Save or update is successful
      */
-    public function save(Task $task) : bool;
+    public function save(Task $task): bool;
 
     /**
      * @param Task $task
      * @return int Number of records deleted
      */
-    public function delete(Task $task) : int;
-
+    public function delete(Task $task): int;
 }

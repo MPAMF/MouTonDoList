@@ -29,6 +29,5 @@ interface AuthInterface
     /**
      * @return void
      */
-    public function removeUser() : void;
-
+    public function removeUser(): void;
 }

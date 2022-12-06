@@ -7,7 +7,6 @@ use App\Domain\Requests\Task\DeleteTaskRequest;
 use App\Domain\Requests\Task\GetTaskRequest;
 use App\Domain\Services\Task\DeleteTaskService;
 use App\Domain\Services\Task\GetTaskService;
-use DI\Annotation\Inject;
 
 class DeleteTaskServiceImpl implements DeleteTaskService
 {

@@ -2,19 +2,13 @@
 
 namespace App\Infrastructure\Services\Task;
 
-use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\CategoryNotFoundException;
-use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Models\Task\Task;
-use App\Domain\Models\Task\TaskNotFoundException;
 use App\Domain\Models\Task\TaskRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\Task\GetTaskRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
-use App\Domain\Services\Category\GetCategoryService;
 use App\Domain\Services\Task\GetTaskService;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
-use DI\Annotation\Inject;
 
 class GetTaskServiceImpl implements GetTaskService
 {
@@ -42,7 +36,7 @@ class GetTaskServiceImpl implements GetTaskService
 
         if (!isset($with)) {
             $with = ['category'];
-        } else if (!array_key_exists('category', $with)) {
+        } elseif (!array_key_exists('category', $with)) {
             $with[] = 'category';
         }
 

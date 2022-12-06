@@ -59,13 +59,11 @@ class TimeStampedModel implements EloquentModel
      */
     public function fromRow(stdClass $row): void
     {
-        if(!empty($row->updated_at))
-        {
+        if (!empty($row->updated_at)) {
             $this->setUpdatedAt(new DateTime($row->updated_at));
         }
 
-        if(!empty($row->created_at))
-        {
+        if (!empty($row->created_at)) {
             $this->setCreatedAt(new DateTime($row->created_at));
         }
     }
