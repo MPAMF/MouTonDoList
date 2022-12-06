@@ -3,7 +3,7 @@
     <div class="category-title">
         <h3 id="title" onclick="openEditModalCategory({{ category.category.id }})">{{ category.category.name }}</h3>
         <div class="title-actions">
-            <a data-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="Ouvre une liste d'actions pour une catégorie"
+            <a data-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}"
                 {% if (canEdit) and (category.category.archived) %}
                     data-bs-popover="category-archive-popover">
                 {% elseif (canEdit) %}
@@ -17,7 +17,7 @@
     </div>
 
     <div id="research" class="research" hidden>
-        <p class="mb-4 form-text text-muted">Résultat de la recherche :</p>
+        <p class="mb-4 form-text text-muted">{% trans %}CategorySearchResult{% endtrans %}</p>
         <ul class="list-group list-group-flush tasks list-research"></ul>
     </div>
 

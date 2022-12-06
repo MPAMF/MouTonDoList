@@ -2,6 +2,9 @@
   "AppName" : "MouTonDoList",
   "TodoList": "TodoList francais",
 
+  "Cancel": "Annuler",
+
+
   "HomePresentation": "Présentation",
   "HomeLogin": "Connexion",
   "HomeSignIn": "Commencez gratuitement",
@@ -69,5 +72,35 @@
   "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère doit être entre ",
   "RegexPassConf": "Les deux mots de passe sont différents.",
 
-  "ConnectionFailed": "Adresse e-mail ou mot de passe erronés."
+  "ConnectionFailed": "Adresse e-mail ou mot de passe erronés.",
+
+  "SidebarAriaLabel": "Liste de mes listes de tâches",
+  "SidebarMyProjectsName": "Mes projets",
+  "SidebarNewTodolistButton": "Création d'une liste de tâche",
+  "SidebarSharedProjectsName": "Projets partagés",
+  "SidebarArchivedProjectsName": "Mes projets archivés",
+
+  "CategorySearchResult": "Résultat de la recherche :",
+  "CategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une catégorie",
+
+  "SubCategoryDragTitle": "Attrape la sous-catégorie pour la changer d'emplacement",
+  "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie",
+  "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie archivée",
+
+  "TaskCheckboxTitle": "Etat de la tâche",
+  "TaskNameTitle": "Nom de la tâche",
+  "TaskAssignedTitle": "Membre assignée à la tâche",
+  "TaskDescriptionTitle": "Description de la tâche",
+  "TaskDeleteTitle": "Suppression de la tâche",
+  "TaskPopoverAriaLabel": "Ouvre une liste d'actions pour une tâche",
+  "TaskNotAssigned": "Non assignée",
+  "TaskNewTaskButtonName" : "Ajouter une tâche",
+
+  "NewTaskCancel": "Annuler",
+  "NewTaskCreate": "Ajouter une tâche",
+  "NewTaskNameAriaLabel": "Nom de la nouvelle tâche",
+  "NewTaskNamePlaceholder": "Nom",
+  "NewTaskNameError": "Veuillez indiquer un nom.",
+  "NewTaskDescriptionAriaLabel": "Description de la nouvelle tâche",
+  "NewTaskDescriptionPlaceholder": "Description"
 }

@@ -2,28 +2,28 @@
     <div class="d-grid">
         <button class="btn btn-task-add" type="button" id="taskAdd-{{ subCatId }}">
             <span class="mdi mdi-plus-circle"></span>
-            Ajouter une tâche
+            {% trans %}TaskNewTaskButtonName{% endtrans %}
         </button>
     </div>
     <form class="task-new" id="taskNew-{{ subCatId }}">
         <div class="mb-2">
-            <input type="text" class="form-control form-control-sm bg-secondary" id="taskNewName-{{ subCatId }}" placeholder="Nom de la tâche" title="Nom de la nouvelle tâche" required>
-            <div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>
+            <input type="text" class="form-control form-control-sm bg-secondary" id="taskNewName-{{ subCatId }}" placeholder="{{ 'NewTaskNamePlaceholder'|trans|raw }}" title="{{ 'NewTaskNameAriaLabel'|trans|raw }}" required>
+            <div id="error-taskNew{{ subCatId }}" class="invalid-feedback" role="alert">{{ 'NewTaskNameError'|trans|raw }}</div>
         </div>
         <div class="mb-2">
-            <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ subCatId }}" placeholder="Description" title="Description de la nouvelle tâche" ></textarea>
+            <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ subCatId }}" placeholder="{{ 'NewTaskDescriptionPlaceholder'|trans|raw }}" title="{{ 'NewTaskDescriptionAriaLabel'|trans|raw }}" ></textarea>
         </div>
         <div class="mb-2">
-            <select class="btn btn-sm btn-modal-select" aria-label="Membre assigné" required>
-                <option value="0" selected>Non assignée</option>
+            <select class="btn btn-sm btn-modal-select" aria-label="{{ 'TaskAssignedTitle'|trans|raw }}" required>
+                <option value="0" selected>{% trans %}TaskNotAssigned{% endtrans %}</option>
                 {% for member in category.members %}
                     <option value="{{ member.user.id }}"> {{ member.user.username }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="taskNewCancel-{{ subCatId }}">Annuler</button>
-            <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="taskNewCreate-{{ subCatId }}" disabled>Ajouter une tâche</button>
+            <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="taskNewCancel-{{ subCatId }}">{% trans %}NewTaskCancel{% endtrans %}</button>
+            <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="taskNewCreate-{{ subCatId }}" disabled>{% trans %}NewTaskCreate{% endtrans %}</button>
         </div>
     </form>
 </li>
