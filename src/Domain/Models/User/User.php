@@ -199,6 +199,7 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
 
     public function fromValidator(object|array $data) : void
     {
+        $data = (object)$data;
         $this->email = $data->email;
         $this->username = $data->username;
         $this->image_path = $data->image_path;

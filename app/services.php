@@ -22,6 +22,7 @@ use App\Infrastructure\Services\Category\CreateCategoryServiceImpl;
 use App\Infrastructure\Services\Category\DeleteCategoryServiceImpl;
 use App\Infrastructure\Services\Category\GetCategoryServiceImpl;
 use App\Infrastructure\Services\Category\UpdateCategoryServiceImpl;
+use App\Infrastructure\Services\DisplayDashboardServiceImpl;
 use App\Infrastructure\Services\Invitation\AnswerInvitationServiceImpl;
 use App\Infrastructure\Services\Invitation\CreateInvitationServiceImpl;
 use App\Infrastructure\Services\Invitation\ListInvitationsServiceImpl;
@@ -66,7 +67,7 @@ return function (ContainerBuilder $containerBuilder) {
         // DeleteUserService::class => autowire(DeleteUserServiceImpl::class),
 
         // Dashboard
-        DisplayDashboardService::class => autowire(DisplayDashboardService::class),
+        DisplayDashboardService::class => autowire(DisplayDashboardServiceImpl::class),
 
         // UserCategories
         UserCategoryCheckPermissionService::class => autowire(UserCategoryCheckPermissionServiceImpl::class),

@@ -6,11 +6,13 @@ namespace App\Domain\Models\UserCategory;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\TimeStampedModel;
 use App\Domain\Models\User\User;
+use App\Domain\Models\ValidatorModel;
 use DateTime;
 use JsonSerializable;
+use Respect\Validation\Validator;
 use stdClass;
 
-class UserCategory extends TimeStampedModel implements JsonSerializable
+class UserCategory extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
     private ?int $id;
     private int $user_id;
@@ -159,7 +161,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
             'can_edit' => $this->canEdit,
         ];
 
-        if(isset($this->members)) {
+        if (isset($this->members)) {
             $result['members'] = $this->members;
         }
 
@@ -173,12 +175,9 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
     {
         parent::fromRow($row);
         $this->id = $row->id;
-        $this->user_id = $row->user_id;
         $this->user = $row->user;
-        $this->category_id = $row->category_id;
         $this->category = $row->category;
-        $this->accepted = boolval($row->accepted);
-        $this->canEdit = boolval($row->can_edit);
+        $this->fromValidator($row);
     }
 
     /**
@@ -191,5 +190,24 @@ class UserCategory extends TimeStampedModel implements JsonSerializable
         unset($result['category']);
         unset($result['members']);
         return $result;
+    }
+
+    public static function getValidatorRules(): array
+    {
+        return [
+            'accepted' => Validator::boolType(),
+            'can_edit' => Validator::boolType(),
+            'category_id' => Validator::intType(),
+            'user_id' => Validator::intType()
+        ];
+    }
+
+    public function fromValidator(object|array $data): void
+    {
+        $data = (object)$data;
+        $this->user_id = intval($data->user_id);
+        $this->category_id = $data->category_id;
+        $this->accepted = boolval($data->accepted);
+        $this->canEdit = boolval($data->can_edit);
     }
 }

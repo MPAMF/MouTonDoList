@@ -14,5 +14,4 @@ class AnswerInvitationServiceImpl implements AnswerInvitationService
         // TODO: Implement answer() method.
         return new UserCategory();
     }
-
 }
