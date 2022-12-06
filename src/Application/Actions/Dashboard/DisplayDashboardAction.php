@@ -4,14 +4,8 @@ declare(strict_types=1);
 namespace App\Application\Actions\Dashboard;
 
 use App\Application\Actions\Action;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Task\TaskRepository;
-use App\Domain\Models\TaskComment\TaskCommentRepository;
-use App\Domain\Models\UserCategory\UserCategory;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\DisplayDashboardRequest;
 use App\Domain\Services\DisplayDashboardService;
-use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class DisplayDashboardAction extends Action
@@ -35,6 +29,5 @@ class DisplayDashboardAction extends Action
 
         return $this->respondWithView('pages/dashboard.twig', $data);
     }
-
 
 }

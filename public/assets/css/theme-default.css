@@ -90,6 +90,16 @@
   --bs-btn-active-bg: #4B5057;
   --bs-btn-active-border-color: #4B5057;
 }
+.btn-modal-success{
+  --bs-btn-color: #198754;
+  --bs-btn-border-color: #198754;
+  --bs-btn-hover-color: #A2E7C7;
+  --bs-btn-hover-border-color: #A2E7C7;
+  --bs-btn-hover-bg: #0B633A;
+  --bs-btn-active-color: #EEEEEE;
+  --bs-btn-active-border-color: #EEEEEE;
+  --bs-btn-active-bg: #0D7444;
+}
 .btn-modal-remove{
   --bs-btn-color: #ec5941;
   --bs-btn-border-color: #ec5941;

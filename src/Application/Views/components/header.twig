@@ -115,6 +115,8 @@
                                 <span class="mdi mdi-palette-outline me-2"></span> {% trans %}ThemeLiModalNav{% endtrans %}</button> </li>
                         <li class="sidebar-li rounded" id="modal-btn-notif"><button class="btn-user-modal" onclick="modalNotification()">
                                 <span class="mdi mdi-bell me-2"></span> {% trans %}NotifLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded" id="modal-btn-taskToDo"><button class="btn-user-modal" onclick="modalTaskToDo()">
+                                <span class="mdi mdi-bell me-2"></span> {% trans %}TaskToDoLiModalNav{% endtrans %}</button> </li>
                     </ul>
                 </div>
                 <div class="container-fluid p-0">
@@ -247,36 +249,82 @@
         `);
     }
 
-    /*  Notification */
-    function modalNotification() {
-        setActiveModal("modal-btn-notif");
-        $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
-        $('#modal-div-body').html(loadAllNotifications());
-        addEventNotif();
-    }
+    /*  Notification and TaskToDo */
+    function loadAllValues(isTasks, values){
+        let res =`<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
 
-    function loadAllNotifications(){
-        let values = [[2,5, "03/12/2022"]];
-        let res =`<ul class="list-group list-group-flush tasks" data-sortable="tasks">`;
+        if(isTasks){/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+            values.forEach(value =>{
+                res += createTaskToDo(value[0],value[1],value[2],`{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[3]);
+            });
+        }
+        else{ /* [0]: categoryName; [1]: owner; [2]: creationDate; */
+            values.forEach(value =>{
+                res += createNotification(value[0],value[1],`{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[2]);
+            });
+        }
 
-        values.forEach(value =>{
-            res += createNotification(value[0],value[1],`{{ 'LabelNotifModalNav'|trans|raw }}` + value[2]);
-        });
         res += `</ul>`;
         return res;
     }
 
-    function createNotification(subCatId, taskId, date){
+    /*  Notification */
+    function modalNotification() {
+        setActiveModal("modal-btn-notif");
+        $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
+        $('#modal-div-body').html(loadAllValues(false,loadNotification()));
+        addEventNotif();
+    }
+
+    function createNotification(category, owner, date){
         return `
-        <li class="sidebar-li rounded p-2" id="notif-` + subCatId + `-` + taskId +`">
+        <li class="sidebar-li rounded p-2" id="">
+            <div class="d-flex w-100 justify-content-between">
+                <label class="align-items-center mt-2" >
+                    ` + category +` , ` + owner +` , ` + date +`
+                </label>
+                <div class="d-flex">
+                    <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success" title="Notification"
+                         onclick="validNotification()">
+                        <span class="mdi mdi-check span-nav"></span>
+                    </button>
+                    <button type="button" class="btn position-relative btn-nav me-1 btn-modal-remove" title="Notification"
+                         onclick="refuseNotification()">
+                        <span class="mdi mdi-18px mdi-close-thick"></span>
+                    </button>
+                </div>
+            </div>
+        </li>
+        `;
+    }
+
+    function validNotification(){
+
+    }
+
+    function refuseNotification(){
+
+    }
+
+    /*  TaskToDo */
+    function modalTaskToDo() {
+        setActiveModal("modal-btn-taskToDo");
+        $('#modal-title-body').html(`{{ 'TitleTaskToDoModalNav'|trans|raw }}`);
+        $('#modal-div-body').html(loadAllValues(true,loadTaskToDo()));
+        addEventNotif();
+    }
+
+    function createTaskToDo(taskName, subCatId, taskId, date){
+        return `
+        <li class="sidebar-li rounded p-2" id="taskToDo-` + subCatId + `-` + taskId +`">
             <div class="d-flex">
                 <div class="" onclick="openTaskDetails(`+ subCatId +`,`+ taskId +`)">
                     <label>
-                        Nom de la tâche [` + subCatId + `-` + taskId +`], ` + date +`
+                        ` + taskName +` , ` + date +`
                     </label>
                 </div>
                     <a class="ms-2" data-idCat="` + subCatId + `" data-idTask="` + taskId + `" role="button"
-                            data-bs="popover" data-bs-popover="notif-popover" aria-label="Actions de la tâche" onclick="setNotifPopoverValues(`+ subCatId +`,`+ taskId +`)">
+                            data-bs="popover" data-bs-popover="taskToDo-popover" aria-label="Actions de la tâche" onclick="setTaskToDoPopoverValues(`+ subCatId +`,`+ taskId +`)">
                         <span class="mdi mdi-dots-horizontal"></span>
                     </a>
             </div>
@@ -284,12 +332,12 @@
         `;
     }
 
-    function setNotifPopoverValues(subCatId, taskId){
+    function setTaskToDoPopoverValues(subCatId, taskId){
         idCat = subCatId;idTask = taskId;
     }
 
     function addEventNotif(){
-        $("[data-bs-popover=notif-popover]").popover({
+        $("[data-bs-popover=TaskToDo-popover]").popover({
             trigger: 'click',
             placement: 'right',
             customClass: 'popover',
@@ -297,13 +345,13 @@
             html: true,
             sanitize: false,
             content: () => {
-                let moveTrad = `{{'NotifMoveToTaskModalNav'|trans|raw }}`;
-                let deleteTrad = `{{'NotifDeleteToTaskModalNav'|trans|raw }}`;
+                let moveTrad = `{{'TaskToDoMoveToTaskModalNav'|trans|raw }}`;
+                let deleteTrad = `{{'TaskToDoDeleteToTaskModalNav'|trans|raw }}`;
                 return `
-                <div class="btn-group-vertical" id="notif-popover-` + idCat + `-` + idTask +`" role="group" aria-label="Vertical button group">
+                <div class="btn-group-vertical" id="taskToDo-popover-` + idCat + `-` + idTask +`" role="group" aria-label="Vertical button group">
                     <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(`+ idCat +`,`+ idTask +`)">
                             <span class="mdi mdi-archive-outline"></span>` + moveTrad +`</button>
-                    <button type="button" class="btn btn-sm btn-popover" onclick="deleteNotification(`+ idCat +`,`+ idTask +`)">
+                    <button type="button" class="btn btn-sm btn-popover" onclick="deleteTaskToDo(`+ idCat +`,`+ idTask +`)">
                             <span class="mdi mdi-trash-can"></span> `+ deleteTrad +` </button>
                 </div>`;
             }
@@ -311,7 +359,7 @@
     }
 
     function closePopover(){
-        let element = document.getElementById('notif-popover-' + idCat + '-' + idTask);
+        let element = document.getElementById('taskToDo-popover-' + idCat + '-' + idTask);
         if(element !== null) {
             let parent = element.parentElement;
             if (parent !== null) {
@@ -329,8 +377,8 @@
         element.scrollIntoView({block:"center"});
     }
 
-    function deleteNotification(subCatId, taskId){
-        $('#notif-' + subCatId + '-' + taskId).remove();
+    function deleteTaskToDo(subCatId, taskId){
+        $('#naskToDo-' + subCatId + '-' + taskId).remove();
         closePopover();
     }
 
