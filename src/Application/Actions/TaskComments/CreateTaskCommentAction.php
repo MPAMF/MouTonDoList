@@ -2,52 +2,47 @@
 
 namespace App\Application\Actions\TaskComments;
 
-use App\Domain\Task\TaskNotFoundException;
-use App\Domain\TaskComment\TaskComment;
+use App\Application\Actions\Action;
+use App\Domain\Exceptions\BadRequestException;
+use App\Domain\Exceptions\NoPermissionException;
+use App\Domain\Exceptions\RepositorySaveException;
+use App\Domain\Exceptions\ValidationException;
+use App\Domain\Requests\TaskComment\CreateTaskCommentRequest;
+use App\Domain\Services\TaskComment\CreateTaskCommentService;
+use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpInternalServerErrorException;
 
-class CreateTaskCommentAction extends TaskCommentAction
+class CreateTaskCommentAction extends Action
 {
+    /**
+     * @Inject
+     * @var CreateTaskCommentService
+     */
+    private CreateTaskCommentService $createTaskCommentService;
 
     /**
      * @inheritDoc
      */
     protected function action(): Response
     {
-        $data = $this->getFormData();
-        $taskComment = new TaskComment();
+        $request = new CreateTaskCommentRequest(
+            userId: $this->user()->getId(),
+            formData: $this->getFormData()
+        );
 
-        $validator = $this->validator->validate($data, $taskComment->getValidatorRules());
-
-        if (!$validator->isValid()) {
-            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
-        }
-
-        $data = $validator->getValues();
-        $userId = $this->user()->getId();
-        //
-        $taskComment->fromValidator($data);
-        $taskComment->setAuthorId($userId);
-
-        // Check category validity
         try {
-            $taskComment->setTask($this->taskRepository->get($taskComment->getTaskId(), with: ['category']));
-        } catch (TaskNotFoundException) {
-            throw new HttpBadRequestException($this->request, $this->translator->trans('TaskNotFoundException'));
-        }
-
-        // Check can edit
-        if ($taskComment->getTask()->getCategory()->getOwnerId() != $userId) {
-            if (!$this->userCategoryRepository->exists(null, $taskComment->getTask()->getCategoryId(), $userId, accepted: true, canEdit: true)) {
-                throw new HttpForbiddenException($this->request);
-            }
-        }
-
-        if (!$this->taskCommentRepository->save($taskComment)) {
-            // return with error?
-            return $this->respondWithData(['error' => $this->translator->trans('TaskCommentCreateDBError')], 500);
+            $taskComment = $this->createTaskCommentService->create($request);
+        } catch (BadRequestException $e) {
+            throw new HttpBadRequestException($this->request, $e->getMessage());
+        } catch (NoPermissionException) {
+            throw new HttpForbiddenException($this->request);
+        } catch (RepositorySaveException $e) {
+            throw new HttpInternalServerErrorException($this->request, $e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpBadRequestException($this->request, json_encode($e->getErrors()));
         }
 
         return $this->respondWithData($taskComment);

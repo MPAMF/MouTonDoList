@@ -6,7 +6,7 @@ namespace App\Application\Actions;
 use App\Application\Handlers\FlashMessageHandler;
 use App\Application\Handlers\RedirectHandler;
 use App\Domain\DomainException\DomainRecordNotFoundException;
-use App\Domain\User\User;
+use App\Domain\Models\User\User;
 use Exception;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;

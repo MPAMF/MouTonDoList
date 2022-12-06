@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use App\Domain\Category\Category;
-use App\Domain\User\User;
 use Phinx\Seed\AbstractSeed;
 
 class TestTasksSeeder extends AbstractSeed

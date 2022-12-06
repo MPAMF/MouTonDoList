@@ -2,48 +2,55 @@
 
 namespace App\Application\Actions\Tasks;
 
+use App\Application\Actions\Action;
+use App\Domain\Exceptions\BadRequestException;
+use App\Domain\Exceptions\NoPermissionException;
+use App\Domain\Exceptions\RepositorySaveException;
+use App\Domain\Exceptions\ValidationException;
+use App\Domain\Models\Category\CategoryNotFoundException;
+use App\Domain\Models\Task\TaskNotFoundException;
+use App\Domain\Requests\Task\UpdateTaskRequest;
+use App\Domain\Services\Task\UpdateTaskService;
+use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpInternalServerErrorException;
+use Slim\Exception\HttpNotFoundException;
 
-class UpdateTaskAction extends TaskAction
+class UpdateTaskAction extends Action
 {
+
+    /**
+     * @Inject
+     * @var UpdateTaskService
+     */
+    private UpdateTaskService $updateTaskService;
+
 
     /**
      * @inheritDoc
      */
     protected function action(): Response
     {
-        $data = $this->getFormData();
-        $task = $this->getTaskWithPermissionCheck(with: ['category']);
+        $request = new UpdateTaskRequest(
+            userId: $this->user()->getId(),
+            taskId: (int)$this->resolveArg('id'),
+            formData: $this->getFormData()
+        );
 
-        $validator = $this->validator->validate($data, $task->getValidatorRules());
-
-        if (!$validator->isValid()) {
-            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
-        }
-
-        $data = $validator->getValues();
-        $userId = $this->user()->getId();
-
-        // Check category validity
-        if (!isset($data->category_id)) // categoryId == null is main category, cannot create tasks in those categories
-        {
-            throw new HttpBadRequestException($this->request, $this->translator->trans('CategoryIdNotValid'));
-        } else {
-            // Check if current category has same parentCategory
-            if (!$this->categoryRepository->exists($data->category_id, $task->getCategory()->getParentCategoryId())) {
-                throw new HttpForbiddenException($this->request);
-            }
-        }
-
-        $task->fromValidator($data);
-        $task->setLastEditorId($userId);
-
-        // Useless to check if something was deleted
-        if (!$this->taskRepository->save($task)) {
-            // return with error?
-            return $this->respondWithData(['error' => $this->translator->trans('TaskUpdateDBError')], 500);
+        try {
+            $task = $this->updateTaskService->update($request);
+        } catch (BadRequestException $e) {
+            throw new HttpBadRequestException($this->request, $e->getMessage());
+        } catch (NoPermissionException) {
+            throw new HttpForbiddenException($this->request);
+        } catch (RepositorySaveException $e) {
+            throw new HttpInternalServerErrorException($this->request, $e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpBadRequestException($this->request, json_encode($e->getErrors()));
+        } catch (CategoryNotFoundException|TaskNotFoundException $e) {
+            throw new HttpNotFoundException($this->request, $e->getMessage());
         }
 
         return $this->respondWithData($task);

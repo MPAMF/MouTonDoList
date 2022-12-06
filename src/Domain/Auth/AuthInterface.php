@@ -2,8 +2,8 @@
 
 namespace App\Domain\Auth;
 
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
+use App\Domain\Models\User\User;
+use App\Domain\Models\User\UserNotFoundException;
 
 interface AuthInterface
 {
