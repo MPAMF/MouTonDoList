@@ -248,7 +248,7 @@ class Category extends TimeStampedModel implements JsonSerializable, ValidatorMo
         ];
     }
 
-    public function fromValidator(array|object $data)
+    public function fromValidator(array|object $data) : void
     {
         $data = (object)$data;
         $this->name = $data->name;

@@ -174,7 +174,7 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
         ];
     }
 
-    public function fromValidator(object|array $data)
+    public function fromValidator(object|array $data) : void
     {
         $this->content = $data->content;
         $this->author_id = isset($data->author_id) ? intval($data->author_id) : null;

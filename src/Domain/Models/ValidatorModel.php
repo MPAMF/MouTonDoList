@@ -12,8 +12,8 @@ interface ValidatorModel
 
     /**
      * @param array|object $data
-     * @return mixed
+     * @return void
      */
-    public function fromValidator(array|object $data): mixed;
+    public function fromValidator(array|object $data): void;
 
 }

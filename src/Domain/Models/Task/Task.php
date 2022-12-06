@@ -304,7 +304,7 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
         ];
     }
 
-    public function fromValidator(array|object $data)
+    public function fromValidator(array|object $data) : void
     {
         $this->category_id = intval($data->category_id);
         $this->name = $data->name;
