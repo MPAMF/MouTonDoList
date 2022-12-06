@@ -6,18 +6,18 @@ class UpdateTaskCommentRequest
 {
 
     private int $userId;
-    private int $categoryId;
+    private int $taskCommentId;
     private array $formData;
 
     /**
      * @param int $userId
-     * @param int $categoryId
+     * @param int $taskCommentId
      * @param array $formData
      */
-    public function __construct(int $userId, int $categoryId, array $formData)
+    public function __construct(int $userId, int $taskCommentId, array $formData)
     {
         $this->userId = $userId;
-        $this->categoryId = $categoryId;
+        $this->taskCommentId = $taskCommentId;
         $this->formData = $formData;
     }
 
@@ -32,9 +32,9 @@ class UpdateTaskCommentRequest
     /**
      * @return int
      */
-    public function getCategoryId(): int
+    public function getTaskCommentId(): int
     {
-        return $this->categoryId;
+        return $this->taskCommentId;
     }
 
     /**
