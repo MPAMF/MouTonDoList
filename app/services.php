@@ -5,6 +5,7 @@ use App\Domain\Services\Category\CreateCategoryService;
 use App\Domain\Services\Category\DeleteCategoryService;
 use App\Domain\Services\Category\GetCategoryService;
 use App\Domain\Services\Category\UpdateCategoryService;
+use App\Domain\Services\DisplayDashboardService;
 use App\Domain\Services\Task\CreateTaskService;
 use App\Domain\Services\Task\DeleteTaskService;
 use App\Domain\Services\Task\GetTaskService;
@@ -58,6 +59,8 @@ return function (ContainerBuilder $containerBuilder) {
         // UpdateUserService::class => autowire(UpdateUserServiceImpl::class),
         // GetUserService::class => autowire(GetUserServiceImpl::class),
         // DeleteUserService::class => autowire(DeleteUserServiceImpl::class),
+        // Dashboard
+        DisplayDashboardService::class => autowire(DisplayDashboardService::class),
         // UserCategories
         UserCategoryCheckPermissionService::class => autowire(UserCategoryCheckPermissionServiceImpl::class),
     ]);
