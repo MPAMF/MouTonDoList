@@ -11,6 +11,9 @@ use App\Application\Actions\Categories\DeleteCategoryAction;
 use App\Application\Actions\Categories\ReadCategoryAction;
 use App\Application\Actions\Categories\UpdateCategoryAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
+use App\Application\Actions\Invitations\AnswerInvitationAction;
+use App\Application\Actions\Invitations\CreateInvitationAction;
+use App\Application\Actions\Invitations\ListInvitationsAction;
 use App\Application\Actions\TaskComments\CreateTaskCommentAction;
 use App\Application\Actions\TaskComments\DeleteTaskCommentAction;
 use App\Application\Actions\TaskComments\ReadTaskCommentAction;
@@ -80,6 +83,12 @@ return function (App $app) {
             $group->get('/{id}', ReadTaskCommentAction::class)->setName('actions.comments.read');
             $group->put('/{id}', UpdateTaskCommentAction::class)->setName('actions.comments.update');
             $group->delete('/{id}', DeleteTaskCommentAction::class)->setName('actions.comments.delete');
+        });
+
+        $group->group('/invitations', function (Group $group) {
+            $group->post('', CreateInvitationAction::class)->setName('actions.invitations.create');
+            $group->get('', ListInvitationsAction::class)->setName('actions.invitations.list');
+            $group->post('/{id}/answer', AnswerInvitationAction::class)->setName('actions.invitations.answer');
         });
     })->add(UserConnectedMiddleware::class);
 };
