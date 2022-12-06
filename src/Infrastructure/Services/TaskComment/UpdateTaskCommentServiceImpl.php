@@ -2,31 +2,16 @@
 
 namespace App\Infrastructure\Services\TaskComment;
 
-use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
-use App\Domain\Models\Category\CategoryNotFoundException;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Task\Task;
-use App\Domain\Models\Task\TaskNotFoundException;
-use App\Domain\Models\Task\TaskRepository;
 use App\Domain\Models\TaskComment\TaskComment;
-use App\Domain\Models\TaskComment\TaskCommentNotFoundException;
 use App\Domain\Models\TaskComment\TaskCommentRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
-use App\Domain\Requests\Category\GetCategoryRequest;
-use App\Domain\Requests\Task\GetTaskRequest;
-use App\Domain\Requests\Task\UpdateTaskRequest;
 use App\Domain\Requests\TaskComment\GetTaskCommentRequest;
 use App\Domain\Requests\TaskComment\UpdateTaskCommentRequest;
-use App\Domain\Services\Category\GetCategoryService;
-use App\Domain\Services\Task\GetTaskService;
-use App\Domain\Services\Task\UpdateTaskService;
 use App\Domain\Services\TaskComment\GetTaskCommentService;
 use App\Domain\Services\TaskComment\UpdateTaskCommentService;
 use App\Infrastructure\Services\Service;
-use DI\Annotation\Inject;
 
 class UpdateTaskCommentServiceImpl extends Service implements UpdateTaskCommentService
 {
@@ -81,5 +66,4 @@ class UpdateTaskCommentServiceImpl extends Service implements UpdateTaskCommentS
 
         return $taskComment;
     }
-
 }

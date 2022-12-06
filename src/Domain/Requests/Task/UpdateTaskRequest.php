@@ -44,6 +44,4 @@ class UpdateTaskRequest
     {
         return $this->formData;
     }
-
-
 }

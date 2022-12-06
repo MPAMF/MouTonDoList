@@ -33,5 +33,4 @@ class DeleteCategoryRequest
     {
         return $this->categoryId;
     }
-
 }

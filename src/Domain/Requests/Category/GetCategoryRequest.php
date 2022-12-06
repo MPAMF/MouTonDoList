@@ -44,5 +44,4 @@ class GetCategoryRequest
     {
         return $this->canEdit;
     }
-
 }

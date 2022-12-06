@@ -15,13 +15,13 @@ interface UserCategoryRepository
      * @param array|null $with ['user', 'category'] load objects
      * @return array Categories from user
      */
-    public function getCategories(User|int $user, ?bool $accepted = null, array|null $with = null) : array;
+    public function getCategories(User|int $user, ?bool $accepted = null, array|null $with = null): array;
 
     /**
      * @param UserCategory $userCategory User category
      * @return int Number of records deleted
      */
-    public function delete(UserCategory $userCategory) : int;
+    public function delete(UserCategory $userCategory): int;
 
     /**
      * @param UserCategory $userCategory User category
@@ -50,6 +50,5 @@ interface UserCategoryRepository
      * @param int|null $userId
      * @return bool
      */
-    public function exists(?int $id, ?int $categoryId = null, ?int $userId = null, ?bool $accepted = null, ?bool $canEdit = null) : bool;
-
+    public function exists(?int $id, ?int $categoryId = null, ?int $userId = null, ?bool $accepted = null, ?bool $canEdit = null): bool;
 }

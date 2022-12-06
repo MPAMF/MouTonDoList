@@ -16,5 +16,4 @@ interface DeleteCategoryService
      * @throws CategoryNotFoundException
      */
     public function delete(DeleteCategoryRequest $request): bool;
-
 }

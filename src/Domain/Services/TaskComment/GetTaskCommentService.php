@@ -18,6 +18,5 @@ interface GetTaskCommentService
      * @throws NoPermissionException
      * @throws TaskCommentNotFoundException
      */
-    public function get(GetTaskCommentRequest $request) : TaskComment;
-
+    public function get(GetTaskCommentRequest $request): TaskComment;
 }

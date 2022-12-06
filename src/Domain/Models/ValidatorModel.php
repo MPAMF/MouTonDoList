@@ -15,5 +15,4 @@ interface ValidatorModel
      * @return void
      */
     public function fromValidator(array|object $data): void;
-
 }

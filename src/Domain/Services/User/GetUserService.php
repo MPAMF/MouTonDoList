@@ -16,6 +16,5 @@ interface GetUserService
      * @throws CategoryNotFoundException
      * @throws NoPermissionException
      */
-    public function get(GetUserRequest $request) : User;
-
+    public function get(GetUserRequest $request): User;
 }

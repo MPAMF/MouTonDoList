@@ -6,7 +6,6 @@ use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
-use DI\Annotation\Inject;
 
 class UserCategoryCheckPermissionServiceImpl implements UserCategoryCheckPermissionService
 {
@@ -27,29 +26,37 @@ class UserCategoryCheckPermissionServiceImpl implements UserCategoryCheckPermiss
         $categoryId = $request->getCategoryId();
 
         if ($request->isCanEdit()) {
-
             if ($request->isCheckAccepted()) {
-                if (!$this->userCategoryRepository->exists(null, categoryId: $categoryId,
-                    userId: $userId, accepted: $request->isAccepted(), canEdit: true)) {
+                if (!$this->userCategoryRepository->exists(
+                    null,
+                    categoryId: $categoryId,
+                    userId: $userId,
+                    accepted: $request->isAccepted(),
+                    canEdit: true
+                )) {
                     throw new NoPermissionException();
                 }
-            } elseif (!$this->userCategoryRepository->exists(null, categoryId: $categoryId,
-                userId: $userId, canEdit: true)) {
+            } elseif (!$this->userCategoryRepository->exists(
+                null,
+                categoryId: $categoryId,
+                userId: $userId,
+                canEdit: true
+            )) {
                 throw new NoPermissionException();
             }
-
         } else {
-
             if ($request->isCheckAccepted()) {
-                if (!$this->userCategoryRepository->exists(null, categoryId: $categoryId,
-                    userId: $userId, accepted: $request->isAccepted())) {
+                if (!$this->userCategoryRepository->exists(
+                    null,
+                    categoryId: $categoryId,
+                    userId: $userId,
+                    accepted: $request->isAccepted()
+                )) {
                     throw new NoPermissionException();
                 }
             } elseif (!$this->userCategoryRepository->exists(null, categoryId: $categoryId)) {
                 throw new NoPermissionException();
             }
-
         }
-
     }
 }

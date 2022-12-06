@@ -44,6 +44,4 @@ class UpdateCategoryRequest
     {
         return $this->formData;
     }
-
-
 }

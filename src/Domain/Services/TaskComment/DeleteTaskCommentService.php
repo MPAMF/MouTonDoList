@@ -18,5 +18,4 @@ interface DeleteTaskCommentService
      * @throws TaskCommentNotFoundException
      */
     public function delete(DeleteTaskCommentRequest $request): bool;
-
 }

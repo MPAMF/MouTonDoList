@@ -20,6 +20,5 @@ interface CreateCategoryService
      * @throws NoPermissionException
      * @throws ValidationException
      */
-    public function create(CreateCategoryRequest $request) : Category;
-
+    public function create(CreateCategoryRequest $request): Category;
 }

@@ -33,5 +33,4 @@ class DeleteTaskRequest
     {
         return $this->taskId;
     }
-
 }

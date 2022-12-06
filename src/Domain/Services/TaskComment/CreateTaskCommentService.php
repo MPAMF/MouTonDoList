@@ -20,6 +20,5 @@ interface CreateTaskCommentService
      * @throws NoPermissionException
      * @throws ValidationException
      */
-    public function create(CreateTaskCommentRequest $request) : TaskComment;
-
+    public function create(CreateTaskCommentRequest $request): TaskComment;
 }

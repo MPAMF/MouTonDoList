@@ -23,5 +23,4 @@ interface UpdateTaskCommentService
      * @throws TaskCommentNotFoundException
      */
     public function update(UpdateTaskCommentRequest $request): TaskComment;
-
 }

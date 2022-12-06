@@ -16,5 +16,4 @@ interface DeleteUserService
      * @throws CategoryNotFoundException
      */
     public function delete(DeleteUserRequest $request): bool;
-
 }

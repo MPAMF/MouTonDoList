@@ -32,5 +32,4 @@ class CreateTaskRequest
     {
         return $this->formData;
     }
-
 }

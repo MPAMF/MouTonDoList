@@ -33,6 +33,4 @@ class CreateUserRequest
     {
         return $this->formData;
     }
-
-
 }

@@ -9,7 +9,6 @@ use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\DisplayDashboardRequest;
 use App\Domain\Services\DisplayDashboardService;
-use Illuminate\Support\Collection;
 
 class DisplayDashboardServiceImpl implements DisplayDashboardService
 {
@@ -97,5 +96,4 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
             'notifications' => $notifications
         ];
     }
-
 }

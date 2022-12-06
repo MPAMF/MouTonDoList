@@ -32,17 +32,13 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
         $this->task_id = 0;
     }
 
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
+    public static function getValidatorRules(): array
     {
-        $this->id = $id;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        return [
+            'content' => Validator::stringType()->length(min: 1),
+            'author_id' => Validator::intType(),
+            'assigned_id' => Validator::intType()
+        ];
     }
 
     /**
@@ -62,6 +58,14 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
     }
 
     /**
+     * @return User|null
+     */
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    /**
      * @param User|null $author
      */
     public function setAuthor(?User $author): void
@@ -70,12 +74,25 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
         $this->author_id = $author?->getId();
     }
 
-    /**
-     * @return User|null
-     */
-    public function getAuthor(): ?User
+    public function getId(): ?int
     {
-        return $this->author;
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return Task|null
+     */
+    public function getTask(): ?Task
+    {
+        return $this->task;
     }
 
     /**
@@ -88,19 +105,11 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
     }
 
     /**
-     * @return Task|null
+     * @return int|null
      */
-    public function getTask(): ?Task
+    public function getAuthorId(): ?int
     {
-        return $this->task;
-    }
-
-    /**
-     * @param int $task_id
-     */
-    public function setTaskId(int $task_id): void
-    {
-        $this->task_id = $task_id;
+        return $this->author_id;
     }
 
     /**
@@ -112,19 +121,50 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
     }
 
     /**
-     * @return int|null
-     */
-    public function getAuthorId(): ?int
-    {
-        return $this->author_id;
-    }
-
-    /**
      * @return int
      */
     public function getTaskId(): int
     {
         return $this->task_id;
+    }
+
+    /**
+     * @param int $task_id
+     */
+    public function setTaskId(int $task_id): void
+    {
+        $this->task_id = $task_id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        parent::fromRow($row);
+        $this->id = $row->id;
+        $this->author = $row->author ?? null;
+        $this->task = $row->task ?? null;
+        $this->fromValidator($row);
+    }
+
+    public function fromValidator(object|array $data): void
+    {
+        $this->content = $data->content;
+        $this->author_id = isset($data->author_id) ? intval($data->author_id) : null;
+        $this->task_id = isset($data->task_id) ? intval($data->task_id) : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        $result = $this->jsonSerialize();
+        unset($result['author']);
+        unset($result['task']);
+        unset($result['date']);
+        return $result;
     }
 
     #[\ReturnTypeWillChange]
@@ -140,45 +180,4 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
             'date' => $this->getCreatedAt()->format('Y-m-d H:i:s')
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fromRow(stdClass $row): void
-    {
-        parent::fromRow($row);
-        $this->id = $row->id;
-        $this->author = $row->author ?? null;
-        $this->task = $row->task ?? null;
-        $this->fromValidator($row);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toRow(): array
-    {
-        $result = $this->jsonSerialize();
-        unset($result['author']);
-        unset($result['task']);
-        unset($result['date']);
-        return $result;
-    }
-
-    public static function getValidatorRules(): array
-    {
-        return [
-            'content' => Validator::stringType()->length(min: 1),
-            'author_id' => Validator::intType(),
-            'assigned_id' => Validator::intType()
-        ];
-    }
-
-    public function fromValidator(object|array $data) : void
-    {
-        $this->content = $data->content;
-        $this->author_id = isset($data->author_id) ? intval($data->author_id) : null;
-        $this->task_id = isset($data->task_id) ? intval($data->task_id) : null;
-    }
-
 }

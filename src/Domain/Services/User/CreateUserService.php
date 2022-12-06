@@ -20,6 +20,5 @@ interface CreateUserService
      * @throws NoPermissionException
      * @throws ValidationException
      */
-    public function create(CreateUserRequest $request) : User;
-
+    public function create(CreateUserRequest $request): User;
 }

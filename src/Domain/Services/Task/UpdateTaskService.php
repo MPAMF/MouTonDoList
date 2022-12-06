@@ -25,5 +25,4 @@ interface UpdateTaskService
      * @throws TaskNotFoundException
      */
     public function update(UpdateTaskRequest $request): Task;
-
 }

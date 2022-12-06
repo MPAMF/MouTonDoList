@@ -16,6 +16,5 @@ interface GetCategoryService
      * @throws CategoryNotFoundException
      * @throws NoPermissionException
      */
-    public function get(GetCategoryRequest $request) : Category;
-
+    public function get(GetCategoryRequest $request): Category;
 }

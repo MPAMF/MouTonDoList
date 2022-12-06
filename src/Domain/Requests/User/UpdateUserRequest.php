@@ -44,6 +44,4 @@ class UpdateUserRequest
     {
         return $this->formData;
     }
-
-
 }
