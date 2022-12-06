@@ -1,5 +1,6 @@
 let activeCategories = 0
 let assignValue = null
+let assignId = null
 
 function toggleSearchScroll(){
     let searchbar = $(".searchbar")
@@ -55,12 +56,15 @@ function resetAssign() {
     if(activeCategories !== 0)
         toggleSearchScroll()
     assignValue = null
+    assignId = null
     document.getElementById("assign-value").innerHTML = ''
     document.getElementById("assign-cancel").style.display = "none"
     document.getElementById("searchbar-assign").style.display = "none"
 }
 
-function setAssignedValue(element) {
+function setAssignedValue(value, element) {
+    if(value === null) return
+    assignId = value
     if(element.innerText !== "")
         assignValue = element.innerText
     document.getElementById('assign-value').innerText = element.innerText
@@ -81,47 +85,69 @@ $(document).ready(function() {
     })
 
     $(document).on('keydown keypress', "#searchbar-input", function (e) {
-        let keyCode = e.keyCode || e.which;
+        let keyCode = e.keyCode || e.which
+        let input = $("#searchbar-input").val()
         if (keyCode === 13) {
             e.preventDefault();
-            let result = doSearch(assignValue, $("#searchbar-input").val().split())
+            if(assignId === null && input.length === 0) {
+                resetSearchbar()
+                return
+            }
+            let result = doSearch(input.split())
             displayResult(result)
         }
     });
 })
 
-function doSearch(assignValue, splitInputs) {
+function doSearch(splitInputs) {
     const result = []
     let correspond = false
 
-    categories.forEach(function(category) {
-        category.subs.forEach(function(sub) {
-            sub.tasks.forEach(function(task) {
-                switch (assignValue) {
-                    case null:
-                        break
-                    case task.assigned:
+    if(assignId === null && splitInputs.length !== 1 && splitInputs[0] !== "")
+    {
+        resetSearchbar()
+        return;
+    }
+
+    getCurrentCategory().subCategories.forEach(function(sub) {
+        sub.tasks.forEach(function(task) {
+
+            const name = (task.name.split(" ")).some(r => splitInputs.includes(r))
+            const desc = (task.description.split(" ")).some(r => splitInputs.includes(r))
+
+            if (name || desc)
+                correspond = true
+
+            switch (assignId) {
+                case null: // Null
+                    if(!correspond && splitInputs.length !== 1 && splitInputs[0] !== "") // no input matched
                         correspond = true
-                        break
-                    case 'None':
-                        if (task.assigned === "")
-                            correspond = true
-                        break
-                    default:
-                        break
-                }
-
-                const name = (task.name.split(" ")).some(r => splitInputs.includes(r))
-                const desc = (task.description.split(" ")).some(r => splitInputs.includes(r))
-
-                if (name || desc)
-                    correspond = true
-
-                if (correspond) {
-                    result.push(task)
+                    break
+                case -1: // None
+                    if(correspond) // if input matched : combined
+                        correspond = (task.assigned_id === null)
+                    else if(!correspond && splitInputs.length !== 1 && splitInputs[0] !== "") // no input matched
+                        correspond = (task.assigned_id === null)
+                    else if(!correspond && splitInputs.length === 1 && splitInputs[0] === "") // no input
+                        correspond = true
+                    break
+                case -2: // Any
+                    if(!correspond && splitInputs.length === 1 && splitInputs[0] === "") // no input
+                        correspond = true
+                    break
+                case task.assigned_id: // User's id correspond
+                    if(!correspond && splitInputs.length === 1 && splitInputs[0] === "") // no input
+                        correspond = true
+                    break
+                default:
                     correspond = false
-                }
-            })
+                    break
+            }
+
+            if (correspond) {
+                result.push(task)
+                correspond = false
+            }
         })
     })
     return result

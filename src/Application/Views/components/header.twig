@@ -22,18 +22,18 @@
                             <span id="assign-cancel" onclick="resetAssign()" class="text-muted searchbar-category-cancel mdi mdi-close-thick"></span>
                             <ul id="dropdown-assign" class="dropdown-menu dd-nav" data-bs="dropdown">
                                 <li>
-                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                    <button onclick="setAssignedValue(-1, this)" class="dropdown-item dropdown-item-nav" type="button">
                                         {% trans %}SearchAssignedNone{% endtrans %}
                                     </button>
                                 </li>
                                 <li>
-                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                    <button onclick="setAssignedValue(-2, this)" class="dropdown-item dropdown-item-nav" type="button">
                                         {% trans %}SearchAssignedAny{% endtrans %}
                                     </button>
                                 </li>
                                 {% for member in category.members %}
                                     <li>
-                                        <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                        <button onclick="setAssignedValue({{ member.user.id }}, this)" class="dropdown-item dropdown-item-nav" type="button">
                                             {{ member.user.username }}
                                         </button>
                                     </li>
