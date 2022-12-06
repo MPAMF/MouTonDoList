@@ -5,9 +5,11 @@ namespace App\Infrastructure\Services\Category;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Category\Requests\GetCategoryRequest;
-use App\Domain\Models\Category\Services\GetCategoryService;
 use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Domain\Requests\Category\GetCategoryRequest;
+use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
+use App\Domain\Services\Category\GetCategoryService;
+use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
 use DI\Annotation\Inject;
 
 class GetCategoryServiceImpl implements GetCategoryService
@@ -24,6 +26,12 @@ class GetCategoryServiceImpl implements GetCategoryService
      * @var UserCategoryRepository
      */
     public UserCategoryRepository $userCategoryRepository;
+
+    /**
+     * @Inject
+     * @var UserCategoryCheckPermissionService
+     */
+    public UserCategoryCheckPermissionService $userCategoryExistsService;
 
     /**
      * {@inheritDoc}
@@ -43,17 +51,12 @@ class GetCategoryServiceImpl implements GetCategoryService
                 throw new NoPermissionException();
             }
 
-            if ($request->isCanEdit()) {
-                if (!$this->userCategoryRepository->exists(null, categoryId: $id,
-                    userId: $userId, accepted: true, canEdit: true)) {
-                    throw new NoPermissionException();
-                }
-            } else {
-                if (!$this->userCategoryRepository->exists(null, categoryId: $id,
-                    userId: $userId, accepted: true)) {
-                    throw new NoPermissionException();
-                }
-            }
+            // Throws NoPermissionException if no permission
+            $this->userCategoryExistsService->exists(new UserCategoryCheckPermissionRequest(
+                userId: $userId,
+                categoryId: $id,
+                canEdit: $request->isCanEdit()
+            ));
 
         }
 

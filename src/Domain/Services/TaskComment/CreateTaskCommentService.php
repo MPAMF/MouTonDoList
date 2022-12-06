@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Domain\Models\Category\Services;
+namespace App\Domain\Services\TaskComment;
 
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
-use App\Domain\Models\Category\Category;
-use App\Domain\Models\Category\Requests\CreateCategoryRequest;
+use App\Domain\Models\TaskComment\TaskComment;
+use App\Domain\Requests\TaskComment\CreateTaskCommentRequest;
 
-interface CreateCategoryService
+interface CreateTaskCommentService
 {
 
     /**
-     * @param CreateCategoryRequest $categoryRequest
-     * @return Category
+     * @param CreateTaskCommentRequest $request
+     * @return TaskComment
      * @throws RepositorySaveException
      * @throws BadRequestException
      * @throws NoPermissionException
      * @throws ValidationException
      */
-    public function create(CreateCategoryRequest $categoryRequest) : Category;
+    public function create(CreateTaskCommentRequest $request) : TaskComment;
 
 }

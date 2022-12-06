@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Domain\Models\UserCategory;
 
 use App\Domain\Models\Category\Category;
+use App\Domain\Models\TimeStampedModel;
 use App\Domain\Models\User\User;
-use App\Domain\TimeStampedModel;
 use DateTime;
 use JsonSerializable;
 use stdClass;

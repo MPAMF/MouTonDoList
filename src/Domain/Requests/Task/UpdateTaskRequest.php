@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Domain\Models\Category\Requests;
+namespace App\Domain\Requests\Task;
 
-class UpdateCategoryRequest
+class UpdateTaskRequest
 {
 
     private int $userId;
-    private int $categoryId;
+    private int $taskId;
     private array $formData;
 
     /**
      * @param int $userId
-     * @param int $categoryId
+     * @param int $taskId
      * @param array $formData
      */
-    public function __construct(int $userId, int $categoryId, array $formData)
+    public function __construct(int $userId, int $taskId, array $formData)
     {
         $this->userId = $userId;
-        $this->categoryId = $categoryId;
+        $this->taskId = $taskId;
         $this->formData = $formData;
     }
 
@@ -32,9 +32,9 @@ class UpdateCategoryRequest
     /**
      * @return int
      */
-    public function getCategoryId(): int
+    public function getTaskId(): int
     {
-        return $this->categoryId;
+        return $this->taskId;
     }
 
     /**

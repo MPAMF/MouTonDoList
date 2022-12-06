@@ -3,10 +3,10 @@
 namespace App\Infrastructure\Services\Category;
 
 use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Category\Requests\DeleteCategoryRequest;
-use App\Domain\Models\Category\Requests\GetCategoryRequest;
-use App\Domain\Models\Category\Services\DeleteCategoryService;
-use App\Domain\Models\Category\Services\GetCategoryService;
+use App\Domain\Requests\Category\DeleteCategoryRequest;
+use App\Domain\Requests\Category\GetCategoryRequest;
+use App\Domain\Services\Category\DeleteCategoryService;
+use App\Domain\Services\Category\GetCategoryService;
 use DI\Annotation\Inject;
 
 class DeleteCategoryServiceImpl implements DeleteCategoryService

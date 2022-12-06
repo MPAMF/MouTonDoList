@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Models;
 
 interface ValidatorModel
 {
@@ -14,6 +14,6 @@ interface ValidatorModel
      * @param array|object $data
      * @return mixed
      */
-    public function fromValidator(array|object $data);
+    public function fromValidator(array|object $data): mixed;
 
 }

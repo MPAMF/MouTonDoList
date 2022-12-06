@@ -9,10 +9,12 @@ use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Category\Requests\CreateCategoryRequest;
-use App\Domain\Models\Category\Services\CreateCategoryService;
 use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Domain\Requests\Category\CreateCategoryRequest;
+use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
+use App\Domain\Services\Category\CreateCategoryService;
+use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
 use App\Infrastructure\Services\Service;
 use DI\Annotation\Inject;
 
@@ -21,32 +23,30 @@ class CreateCategoryServiceImpl extends Service implements CreateCategoryService
 
     /**
      * @Inject
-     * @var UserCategoryRepository
-     */
-    public UserCategoryRepository $userCategoryRepository;
-
-    /**
-     * @Inject
      * @var CategoryRepository
      */
     public CategoryRepository $categoryRepository;
 
     /**
+     * @Inject
+     * @var UserCategoryCheckPermissionService
+     */
+    public UserCategoryCheckPermissionService $userCategoryCheckPermissionService;
+
+    /**
      * {@inheritDoc}
      */
-    public function create(CreateCategoryRequest $categoryRequest): Category
+    public function create(CreateCategoryRequest $request): Category
     {
         $category = new Category();
-
-        $validator = $this->validator->validate($categoryRequest->getFormData(), $category->getValidatorRules());
+        $validator = $this->validator->validate($request->getFormData(), $category->getValidatorRules());
 
         if (!$validator->isValid()) {
             throw new ValidationException($validator->getErrors());
         }
 
         $data = $validator->getValues();
-
-        $userId = $categoryRequest->getUserId();
+        $userId = $request->getUserId();
         //
         $category->fromValidator($data);
 
@@ -58,10 +58,11 @@ class CreateCategoryServiceImpl extends Service implements CreateCategoryService
         } else {
 
             // Parent category isn't none, check if user has permission to create a new subCategory
-            if (!$this->userCategoryRepository->exists(null, categoryId: $category->getParentCategoryId(),
-                userId: $userId, accepted: true, canEdit: true)) {
-                throw new NoPermissionException();
-            }
+            // Throws exception if no permission
+            $this->userCategoryCheckPermissionService->exists(new UserCategoryCheckPermissionRequest(
+                userId: $userId,
+                categoryId: $category->getParentCategoryId(),
+            ));
 
             // set subcategory owner to the owner of the parent category
             try {

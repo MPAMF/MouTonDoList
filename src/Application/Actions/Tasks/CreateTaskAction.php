@@ -2,69 +2,52 @@
 
 namespace App\Application\Actions\Tasks;
 
+use App\Application\Actions\Action;
+use App\Domain\Exceptions\BadRequestException;
+use App\Domain\Exceptions\NoPermissionException;
+use App\Domain\Exceptions\RepositorySaveException;
+use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\CategoryNotFoundException;
-use App\Domain\Models\Task\Task;
+use App\Domain\Requests\Task\CreateTaskRequest;
+use App\Domain\Services\Task\CreateTaskService;
+use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpInternalServerErrorException;
+use Slim\Exception\HttpNotFoundException;
 
-class CreateTaskAction extends TaskAction
+class CreateTaskAction extends Action
 {
+
+    /**
+     * @Inject
+     * @var CreateTaskService
+     */
+    public CreateTaskService $createTaskService;
 
     /**
      * @inheritDoc
      */
     protected function action(): Response
     {
+        $request = new CreateTaskRequest(
+            userId: $this->user()->getId(),
+            formData: $this->getFormData()
+        );
 
-        $data = $this->getFormData();
-        $task = new Task();
-
-        $validator = $this->validator->validate($data, $task->getValidatorRules());
-
-        if (!$validator->isValid()) {
-            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
-        }
-
-        $data = $validator->getValues();
-
-        $userId = $this->user()->getId();
-        //
-        $task->fromValidator($data);
-        $task->setLastEditorId($userId);
-
-        // Check category validity
         try {
-            $task->setCategory($this->categoryRepository->get($task->getId()));
-        } catch (CategoryNotFoundException) {
-            throw new HttpBadRequestException($this->request, $this->translator->trans('CategoryNotFoundException'));
-        }
-
-        // Only accept to create tasks in subcategories
-        if ($task->getCategory()->getParentCategoryId() == null) {
-            throw new HttpBadRequestException($this->request, $this->translator->trans('CategoryParentException'));
-        }
-
-        // Check can edit
-        if ($task->getCategory()->getOwnerId() != $userId) {
-            if (!$this->userCategoryRepository->exists(null, $task->getCategoryId(), $userId, accepted: true, canEdit: true)) {
-                throw new HttpForbiddenException($this->request);
-            }
-        }
-
-        // Check assigned_id
-        if ($task->getAssignedId() != null) {
-
-            // Check if assigned user has access to the project
-            if (!$this->userCategoryRepository->exists(null, $task->getCategoryId(), $task->getAssignedId(), accepted: true)) {
-                throw new HttpBadRequestException($this->request, $this->translator->trans('AssignedUserNotFoundException'));
-            }
-
-        }
-
-        if (!$this->taskRepository->save($task)) {
-            // return with error?
-            return $this->respondWithData(['error' => $this->translator->trans('TaskCreateDBError')], 500);
+            $task = $this->createTaskService->create($request);
+        } catch (BadRequestException $e) {
+            throw new HttpBadRequestException($this->request, $e->getMessage());
+        } catch (NoPermissionException) {
+            throw new HttpForbiddenException($this->request);
+        } catch (RepositorySaveException $e) {
+            throw new HttpInternalServerErrorException($this->request, $e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpBadRequestException($this->request, json_encode($e->getErrors()));
+        } catch (CategoryNotFoundException $e) {
+            throw new HttpNotFoundException($this->request, $e->getMessage());
         }
 
         return $this->respondWithData($task);

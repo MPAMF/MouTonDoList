@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Domain\Models\Category\Requests;
+namespace App\Domain\Requests\User;
 
-class CreateCategoryRequest
+class UpdateUserRequest
 {
 
     private int $userId;
+    private int $categoryId;
     private array $formData;
 
     /**
      * @param int $userId
+     * @param int $categoryId
      * @param array $formData
      */
-    public function __construct(int $userId, array $formData)
+    public function __construct(int $userId, int $categoryId, array $formData)
     {
         $this->userId = $userId;
+        $this->categoryId = $categoryId;
         $this->formData = $formData;
     }
 
@@ -24,6 +27,14 @@ class CreateCategoryRequest
     public function getUserId(): int
     {
         return $this->userId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->categoryId;
     }
 
     /**

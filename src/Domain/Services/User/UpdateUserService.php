@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Domain\Models\Category\Services;
+namespace App\Domain\Services\User;
 
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
-use App\Domain\Models\Category\Category;
 use App\Domain\Models\Category\CategoryNotFoundException;
-use App\Domain\Models\Category\Requests\UpdateCategoryRequest;
+use App\Domain\Models\User\User;
+use App\Domain\Requests\User\UpdateUserRequest;
 
-interface UpdateCategoryService
+interface UpdateUserService
 {
 
     /**
-     * @param UpdateCategoryRequest $request
-     * @return Category
+     * @param UpdateUserRequest $request
+     * @return User
      * @throws RepositorySaveException
      * @throws ValidationException
      * @throws NoPermissionException
      * @throws CategoryNotFoundException
      */
-    public function update(UpdateCategoryRequest $request): Category;
+    public function update(UpdateUserRequest $request): User;
 
 }

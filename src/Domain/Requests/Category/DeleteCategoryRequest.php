@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Models\Category\Requests;
+namespace App\Domain\Requests\Category;
 
 class DeleteCategoryRequest
 {

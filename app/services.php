@@ -1,14 +1,36 @@
 <?php
 declare(strict_types=1);
 
-use App\Domain\Models\Category\Services\CreateCategoryService;
-use App\Domain\Models\Category\Services\DeleteCategoryService;
-use App\Domain\Models\Category\Services\GetCategoryService;
-use App\Domain\Models\Category\Services\UpdateCategoryService;
+use App\Domain\Services\Category\CreateCategoryService;
+use App\Domain\Services\Category\DeleteCategoryService;
+use App\Domain\Services\Category\GetCategoryService;
+use App\Domain\Services\Category\UpdateCategoryService;
+use App\Domain\Services\Task\CreateTaskService;
+use App\Domain\Services\Task\DeleteTaskService;
+use App\Domain\Services\Task\GetTaskService;
+use App\Domain\Services\Task\UpdateTaskService;
+use App\Domain\Services\TaskComment\CreateTaskCommentService;
+use App\Domain\Services\TaskComment\DeleteTaskCommentService;
+use App\Domain\Services\TaskComment\GetTaskCommentService;
+use App\Domain\Services\TaskComment\UpdateTaskCommentService;
+use App\Domain\Services\User\CreateUserService;
+use App\Domain\Services\User\DeleteUserService;
+use App\Domain\Services\User\GetUserService;
+use App\Domain\Services\User\UpdateUserService;
+use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
 use App\Infrastructure\Services\Category\CreateCategoryServiceImpl;
 use App\Infrastructure\Services\Category\DeleteCategoryServiceImpl;
 use App\Infrastructure\Services\Category\GetCategoryServiceImpl;
 use App\Infrastructure\Services\Category\UpdateCategoryServiceImpl;
+use App\Infrastructure\Services\Task\CreateTaskServiceImpl;
+use App\Infrastructure\Services\Task\DeleteTaskServiceImpl;
+use App\Infrastructure\Services\Task\GetTaskServiceImpl;
+use App\Infrastructure\Services\Task\UpdateTaskServiceImpl;
+use App\Infrastructure\Services\TaskComment\CreateTaskCommentServiceImpl;
+use App\Infrastructure\Services\TaskComment\DeleteTaskCommentServiceImpl;
+use App\Infrastructure\Services\TaskComment\GetTaskCommentServiceImpl;
+use App\Infrastructure\Services\TaskComment\UpdateTaskCommentServiceImpl;
+use App\Infrastructure\Services\UserCategory\UserCategoryCheckPermissionServiceImpl;
 use DI\ContainerBuilder;
 use function DI\autowire;
 
@@ -20,5 +42,23 @@ return function (ContainerBuilder $containerBuilder) {
         UpdateCategoryService::class => autowire(UpdateCategoryServiceImpl::class),
         GetCategoryService::class => autowire(GetCategoryServiceImpl::class),
         DeleteCategoryService::class => autowire(DeleteCategoryServiceImpl::class),
+        // Tasks
+        CreateTaskService::class => autowire(CreateTaskServiceImpl::class),
+        UpdateTaskService::class => autowire(UpdateTaskServiceImpl::class),
+        GetTaskService::class => autowire(GetTaskServiceImpl::class),
+        DeleteTaskService::class => autowire(DeleteTaskServiceImpl::class),
+        // TaskComments
+        CreateTaskCommentService::class => autowire(CreateTaskCommentServiceImpl::class),
+        UpdateTaskCommentService::class => autowire(UpdateTaskCommentServiceImpl::class),
+        GetTaskCommentService::class => autowire(GetTaskCommentServiceImpl::class),
+        DeleteTaskCommentService::class => autowire(DeleteTaskCommentServiceImpl::class),
+        // Users
+        // TODO:
+        // CreateUserService::class => autowire(CreateUserServiceImpl::class),
+        // UpdateUserService::class => autowire(UpdateUserServiceImpl::class),
+        // GetUserService::class => autowire(GetUserServiceImpl::class),
+        // DeleteUserService::class => autowire(DeleteUserServiceImpl::class),
+        // UserCategories
+        UserCategoryCheckPermissionService::class => autowire(UserCategoryCheckPermissionServiceImpl::class),
     ]);
 };

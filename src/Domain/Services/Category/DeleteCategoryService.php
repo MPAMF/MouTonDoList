@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domain\Models\Category\Services;
+namespace App\Domain\Services\Category;
 
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\CategoryNotFoundException;
-use App\Domain\Models\Category\Requests\DeleteCategoryRequest;
+use App\Domain\Requests\Category\DeleteCategoryRequest;
 
 interface DeleteCategoryService
 {

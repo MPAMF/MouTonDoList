@@ -6,11 +6,11 @@ use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Category\Requests\GetCategoryRequest;
-use App\Domain\Models\Category\Requests\UpdateCategoryRequest;
-use App\Domain\Models\Category\Services\GetCategoryService;
-use App\Domain\Models\Category\Services\UpdateCategoryService;
 use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Domain\Requests\Category\GetCategoryRequest;
+use App\Domain\Requests\Category\UpdateCategoryRequest;
+use App\Domain\Services\Category\GetCategoryService;
+use App\Domain\Services\Category\UpdateCategoryService;
 use App\Infrastructure\Services\Service;
 use DI\Annotation\Inject;
 
