@@ -118,6 +118,16 @@ body.default::-webkit-scrollbar-thumb,
     --#{$variable-prefix}btn-active-color: #{$body-color};
     --#{$variable-prefix}btn-active-border-color: #4B5057;
   }
+  .btn-modal-success{
+    --#{$variable-prefix}btn-color: #198754;
+    --#{$variable-prefix}btn-border-color: #198754;
+    --#{$variable-prefix}btn-hover-bg: #0B633A;
+    --#{$variable-prefix}btn-hover-border-color: #A2E7C7;
+    --#{$variable-prefix}btn-hover-color: #A2E7C7;
+    --#{$variable-prefix}btn-active-color: #{$body-color};
+    --#{$variable-prefix}btn-active-bg: #0D7444;
+    --#{$variable-prefix}btn-active-border-color: #{$body-color};
+  }
   .btn-modal-remove{
     --#{$variable-prefix}btn-color: #ec5941;
     --#{$variable-prefix}btn-border-color: #ec5941;
