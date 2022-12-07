@@ -98,6 +98,7 @@
   "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie",
   "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie archivée",
 
+  "TaskDragTitle": "Attrape la tâche pour la changer d'emplacement",
   "TaskCheckboxTitle": "Etat de la tâche",
   "TaskNameTitle": "Nom de la tâche",
   "TaskAssignedTitle": "Membre assignée à la tâche",

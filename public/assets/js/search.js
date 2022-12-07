@@ -145,6 +145,12 @@ function doSearch(splitInputs) {
             }
 
             if (correspond) {
+                if(task.assigned === null)
+                {
+                    task.assigned = { name: ""}
+                }
+                else if (task.assigned.name === null)
+                    task.assigned.name = ""
                 result.push(task)
                 correspond = false
             }
@@ -172,21 +178,40 @@ function toggleResearch(value) {
 function buildTaskElement(task) {
     let newTask = document.createElement("li")
     newTask.classList.add("list-group-item", "task-view")
-    newTask.innerHTML = '' +
-        '    <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d\'emplacement">' +
-        '        <span class="mdi mdi-18px mdi-drag"></span>' +
-        '    </button>' +
+    newTask.setAttribute("data-idCat", task.category_id)
+    newTask.setAttribute("data-idTask", task.id)
+    newTask.innerHTML = ''
+
+    if(data.canEdit)
+    {
+        newTask.innerHTML +=
+            '    <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d\'emplacement">' +
+            '        <span class="mdi mdi-18px mdi-drag"></span>' +
+            '    </button>'
+    }
+
+    newTask.innerHTML +=
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" ' + (task.checked ? 'checked' : '') + '>' +
-        '        <div class="task-view-info" id="taskViewInfo-' + task.subId + '-' + task.taskId + '" onclick="openTaskDetails(' + task.subId + ',' + task.taskId + ')">' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" ' + (task.checked ? 'checked' : '') + ' ' + (data.canEdit ? '' : 'disabled') +  '>' +
+        '        <div class="task-view-info" id="taskViewInfo-' + task.category_id + '-' + task.id + '" onclick="openTaskDetails(' + task.category_id + ',' + task.id + ')">' +
         '            <label class="form-check-label" title="Nom de la tâche">' + task.name + '</label>' +
-        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + task.assigned + '</small>' +
+        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + task.assigned.name + '</small>' +
         '            <small class="form-text text-muted" title="Description de la tâche">' + task.description + '</small>' +
         '        </div>' +
-        '    </div>' +
-        '    <a data-idCat="' + task.subId + '" data-idTask="' + task.taskId + '" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">' +
+        '    </div>'
+
+    let popover = ""
+    if(data.canEdit)
+        popover = 'data-bs-popover="task-popover">'
+    else
+        popover = 'data-bs-popover="task-readonly-popover">'
+
+    newTask.innerHTML +=
+        '    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="Actions de la tâche"'
+        + popover +
         '        <span class="mdi mdi-dots-horizontal"></span>' +
         '    </a>'
+
     return newTask
 }
 
