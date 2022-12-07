@@ -1,10 +1,14 @@
 class Repository {
 
-    constructor(endpoint) {
-        this.endpoint = endpoint
+    list(endpoint) {
+        return $.ajax({
+            url: `${this.endpoint}`,
+            type: 'get',
+            contentType: 'application/json; charset=utf-8',
+        })
     }
 
-    get(id) {
+    get(endpoint, id) {
         return $.ajax({
             url: `${this.endpoint}/${id}`,
             type: 'get',
@@ -12,7 +16,7 @@ class Repository {
         })
     }
 
-    put(id, data = {}) {
+    put(endpoint, id, data = {}) {
         return $.ajax({
             url: `${this.endpoint}/${id}`,
             type: 'put',
@@ -22,7 +26,7 @@ class Repository {
         })
     }
 
-    post(data = {}) {
+    post(endpoint, data = {}) {
         return $.ajax({
             url: this.endpoint,
             type: 'post',
@@ -32,7 +36,7 @@ class Repository {
         })
     }
 
-    delete(id) {
+    delete(endpoint, id) {
         return $.ajax({
             url: `${this.endpoint}/${id}`,
             type: 'delete',
@@ -46,80 +50,84 @@ class Repository {
 class TaskRepository extends Repository {
 
     constructor() {
-        super('actions/tasks');
+        super();
+        this.endpoint = '/actions/tasks'
     }
 
     get(id) {
-        return super.get(id)
+        return super.get(this.endpoint, id)
     }
 
     create(task) {
-        return super.post(task)
+        return super.post(this.endpoint, task)
     }
 
     update(task) {
-        return super.put(task.id, task)
+        return super.put(this.endpoint, task.id, task)
     }
 
     delete(task) {
-        return super.delete(task.id)
+        return super.delete(this.endpoint, task.id)
     }
 }
 
 class CategoryRepository extends Repository {
 
     constructor() {
-        super('actions/categories');
+        super();
+        this.endpoint = '/actions/categories'
     }
 
     get(id) {
-        return super.get(id)
+        return super.get(this.endpoint, id)
     }
 
     create(category) {
-        return super.post(category)
+        return super.post(this.endpoint, category)
     }
 
     update(category) {
-        return super.put(category.id, category)
+        return super.put(this.endpoint, category.id, category)
     }
 
     delete(category) {
-        return super.delete(category.id)
+        return super.delete(this.endpoint, category.id)
     }
 }
 
 class CommentRepository extends Repository {
 
     constructor() {
-        super('actions/comments');
+        super();
+        this.endpoint = '/actions/comments'
     }
 
     get(id) {
-        return super.get(id)
+        return super.get(this.endpoint, id)
     }
 
     create(comment) {
-        return super.post(comment)
+        return super.post(this.endpoint, comment)
     }
 
     update(comment) {
-        return super.put(comment.id, comment)
+        return super.put(this.endpoint, comment.id, comment)
     }
 
     delete(comment) {
-        return super.delete(comment.id)
+        return super.delete(this.endpoint, comment.id)
     }
 }
 
 class UserRepository extends Repository {
 
     constructor() {
-        super('actions/users');
+        super();
+        this.endpoint = '/actions/users'
     }
 
     get(id) {
-        return super.get(id)
+        return super.get(this.endpoint, id)
     }
 
     // Not implemented
@@ -128,11 +136,33 @@ class UserRepository extends Repository {
     }
 
     update(user) {
-        return super.put(user.id, user)
+        return super.put(this.endpoint, user.id, user)
     }
 
     // Not implemented
     delete(user) {
         return new Promise((resolve, reject) => reject());
     }
+}
+
+class InvitationRepository extends Repository {
+
+    constructor() {
+        super();
+        this.endpoint = '/actions/invitations'
+    }
+
+    list() {
+        return super.list(this.endpoint)
+    }
+
+    // Not implemented
+    create(user) {
+        return new Promise((resolve, reject) => reject());
+    }
+
+    update(user) {
+        return super.put(this.endpoint, user.id, user)
+    }
+
 }
