@@ -159,6 +159,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
             'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
             'accepted' => $this->accepted,
             'can_edit' => $this->canEdit,
+            'date' => $this->getCreatedAt()->format('Y-m-d H:i:s')
         ];
 
         if (isset($this->members)) {
