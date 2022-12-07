@@ -1,11 +1,11 @@
-<li class="list-group-item task-view" data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}">
+<li class="list-group-item task-view" data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}" id="Task-{{ task.categoryId }}-{{ task.id }}">
     {% if (canEdit) %}
         <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d'emplacement">
             <span class="mdi mdi-18px mdi-drag"></span>
         </button>
     {% endif %}
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="true"' : '' }} {{ canEdit ? '' : 'disabled="true"' }}>
+        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="true"' : '' }} {{ canEdit ? '' : 'disabled="true"' }} onclick="checkTask({{ task.categoryId }},{{ task.id }})">
         <div class="task-view-info" id="taskViewInfo-{{ task.categoryId }}-{{ task.id }}" onclick="openTaskDetails({{ task.categoryId }},{{ task.id }})">
             <label class="form-check-label" title="Nom de la tâche">
                 {{ task.name }}

@@ -1,6 +1,6 @@
-<li class="list-group-item task-view">
+<li class="list-group-item task-view" id = "Task-{{ task.categoryId }}-{{ task.id }}">
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="1"' : '' }} disabled>
+        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="1"' : '' }} disabled onclick="checkTask({{ task.categoryId }},{{ task.id }})">
         <div class="task-view-info" id="taskViewInfo-{{ task.categoryId }}-{{ task.id }}" data-bs-toggle="modal" data-bs-target="#taskModal-{{ task.categoryId }}-{{ task.id }}">
             <label class="form-check-label" title="Nom de la tâche">
                 {{ task.name }}

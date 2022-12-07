@@ -1,4 +1,4 @@
-<div class="accordion-item accordion-item-tasks subcategory-archive">
+<div class="accordion-item accordion-item-tasks subcategory-archive" id="Subcategory-{{ subCategory.id }}">
     <h2 class="accordion-header subcategory-header" id="panelsStayOpen-heading-{{ subCategory.id }}">
         {% if (canEdit) %}
             <span class="category-button">
@@ -13,9 +13,9 @@
             {{ subCategory.name }}
         </button>
         {% if (canEdit) %}
-            <span class="category-button">
+            <span class="category-button" id="Subcategory-popover-{{ subCategory.id }}">
                 <span class="accordion-button">
-                    <a tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" data-bs-popover="subcategory-archive-popover" aria-label="Liste d'actions d'une sous-catégorie archivée dans une todolist">
+                    <a data-archive="true" data-id="{{ subCategory.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" data-bs-popover="subcategory-popover" aria-label="Liste d'actions d'une sous-catégorie archivée dans une todolist">
                         <span class="mdi mdi-24px mdi-dots-horizontal"></span>
                     </a>
                 </span>
@@ -28,6 +28,9 @@
                 {% for task in tasks %}
                     {% include 'pages/components/task/archive.twig' with { 'taskId': taskId } %}
                 {% endfor %}
+            </ul>
+            <ul id="Sub-categoryNewTask-{{ subCatId }}" class="d-none">
+                {% include 'pages/components/task/new.twig' with { 'subCatId' : subCatId } %}
             </ul>
         </div>
     </div>

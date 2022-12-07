@@ -1,5 +1,4 @@
 <div class="accordion accordion-flush categories">
-
     <div class="category-title">
         <h3 id="title" onclick="openEditModalCategory({{ category.category.id }})">{{ category.category.name }}</h3>
         <div class="title-actions">
@@ -24,11 +23,14 @@
     <div id="default-category-content" data-sortable="categories">
         {% for subCategory in category.category.subCategories %}
             {% if subCategory.archived %}
-                {% include 'pages/components/sub-category/archive.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
+                <div id="sub-category">
+                    {% include 'pages/components/sub-category/archive.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
+                </div>
             {% else %}
-                {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
+                <div id="sub-category-archive" class="">
+                    {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
+                </div>
             {% endif %}
         {% endfor %}
     </div>
-
 </div>

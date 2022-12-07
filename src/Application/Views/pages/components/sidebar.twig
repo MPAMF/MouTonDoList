@@ -12,9 +12,9 @@
             <div class="collapse show" id="category-active">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     {% for cat in categories|filter(cat => cat.category.ownerId == user.id) %}
-                        <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}">
+                        <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}" id="CategorieTest{{ cat.category.id }}">
                             <a href="{{ url_for('dashboard', {'id':cat.category.id}) }}" class="d-inline-flex text-decoration-none rounded sidebar-li-name">{{ cat.category.name }}</a>
-                            <a data-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
+                            <a data-archive="false" data-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
                                 <span class="mdi mdi-dots-horizontal"></span>
                             </a>
                         </li>
@@ -31,9 +31,9 @@
             <div class="collapse show" id="category-active">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     {% for cat in categories|filter(cat => cat.category.ownerId != user.id)%}
-                        <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}">
+                        <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}" id="CategorieTest{{ cat.category.id }}">
                             <a href="{{ url_for('dashboard', {'id':cat.category.id}) }}" class="d-inline-flex text-decoration-none rounded sidebar-li-name">{{ cat.category.name }}</a>
-                            <a data-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" aria-label="Ouvre une liste d'actions pour une catégorie"
+                            <a data-archive="false" data-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" aria-label="Ouvre une liste d'actions pour une catégorie"
                                 {% if (canEdit) and (category.category.archived) %}
                                     data-bs-popover="category-archive-popover">
                                 {% elseif (canEdit) %}
@@ -58,14 +58,13 @@
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 
                     {% for cat in archivedCategories %}
-                        <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}">
+                        <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}"  id="CategorieTest{{ cat.category.id }}">
                             <a href="{{ url_for('dashboard', {'id':cat.category.id}) }}" class="d-inline-flex text-decoration-none rounded sidebar-li-name">{{ cat.category.name }}</a>
-                            <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-archive-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
+                            <a data-archive="true" data-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-popover" aria-label="Ouvre une liste d'actions pour une catégorie">
                                 <span class="mdi mdi-dots-horizontal"></span>
                             </a>
                         </li>
                     {% endfor %}
-
                 </ul>
             </div>
         </li>

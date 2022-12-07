@@ -88,7 +88,7 @@ function openEditModalCategory(catId)
     $("#modal-title").html('Modifier le projet')
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary">Enregistrer</button>')
+        '<button type="button" id="modal-submit" class="btn btn-primary" onclick="saveChangeCategoryName(' + catId + ')">Enregistrer</button>')
 
     let content = '<form class="row g-3 form-check">'
 
