@@ -5,7 +5,7 @@ namespace App\Application\Middleware\Auth;
 
 use App\Application\Middleware\Middleware;
 use App\Domain\Auth\AuthInterface;
-use App\Domain\User\UserNotFoundException;
+use App\Domain\Models\User\UserNotFoundException;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

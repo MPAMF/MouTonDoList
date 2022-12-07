@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\User;
 
-use App\Domain\User\UserNotFoundException;
+use App\Domain\Models\User\UserNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ListUsersAction extends UserAction

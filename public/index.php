@@ -35,6 +35,10 @@ $dependencies($containerBuilder);
 $repositories = require __DIR__ . '/../app/repositories.php';
 $repositories($containerBuilder);
 
+// Set up services
+$services = require __DIR__ . '/../app/services.php';
+$services($containerBuilder);
+
 // Instantiate the app
 $bootstrap = require __DIR__ . '/../app/bootstrap.php';
 $bootstrap($containerBuilder);
