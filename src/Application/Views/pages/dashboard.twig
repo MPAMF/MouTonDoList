@@ -24,6 +24,7 @@
     <script type="text/javascript" src="/assets/js/checks.js"></script>
     <script type="text/javascript" src="/assets/js/modal-init.js"></script>
     <script type="text/javascript" src="/assets/js/popover-init.js"></script>
+    <script type="text/javascript" src="/assets/js/load-notifications.js"></script>
 {% endblock %}
 
 {% block header %}
@@ -37,6 +38,7 @@
 
 {% block footer %}
     {% include 'components/footer.twig' %}
+    {% include 'components/toasts.twig' %}
 {% endblock %}
 
 {% block javascript_after %}
