@@ -1,20 +1,20 @@
 <li class="list-group-item task-view" data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}">
     {% if (canEdit) %}
-        <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d'emplacement">
+        <button class="btn btn-sm btn-task-drag" type="button" title="{{ 'TaskDragTitle'|trans|raw }}">
             <span class="mdi mdi-18px mdi-drag"></span>
         </button>
     {% endif %}
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" {{ task.checked ? 'checked="true"' : '' }} {{ canEdit ? '' : 'disabled="true"' }}>
+        <input class="form-check-input task-checkbox" type="checkbox" value="" title="{{ 'TaskCheckboxTitle'|trans|raw }}" {{ task.checked ? 'checked' : '' }} {{ canEdit ? '' : 'disabled' }}>
         <div class="task-view-info" id="taskViewInfo-{{ task.categoryId }}-{{ task.id }}" onclick="openTaskDetails({{ task.categoryId }},{{ task.id }})">
-            <label class="form-check-label" title="Nom de la tâche">
+            <label class="form-check-label" title="{{ 'TaskNameTitle'|trans|raw }}">
                 {{ task.name }}
             </label>
-            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">{{ task.assigned.name }}</small>
-            <small class="form-text text-muted" title="Description de la tâche">{{ task.description }}</small>
+            <small class="form-text text-muted assigned-member" title="{{ 'TaskAssignedTitle'|trans|raw }}">{{ task.assigned.name }}</small>
+            <small class="form-text text-muted" title="{{ 'TaskDescriptionTitle'|trans|raw }}">{{ task.description }}</small>
         </div>
     </div>
-    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="Actions de la tâche"
+    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="{{ 'TaskPopoverAriaLabel'|trans|raw }}"
         {% if (canEdit) %}
             data-bs-popover="task-popover">
         {% else %}

@@ -2,6 +2,18 @@
   "AppName" : "MouTonDoList",
   "TodoList": "TodoList francais",
 
+  "HeaderAriaLabel": "Actions et barre de navigation",
+
+  "ThemeDarkName": "Thème sombre",
+  "ThemeLightName": "Thème clair",
+
+  "CloseAriaLabel": "Close",
+
+  "SearchTypeAssigned": "Assigné",
+  "SearchAssigned": "Assigné=",
+  "SearchAssignedNone": "Aucun",
+  "SearchAssignedAny": "N'importe",
+
   "HomePresentation": "Présentation",
   "HomeLogin": "Connexion",
   "HomeSignIn": "Commencez gratuitement",
@@ -29,6 +41,38 @@
   "DropDownDisconnectNav": "Déconnexion",
   "DropDownThemeNav": "Thèmes",
   "DropDownShareNav": "Partage",
+
+  "ModalTaskDetailsName": "Détail de la tâche",
+  "ModalCategoryEditName": "Modifier le projet",
+  "ModalSubCategoryEditName": "Modifier la catégorie",
+  "ModalTaskEditName": "Modifier la tâche",
+
+  "ModalInputName": "Nom",
+  "ModalInputDescription": "Description",
+  "ModalInputProjectName": "Nom du projet",
+  "ModalInputTaskName": "Nom de la tâche",
+  "ModalInputCategoryName": "Nom de la catégorie",
+
+  "ModalProjectHideArchivedText": "Masquer les sections archivées",
+  "ModalProjectHideCheckedText": "Masquer les tâches effectuées",
+  "ModalProjectMembersTitle": "Liste des membres",
+  "ModalProjectMemberStatus": "Rôle du membre",
+  "ModalProjectMemberReader": "Lecteur",
+  "ModalProjectMemberEditor": "Editeur",
+  "ModalProjectMemberRemove": "Retirer",
+  "ModalProjectMemberStatusErrorText": "Le rôle d'un des membres n'est pas valide.",
+  "ModalProjectMemberEmailErrorText": "L'email indiqué n'est pas valide.",
+  "ModalProjectMemberNewText": " Ajouter un membre",
+  "ModalProjectMemberErrorText": "Le statut indiqué n'est pas valide.",
+  "ModalProjectMemberAddText": "Ajouter le membre",
+
+  "ModalCommentsTitle": "Liste des commentaires",
+  "ModalCommentAuthorUnknown": "Inconnu",
+  "ModalCommentDateTitle": "Date du commentaire",
+  "ModalCommentDeleteTitle": "Suppression du commentaire",
+  "ModalCommentNewText": " Ajouter un commentaire",
+  "ModalCommentErrorText": "Veuillez indiquer un commentaire.",
+  "ModalCommentAddText": "Ajouter le commentaire",
 
   "TitreModalNav": "Données du compte",
   "CloseModalNav": "Fermer",
@@ -74,5 +118,40 @@
   "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère doit être entre ",
   "RegexPassConf": "Les deux mots de passe sont différents.",
 
-  "ConnectionFailed": "Adresse e-mail ou mot de passe erronés."
+  "ConnectionFailed": "Adresse e-mail ou mot de passe erronés.",
+
+  "SidebarAriaLabel": "Liste de mes listes de tâches",
+  "SidebarMyProjectsName": "Mes projets",
+  "SidebarNewTodolistButton": "Création d'une liste de tâche",
+  "SidebarSharedProjectsName": "Projets partagés",
+  "SidebarArchivedProjectsName": "Mes projets archivés",
+
+  "CategorySearchResult": "Résultat de la recherche :",
+  "CategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une catégorie",
+
+  "SubCategoryDragTitle": "Attrape la sous-catégorie pour la changer d'emplacement",
+  "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie",
+  "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie archivée",
+
+  "TaskDragTitle": "Attrape la tâche pour la changer d'emplacement",
+  "TaskCheckboxTitle": "Etat de la tâche",
+  "TaskNameTitle": "Nom de la tâche",
+  "TaskAssignedTitle": "Membre assignée à la tâche",
+  "TaskDescriptionTitle": "Description de la tâche",
+  "TaskDeleteTitle": "Suppression de la tâche",
+  "TaskPopoverAriaLabel": "Ouvre une liste d'actions pour une tâche",
+  "TaskNotAssigned": "Non assignée",
+  "TaskNewTaskButtonName" : "Ajouter une tâche",
+
+  "NewTaskCancel": "Annuler",
+  "NewTaskCreate": "Ajouter une tâche",
+  "NewTaskNameAriaLabel": "Nom de la nouvelle tâche",
+  "NewTaskNamePlaceholder": "Nom",
+  "NewTaskNameError": "Veuillez indiquer un nom.",
+  "NewTaskDescriptionAriaLabel": "Description de la nouvelle tâche",
+  "NewTaskDescriptionPlaceholder": "Description",
+
+  "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
+  "FooterGitalb": "Page GitLab du projet",
+  "FooterGithub": "Page GitHub du projet"
 }

@@ -31,6 +31,12 @@ function getTaskInCurrentById(subCatId, taskId) {
     return currentSub.tasks[taskIdx]
 }
 
+function isCanEdit() { return data.canEdit }
+function isCanEditById(catId) { return getCategoryContainerById(catId).can_edit }
+
+function isOwner() { return data.user.id === getCurrentCategory().owner_id }
+function isOwnerById(catId) { return data.user.id === getCategoryById(catId).owner_id }
+
 function timeSince(date) {
 
     var seconds = Math.floor((new Date() - date) / 1000);
@@ -58,23 +64,3 @@ function timeSince(date) {
     }
     return Math.floor(seconds) + " seconds";
 }
-
-function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
-    console.log("taskId :" + taskId)
-    console.log("oldCatId :" + oldSubCategoryId)
-    console.log("oldIndex :" + oldIndex)
-    console.log("newCatId :" + newSubCategoryId)
-    console.log("newIndex :" + newIndex)
-}
-
-function moveSubCategory(subCatId, oldIndex, newIndex) {
-    console.log("subCatId :" + subCatId)
-    console.log("oldIndex :" + oldIndex)
-    console.log("newIndex :" + newIndex)
-}
-
-function isCanEdit() { return data.canEdit }
-function isCanEditById(catId) { return getCategoryContainerById(catId).can_edit }
-
-function isOwner() { return data.userId === getCurrentCategory().owner_id }
-function isOwnerById(catId) { return data.userId === getCategoryById(catId).owner_id }

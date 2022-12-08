@@ -24,7 +24,7 @@ function fetchNotifications() {
 function loadTaskToDo() {
     let notifications = [];
     let numberDays = 3;
-    let userId = data.userId;
+    let userId = data.user.id;
     let date = new Date();
     numberDays = 24 * 3600 * 1000 * numberDays;
 
