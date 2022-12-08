@@ -1,7 +1,7 @@
 function loadTaskToDo(){
     let notifications = [];
     let numberDays = 3;
-    let userId = data.id;
+    let userId = data.user.id;
     let date = new Date();
     date.setTime(date.getTime() - 24 * 3600 * 1000 * numberDays);
 

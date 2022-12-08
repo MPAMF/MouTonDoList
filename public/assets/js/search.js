@@ -185,18 +185,18 @@ function buildTaskElement(task) {
     if(data.canEdit)
     {
         newTask.innerHTML +=
-            '    <button class="btn btn-sm btn-task-drag" type="button" title="Attrape la tâche pour la changer d\'emplacement">' +
+            '    <button class="btn btn-sm btn-task-drag" type="button" title="' + getValueFromLanguage('TaskDragTitle') + '">' +
             '        <span class="mdi mdi-18px mdi-drag"></span>' +
             '    </button>'
     }
 
     newTask.innerHTML +=
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" ' + (task.checked ? 'checked' : '') + ' ' + (data.canEdit ? '' : 'disabled') +  '>' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? 'checked' : '') + ' ' + (data.canEdit ? '' : 'disabled') +  '>' +
         '        <div class="task-view-info" id="taskViewInfo-' + task.category_id + '-' + task.id + '" onclick="openTaskDetails(' + task.category_id + ',' + task.id + ')">' +
-        '            <label class="form-check-label" title="Nom de la tâche">' + task.name + '</label>' +
-        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + task.assigned.name + '</small>' +
-        '            <small class="form-text text-muted" title="Description de la tâche">' + task.description + '</small>' +
+        '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
+        '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + task.assigned.name + '</small>' +
+        '            <small class="form-text text-muted" title="' + getValueFromLanguage('TaskDescriptionTitle') + '">' + task.description + '</small>' +
         '        </div>' +
         '    </div>'
 
@@ -207,7 +207,7 @@ function buildTaskElement(task) {
         popover = 'data-bs-popover="task-readonly-popover">'
 
     newTask.innerHTML +=
-        '    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="Actions de la tâche"'
+        '    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="' + getValueFromLanguage('TaskPopoverAriaLabel') + '"'
         + popover +
         '        <span class="mdi mdi-dots-horizontal"></span>' +
         '    </a>'
