@@ -25,15 +25,31 @@ $(document).ready(function () {
                 res =  '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
                     '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
                     '<button type="button" class="btn btn-sm btn-popover" onclick="DuplicateCategory(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="ArchiveCategory(' + id + ')"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover" onclick="ArchiveCategory(' + id + ',false)"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
                     '<button type="button" class="btn btn-sm btn-popover" onclick="DeleteCategory(' + id + ')"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="AddSubcategory(' + id + ')"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
+                    '</div>'
+            }
+            else if(isArchive === "true"){
+                res = `<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                    <button type="button" class="btn btn-sm btn-popover" onclick="DuplicateCategory(` + id + `)"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>
+                    <button type="button" class="btn btn-sm btn-popover" onclick="UnarchivedCategory(` + id + `,false)"><span class="mdi mdi-archive-outline"></span> Désarchiver le projet</button>
+                    <button type="button" class="btn btn-sm btn-popover" onclick="DeleteCategory(` + id + `)"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>
+                </div>`;
+            }
+            else if(isArchive === "falseActive"){
+                res =  '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
+                    '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover" onclick="DuplicateCategory(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover" onclick="ArchiveCategory(' + id + ',true)"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover" onclick="DeleteCategory(' + id + ')"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>' +
+                    '<button type="button" class="btn btn-sm btn-popover" onclick="AddSubcategoryActive(' + id + ')"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
                     '</div>'
             }
             else{
                 res = `<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
                     <button type="button" class="btn btn-sm btn-popover" onclick="DuplicateCategory(` + id + `)"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>
-                    <button type="button" class="btn btn-sm btn-popover" onclick="UnarchivedCategory(` + id + `)"><span class="mdi mdi-archive-outline"></span> Désarchiver le projet</button>
+                    <button type="button" class="btn btn-sm btn-popover" onclick="UnarchivedCategory(` + id + `,true)"><span class="mdi mdi-archive-outline"></span> Désarchiver le projet</button>
                     <button type="button" class="btn btn-sm btn-popover" onclick="DeleteCategory(` + id + `)"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>
                 </div>`;
             }

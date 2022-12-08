@@ -1,4 +1,4 @@
-function ArchiveCategory(id)
+function ArchiveCategory(id, active)
 {
     let element = document.getElementById("category-archive")
     let newPlacement = element.getElementsByTagName("ul")
@@ -6,10 +6,19 @@ function ArchiveCategory(id)
     let attribute = category.getElementsByTagName("a")
     $("#Category" + id).appendTo(newPlacement);
 
-    attribute[1].setAttribute("data-archive","true");
+    if(active) {
+        attribute[1].setAttribute("data-archive","trueActive");
+        let categoryActive = document.getElementById("CategoryActive"+id)
+        let attributeActive = categoryActive.getElementsByTagName("a")
+        attributeActive[0].setAttribute("data-archive","trueActive");
+    }
+    else {
+        attribute[1].setAttribute("data-archive","true");
+    }
+
 }
 
-function UnarchivedCategory(id)
+function UnarchivedCategory(id, active)
 {
     let element = document.getElementById("category-active")
     let newPlacement = element.getElementsByTagName("ul")
@@ -17,7 +26,15 @@ function UnarchivedCategory(id)
     let attribute = category.getElementsByTagName("a")
     $("#Category" + id).appendTo(newPlacement);
 
-    attribute[1].setAttribute("data-archive","false");
+    if(active) {
+        attribute[1].setAttribute("data-archive","falseActive");
+        let categoryActive = document.getElementById("CategoryActive"+id)
+        let attributeActive = categoryActive.getElementsByTagName("a")
+        attributeActive[0].setAttribute("data-archive","falseActive");
+    }
+    else {
+        attribute[1].setAttribute("data-archive","false");
+    }
 }
 
 function DeleteCategory(id)
@@ -143,7 +160,7 @@ function AddSubcategoryEnd(id)
     subCategoryNewTask(subId)
 }
 
-function AddSubcategory()
+function AddSubcategoryActive()
 {
     let subId=10
     let subcategory = getSubcategory(subId)
