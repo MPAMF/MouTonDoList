@@ -1,7 +1,9 @@
-<nav role="navigation" class="navbar navbar-expand-lg fixed-top bg-primary" aria-label="Actions principales et accès aux autres pages">
+<nav role="navigation" class="navbar navbar-expand-lg fixed-top bg-primary"
+     aria-label="Actions principales et accès aux autres pages">
     <div class="container p-0">
         <div class="d-inline-flex">
-            <button type="button" class="btn btn-abs-nav btn-nav me-1 ms-1" data-bs-toggle="collapse" data-bs-target="#verticalNavbar" aria-expanded="false" aria-controls="verticalNavbar">
+            <button type="button" class="btn btn-abs-nav btn-nav me-1 ms-1" data-bs-toggle="collapse"
+                    data-bs-target="#verticalNavbar" aria-expanded="false" aria-controls="verticalNavbar">
                 <span class="mdi mdi-menu span-nav"></span>
             </button>
             <a class="nav-link active d-flex me-1" href=".">
@@ -15,34 +17,43 @@
                 <form class="dropdown input-group flex-nowrap container-searchbar" role="search">
                     <div class="d-flex align-items-center searchbar">
                         <div id="searchbar-assign" class="searchbar-category-container">
-                            <div id="assign-button" class="searchbar-category-button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div id="assign-button" class="searchbar-category-button" data-bs-toggle="dropdown"
+                                 aria-expanded="false">
                                 <small class="form-text text-muted">Assigné=</small>
                                 <small id="assign-value" class="form-text text-muted"></small>
                             </div>
-                            <span id="assign-cancel" onclick="resetAssign()" class="text-muted searchbar-category-cancel mdi mdi-close-thick"></span>
+                            <span id="assign-cancel" onclick="resetAssign()"
+                                  class="text-muted searchbar-category-cancel mdi mdi-close-thick"></span>
                             <ul id="dropdown-assign" class="dropdown-menu dd-nav" data-bs="dropdown">
                                 <li>
-                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav"
+                                            type="button">
                                         None
                                     </button>
                                 </li>
                                 <li>
-                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav"
+                                            type="button">
                                         Any
                                     </button>
                                 </li>
                                 <li>
-                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav" type="button">
+                                    <button onclick="setAssignedValue(this)" class="dropdown-item dropdown-item-nav"
+                                            type="button">
                                         NOM Prénom
                                     </button>
                                 </li>
                             </ul>
                         </div>
                         <div class="searchbar-input-container">
-                            <input type="text" id="searchbar-input" class="form-control" data-bs-toggle="dropdown" aria-expanded="false" placeholder= "{% trans %}InputSearchNav{% endtrans %}" aria-label="Search">
-                            <ul id="dropdown-category" class="dropdown-menu dropdown-menu-end dd-nav" data-bs="dropdown">
+                            <input type="text" id="searchbar-input" class="form-control" data-bs-toggle="dropdown"
+                                   aria-expanded="false" placeholder="{% trans %}InputSearchNav{% endtrans %}"
+                                   aria-label="Search">
+                            <ul id="dropdown-category" class="dropdown-menu dropdown-menu-end dd-nav"
+                                data-bs="dropdown">
                                 <li>
-                                    <button type="button" onclick="showDropdownAssign(event)" class="dropdown-item dropdown-item-nav">
+                                    <button type="button" onclick="showDropdownAssign(event)"
+                                            class="dropdown-item dropdown-item-nav">
                                         <span class="mdi mdi-account me-2"></span>
                                         Assigné
                                     </button>
@@ -50,47 +61,70 @@
                             </ul>
                         </div>
                     </div>
-                    <button type="reset" onclick="resetSearchbar()" class="btn searchbar-cancel"><span class="mdi mdi-24px mdi-close-circle"></span></button>
+                    <button type="reset" onclick="resetSearchbar()" class="btn searchbar-cancel"><span
+                                class="mdi mdi-24px mdi-close-circle"></span></button>
                 </form>
             </div>
 
-            <button class="btn btn-abs-nav btn-nav" type="submit" data-bs-toggle="collapse" data-bs-target="#collapseSearch"
+            <button class="btn btn-abs-nav btn-nav" type="submit" data-bs-toggle="collapse"
+                    data-bs-target="#collapseSearch"
                     aria-expanded="false" aria-controls="collapseSearch">
                 <span class="mdi mdi-magnify span-nav"></span>
             </button>
 
             <div class="btn-group-nav">
-                <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false" title="Notification"
+                <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false"
+                        title="Notification"
                         data-bs-toggle="modal" data-bs-target="#userModal" onclick="modalNotification()">
                     <span class="mdi mdi-bell span-nav"></span>
-                    <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification">99+</span>
+                    <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification"
+                          id="btn-notification-count"></span>
                 </button>
             </div>
 
             <div class="btn-group-nav">
-                <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown" aria-expanded="false" title="Compte">
+                <button type="button" class="btn btn-abs-nav btn-nav me-1" data-bs-toggle="dropdown"
+                        aria-expanded="false" title="Compte">
                     <span class="mdi mdi-account-circle span-nav"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end dd-nav">
-                    <li><button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
-                                data-bs-target="#userModal" onclick="modalUser()"> <span class="mdi mdi-account me-2"></span>
-                            {% trans %}DropDownAccount{% endtrans %}</button></li>
-                    <li><button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
-                                data-bs-target="#userModal" onclick="modalGeneral()"> <span class="mdi mdi-cog-outline me-2"></span>
-                            {% trans %}DropDownParameters{% endtrans %}</button></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
+                                data-bs-target="#userModal" onclick="modalUser()"><span
+                                    class="mdi mdi-account me-2"></span>
+                            {% trans %}DropDownAccount{% endtrans %}</button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
+                                data-bs-target="#userModal" onclick="modalGeneral()"><span
+                                    class="mdi mdi-cog-outline me-2"></span>
+                            {% trans %}DropDownParameters{% endtrans %}</button>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
 
-                    <li><button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
-                                data-bs-target="#userModal" onclick="modalTheme()"> <span class="mdi mdi-palette-outline me-2"></span>
-                            {% trans %}DropDownThemeNav{% endtrans %}</button></li>
+                    <li>
+                        <button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
+                                data-bs-target="#userModal" onclick="modalTheme()"><span
+                                    class="mdi mdi-palette-outline me-2"></span>
+                            {% trans %}DropDownThemeNav{% endtrans %}</button>
+                    </li>
 
-                    <li><button class="dropdown-item dropdown-item-nav" type="button"> <span class="mdi mdi-share me-2"></span>
-                            {% trans %}DropDownShareNav{% endtrans %}</button></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <button class="dropdown-item dropdown-item-nav" type="button"><span
+                                    class="mdi mdi-share me-2"></span>
+                            {% trans %}DropDownShareNav{% endtrans %}</button>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
 
-                    <li><form action="{{ url_for('account.logout') }}" method="post">
+                    <li>
+                        <form action="{{ url_for('account.logout') }}" method="post">
                             {{ csrf.html | raw }}
-                            <button class="dropdown-item dropdown-item-nav" type="submit"> <span class="mdi mdi-exit-run me-2"></span>
+                            <button class="dropdown-item dropdown-item-nav" type="submit"><span
+                                        class="mdi mdi-exit-run me-2"></span>
                                 {% trans %}DropDownDisconnectNav{% endtrans %}</button>
                         </form>
                     </li>
@@ -100,29 +134,46 @@
     </div>
 </nav>
 
-<div class="modal fade modal-edit" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
+<div class="modal fade modal-edit" id="userModal" tabindex="-1" aria-labelledby="userModalLabel"
+     data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="container-fluid d-flex">
                 <div class="mt-3 mb-2 pe-2">
                     <h1 class="modal-title fs-5 mb-4 text-center">{% trans %}ParamLiModalNav{% endtrans %}</h1>
                     <ul class="list-group">
-                        <li class="sidebar-li rounded" id="modal-btn-account"><button class="btn-user-modal" onclick="modalUser()">
-                                <span class="mdi mdi-account me-2"></span> {% trans %}UserLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded" id="modal-btn-general"><button class="btn-user-modal" onclick="modalGeneral()">
-                                <span class="mdi mdi-cog-outline me-2"></span> {% trans %}GeneralLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded" id="modal-btn-theme"><button class="btn-user-modal" onclick="modalTheme()">
-                                <span class="mdi mdi-palette-outline me-2"></span> {% trans %}ThemeLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded" id="modal-btn-notif"><button class="btn-user-modal" onclick="modalNotification()">
-                                <span class="mdi mdi-bell me-2"></span> {% trans %}NotifLiModalNav{% endtrans %}</button> </li>
-                        <li class="sidebar-li rounded" id="modal-btn-taskToDo"><button class="btn-user-modal" onclick="modalTaskToDo()">
-                                <span class="mdi mdi-bell me-2"></span> {% trans %}TaskToDoLiModalNav{% endtrans %}</button> </li>
+                        <li class="sidebar-li rounded" id="modal-btn-account">
+                            <button class="btn-user-modal" onclick="modalUser()">
+                                <span class="mdi mdi-account me-2"></span> {% trans %}UserLiModalNav{% endtrans %}
+                            </button>
+                        </li>
+                        <li class="sidebar-li rounded" id="modal-btn-general">
+                            <button class="btn-user-modal" onclick="modalGeneral()">
+                                <span class="mdi mdi-cog-outline me-2"></span> {% trans %}GeneralLiModalNav{% endtrans %}
+                            </button>
+                        </li>
+                        <li class="sidebar-li rounded" id="modal-btn-theme">
+                            <button class="btn-user-modal" onclick="modalTheme()">
+                                <span class="mdi mdi-palette-outline me-2"></span> {% trans %}ThemeLiModalNav{% endtrans %}
+                            </button>
+                        </li>
+                        <li class="sidebar-li rounded" id="modal-btn-notif">
+                            <button class="btn-user-modal" onclick="modalNotification()">
+                                <span class="mdi mdi-bell me-2"></span> {% trans %}NotifLiModalNav{% endtrans %}
+                            </button>
+                        </li>
+                        <li class="sidebar-li rounded" id="modal-btn-taskToDo">
+                            <button class="btn-user-modal" onclick="modalTaskToDo()">
+                                <span class="mdi mdi-bell me-2"></span> {% trans %}TaskToDoLiModalNav{% endtrans %}
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 <div class="container-fluid p-0">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitreModalNav{% endtrans %}</h1>
-                        <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div>
@@ -133,7 +184,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="btn-close-modal" data-bs-dismiss="modal">{% trans %}CloseModalNav{% endtrans %}</button>
+                        <button type="button" class="btn btn-secondary" id="btn-close-modal"
+                                data-bs-dismiss="modal">{% trans %}CloseModalNav{% endtrans %}</button>
                         <button type="button" class="btn btn-primary">{% trans %}SaveModalNav{% endtrans %}</button>
                     </div>
                 </div>
@@ -143,21 +195,24 @@
 </div>
 
 <script>
+    fetchNotifications();
+
     let lastPage = "";
     let idCat = "";
     let idTask = "";
 
-    function setActiveModal(newPage){
+    function setActiveModal(newPage) {
         closePopover();
-        if(lastPage !== ""){
-            $('#'+lastPage).removeClass("bg-secondary")
+        if (lastPage !== "") {
+            $('#' + lastPage).removeClass("bg-secondary")
         }
 
         lastPage = newPage;
-        $('#'+newPage).addClass("bg-secondary");
+        $('#' + newPage).addClass("bg-secondary");
     }
+
     /*  Theme */
-    function modalTheme(){
+    function modalTheme() {
         setActiveModal("modal-btn-theme");
         $('#modal-title-body').html(`{{ 'LabelThemeModalNav'|trans|raw }}`);
         $('#modal-div-body').html(`
@@ -181,7 +236,7 @@
     }
 
     /* Account */
-    function modalUser(){
+    function modalUser() {
         let pseudo = `{{ 'PseudoAccount'|trans|raw }}`;
         let mail = `{{ 'MailAccount'|trans|raw }}`;
         let pass = `{{ 'PasswordAccount'|trans|raw }}`;
@@ -190,19 +245,19 @@
         $('#modal-title-body').html(`{{ 'LabelAccount'|trans|raw }}`);
         $('#modal-div-body').html(`
             <div class="d-flex flex-column">
-                <h6>`+ pseudo + `</h6>
+                <h6>` + pseudo + `</h6>
                 <p></p>
 
-                <h6>`+ mail + `</h6>
+                <h6>` + mail + `</h6>
                 <p></p>
 
-                <h6>`+ pass + `</h6>
-                <button type="button" class="btn btn-abs-nav" onclick="modificationPassword()">`+ btn + `</button>
+                <h6>` + pass + `</h6>
+                <button type="button" class="btn btn-abs-nav" onclick="modificationPassword()">` + btn + `</button>
             </div>
         `);
     }
 
-    function modificationPassword(){
+    function modificationPassword() {
         let url = `{{ url_for('account.login') }}`;
         let annulation = `{{ 'AnnulationModalNav'|trans|raw }}`;
         let save = `{{ 'SaveModalNav'|trans|raw }}`;
@@ -250,17 +305,17 @@
     }
 
     /*  Notification and TaskToDo */
-    function loadAllValues(isTasks, values){
-        let res =`<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
+    function loadAllValues(isTasks, values) {
+        let res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
 
-        if(isTasks){/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
-            values.forEach(value =>{
-                res += createTaskToDo(value[0],value[1],value[2],`{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[3]);
+        if (isTasks) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+            values.forEach(value => {
+                res += createTaskToDo(value[0], value[1], value[2], `{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[3]);
             });
-        }
-        else{ /* [0]: categoryName; [1]: owner; [2]: creationDate; */
-            values.forEach(value =>{
-                res += createNotification(value[0],value[1],`{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[2]);
+        } else { /* [0]: categoryName; [1]: owner; [2]: creationDate; */
+            values.forEach(value => {
+                res += createNotification(value.id, value.category.name, value.category.owner.username,
+                    `{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value.date);
             });
         }
 
@@ -272,24 +327,24 @@
     function modalNotification() {
         setActiveModal("modal-btn-notif");
         $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
-        $('#modal-div-body').html(loadAllValues(false,loadNotification()));
+        $('#modal-div-body').html(loadAllValues(false, invitations));
         addEventNotif();
     }
 
-    function createNotification(category, owner, date){
+    function createNotification(invitationId, category, owner, date) {
         return `
-        <li class="sidebar-li rounded p-2" id="">
+        <li class="sidebar-li rounded p-2" id="invitation-` + invitationId + `">
             <div class="d-flex w-100 justify-content-between">
                 <label class="align-items-center mt-2" >
-                    ` + category +` , ` + owner +` , ` + date +`
+                    ` + category + ` , ` + owner + ` , ` + date + `
                 </label>
                 <div class="d-flex">
                     <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success" title="Notification"
-                         onclick="validNotification()">
+                         onclick="updateInvitation(` + invitationId + `,true)">
                         <span class="mdi mdi-check span-nav"></span>
                     </button>
                     <button type="button" class="btn position-relative btn-nav me-1 btn-modal-remove" title="Notification"
-                         onclick="refuseNotification()">
+                         onclick="updateInvitation(` + invitationId + `,false))">
                         <span class="mdi mdi-18px mdi-close-thick"></span>
                     </button>
                 </div>
@@ -298,33 +353,29 @@
         `;
     }
 
-    function validNotification(){
-
-    }
-
-    function refuseNotification(){
-
+    function removeInvitation(invitationId) {
+        $("#invitation-" + invitationId).remove();
     }
 
     /*  TaskToDo */
     function modalTaskToDo() {
         setActiveModal("modal-btn-taskToDo");
         $('#modal-title-body').html(`{{ 'TitleTaskToDoModalNav'|trans|raw }}`);
-        $('#modal-div-body').html(loadAllValues(true,loadTaskToDo()));
+        $('#modal-div-body').html(loadAllValues(true, loadTaskToDo()));
         addEventNotif();
     }
 
-    function createTaskToDo(taskName, subCatId, taskId, date){
+    function createTaskToDo(taskName, subCatId, taskId, date) {
         return `
-        <li class="sidebar-li rounded p-2" id="taskToDo-` + subCatId + `-` + taskId +`">
+        <li class="sidebar-li rounded p-2" id="taskToDo-` + subCatId + `-` + taskId + `">
             <div class="d-flex">
-                <div class="" onclick="openTaskDetails(`+ subCatId +`,`+ taskId +`)">
+                <div class="" onclick="openTaskDetails(` + subCatId + `,` + taskId + `)">
                     <label>
-                        ` + taskName +` , ` + date +`
+                        ` + taskName + ` , ` + date + `
                     </label>
                 </div>
                     <a class="ms-2" data-idCat="` + subCatId + `" data-idTask="` + taskId + `" role="button"
-                            data-bs="popover" data-bs-popover="taskToDo-popover" aria-label="Actions de la tâche" onclick="setTaskToDoPopoverValues(`+ subCatId +`,`+ taskId +`)">
+                            data-bs="popover" data-bs-popover="taskToDo-popover" aria-label="Actions de la tâche" onclick="setTaskToDoPopoverValues(` + subCatId + `,` + taskId + `)">
                         <span class="mdi mdi-dots-horizontal"></span>
                     </a>
             </div>
@@ -332,12 +383,13 @@
         `;
     }
 
-    function setTaskToDoPopoverValues(subCatId, taskId){
-        idCat = subCatId;idTask = taskId;
+    function setTaskToDoPopoverValues(subCatId, taskId) {
+        idCat = subCatId;
+        idTask = taskId;
     }
 
-    function addEventNotif(){
-        $("[data-bs-popover=TaskToDo-popover]").popover({
+    function addEventNotif() {
+        $("[data-bs-popover=taskToDo-popover]").popover({
             trigger: 'click',
             placement: 'right',
             customClass: 'popover',
@@ -345,40 +397,40 @@
             html: true,
             sanitize: false,
             content: () => {
-                let moveTrad = `{{'TaskToDoMoveToTaskModalNav'|trans|raw }}`;
-                let deleteTrad = `{{'TaskToDoDeleteToTaskModalNav'|trans|raw }}`;
+                let moveTrad = `{{ 'TaskToDoMoveToTaskModalNav'|trans|raw }}`;
+                let deleteTrad = `{{ 'TaskToDoDeleteToTaskModalNav'|trans|raw }}`;
                 return `
-                <div class="btn-group-vertical" id="taskToDo-popover-` + idCat + `-` + idTask +`" role="group" aria-label="Vertical button group">
-                    <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(`+ idCat +`,`+ idTask +`)">
-                            <span class="mdi mdi-archive-outline"></span>` + moveTrad +`</button>
-                    <button type="button" class="btn btn-sm btn-popover" onclick="deleteTaskToDo(`+ idCat +`,`+ idTask +`)">
-                            <span class="mdi mdi-trash-can"></span> `+ deleteTrad +` </button>
+                <div class="btn-group-vertical" id="taskToDo-popover-` + idCat + `-` + idTask + `" role="group" aria-label="Vertical button group">
+                    <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(` + idCat + `,` + idTask + `)">
+                            <span class="mdi mdi-archive-outline"></span>` + moveTrad + `</button>
+                    <button type="button" class="btn btn-sm btn-popover" onclick="deleteTaskToDo(` + idCat + `,` + idTask + `)">
+                            <span class="mdi mdi-trash-can"></span> ` + deleteTrad + ` </button>
                 </div>`;
             }
         })
     }
 
-    function closePopover(){
+    function closePopover() {
         let element = document.getElementById('taskToDo-popover-' + idCat + '-' + idTask);
-        if(element !== null) {
+        if (element !== null) {
             let parent = element.parentElement;
             if (parent !== null) {
                 let parent_parent = parent.parentElement;
-                if(parent_parent !== null){
+                if (parent_parent !== null) {
                     parent_parent.remove();
                 }
             }
         }
     }
 
-    function moveToSubCategory(subCatId, taskId){
+    function moveToSubCategory(subCatId, taskId) {
         closePopover();
         let element = document.getElementById('taskViewInfo-' + subCatId + '-' + taskId);
-        element.scrollIntoView({block:"center"});
+        element.scrollIntoView({block: "center"});
     }
 
-    function deleteTaskToDo(subCatId, taskId){
-        $('#naskToDo-' + subCatId + '-' + taskId).remove();
+    function deleteTaskToDo(subCatId, taskId) {
+        $('#taskToDo-' + subCatId + '-' + taskId).remove();
         closePopover();
     }
 
