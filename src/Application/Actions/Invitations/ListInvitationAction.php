@@ -3,25 +3,25 @@
 namespace App\Application\Actions\Invitations;
 
 use App\Application\Actions\Action;
-use App\Domain\Requests\Invitation\ListInvitationsRequest;
-use App\Domain\Services\Invitation\ListInvitationsService;
+use App\Domain\Requests\Invitation\ListInvitationRequest;
+use App\Domain\Services\Invitation\ListInvitationService;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ListInvitationsAction extends Action
+class ListInvitationAction extends Action
 {
 
     /**
      * @Inject
-     * @var ListInvitationsService
+     * @var ListInvitationService
      */
-    private ListInvitationsService $listInvitationsService;
+    private ListInvitationService $listInvitationsService;
 
     /**
      * {@inheritDoc}
      */
     protected function action(): Response
     {
-        $data = $this->listInvitationsService->list(new ListInvitationsRequest(
+        $data = $this->listInvitationsService->list(new ListInvitationRequest(
             userId: $this->user()->getId()
         ));
 

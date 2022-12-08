@@ -11,9 +11,11 @@ use App\Application\Actions\Categories\DeleteCategoryAction;
 use App\Application\Actions\Categories\ReadCategoryAction;
 use App\Application\Actions\Categories\UpdateCategoryAction;
 use App\Application\Actions\Dashboard\DisplayDashboardAction;
-use App\Application\Actions\Invitations\AnswerInvitationAction;
 use App\Application\Actions\Invitations\CreateInvitationAction;
-use App\Application\Actions\Invitations\ListInvitationsAction;
+use App\Application\Actions\Invitations\DeleteInvitationAction;
+use App\Application\Actions\Invitations\ListInvitationAction;
+use App\Application\Actions\Invitations\ReadInvitationAction;
+use App\Application\Actions\Invitations\UpdateInvitationAction;
 use App\Application\Actions\TaskComments\CreateTaskCommentAction;
 use App\Application\Actions\TaskComments\DeleteTaskCommentAction;
 use App\Application\Actions\TaskComments\ReadTaskCommentAction;
@@ -87,8 +89,11 @@ return function (App $app) {
 
         $group->group('/invitations', function (Group $group) {
             $group->post('', CreateInvitationAction::class)->setName('actions.invitations.create');
-            $group->get('', ListInvitationsAction::class)->setName('actions.invitations.list');
-            $group->post('/{id}/answer', AnswerInvitationAction::class)->setName('actions.invitations.answer');
+            $group->get('', ListInvitationAction::class)->setName('actions.invitations.list');
+            $group->get('/{id}', ReadInvitationAction::class)->setName('actions.invitations.read');
+            $group->put('/{id}', UpdateInvitationAction::class)->setName('actions.invitations.answer');
+            $group->delete('/{id}', DeleteInvitationAction::class)->setName('actions.invitations.delete');
         });
+
     })->add(UserConnectedMiddleware::class);
 };

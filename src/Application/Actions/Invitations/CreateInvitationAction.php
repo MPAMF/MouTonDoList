@@ -4,7 +4,7 @@ namespace App\Application\Actions\Invitations;
 
 use App\Application\Actions\Action;
 use App\Domain\Services\Invitation\CreateInvitationService;
-use App\Domain\Services\Invitation\ListInvitationsService;
+use App\Domain\Services\Invitation\ListInvitationService;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class CreateInvitationAction extends Action

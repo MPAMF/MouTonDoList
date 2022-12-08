@@ -3,17 +3,17 @@
 namespace App\Application\Actions\Invitations;
 
 use App\Application\Actions\Action;
-use App\Domain\Services\Invitation\AnswerInvitationService;
+use App\Domain\Services\Invitation\UpdateInvitationService;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class AnswerInvitationAction extends Action
+class UpdateInvitationAction extends Action
 {
 
     /**
      * @Inject
-     * @var AnswerInvitationService
+     * @var UpdateInvitationService
      */
-    private AnswerInvitationService $answerInvitationService;
+    private UpdateInvitationService $answerInvitationService;
 
     /**
      * {@inheritDoc}

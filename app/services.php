@@ -6,9 +6,9 @@ use App\Domain\Services\Category\DeleteCategoryService;
 use App\Domain\Services\Category\GetCategoryService;
 use App\Domain\Services\Category\UpdateCategoryService;
 use App\Domain\Services\DisplayDashboardService;
-use App\Domain\Services\Invitation\AnswerInvitationService;
+use App\Domain\Services\Invitation\UpdateInvitationService;
 use App\Domain\Services\Invitation\CreateInvitationService;
-use App\Domain\Services\Invitation\ListInvitationsService;
+use App\Domain\Services\Invitation\ListInvitationService;
 use App\Domain\Services\Task\CreateTaskService;
 use App\Domain\Services\Task\DeleteTaskService;
 use App\Domain\Services\Task\GetTaskService;
@@ -23,9 +23,9 @@ use App\Infrastructure\Services\Category\DeleteCategoryServiceImpl;
 use App\Infrastructure\Services\Category\GetCategoryServiceImpl;
 use App\Infrastructure\Services\Category\UpdateCategoryServiceImpl;
 use App\Infrastructure\Services\DisplayDashboardServiceImpl;
-use App\Infrastructure\Services\Invitation\AnswerInvitationServiceImpl;
+use App\Infrastructure\Services\Invitation\UpdateInvitationServiceImpl;
 use App\Infrastructure\Services\Invitation\CreateInvitationServiceImpl;
-use App\Infrastructure\Services\Invitation\ListInvitationsServiceImpl;
+use App\Infrastructure\Services\Invitation\ListInvitationServiceImpl;
 use App\Infrastructure\Services\Task\CreateTaskServiceImpl;
 use App\Infrastructure\Services\Task\DeleteTaskServiceImpl;
 use App\Infrastructure\Services\Task\GetTaskServiceImpl;
@@ -74,7 +74,7 @@ return function (ContainerBuilder $containerBuilder) {
 
         // Invitations
         CreateInvitationService::class => autowire(CreateInvitationServiceImpl::class),
-        AnswerInvitationService::class => autowire(AnswerInvitationServiceImpl::class),
-        ListInvitationsService::class => autowire(ListInvitationsServiceImpl::class)
+        UpdateInvitationService::class => autowire(UpdateInvitationServiceImpl::class),
+        ListInvitationService::class => autowire(ListInvitationServiceImpl::class)
     ]);
 };
