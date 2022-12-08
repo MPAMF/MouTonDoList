@@ -50,9 +50,9 @@ $(document).ready(function () {
         content: () => {
             let id = $(this)[0].activeElement.getAttribute('data-id').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
-                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
-                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="DuplicateCategoryShared(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="LeaveCategoryShared(' + id + ')"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="AddSubcategoryShared(' + id + ')"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
                 '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une tâche</button>' +
                 '</div>'
         }
@@ -67,8 +67,8 @@ $(document).ready(function () {
         content: () => {
             let id = $(this)[0].activeElement.getAttribute('data-id').toString();
             return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
-                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="DuplicateCategorySharedReadonly(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
+                '<button type="button" class="btn btn-sm btn-popover" onclick="LeaveCategorySharedReadonly(' + id + ')"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
                 '</div>'
         }
     })

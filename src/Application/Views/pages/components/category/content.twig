@@ -2,13 +2,13 @@
     <div class="category-title">
         <h3 id="title" onclick="openEditModalCategory({{ category.category.id }})">{{ category.category.name }}</h3>
         <div class="title-actions">
-            <a data-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="Ouvre une liste d'actions pour une catégorie"
+            <a  data-archive="false" data-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="Ouvre une liste d'actions pour une catégorie"
                 {% if (canEdit) and (category.category.archived) %}
-                    data-bs-popover="category-archive-popover">
+                data-archive="true" data-bs-popover="category-popover">
                 {% elseif (canEdit) %}
-                    data-bs-popover="category-popover">
+                    data-archive="false" data-bs-popover="category-popover">
                 {% else %}
-                    data-bs-popover="category-shared-readonly-popover">
+                    data-archive="false" data-bs-popover="category-shared-readonly-popover">
                 {% endif %}
                 <span class="mdi mdi-24px mdi-dots-horizontal"></span>
             </a>
@@ -21,16 +21,16 @@
     </div>
 
     <div id="default-category-content" data-sortable="categories">
+        <div id="sub-category">
+        </div>
         {% for subCategory in category.category.subCategories %}
             {% if subCategory.archived %}
-                <div id="sub-category">
-                    {% include 'pages/components/sub-category/archive.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
-                </div>
+                {% include 'pages/components/sub-category/archive.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
             {% else %}
-                <div id="sub-category-archive" class="">
-                    {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
-                </div>
+                {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
             {% endif %}
         {% endfor %}
+        <div id="sub-category-archive" class="">
+        </div>
     </div>
 </div>
