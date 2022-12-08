@@ -63,7 +63,8 @@
                 <button type="button" class="btn position-relative btn-abs-nav btn-nav me-1" aria-expanded="false" title="Notification"
                         data-bs-toggle="modal" data-bs-target="#userModal" onclick="modalNotification()">
                     <span class="mdi mdi-bell span-nav"></span>
-                    <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification">99+</span>
+                    <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-danger notification"
+                        id="btn-notification-count" ></span>
                 </button>
             </div>
 
@@ -143,6 +144,8 @@
 </div>
 
 <script>
+    callNotification();
+
     let lastPage = "";
     let idCat = "";
     let idTask = "";
@@ -156,6 +159,7 @@
         lastPage = newPage;
         $('#'+newPage).addClass("bg-secondary");
     }
+
     /*  Theme */
     function modalTheme(){
         setActiveModal("modal-btn-theme");
@@ -272,7 +276,7 @@
     function modalNotification() {
         setActiveModal("modal-btn-notif");
         $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
-        $('#modal-div-body').html(loadAllValues(false,loadNotification()));
+        $('#modal-div-body').html(loadAllValues(false,notificationTab));
         addEventNotif();
     }
 
@@ -337,7 +341,7 @@
     }
 
     function addEventNotif(){
-        $("[data-bs-popover=TaskToDo-popover]").popover({
+        $("[data-bs-popover=taskToDo-popover]").popover({
             trigger: 'click',
             placement: 'right',
             customClass: 'popover',
@@ -378,7 +382,7 @@
     }
 
     function deleteTaskToDo(subCatId, taskId){
-        $('#naskToDo-' + subCatId + '-' + taskId).remove();
+        $('#taskToDo-' + subCatId + '-' + taskId).remove();
         closePopover();
     }
 
