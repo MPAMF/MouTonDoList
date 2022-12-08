@@ -49,7 +49,7 @@
   "TaskToDoMoveToTaskModalNav": " Se déplacer vers la tâche",
   "TaskToDoDeleteToTaskModalNav": " Supprimer la notification",
 
-  "ToastTitleErrorUpdateInvitation": "Erreur sur les",
+  "ToastTitleErrorUpdateInvitation": "Erreur sur les ",
   "ToastErrorMessageUpdateInvitation": "Erreur avec l'invitation, essayez à nouveau plutard.",
 
   "LabelAccount": "Vos informations :",
