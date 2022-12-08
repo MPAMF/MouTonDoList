@@ -13,7 +13,7 @@ function openTaskDetails(subCatId, taskId)
         '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="Etat de la tâche" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + '>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="Nom de la tâche">' + task.name + '</label>' +
-        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + (task.assigned === null ? '' : task.assigned) + '</small>' +
+        '            <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">' + (task.assigned === null ? '' : task.assigned.name) + '</small>' +
         '            <small class="form-text text-muted" title="Description de la tâche">' + (task.description == null ? '' : task.description) + '</small>' +
         '        </div>' +
         '    </div>' +
@@ -102,13 +102,17 @@ function openEditModalCategory(catId)
             '</div>'
     }
 
+    let storageCategory = storageGetCategory(catId)
+    let hideArchived = storageCategory.hideArchived
+    let hideChecked = storageCategory.hideChecked
+
     content +=
             '<div class="col-12 checkbox">' +
-                '<input id="modal-checkbox-subcategory" class="form-check-input task-checkbox" type="checkbox" value="">' +
+                '<input id="modal-checkbox-subcategory" class="form-check-input task-checkbox" type="checkbox" value=""' + (hideArchived ? "checked" : "") + '>' +
                 '<label for="modal-checkbox-subcategory">Masquer les sections archivées</label>' +
             '</div>' +
             '<div class="col-12 checkbox">' +
-                '<input id="modal-checkbox-task" class="form-check-input task-checkbox" type="checkbox" value="">' +
+                '<input id="modal-checkbox-task" class="form-check-input task-checkbox" type="checkbox" value=""' + (hideChecked ? "checked" : "") + '>' +
                 '<label for="modal-checkbox-task">Masquer les tâches effectuées</label>' +
             '</div>'
 
@@ -182,6 +186,7 @@ function openEditModalCategory(catId)
         '</form>'
 
     $("#modal-body").html(content)
+    $("#modal-body").attr("data-id", catId)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -293,6 +298,11 @@ $(document).ready(
         let memberSelectsName = document.getElementsByName("modal-member-select")
         if(memberSelectsName.length !== 0)
             checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
+        let hideArchived = document.getElementById("modal-checkbox-subcategory").checked
+        let hideChecked = document.getElementById("modal-checkbox-task").checked
+        let catId = $("#modal-body").attr("data-id")
+        storageUpdateCategory(catId, hideArchived, hideChecked)
+        bootstrap.Modal.getInstance($("#modal")).hide()
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {
         checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit")

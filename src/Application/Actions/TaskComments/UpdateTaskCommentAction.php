@@ -2,44 +2,57 @@
 
 namespace App\Application\Actions\TaskComments;
 
+use App\Application\Actions\Action;
+use App\Domain\Exceptions\BadRequestException;
+use App\Domain\Exceptions\NoPermissionException;
+use App\Domain\Exceptions\RepositorySaveException;
+use App\Domain\Exceptions\ValidationException;
+use App\Domain\Models\Category\CategoryNotFoundException;
+use App\Domain\Models\Task\TaskNotFoundException;
+use App\Domain\Models\TaskComment\TaskCommentNotFoundException;
+use App\Domain\Requests\Task\UpdateTaskRequest;
+use App\Domain\Requests\TaskComment\UpdateTaskCommentRequest;
+use App\Domain\Services\Task\UpdateTaskService;
+use App\Domain\Services\TaskComment\UpdateTaskCommentService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpInternalServerErrorException;
+use Slim\Exception\HttpNotFoundException;
 
-class UpdateTaskCommentAction extends TaskCommentAction
+class UpdateTaskCommentAction extends Action
 {
+
+    /**
+     * @Inject
+     * @var UpdateTaskCommentService
+     */
+    private UpdateTaskCommentService $updateTaskCommentService;
+
 
     /**
      * @inheritDoc
      */
     protected function action(): Response
     {
-        $data = $this->getFormData();
-        $taskComment = $this->getTaskCommentWithPermissionCheck(with: ['task', 'category']);
+        $request = new UpdateTaskCommentRequest(
+            userId: $this->user()->getId(),
+            taskCommentId: (int)$this->resolveArg('id'),
+            formData: $this->getFormData()
+        );
 
-        $validator = $this->validator->validate($data, $taskComment->getValidatorRules());
-
-        if (!$validator->isValid()) {
-            throw new HttpBadRequestException($this->request, json_encode($validator->getErrors()));
-        }
-
-        $data = $validator->getValues();
-        $userId = $this->user()->getId();
-
-        if ($taskComment->getAuthorId() != $userId) {
+        try {
+            $taskComment = $this->updateTaskCommentService->update($request);
+        } catch (BadRequestException $e) {
+            throw new HttpBadRequestException($this->request, $e->getMessage());
+        } catch (NoPermissionException) {
             throw new HttpForbiddenException($this->request);
-        }
-
-        // Disable update of author_id and task_id
-        $data->author_id = $taskComment->getAuthorId();
-        $data->task_id = $taskComment->getTaskId();
-        //
-        $taskComment->fromValidator($data);
-
-        // Useless to check if something was deleted
-        if (!$this->taskCommentRepository->save($taskComment)) {
-            // return with error?
-            return $this->respondWithData(['error' => $this->translator->trans('TaskCommentUpdateDBError')], 500);
+        } catch (RepositorySaveException $e) {
+            throw new HttpInternalServerErrorException($this->request, $e->getMessage());
+        } catch (ValidationException $e) {
+            throw new HttpBadRequestException($this->request, json_encode($e->getErrors()));
+        } catch (TaskCommentNotFoundException $e) {
+            throw new HttpNotFoundException($this->request, $e->getMessage());
         }
 
         return $this->respondWithData($taskComment);

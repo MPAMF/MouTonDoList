@@ -54,13 +54,13 @@ return function (ContainerBuilder $containerBuilder) {
             // Add resources
             $translator->addResource(
                 'json',
-                __DIR__ . '/../resources/translations/translations.en.json',
+                __DIR__ . '/../public/assets/translations/translations.en.json',
                 'en'
             );
 
             $translator->addResource(
                 'json',
-                __DIR__ . '/../resources/translations/translations.fr.json',
+                __DIR__ . '/../public/assets/translations/translations.fr.json',
                 'fr'
             );
             return $translator;

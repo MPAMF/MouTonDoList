@@ -3,7 +3,7 @@
 namespace App\Application\Actions\Auth\Register;
 
 use App\Application\Actions\Auth\AuthAction;
-use App\Domain\User\User;
+use App\Domain\Models\User\User;
 use PHPUnit\Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Validator;
