@@ -2,7 +2,7 @@
 
 namespace App\Domain\Requests\Invitation;
 
-class ListInvitationsRequest
+class ListInvitationRequest
 {
 
     private int $userId;
