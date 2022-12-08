@@ -144,7 +144,7 @@
 </div>
 
 <script>
-    callNotification();
+    fetchNotifications();
 
     let lastPage = "";
     let idCat = "";
@@ -264,7 +264,8 @@
         }
         else{ /* [0]: categoryName; [1]: owner; [2]: creationDate; */
             values.forEach(value =>{
-                res += createNotification(value[0],value[1],`{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[2]);
+                res += createNotification(value.id, value.category.name, value.category.owner.username,
+                    `{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value.date);
             });
         }
 
@@ -276,24 +277,24 @@
     function modalNotification() {
         setActiveModal("modal-btn-notif");
         $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
-        $('#modal-div-body').html(loadAllValues(false,notificationTab));
+        $('#modal-div-body').html(loadAllValues(false,invitations));
         addEventNotif();
     }
 
-    function createNotification(category, owner, date){
+    function createNotification(invitationId, category, owner, date){
         return `
-        <li class="sidebar-li rounded p-2" id="">
+        <li class="sidebar-li rounded p-2" id="invitation-`+ invitationId +`">
             <div class="d-flex w-100 justify-content-between">
                 <label class="align-items-center mt-2" >
                     ` + category +` , ` + owner +` , ` + date +`
                 </label>
                 <div class="d-flex">
                     <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success" title="Notification"
-                         onclick="validNotification()">
+                         onclick="updateInvitation(`+ invitationId +`,true)">
                         <span class="mdi mdi-check span-nav"></span>
                     </button>
                     <button type="button" class="btn position-relative btn-nav me-1 btn-modal-remove" title="Notification"
-                         onclick="refuseNotification()">
+                         onclick="updateInvitation(`+ invitationId +`,false))">
                         <span class="mdi mdi-18px mdi-close-thick"></span>
                     </button>
                 </div>
@@ -302,12 +303,8 @@
         `;
     }
 
-    function validNotification(){
-
-    }
-
-    function refuseNotification(){
-
+    function removeInvitation(invitationId){
+        $("#invitation-"+invitationId).remove();
     }
 
     /*  TaskToDo */

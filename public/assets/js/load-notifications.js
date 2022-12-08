@@ -1,16 +1,12 @@
 let invitationRepository = new InvitationRepository();
 let countErrors = 0;
-let notificationTab = [];
+let invitations = [];
 
-function callNotification(){
+function fetchNotifications(){
     invitationRepository.list()
         .then(values => {
             $("#btn-notification-count").html(values.data.length);
-            notificationTab = [];
-            values.data.forEach(value => {
-                notificationTab.push([value.category.name,value.category.owner,value.date]);
-            });
-            console.log(values);
+            invitations = values.data;
             countErrors = 0;
         })
         .catch(e => {
@@ -19,17 +15,17 @@ function callNotification(){
         });
 
     if(countErrors > 3){
-        setTimeout(callNotification,60000);
+        setTimeout(fetchNotifications,60000);
     }
     else{
-        setTimeout(callNotification,5000);
+        setTimeout(fetchNotifications,5000);
     }
 }
 
 function loadTaskToDo(){
     let notifications = [];
     let numberDays = 3;
-    let userId = data.id;
+    let userId = data.userId;
     let date = new Date();
     numberDays = 24 * 3600 * 1000 * numberDays;
 
@@ -37,7 +33,6 @@ function loadTaskToDo(){
         if(userCategory.category.subCategories !== undefined){
             (userCategory.category.subCategories).forEach(function (subCategory) {
                 (subCategory.tasks).forEach(function (task) {
-                    console.log(userId)
                     if((task.assigned_id === userId) && (date.getTime() - (new Date(task.due_date)).getTime() >= numberDays)){
                         notifications.push([task.name,task.category_id,task.id,task.due_date])
                     }
@@ -47,4 +42,16 @@ function loadTaskToDo(){
     })
 
     return notifications;
+}
+
+function updateInvitation(invitationId, hasAccepted){
+    let invitationIdx = invitations.findIndex(c => c.id === invitationId);
+    invitations[invitationIdx].accept = hasAccepted;
+    invitationRepository.update(invitations[invitationIdx])
+        .then( function (){
+            removeInvitation(invitationId);
+        })
+        .catch(e => {
+
+        });
 }
