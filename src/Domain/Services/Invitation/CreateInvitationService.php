@@ -13,7 +13,6 @@ use App\Domain\Requests\Invitation\CreateInvitationRequest;
 
 interface CreateInvitationService
 {
-
     /**
      * @param CreateInvitationRequest $request
      * @return UserCategory
@@ -25,5 +24,4 @@ interface CreateInvitationService
      * @throws RepositorySaveException
      */
     public function create(CreateInvitationRequest $request) : UserCategory;
-
 }

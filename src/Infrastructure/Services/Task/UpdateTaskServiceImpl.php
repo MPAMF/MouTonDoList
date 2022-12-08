@@ -57,7 +57,8 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
         $userId = $request->getUserId();
 
         // Check category validity
-        if (!isset($data->category_id)) { // categoryId == null is main category, cannot create tasks in those categories
+        if (!isset($data->category_id)) {
+            // categoryId == null is main category, cannot create tasks in those categories
             throw new BadRequestException($this->translator->trans('CategoryIdNotValid'));
         } else {
             // Check if current category has same parentCategory

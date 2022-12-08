@@ -15,6 +15,9 @@ class ListInvitationServiceImpl implements ListInvitationService
      */
     public UserCategoryRepository $userCategoryRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     public function list(ListInvitationRequest $request): array
     {
         return $this->userCategoryRepository->getCategories($request->getUserId(), false, with: ['owner']);

@@ -6,9 +6,11 @@ use App\Domain\Services\Category\DeleteCategoryService;
 use App\Domain\Services\Category\GetCategoryService;
 use App\Domain\Services\Category\UpdateCategoryService;
 use App\Domain\Services\DisplayDashboardService;
-use App\Domain\Services\Invitation\UpdateInvitationService;
 use App\Domain\Services\Invitation\CreateInvitationService;
+use App\Domain\Services\Invitation\DeleteInvitationService;
+use App\Domain\Services\Invitation\GetInvitationService;
 use App\Domain\Services\Invitation\ListInvitationService;
+use App\Domain\Services\Invitation\UpdateInvitationService;
 use App\Domain\Services\Task\CreateTaskService;
 use App\Domain\Services\Task\DeleteTaskService;
 use App\Domain\Services\Task\GetTaskService;
@@ -23,9 +25,11 @@ use App\Infrastructure\Services\Category\DeleteCategoryServiceImpl;
 use App\Infrastructure\Services\Category\GetCategoryServiceImpl;
 use App\Infrastructure\Services\Category\UpdateCategoryServiceImpl;
 use App\Infrastructure\Services\DisplayDashboardServiceImpl;
-use App\Infrastructure\Services\Invitation\UpdateInvitationServiceImpl;
 use App\Infrastructure\Services\Invitation\CreateInvitationServiceImpl;
+use App\Infrastructure\Services\Invitation\DeleteInvitationServiceImpl;
+use App\Infrastructure\Services\Invitation\GetInvitationServiceImpl;
 use App\Infrastructure\Services\Invitation\ListInvitationServiceImpl;
+use App\Infrastructure\Services\Invitation\UpdateInvitationServiceImpl;
 use App\Infrastructure\Services\Task\CreateTaskServiceImpl;
 use App\Infrastructure\Services\Task\DeleteTaskServiceImpl;
 use App\Infrastructure\Services\Task\GetTaskServiceImpl;
@@ -75,6 +79,8 @@ return function (ContainerBuilder $containerBuilder) {
         // Invitations
         CreateInvitationService::class => autowire(CreateInvitationServiceImpl::class),
         UpdateInvitationService::class => autowire(UpdateInvitationServiceImpl::class),
-        ListInvitationService::class => autowire(ListInvitationServiceImpl::class)
+        ListInvitationService::class => autowire(ListInvitationServiceImpl::class),
+        GetInvitationService::class => autowire(GetInvitationServiceImpl::class),
+        DeleteInvitationService::class => autowire(DeleteInvitationServiceImpl::class),
     ]);
 };

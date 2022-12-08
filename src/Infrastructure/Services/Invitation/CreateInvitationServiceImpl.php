@@ -44,7 +44,6 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
     public function create(CreateInvitationRequest $request): UserCategory
     {
         $userCategory = new UserCategory();
-
         $validator = $this->validator->validate($request->getFormData(), $userCategory->getValidatorRules());
 
         if (!$validator->isValid()) {
