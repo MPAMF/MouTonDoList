@@ -2,6 +2,7 @@
 
 {% block javascript_before %}
     <script type="text/javascript" src="/assets/js/local-storage.js"></script>
+    <script type="text/javascript" src="/assets/js/translations.js"></script>
     <script type="text/javascript">
         const data = {
             categories: JSON.parse(`{{ categories.values()|json_encode|raw }}`),
@@ -9,18 +10,21 @@
             currentCategoryId: {{ category.category.id }},
             currentCategoryIdx: 0,
             canEdit: {{ canEdit|json_encode|raw }},
-            userId: {{ user.id }}
+            user: {{ user|json_encode|raw }},
+            language: {}
         }
         data.categories = data.categories.concat(JSON.parse(`{{ archivedCategories.values()|json_encode|raw }}`))
         data.currentCategoryIdx = data.categories.findIndex(c => c.id === data.currentUserCategoryId)
         updateStorageFromData()
+        loadTranslations()
         console.log(data)
     </script>
     <script type="text/javascript" src="/assets/js/repositories.js"></script>
-    <script type="text/javascript" src="/assets/js/utils-category.js"></script>
+    <script type="text/javascript" src="/assets/js/utils-data.js"></script>
     <script type="text/javascript" src="/assets/js/checks.js"></script>
     <script type="text/javascript" src="/assets/js/modal-init.js"></script>
     <script type="text/javascript" src="/assets/js/popover-init.js"></script>
+    <script type="text/javascript" src="/assets/js/load-notifications.js"></script>
 {% endblock %}
 
 {% block header %}
@@ -34,6 +38,7 @@
 
 {% block footer %}
     {% include 'components/footer.twig' %}
+    {% include 'components/toasts.twig' %}
 {% endblock %}
 
 {% block javascript_after %}
@@ -43,6 +48,6 @@
     <script type="text/javascript" src="/assets/js/search.js"></script>
     <script type="text/javascript" src="/assets/js/theme-switcher.js"></script>
     <script type="text/javascript" src="/assets/js/sidebar-event.js"></script>
-    <script type="text/javascript" src="/assets/js/popover-actions.js"></script>
+    <script type="text/javascript" src="/assets/js/actions.js"></script>
 {% endblock %}
 

@@ -2,23 +2,22 @@
 
 namespace App\Domain\Requests\Invitation;
 
-class AnswerInvitationRequest
+class GetInvitationRequest
 {
-
     private int $userId;
     private int $invitationId;
-    private array $formData;
+    private ?array $with;
 
     /**
      * @param int $userId
      * @param int $invitationId
-     * @param array $formData
+     * @param array|null $with
      */
-    public function __construct(int $userId, int $invitationId, array $formData)
+    public function __construct(int $userId, int $invitationId, array|null $with = null)
     {
         $this->userId = $userId;
         $this->invitationId = $invitationId;
-        $this->formData = $formData;
+        $this->with = $with;
     }
 
     /**
@@ -30,14 +29,6 @@ class AnswerInvitationRequest
     }
 
     /**
-     * @return array
-     */
-    public function getFormData(): array
-    {
-        return $this->formData;
-    }
-
-    /**
      * @return int
      */
     public function getInvitationId(): int
@@ -45,4 +36,11 @@ class AnswerInvitationRequest
         return $this->invitationId;
     }
 
+    /**
+     * @return array|null
+     */
+    public function getWith(): ?array
+    {
+        return $this->with;
+    }
 }

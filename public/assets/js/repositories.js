@@ -161,8 +161,11 @@ class InvitationRepository extends Repository {
         return new Promise((resolve, reject) => reject());
     }
 
-    update(user) {
-        return super.put(this.endpoint, user.id, user)
+    update(category) {
+        return super.put(this.endpoint, category.id, category)
     }
 
+    delete(id) {
+        return super.delete(this.endpoint, id)
+    }
 }
