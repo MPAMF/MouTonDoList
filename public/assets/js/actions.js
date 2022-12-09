@@ -1,3 +1,9 @@
+const repositories = {
+    categories: new CategoryRepository(),
+    tasks: new TaskRepository(),
+    taskComments: new CommentRepository()
+}
+
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
     console.log("taskId :" + taskId)
     console.log("oldCatId :" + oldSubCategoryId)
@@ -12,54 +18,56 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
     console.log("newIndex :" + newIndex)
 }
 
-function ArchiveCategory(id, active)
-{
+function ArchiveCategory(id, active) {
     let element = document.getElementById("category-archive")
     let newPlacement = element.getElementsByTagName("ul")
-    let category = document.getElementById("Category"+id)
+    let category = document.getElementById("Category" + id)
     let attribute = category.getElementsByTagName("a")
     $("#Category" + id).appendTo(newPlacement);
 
-    if(active) {
-        attribute[1].setAttribute("data-archive","trueActive");
-        let categoryActive = document.getElementById("CategoryActive"+id)
+    if (active) {
+        attribute[1].setAttribute("data-archive", "trueActive");
+        let categoryActive = document.getElementById("CategoryActive" + id)
         let attributeActive = categoryActive.getElementsByTagName("a")
-        attributeActive[0].setAttribute("data-archive","trueActive");
-    }
-    else {
-        attribute[1].setAttribute("data-archive","true");
+        attributeActive[0].setAttribute("data-archive", "trueActive");
+    } else {
+        attribute[1].setAttribute("data-archive", "true");
     }
 
 }
 
-function UnarchivedCategory(id, active)
-{
+function UnarchivedCategory(id, active) {
     let element = document.getElementById("category-active")
     let newPlacement = element.getElementsByTagName("ul")
-    let category = document.getElementById("Category"+id)
+    let category = document.getElementById("Category" + id)
     let attribute = category.getElementsByTagName("a")
     $("#Category" + id).appendTo(newPlacement);
 
-    if(active) {
-        attribute[1].setAttribute("data-archive","falseActive");
-        let categoryActive = document.getElementById("CategoryActive"+id)
+    if (active) {
+        attribute[1].setAttribute("data-archive", "falseActive");
+        let categoryActive = document.getElementById("CategoryActive" + id)
         let attributeActive = categoryActive.getElementsByTagName("a")
-        attributeActive[0].setAttribute("data-archive","falseActive");
-    }
-    else {
-        attribute[1].setAttribute("data-archive","false");
+        attributeActive[0].setAttribute("data-archive", "falseActive");
+    } else {
+        attribute[1].setAttribute("data-archive", "false");
     }
 }
 
-function DeleteCategory(id)
-{
-    $("[data-bs-popover=category-popover]").popover('hide')
-    let elementDown = document.getElementById("Category" + id)
-    elementDown.remove();
+function DeleteCategory(id) {
+    repositories.categories.delete({id: id}).then(() => {
+        let elementDown = document.getElementById("Category" + id)
+        elementDown.remove();
+
+        // TODO: display info toast
+    }).catch(e => {
+        console.log(e)
+        // TODO: display info toast
+    }).finally(() => {
+        $("[data-bs-popover=category-popover]").popover('hide')
+    });
 }
 
-function DuplicateCategory(id)
-{
+function DuplicateCategory(id) {
     $("[data-bs-popover=category-popover]").popover('hide')
     let originalElement = document.getElementById("Category" + id);
     let cloneElement = originalElement.cloneNode(true)
@@ -67,48 +75,42 @@ function DuplicateCategory(id)
     originalElement.parentNode.appendChild(cloneElement)
 }
 
-function DuplicateCategoryShared(id)
-{
+function DuplicateCategoryShared(id) {
     let originalElement = document.getElementById("Category" + id);
     let cloneElement = originalElement.cloneNode(true)
     cloneElement.id = "Category" + (id + 7)
     originalElement.parentNode.appendChild(cloneElement)
 }
 
-function LeaveCategoryShared(id)
-{
+function LeaveCategoryShared(id) {
     $("[data-bs-popover=category-shared-popover]").popover('hide')
     let elementDown = document.getElementById("Category" + id)
     elementDown.remove();
 }
 
-function DuplicateCategorySharedReadonly(id)
-{
+function DuplicateCategorySharedReadonly(id) {
     let originalElement = document.getElementById("Category" + id);
     let cloneElement = originalElement.cloneNode(true)
     cloneElement.id = "Category" + (id + 7)
     originalElement.parentNode.appendChild(cloneElement)
 }
 
-function LeaveCategorySharedReadonly(id)
-{
+function LeaveCategorySharedReadonly(id) {
     $("[data-bs-popover=category-shared-popover]").popover('hide')
     let elementDown = document.getElementById("Category" + id)
     elementDown.remove();
 }
 
-function DeleteSubcategory(id)
-{
+function DeleteSubcategory(id) {
     $("[data-bs-popover=subcategory-popover]").popover('hide')
     let elementDown = document.getElementById("Subcategory-" + id)
     elementDown.remove();
 }
 
-function ArchiveSubcategory(id)
-{
+function ArchiveSubcategory(id) {
     let newPlacement = document.getElementById("sub-category-archive")
     let element = $("#Subcategory-" + id)
-    let subcategory = document.getElementById("Subcategory-popover-"+id)
+    let subcategory = document.getElementById("Subcategory-popover-" + id)
     let attribute = subcategory.getElementsByTagName("a")
 
     element.appendTo(newPlacement);
@@ -116,21 +118,19 @@ function ArchiveSubcategory(id)
 
     $("#Sub-categoryNewTask-" + id).addClass('d-none');
 
-    attribute[0].setAttribute("data-archive","true");
+    attribute[0].setAttribute("data-archive", "true");
 }
 
-function DeleteSubcategoryArchive(id)
-{
+function DeleteSubcategoryArchive(id) {
     $("[data-bs-popover=subcategory-archive-popover]").popover('hide')
     let elementDown = document.getElementById("Subcategory-" + id)
     elementDown.remove();
 }
 
-function UnarchivedSubcategory(id)
-{
+function UnarchivedSubcategory(id) {
     let newPlacement = document.getElementById("sub-category")
     let element = $("#Subcategory-" + id)
-    let subcategory = document.getElementById("Subcategory-popover-"+id)
+    let subcategory = document.getElementById("Subcategory-popover-" + id)
     let attribute = subcategory.getElementsByTagName("a")
 
     element.appendTo(newPlacement);
@@ -138,76 +138,67 @@ function UnarchivedSubcategory(id)
 
     $("#Sub-categoryNewTask-" + id).removeClass('d-none');
 
-    attribute[0].setAttribute("data-archive","false");
+    attribute[0].setAttribute("data-archive", "false");
 }
 
-function DuplicateTask(idCat,idTask)
-{
+function DuplicateTask(idCat, idTask) {
     let originalElement = document.getElementById("Task-" + idCat + "-" + idTask);
     let cloneElement = originalElement.cloneNode(true)
     cloneElement.id = "Task" + (idCat + 10) + "-" + (idTask + 10)
     originalElement.parentNode.appendChild(cloneElement)
 }
 
-function DeleteTask(idCat,idTask)
-{
+function DeleteTask(idCat, idTask) {
     $("[data-bs-popover=task-popover]").popover('hide')
     let elementDown = document.getElementById("Task-" + idCat + "-" + idTask)
     elementDown.remove();
 }
 
-function AddSubcategoryBegin(id)
-{
-    let subId=10
+function AddSubcategoryBegin(id) {
+    let subId = 10
     let subcategory = getSubcategory(subId)
     let element = document.getElementById("Subcategory-" + id)
-    element.insertAdjacentHTML('beforebegin',subcategory)
+    element.insertAdjacentHTML('beforebegin', subcategory)
     subCategoryNewTask(subId)
 }
 
-function AddSubcategoryEnd(id)
-{
-    let subId=10
+function AddSubcategoryEnd(id) {
+    let subId = 10
     let subcategory = getSubcategory(subId)
     let element = document.getElementById("Subcategory-" + id)
-    element.insertAdjacentHTML('beforeend',subcategory)
+    element.insertAdjacentHTML('beforeend', subcategory)
     subCategoryNewTask(subId)
 }
 
-function AddSubcategoryActive()
-{
-    let subId=10
+function AddSubcategoryActive() {
+    let subId = 10
     let subcategory = getSubcategory(subId)
     let element = document.getElementById("sub-category")
-    element.insertAdjacentHTML('afterbegin',subcategory)
+    element.insertAdjacentHTML('afterbegin', subcategory)
     subCategoryNewTask(subId)
 }
 
-function AddSubcategoryShared()
-{
-    let subId=10
+function AddSubcategoryShared() {
+    let subId = 10
     let subcategory = getSubcategory(subId)
     let element = document.getElementById("sub-category")
-    element.insertAdjacentHTML('afterbegin',subcategory)
+    element.insertAdjacentHTML('afterbegin', subcategory)
     subCategoryNewTask(subId)
 }
 
-function NewTaskBegin(idCat,idTask)
-{
-    let task = getTask(idCat,idTask + 10)
+function NewTaskBegin(idCat, idTask) {
+    let task = getTask(idCat, idTask + 10)
     let element = document.getElementById("Task-" + idCat + "-" + idTask)
-    element.insertAdjacentHTML('beforebegin',task)
+    element.insertAdjacentHTML('beforebegin', task)
 }
 
-function NewTaskEnd(idCat,idTask)
-{
-    let task = getTask(idCat,idTask + 10)
+function NewTaskEnd(idCat, idTask) {
+    let task = getTask(idCat, idTask + 10)
     let element = document.getElementById("Task-" + idCat + "-" + idTask)
-    element.insertAdjacentHTML('afterend',task)
+    element.insertAdjacentHTML('afterend', task)
 }
 
-function getSubcategory(sub_id)
-{
+function getSubcategory(sub_id) {
     return `<div class="accordion-item accordion-item-tasks" data-idSubCat="` + sub_id + `" id="Subcategory-` + sub_id + `">
         <h2 class="accordion-header subcategory-header" id="panelsStayOpen-heading-` + sub_id + `">
         <span class="category-button">
@@ -272,34 +263,32 @@ function getSubcategory(sub_id)
     </div>`
 }
 
-function getTask(idCat,idTask)
-{
-    return `<li class="list-group-item task-view" data-idCat="` + idCat + `" data-idTask="` + idTask +`" id="Task-` + idCat + `-` + idTask +`">
+function getTask(idCat, idTask) {
+    return `<li class="list-group-item task-view" data-idCat="` + idCat + `" data-idTask="` + idTask + `" id="Task-` + idCat + `-` + idTask + `">
         <button class="btn btn-sm btn-task-drag" type="button"
                 title="Attrape la tâche pour la changer d'emplacement">
             <span class="mdi mdi-18px mdi-drag"></span>
         </button>
         <div class="form-check task-view-details">
-            <input class="form-check-input task-checkbox" type="checkbox" value="" checked="true" title="Etat de la tâche" onclick="checkTask(` + idCat + `,` + idTask +`)">
-                <div class="task-view-info" id="taskViewInfo-` + idCat + `-` + idTask +`"
-                     onClick="openTaskDetails(` + idCat + `,` + idTask +`)">
+            <input class="form-check-input task-checkbox" type="checkbox" value="" checked="true" title="Etat de la tâche" onclick="checkTask(` + idCat + `,` + idTask + `)">
+                <div class="task-view-info" id="taskViewInfo-` + idCat + `-` + idTask + `"
+                     onClick="openTaskDetails(` + idCat + `,` + idTask + `)">
                     <label class="form-check-label" title="Nom de la tâche">
-                        Nom de la tâche [` + idCat + `-` + idTask +`]
+                        Nom de la tâche [` + idCat + `-` + idTask + `]
                     </label>
                     <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">@NOM
                         Prénom</small>
                     <small class="form-text text-muted" title="Description de la tâche">Description</small>
                 </div>
         </div>
-        <a data-idCat="` + idCat + `" data-idTask="` + idTask +`" tabIndex="0" class="btn btn-sm btn-task-actions"
+        <a data-idCat="` + idCat + `" data-idTask="` + idTask + `" tabIndex="0" class="btn btn-sm btn-task-actions"
            role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
             <span class="mdi mdi-dots-horizontal"></span>
         </a>
     </li>`
 }
 
-function subCategoryNewTask(sub_id)
-{
+function subCategoryNewTask(sub_id) {
     document.getElementById("taskAdd-" + sub_id).addEventListener('click', function (e) {
         toggleForm("taskAdd-" + sub_id, "taskNew-" + sub_id, "error-taskNew" + sub_id, null)
     });
@@ -320,52 +309,46 @@ function subCategoryNewTask(sub_id)
 let subCategoryCheckboxState = false
 let taskCheckboxState = false
 
-function saveChangeCategoryName()
-{
+function saveChangeCategoryName() {
     let input = document.getElementById("modal-input-name").value
     const introPara = document.getElementById("title")
     introPara.innerHTML = input
 
     let subCategoryCheckbox = document.querySelector('input[id="modal-checkbox-subcategory"]')
     let taskCheckbox = document.querySelector('input[id="modal-checkbox-task"]')
-    if(subCategoryCheckbox.checked) {
+    if (subCategoryCheckbox.checked) {
         subCategoryCheckboxState = true
-        if($("#sub-category-archive").hasClass("invisible")===false)
-        {
+        if ($("#sub-category-archive").hasClass("invisible") === false) {
             $("#sub-category-archive").addClass('invisible')
         }
     } else {
         subCategoryCheckboxState = false
-        if($("#sub-category-archive").hasClass("invisible")===true)
-        {
+        if ($("#sub-category-archive").hasClass("invisible") === true) {
             $("#sub-category-archive").removeClass('invisible')
         }
     }
-    if(taskCheckbox.checked) {
+    if (taskCheckbox.checked) {
         taskCheckboxState = true
     } else {
         taskCheckboxState = false
     }
 }
 
-function checkTask(idSub,idTask)
-{
+function checkTask(idSub, idTask) {
     let taskCheck = document.querySelector('input[id="TaskCheckbox-' + idSub + '-' + idTask + '"]')
     let task = document.getElementById("Task-" + idSub + "-" + idTask)
-    if (taskCheckboxState){
-        if (taskCheck){
-            if($("#Task-" + idSub + "-" + idTask).hasClass("d-none")===false) {
+    if (taskCheckboxState) {
+        if (taskCheck) {
+            if ($("#Task-" + idSub + "-" + idTask).hasClass("d-none") === false) {
                 $("#Task-" + idSub + "-" + idTask).addClass('d-none')
             }
-        }
-        else {
-            if($("#Task-" + idSub + "-" + idTask).hasClass("d-none")===true) {
+        } else {
+            if ($("#Task-" + idSub + "-" + idTask).hasClass("d-none") === true) {
                 $("#Task-" + idSub + "-" + idTask).removeClass('d-none')
             }
         }
-    }
-    else{
-        if($("#Task-" + idSub + "-" + idTask).hasClass("d-none")===true) {
+    } else {
+        if ($("#Task-" + idSub + "-" + idTask).hasClass("d-none") === true) {
             $("#Task-" + idSub + "-" + idTask).removeClass('d-none')
         }
     }
