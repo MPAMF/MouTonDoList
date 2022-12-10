@@ -4,12 +4,47 @@ const repositories = {
     taskComments: new CommentRepository()
 }
 
+// Maybe move to another file?
+/**
+ * @param text Text to display
+ * @param title Title
+ * @param type primary, warning, ...
+ * @param duration How much time before hide
+ */
+function showToast(text, title, type, duration = 3000) {
+    const randomId = (Math.random() + 1).toString(36).substring(7);
+    const betterToastHtml =
+        `<div id="toast-${randomId}" class="toast text-bg-${type}" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <strong class="me-auto">${title}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            ${text}
+          </div>
+        </div>`
+
+    $('#toastsContainer').append(betterToastHtml)
+    let toastElement = $('#toast-' + randomId)
+
+    new bootstrap.Toast(toastElement[0], {
+        delay: duration
+    }).show()
+
+    // remove html on hide
+    toastElement.on('hidden.bs.toast', (e) => {
+        document.getElementById(e.target.id).remove()
+    })
+
+}
+
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
     console.log("taskId :" + taskId)
     console.log("oldCatId :" + oldSubCategoryId)
     console.log("oldIndex :" + oldIndex)
     console.log("newCatId :" + newSubCategoryId)
     console.log("newIndex :" + newIndex)
+    showToast(`Moved taskId: ${taskId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
 }
 
 function moveSubCategory(subCatId, oldIndex, newIndex) {
@@ -18,25 +53,33 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
     console.log("newIndex :" + newIndex)
 }
 
-function ArchiveCategory(id, active) {
-    let element = document.getElementById("category-archive")
-    let newPlacement = element.getElementsByTagName("ul")
-    let category = document.getElementById("Category" + id)
-    let attribute = category.getElementsByTagName("a")
-    $("#Category" + id).appendTo(newPlacement);
+function archiveCategory(id, active) {
+    const title = getValueFromLanguage('ArchiveCategoryTitle').replace('%id%', id)
 
-    if (active) {
-        attribute[1].setAttribute("data-archive", "trueActive");
-        let categoryActive = document.getElementById("CategoryActive" + id)
-        let attributeActive = categoryActive.getElementsByTagName("a")
-        attributeActive[0].setAttribute("data-archive", "trueActive");
-    } else {
-        attribute[1].setAttribute("data-archive", "true");
-    }
+    // Get before update to avoid rewrite
+    repositories.categories.get(id).then(c => {
+        c.archived = true;
+        repositories.categories.update(c).then(c => {
+            let element = document.getElementById("category-archive")
+            let newPlacement = element.getElementsByTagName("ul")
+            let category = document.getElementById("Category" + id)
+            let attribute = category.getElementsByTagName("a")
+            $("#Category" + id).appendTo(newPlacement);
+
+            if (active) {
+                attribute[1].setAttribute("data-archive", "trueActive");
+                let categoryActive = document.getElementById("CategoryActive" + id)
+                let attributeActive = categoryActive.getElementsByTagName("a")
+                attributeActive[0].setAttribute("data-archive", "trueActive");
+            } else {
+                attribute[1].setAttribute("data-archive", "true");
+            }
+        }).catch(e => showToast(getValueFromLanguage('UpdateCategoryError').replace('%code%', e.code), title, 'danger'))
+    }).catch(e => showToast(getValueFromLanguage('GetCategoryError').replace('%code%', e.code), title, 'danger'))
 
 }
 
-function UnarchivedCategory(id, active) {
+function unarchivedCategory(id, active) {
     let element = document.getElementById("category-active")
     let newPlacement = element.getElementsByTagName("ul")
     let category = document.getElementById("Category" + id)
@@ -53,21 +96,21 @@ function UnarchivedCategory(id, active) {
     }
 }
 
-function DeleteCategory(id) {
+function deleteCategory(id) {
+    const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', id)
     repositories.categories.delete({id: id}).then(() => {
         let elementDown = document.getElementById("Category" + id)
         elementDown.remove();
-
-        // TODO: display info toast
+        showToast(getValueFromLanguage('DeleteCategorySuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
-        // TODO: display info toast
-    }).finally(() => {
+        showToast(getValueFromLanguage('DeleteCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
         $("[data-bs-popover=category-popover]").popover('hide')
     });
 }
 
-function DuplicateCategory(id) {
+function duplicateCategory(id) {
     $("[data-bs-popover=category-popover]").popover('hide')
     let originalElement = document.getElementById("Category" + id);
     let cloneElement = originalElement.cloneNode(true)
@@ -75,39 +118,39 @@ function DuplicateCategory(id) {
     originalElement.parentNode.appendChild(cloneElement)
 }
 
-function DuplicateCategoryShared(id) {
+function duplicateCategoryShared(id) {
     let originalElement = document.getElementById("Category" + id);
     let cloneElement = originalElement.cloneNode(true)
     cloneElement.id = "Category" + (id + 7)
     originalElement.parentNode.appendChild(cloneElement)
 }
 
-function LeaveCategoryShared(id) {
+function leaveCategoryShared(id) {
     $("[data-bs-popover=category-shared-popover]").popover('hide')
     let elementDown = document.getElementById("Category" + id)
     elementDown.remove();
 }
 
-function DuplicateCategorySharedReadonly(id) {
+function duplicateCategorySharedReadonly(id) {
     let originalElement = document.getElementById("Category" + id);
     let cloneElement = originalElement.cloneNode(true)
     cloneElement.id = "Category" + (id + 7)
     originalElement.parentNode.appendChild(cloneElement)
 }
 
-function LeaveCategorySharedReadonly(id) {
+function leaveCategorySharedReadonly(id) {
     $("[data-bs-popover=category-shared-popover]").popover('hide')
     let elementDown = document.getElementById("Category" + id)
     elementDown.remove();
 }
 
-function DeleteSubcategory(id) {
+function deleteSubcategory(id) {
     $("[data-bs-popover=subcategory-popover]").popover('hide')
     let elementDown = document.getElementById("Subcategory-" + id)
     elementDown.remove();
 }
 
-function ArchiveSubcategory(id) {
+function archiveSubcategory(id) {
     let newPlacement = document.getElementById("sub-category-archive")
     let element = $("#Subcategory-" + id)
     let subcategory = document.getElementById("Subcategory-popover-" + id)
@@ -121,7 +164,7 @@ function ArchiveSubcategory(id) {
     attribute[0].setAttribute("data-archive", "true");
 }
 
-function DeleteSubcategoryArchive(id) {
+function deleteSubcategoryArchive(id) {
     $("[data-bs-popover=subcategory-archive-popover]").popover('hide')
     let elementDown = document.getElementById("Subcategory-" + id)
     elementDown.remove();

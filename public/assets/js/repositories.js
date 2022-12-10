@@ -1,48 +1,48 @@
 class Repository {
 
     list(endpoint) {
-        return $.ajax({
+        return new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}`,
             type: 'get',
             contentType: 'application/json; charset=utf-8',
-        })
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
     get(endpoint, id) {
-        return $.ajax({
+        return  new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}/${id}`,
             type: 'get',
             contentType: 'application/json; charset=utf-8',
-        })
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
     put(endpoint, id, data = {}) {
-        return $.ajax({
+        return new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}/${id}`,
             type: 'put',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: data
-        })
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
     post(endpoint, data = {}) {
-        return $.ajax({
+        return new Promise((resolve, reject) => $.ajax({
             url: this.endpoint,
             type: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: data
-        })
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
     delete(endpoint, id) {
-        return $.ajax({
+        return new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}/${id}`,
             type: 'delete',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-        })
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
 }

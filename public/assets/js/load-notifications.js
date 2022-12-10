@@ -5,8 +5,8 @@ let invitations = [];
 function fetchNotifications() {
     invitationRepository.list()
         .then(values => {
-            $("#btn-notification-count").html(values.data.length);
-            invitations = values.data;
+            $("#btn-notification-count").html(values.length);
+            invitations = values;
             countErrors = 0;
         })
         .catch(e => {
