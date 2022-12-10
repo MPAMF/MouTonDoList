@@ -53,96 +53,109 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
     console.log("newIndex :" + newIndex)
 }
 
-function archiveCategory(id, active) {
-    const title = getValueFromLanguage('ArchiveCategoryTitle').replace('%id%', id)
+function archiveCategory(id) {
+    let category = $('[data-sidebar-id="' + id + '"]')[0]
 
-    // Get before update to avoid rewrite
-    repositories.categories.get(id).then(c => {
-        c.archived = true;
-        repositories.categories.update(c).then(c => {
-            let element = document.getElementById("category-archive")
-            let newPlacement = element.getElementsByTagName("ul")
-            let category = document.getElementById("Category" + id)
-            let attribute = category.getElementsByTagName("a")
-            $("#Category" + id).appendTo(newPlacement);
+    popoverDispose(category)
+    popoverUpdateType(category, "category-default-archive-popover")
 
-            if (active) {
-                attribute[1].setAttribute("data-archive", "trueActive");
-                let categoryActive = document.getElementById("CategoryActive" + id)
-                let attributeActive = categoryActive.getElementsByTagName("a")
-                attributeActive[0].setAttribute("data-archive", "trueActive");
-            } else {
-                attribute[1].setAttribute("data-archive", "true");
-            }
-        }).catch(e => showToast(getValueFromLanguage('UpdateCategoryError').replace('%code%', e.code), title, 'danger'))
-    }).catch(e => showToast(getValueFromLanguage('GetCategoryError').replace('%code%', e.code), title, 'danger'))
+    let newPopover = defaultPopover()
+    newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
+    new bootstrap.Popover(category, newPopover)
 
+    if(isCurrentCategory(id)) {
+        let category = $('[data-category-id="' + id + '"]')[0]
+
+        popoverDispose(category)
+        popoverUpdateType(category, "category-default-archive-popover")
+
+        let newPopover = defaultPopover()
+        newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
+        new bootstrap.Popover(category, newPopover)
+    }
+
+    if(isOwnerById(id)) {
+        let parentContainer = document.getElementById("category-archive")
+        parentContainer.firstElementChild.prepend(category.parentElement)
+    }
 }
 
-function unarchivedCategory(id, active) {
-    let element = document.getElementById("category-active")
-    let newPlacement = element.getElementsByTagName("ul")
-    let category = document.getElementById("Category" + id)
-    let attribute = category.getElementsByTagName("a")
-    $("#Category" + id).appendTo(newPlacement);
+function unarchiveCategory(id) {
+    let category = $('[data-sidebar-id="' + id + '"]')[0]
 
-    if (active) {
-        attribute[1].setAttribute("data-archive", "falseActive");
-        let categoryActive = document.getElementById("CategoryActive" + id)
-        let attributeActive = categoryActive.getElementsByTagName("a")
-        attributeActive[0].setAttribute("data-archive", "falseActive");
-    } else {
-        attribute[1].setAttribute("data-archive", "false");
+    popoverDispose(category)
+    popoverUpdateType(category, "category-default-popover")
+
+    let newPopover = defaultPopover()
+    newPopover.content = getPopoverCategoryDefaultContent(id)
+    new bootstrap.Popover(category, newPopover)
+
+    if(isCurrentCategory(id)) {
+        let category = $('[data-category-id="' + id + '"]')[0]
+
+        popoverDispose(category)
+        popoverUpdateType(category, "category-default-popover")
+
+        let newPopover = defaultPopover()
+        newPopover.content = getPopoverCategoryDefaultContent(id)
+        new bootstrap.Popover(category, newPopover)
+    }
+
+    if(isOwnerById(id)) {
+        let parentContainer = document.getElementById("category-default")
+        parentContainer.firstElementChild.prepend(category.parentElement)
     }
 }
 
 function deleteCategory(id) {
     const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', id)
+    let category = $('[data-sidebar-id="' + id + '"]')[0]
+    let parent = category.parentElement
     repositories.categories.delete({id: id}).then(() => {
-        let elementDown = document.getElementById("Category" + id)
-        elementDown.remove();
+        parent.remove();
         showToast(getValueFromLanguage('DeleteCategorySuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('DeleteCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
-        $("[data-bs-popover=category-popover]").popover('hide')
+        popoverDispose(category)
     });
+    if(isCurrentCategory(id))
+        window.location.replace("http://localhost:8090/dashboard");
 }
 
 function duplicateCategory(id) {
-    $("[data-bs-popover=category-popover]").popover('hide')
-    let originalElement = document.getElementById("Category" + id);
-    let cloneElement = originalElement.cloneNode(true)
-    cloneElement.id = "Categorietest" + (id + 7)
-    originalElement.parentNode.appendChild(cloneElement)
+    let newId = Math.floor(Math.random() * 10000).toString();
+
+    let category = $('[data-sidebar-id="' + id + '"]')[0]
+    let copyElement = category.parentElement.cloneNode(true)
+    copyElement.classList.remove('active')
+
+    let firstChild = copyElement.firstElementChild
+    firstChild.href = firstChild.href.slice(0, firstChild.href.lastIndexOf('/')) + "/" + newId
+    firstChild.textContent += " " + getValueFromLanguage("CopyName")
+
+    let lastChild = copyElement.lastElementChild
+    lastChild.setAttribute("data-sidebar-id", newId)
+    popoverUpdateType(lastChild, "category-default-popover")
+    let newPopover = defaultPopover()
+    newPopover.content = getPopoverCategoryDefaultContent(newId)
+    new bootstrap.Popover(lastChild, newPopover)
+
+    document.getElementById("category-default").firstElementChild.prepend(copyElement)
+    popoverHide(category)
 }
 
-function duplicateCategoryShared(id) {
-    let originalElement = document.getElementById("Category" + id);
-    let cloneElement = originalElement.cloneNode(true)
-    cloneElement.id = "Category" + (id + 7)
-    originalElement.parentNode.appendChild(cloneElement)
+function leaveCategory(id) {
+    let category = $('[data-sidebar-id="' + id + '"]')[0]
+    category.parentElement.remove()
+    popoverDispose(category)
+    if(isCurrentCategory())
+        window.location.replace("http://localhost:8090/dashboard");
 }
 
-function leaveCategoryShared(id) {
-    $("[data-bs-popover=category-shared-popover]").popover('hide')
-    let elementDown = document.getElementById("Category" + id)
-    elementDown.remove();
-}
 
-function duplicateCategorySharedReadonly(id) {
-    let originalElement = document.getElementById("Category" + id);
-    let cloneElement = originalElement.cloneNode(true)
-    cloneElement.id = "Category" + (id + 7)
-    originalElement.parentNode.appendChild(cloneElement)
-}
 
-function leaveCategorySharedReadonly(id) {
-    $("[data-bs-popover=category-shared-popover]").popover('hide')
-    let elementDown = document.getElementById("Category" + id)
-    elementDown.remove();
-}
 
 function deleteSubcategory(id) {
     $("[data-bs-popover=subcategory-popover]").popover('hide')
@@ -198,35 +211,19 @@ function DeleteTask(idCat, idTask) {
 }
 
 function AddSubcategoryBegin(id) {
-    let subId = 10
+    /*let subId = 10
     let subcategory = getSubcategory(subId)
     let element = document.getElementById("Subcategory-" + id)
     element.insertAdjacentHTML('beforebegin', subcategory)
-    subCategoryNewTask(subId)
+    subCategoryNewTask(subId)*/
 }
 
 function AddSubcategoryEnd(id) {
-    let subId = 10
+    /*let subId = 10
     let subcategory = getSubcategory(subId)
     let element = document.getElementById("Subcategory-" + id)
     element.insertAdjacentHTML('beforeend', subcategory)
-    subCategoryNewTask(subId)
-}
-
-function AddSubcategoryActive() {
-    let subId = 10
-    let subcategory = getSubcategory(subId)
-    let element = document.getElementById("sub-category")
-    element.insertAdjacentHTML('afterbegin', subcategory)
-    subCategoryNewTask(subId)
-}
-
-function AddSubcategoryShared() {
-    let subId = 10
-    let subcategory = getSubcategory(subId)
-    let element = document.getElementById("sub-category")
-    element.insertAdjacentHTML('afterbegin', subcategory)
-    subCategoryNewTask(subId)
+    subCategoryNewTask(subId)*/
 }
 
 function NewTaskBegin(idCat, idTask) {
@@ -239,71 +236,6 @@ function NewTaskEnd(idCat, idTask) {
     let task = getTask(idCat, idTask + 10)
     let element = document.getElementById("Task-" + idCat + "-" + idTask)
     element.insertAdjacentHTML('afterend', task)
-}
-
-function getSubcategory(sub_id) {
-    return `<div class="accordion-item accordion-item-tasks" data-idSubCat="` + sub_id + `" id="Subcategory-` + sub_id + `">
-        <h2 class="accordion-header subcategory-header" id="panelsStayOpen-heading-` + sub_id + `">
-        <span class="category-button">
-            <span class="accordion-button btn-subcategory-drag">
-                <button class="btn btn-category-actions" type="button"
-                        title="Attrape la sous-catégorie pour la changer d'emplacement">
-                    <span class="mdi mdi-24px mdi-drag"></span>
-                </button>
-            </span>
-        </span>
-            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#panelsStayOpen-collapse-` + sub_id + `" aria-expanded="true"
-                    aria-controls="panelsStayOpen-collapse-` + sub_id + `">
-                    Sous-catégorie #` + sub_id + `
-            </button>
-            <span class="category-button" id="Subcategory-popover-` + sub_id + `">
-            <span class="accordion-button">
-                <a data-id="` + sub_id + `" tabIndex="0" class="btn btn-category-actions" role="button"
-                   data-bs="popover" data-bs-popover="subcategory-popover"
-                   aria-label="Liste d'actions d'une sous-catégorie archivée dans une todolist">
-                    <span class="mdi mdi-24px mdi-dots-horizontal"></span>
-                </a>
-            </span>
-        </span>
-        </h2>
-        <div id="panelsStayOpen-collapse-` + sub_id + `" class="accordion-collapse collapse show"
-             aria-labelledby="panelsStayOpen-heading-` + sub_id + `">
-            <div class="accordion-body">
-                <ul class="list-group list-group-flush tasks" data-sortable="tasks">
-                </ul>
-                <ul id="Sub-categoryNewTask-` + sub_id + `" class="">
-                    <li class="list-group-item task-add">
-                        <div class="d-grid">
-                            <button class="btn btn-task-add" type="button" id="taskAdd-` + sub_id + `">
-                                <span class="mdi mdi-plus-circle"></span>
-                                Ajouter une tâche [` + sub_id + `]
-                            </button>
-                        </div>
-                        <form class="task-new" id="taskNew-` + sub_id + `">
-                            <div class="mb-2">
-                                <input type="text" class="form-control form-control-sm bg-secondary" id="taskNewName-` + sub_id + `" placeholder="Nom de la tâche" title="Nom de la nouvelle tâche" required>
-                                <div id="error-taskNew` + sub_id + `" class="invalid-feedback" role="alert"> Veuillez indiquer un nom. </div>
-                            </div>
-                            <div class="mb-2">
-                                <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-` + sub_id + `" placeholder="Description" title="Description de la nouvelle tâche" ></textarea>
-                            </div>
-                            <div class="mb-2">
-                                <select class="btn btn-sm btn-modal-select" aria-label="Membre assigné" required>
-                                    <option value="0" selected>Non assignée</option>
-                                    <option value="nomPrenom">NOM Prénom</option>
-                                </select>
-                            </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="taskNewCancel-` + sub_id + `">Annuler</button>
-                                <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="taskNewCreate-` + sub_id + `" disabled>Ajouter une tâche</button>
-                            </div>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>`
 }
 
 function getTask(idCat, idTask) {

@@ -2,13 +2,17 @@
     <div class="category-title">
         <h3 id="title" onclick="openEditModalCategory({{ category.category.id }})">{{ category.category.name }}</h3>
         <div class="title-actions" id="CategoryActive{{ category.category.id }}">
-            <a data-archive="falseActive" data-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}"
-                {% if (canEdit) and (category.category.archived) %}
-                data-archive="true" data-bs-popover="category-popover">
+            <a data-category-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}"
+                {% if (category.category.ownerId == user.id) and (category.category.archived) %}
+                    data-bs-popover="category-default-archive-popover">
+                {% elseif (category.category.ownerId == user.id) %}
+                    data-bs-popover="category-default-popover">
+                {% elseif (canEdit) and (category.category.archived) %}
+                    data-bs-popover="category-shared-archive-popover">
                 {% elseif (canEdit) %}
-                    data-archive="false" data-bs-popover="category-popover">
+                    data-bs-popover="category-shared-popover">
                 {% else %}
-                    data-archive="false" data-bs-popover="category-shared-readonly-popover">
+                    data-bs-popover="category-readonly-popover">
                 {% endif %}
                 <span class="mdi mdi-24px mdi-dots-horizontal"></span>
             </a>
@@ -21,8 +25,6 @@
     </div>
 
     <div id="default-category-content" data-sortable="categories">
-        <div id="sub-category">
-        </div>
         {% for subCategory in category.category.subCategories %}
             {% if subCategory.archived %}
                 {% include 'pages/components/sub-category/archive.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
@@ -30,7 +32,8 @@
                 {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
             {% endif %}
         {% endfor %}
-        <div id="sub-category-archive" class="">
-        </div>
+        {% if (canEdit and category.category.archived == false) %}
+            {% include 'pages/components/category/new.twig' with { 'catId' : category.category.id } %}
+        {% endif %}
     </div>
 </div>

@@ -7,7 +7,9 @@
   "ThemeDarkName": "Thème sombre",
   "ThemeLightName": "Thème clair",
 
-  "CloseAriaLabel": "Close",
+  "CloseAriaLabel": "Fermer",
+
+  "CopyName": "Copie",
 
   "SearchTypeAssigned": "Assigné",
   "SearchAssigned": "Assigné=",
@@ -132,6 +134,7 @@
   "SubCategoryDragTitle": "Attrape la sous-catégorie pour la changer d'emplacement",
   "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie",
   "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie archivée",
+  "SubCategoryNewTaskButtonName" : "Ajouter une sous-catégorie",
 
   "TaskDragTitle": "Attrape la tâche pour la changer d'emplacement",
   "TaskCheckboxTitle": "Etat de la tâche",
@@ -150,6 +153,19 @@
   "NewTaskNameError": "Veuillez indiquer un nom.",
   "NewTaskDescriptionAriaLabel": "Description de la nouvelle tâche",
   "NewTaskDescriptionPlaceholder": "Description",
+
+  "NewSubCatName": "Sous-catégorie",
+  "NewSubCatAriaLabel": "Nom de la nouvelle sous-catégorie",
+  "NewSubCatCreate": "Ajouter une sous-catégorie",
+
+  "PopoverCategoryAriaLabel": "Actions d'une catégorie",
+  "PopoverCategoryEdit": "Modifier le projet",
+  "PopoverCategoryDuplicate": "Dupliquer le projet",
+  "PopoverCategoryArchive": "Archiver le projet",
+  "PopoverCategoryUnarchive": "Désarchiver le projet",
+  "PopoverCategoryDelete": "Supprimer le projet",
+  "PopoverCategoryAddSection": "Ajouter une section",
+  "PopoverCategoryLeave": "Quitter le projet",
 
   "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",

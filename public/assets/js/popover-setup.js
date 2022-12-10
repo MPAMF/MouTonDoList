@@ -1,3 +1,5 @@
+let popover = defaultPopover()
+
 $(document).ready(
     $('html').on('click', function (e) {
         $('[data-bs=popover]').each(function () {
@@ -9,85 +11,34 @@ $(document).ready(
     })
 )
 
+function setupCategoryPopover(element, getPopoverContent) {
+    let id = element.getAttribute('data-category-id') === null ?
+        element.getAttribute('data-sidebar-id').toString() :
+        element.getAttribute('data-category-id').toString()
+    popover.content = getPopoverContent(id)
+    new bootstrap.Popover(element, popover)
+}
+
 $(document).ready(function () {
-    $("[data-bs-popover=category-popover]").popover({
-        trigger: 'click',
-        placement: 'left',
-        customClass: 'popover',
-        offset: [0, 0],
-        html: true,
-        sanitize: false,
-        content: () => {
-            let id = $(this)[0].activeElement.getAttribute('data-id').toString();
-            let isArchive = $(this)[0].activeElement.getAttribute('data-archive').toString();
-            let res;
-            if(isArchive === "false"){
-                res =  '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="duplicateCategory(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="archiveCategory(' + id + ',false)"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="deleteCategory(' + id + ')"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
-                    '</div>'
-            }
-            else if(isArchive === "true"){
-                res = `<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-                    <button type="button" class="btn btn-sm btn-popover" onclick="duplicateCategory(` + id + `)"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>
-                    <button type="button" class="btn btn-sm btn-popover" onclick="unarchivedCategory(` + id + `,false)"><span class="mdi mdi-archive-outline"></span> Désarchiver le projet</button>
-                    <button type="button" class="btn btn-sm btn-popover" onclick="deleteCategory(` + id + `)"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>
-                </div>`;
-            }
-            else if(isArchive === "falseActive"){
-                res =  '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> Modifier le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="duplicateCategory(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="archiveCategory(' + id + ',true)"><span class="mdi mdi-archive-outline"></span> Archiver le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="deleteCategory(' + id + ')"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>' +
-                    '<button type="button" class="btn btn-sm btn-popover" onclick="AddSubcategoryActive(' + id + ')"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
-                    '</div>'
-            }
-            else{
-                res = `<div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-                    <button type="button" class="btn btn-sm btn-popover" onclick="duplicateCategory(` + id + `)"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>
-                    <button type="button" class="btn btn-sm btn-popover" onclick="unarchivedCategory(` + id + `,true)"><span class="mdi mdi-archive-outline"></span> Désarchiver le projet</button>
-                    <button type="button" class="btn btn-sm btn-popover" onclick="deleteCategory(` + id + `)"><span class="mdi mdi-trash-can"></span> Supprimer le projet</button>
-                </div>`;
-            }
-            return res;
-        }
-    })
-    $("[data-bs-popover=category-shared-popover]").popover({
-        trigger: 'click',
-        placement: 'left',
-        customClass: 'popover',
-        offset: [0, 0],
-        html: true,
-        sanitize: false,
-        content: () => {
-            let id = $(this)[0].activeElement.getAttribute('data-id').toString();
-            return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="duplicateCategoryShared(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="leaveCategoryShared(' + id + ')"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="AddSubcategoryShared(' + id + ')"><span class="mdi mdi-plus-circle-outline"> Ajouter une section</button>' +
-                '<button type="button" class="btn btn-sm btn-popover"><span class="mdi mdi-plus-circle-outline"> Ajouter une tâche</button>' +
-                '</div>'
-        }
-    })
-    $("[data-bs-popover=category-shared-readonly-popover]").popover({
-        trigger: 'click',
-        placement: 'left',
-        customClass: 'popover',
-        offset: [0, 0],
-        html: true,
-        sanitize: false,
-        content: () => {
-            let id = $(this)[0].activeElement.getAttribute('data-id').toString();
-            return '<div class="btn-group-vertical" role="group" aria-label="Vertical button group">' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="duplicateCategorySharedReadonly(' + id + ')"><span class="mdi mdi-content-duplicate"> Dupliquer le projet</button>' +
-                '<button type="button" class="btn btn-sm btn-popover" onclick="leaveCategorySharedReadonly(' + id + ')"><span class="mdi mdi-account-minus-outline"></span> Quitter le projet</button>' +
-                '</div>'
-        }
-    })
+
+    $('[data-bs-popover=category-default-popover]').each(function () {
+        setupCategoryPopover($(this)[0], getPopoverCategoryDefaultContent)
+    });
+    $('[data-bs-popover=category-default-archive-popover]').each(function () {
+        setupCategoryPopover($(this)[0], getPopoverCategoryDefaultArchiveContent)
+    });
+
+    $('[data-bs-popover=category-shared-popover]').each(function () {
+        setupCategoryPopover($(this)[0], getPopoverCategorySharedContent)
+    });
+    $('[data-bs-popover=category-shared-archive-popover]').each(function () {
+        setupCategoryPopover($(this)[0], getPopoverCategorySharedArchiveContent)
+    });
+
+    $('[data-bs-popover=category-readonly-popover]').each(function () {
+        setupCategoryPopover($(this)[0], getPopoverCategoryReadonlyContent)
+    });
+
     $("[data-bs-popover=subcategory-popover]").popover({
         trigger: 'click',
         placement: 'left',
