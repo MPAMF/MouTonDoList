@@ -154,9 +154,9 @@
   "NewTaskDescriptionAriaLabel": "Description de la nouvelle tâche",
   "NewTaskDescriptionPlaceholder": "Description",
 
-  "NewSubCatName": "Sous-catégorie",
-  "NewSubCatAriaLabel": "Nom de la nouvelle sous-catégorie",
-  "NewSubCatCreate": "Ajouter une sous-catégorie",
+  "NewSubCatName": "section",
+  "NewSubCatAriaLabel": "Nom de la nouvelle section",
+  "NewSubCatCreate": "Ajouter une section",
 
   "PopoverCategoryAriaLabel": "Actions d'une catégorie",
   "PopoverCategoryEdit": "Modifier le projet",
@@ -166,6 +166,23 @@
   "PopoverCategoryDelete": "Supprimer le projet",
   "PopoverCategoryAddSection": "Ajouter une section",
   "PopoverCategoryLeave": "Quitter le projet",
+
+  "PopoverSubCategoryAriaLabel": "Actions d'une section",
+  "PopoverSubCategoryEdit": "Modifier la section",
+  "PopoverSubCategoryDuplicate": "Dupliquer la section",
+  "PopoverSubCategoryArchive": "Archiver la section",
+  "PopoverSubCategoryUnarchive": "Désarchiver la section",
+  "PopoverSubCategoryDelete": "Supprimer la section",
+  "PopoverSubCategoryAddUp": "Ajouter une section ci-dessus",
+  "PopoverSubCategoryAddDown": "Ajouter une section ci-dessous",
+
+  "PopoverTaskAriaLabel": "Actions d'une tâche",
+  "PopoverTaskDetails": "Ouvrir le détail",
+  "PopoverTaskEdit": "Modifier la tâche",
+  "PopoverTaskDuplicate": "Dupliquer la tâche",
+  "PopoverTaskDelete": "Supprimer la tâche",
+  "PopoverTaskAddUp": "Ajouter une tâche ci-dessus",
+  "PopoverTaskAddDown": "Ajouter une tâche ci-dessous",
 
   "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",
