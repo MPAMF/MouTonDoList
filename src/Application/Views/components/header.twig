@@ -209,8 +209,11 @@
 
     /*  Theme */
     function modalTheme() {
+        let darkTheme = getValueFromLanguage('ThemeDarkName');
+        let lightTheme = getValueFromLanguage('ThemeLightName');
+
         setActiveModal("modal-btn-theme");
-        $('#modal-title-body').html(`{{ 'LabelThemeModalNav'|trans|raw }}`);
+        $('#modal-title-body').html(getValueFromLanguage('LabelThemeModalNav'));
         $('#modal-div-body').html(`
             <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="`+ lightTheme +`">
                 <div class="theme-modal-color">
@@ -233,12 +236,13 @@
 
     /* Account */
     function modalUser() {
-        let pseudo = `{{ 'PseudoAccount'|trans|raw }}`;
-        let mail = `{{ 'MailAccount'|trans|raw }}`;
-        let pass = `{{ 'PasswordAccount'|trans|raw }}`;
-        let btn = `{{ 'ModificationPasswordAccount'|trans|raw }}`;
+        let pseudo = getValueFromLanguage('PseudoAccount');
+        let mail = getValueFromLanguage('MailAccount');
+        let pass = getValueFromLanguage('PasswordAccount');
+        let btn = getValueFromLanguage('ModificationPasswordAccount');
+
         setActiveModal("modal-btn-account");
-        $('#modal-title-body').html(`{{ 'LabelAccount'|trans|raw }}`);
+        $('#modal-title-body').html(getValueFromLanguage('LabelAccount'));
         $('#modal-div-body').html(`
             <div class="d-flex flex-column">
                 <h6>` + pseudo + `</h6>
