@@ -258,10 +258,10 @@
     }
 
     function modificationPassword() {
-        let annulation = `{{ 'AnnulationModalNav'|trans|raw }}`;
-        let save = `{{ 'SaveModalNav'|trans|raw }}`;
-        let new_pass = `{{ 'NewPasswordAccount'|trans|raw }}`;
-        let conf_pass = `{{ 'ConfPasswordAccount'|trans|raw }}`;
+        let annulation = getValueFromLanguage('AnnulationModalNav');
+        let save = getValueFromLanguage('SaveModalNav');
+        let new_pass = getValueFromLanguage('NewPasswordAccount');
+        let conf_pass = getValueFromLanguage('ConfPasswordAccount');
 
         $('#modal-title-body').html(`{{ 'ModificationPasswordAccount'|trans|raw }}`);
         $('#modal-div-body').html(`
