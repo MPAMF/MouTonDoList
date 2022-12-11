@@ -101,7 +101,6 @@
   "MailAccount": "E-mail : ",
   "PasswordAccount": "Mot de passe",
   "ModificationPasswordAccount": "Modifier le mot de passe",
-  "LastPasswordAccount": "Mot de passe actuel",
   "NewPasswordAccount": "Nouveau mot de passe",
   "ConfPasswordAccount": "Confirmer le nouveau mot de passe",
 
@@ -113,9 +112,9 @@
   "AuthRegisterUserExist": "Un utilisateur possède déjà un compte avec cette adresse mail.",
   "AuthRegisterSuccess": "Création réussie!",
 
-  "RegexEmpty": "Ce champ ne peut pas être vide. Le nombre de caractère maximum est : ",
-  "RegexEmail": "L'adresse mail doit être de la forme : 'exemple@exemple.exemple'. Le nombre de caractère maximum est : ",
-  "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère doit être entre ",
+  "RegexEmpty": "Ce champ ne peut pas être vide. Le nombre de caractère maximum est : %size%",
+  "RegexEmail": "L'adresse mail doit être de la forme : 'exemple@exemple.exemple'. Le nombre de caractère maximum est : %size%",
+  "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère doit être entre %size% et %size2%",
   "RegexPassConf": "Les deux mots de passe sont différents.",
 
   "ConnectionFailed": "Adresse e-mail ou mot de passe erronés.",
