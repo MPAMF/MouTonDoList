@@ -236,6 +236,7 @@
 
     /* Account */
     function modalUser() {
+        let user = data.user;
         let pseudo = getValueFromLanguage('PseudoAccount');
         let mail = getValueFromLanguage('MailAccount');
         let pass = getValueFromLanguage('PasswordAccount');
@@ -246,10 +247,10 @@
         $('#modal-div-body').html(`
             <div class="d-flex flex-column">
                 <h6>` + pseudo + `</h6>
-                <p></p>
+                <p>`+ user.username +`</p>
 
                 <h6>` + mail + `</h6>
-                <p></p>
+                <p>`+ user.email +`</p>
 
                 <h6>` + pass + `</h6>
                 <button type="button" class="btn btn-abs-nav" onclick="modificationPassword()">` + btn + `</button>
@@ -263,7 +264,7 @@
         let new_pass = getValueFromLanguage('NewPasswordAccount');
         let conf_pass = getValueFromLanguage('ConfPasswordAccount');
 
-        $('#modal-title-body').html(`{{ 'ModificationPasswordAccount'|trans|raw }}`);
+        $('#modal-title-body').html(getValueFromLanguage('ModificationPasswordAccount'));
         $('#modal-div-body').html(`
         <form class="form-account">
             <div class="mb-3">
