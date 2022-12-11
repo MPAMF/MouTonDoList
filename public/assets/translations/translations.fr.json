@@ -81,7 +81,7 @@
   "LabelThemeModalNav": "Cliquez sur le thème de votre choix :",
   "TitleNotifModalNav": "Centre de notification :",
   "TitleTaskToDoModalNav": "Gestion des tâches :",
-  "LabelTaskToDoModalNav": "Date d'échéance : ",
+  "LabelTaskToDoModalNav": "Date d'échéance : %data%",
   "LightModalNav": "Clair",
   "DarkModalNav": "Sombre",
   "ParamLiModalNav": "Paramètres",

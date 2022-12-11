@@ -346,12 +346,12 @@
 
         if (isTasks) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
             values.forEach(value => {
-                res += createTaskToDo(value[0], value[1], value[2], `{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[3]);
+                res += createTaskToDo(value[0], value[1], value[2], getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value[3]));
             });
         } else { /* [0]: categoryName; [1]: owner; [2]: creationDate; */
             values.forEach(value => {
                 res += createNotification(value.id, value.category.name, value.category.owner.username,
-                    `{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value.date);
+                    getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value.date));
             });
         }
 
@@ -362,7 +362,7 @@
     /*  Notification */
     function modalNotification() {
         setActiveModal("modal-btn-notif");
-        $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
+        $('#modal-title-body').html(getValueFromLanguage('TitleNotifModalNav'));
         $('#modal-div-body').html(loadAllValues(false, invitations));
         addEventNotif();
     }
@@ -396,7 +396,7 @@
     /*  TaskToDo */
     function modalTaskToDo() {
         setActiveModal("modal-btn-taskToDo");
-        $('#modal-title-body').html(`{{ 'TitleTaskToDoModalNav'|trans|raw }}`);
+        $('#modal-title-body').html(getValueFromLanguage('TitleTaskToDoModalNav'));
         $('#modal-div-body').html(loadAllValues(true, loadTaskToDo()));
         addEventNotif();
     }
@@ -433,8 +433,8 @@
             html: true,
             sanitize: false,
             content: () => {
-                let moveTrad = `{{ 'TaskToDoMoveToTaskModalNav'|trans|raw }}`;
-                let deleteTrad = `{{ 'TaskToDoDeleteToTaskModalNav'|trans|raw }}`;
+                let moveTrad = getValueFromLanguage('TaskToDoMoveToTaskModalNav');
+                let deleteTrad = getValueFromLanguage('TaskToDoDeleteToTaskModalNav');
                 return `
                 <div class="btn-group-vertical" id="taskToDo-popover-` + idCat + `-` + idTask + `" role="group" aria-label="Vertical button group">
                     <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(` + idCat + `,` + idTask + `)">
