@@ -430,3 +430,11 @@ function getTheme() {
         return u.theme;
     }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
 }
+
+function setUserLanguage(language) {
+    let userId = data.user.id;
+
+    repositories.user.get(userId).then(u => {
+        return u.language = language;
+    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+}

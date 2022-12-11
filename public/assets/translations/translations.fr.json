@@ -93,6 +93,10 @@
   "TaskToDoMoveToTaskModalNav": " Se déplacer vers la tâche",
   "TaskToDoDeleteToTaskModalNav": " Supprimer la notification",
 
+  "ModalDropdownLanguagesfr": "Français",
+  "ModalDropdownLanguagesen": "English",
+  "LanguageDoNotExist" : "La langue selectionnée n'existe pas",
+
   "ToastTitleErrorUpdateInvitation": "Erreur sur les ",
   "ToastErrorMessageUpdateInvitation": "Erreur avec l'invitation, essayez à nouveau plutard.",
 
