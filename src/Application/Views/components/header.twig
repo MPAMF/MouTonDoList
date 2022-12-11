@@ -132,7 +132,7 @@
 </nav>
 
 <div class="modal fade modal-edit" id="userModal" tabindex="-1" aria-labelledby="userModalLabel"
-     data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
+     data-bs-keyboard="false" aria-hidden="true" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="container-fluid d-flex">
@@ -178,11 +178,6 @@
 
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="btn-close-modal"
-                                data-bs-dismiss="modal">{% trans %}CloseModalNav{% endtrans %}</button>
-                        <button type="button" class="btn btn-primary">{% trans %}SaveModalNav{% endtrans %}</button>
                     </div>
                 </div>
             </div>
@@ -330,26 +325,24 @@
         changePassword(pass);
     }
 
-    /*  General */
-    function modalGeneral() {
-        setActiveModal("modal-btn-general");
-        $('#modal-title-body').html(`test`);
-        $('#modal-div-body').html(`
-            <div>
+    /*  General, Notification and TaskToDo */
+    function loadAllValues(typeValue, values) {
+        let res;
 
-            </div>
-        `);
-    }
-
-    /*  Notification and TaskToDo */
-    function loadAllValues(isTasks, values) {
-        let res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
-
-        if (isTasks) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+        if (typeValue === 0) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+            res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
                 res += createTaskToDo(value[0], value[1], value[2], getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value[3]));
             });
-        } else { /* [0]: categoryName; [1]: owner; [2]: creationDate; */
+        }
+        else if(typeValue === 1){
+            res = `<ul class="dropdown-menu dd-nav">`;
+            values.forEach(value => {
+                res += createLanguage(value);
+            });
+        }
+        else if(typeValue === 2){ /* [0]: categoryName; [1]: owner; [2]: creationDate; */
+            res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
                 res += createNotification(value.id, value.category.name, value.category.owner.username,
                     getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value.date));
@@ -360,11 +353,34 @@
         return res;
     }
 
+    /*  General */
+    function modalGeneral() {
+        setActiveModal("modal-btn-general");
+        $('#modal-title-body').html(getValueFromLanguage('ModalLabelLanguage'));
+
+        let bodyValue = `<div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">`;
+        bodyValue += getValueFromLanguage('ModalDropdownLanguages'+data.user.language);
+        bodyValue += `</button>`;
+        bodyValue += loadAllValues(1, languages);
+        bodyValue += `</div>`;
+        $('#modal-div-body').html( bodyValue);
+
+    }
+
+    function createLanguage(language) {
+        return `
+        <li>
+            <button class="dropdown-item dropdown-item-nav" type="button" onclick="setLanguage("`+ language +`")">`+ getValueFromLanguage('ModalDropdownLanguages'+language)+ `</button>
+        </li>
+        `;
+    }
+
     /*  Notification */
     function modalNotification() {
         setActiveModal("modal-btn-notif");
         $('#modal-title-body').html(getValueFromLanguage('TitleNotifModalNav'));
-        $('#modal-div-body').html(loadAllValues(false, invitations));
+        $('#modal-div-body').html(loadAllValues(2, invitations));
         addEventNotif();
     }
 
@@ -398,7 +414,7 @@
     function modalTaskToDo() {
         setActiveModal("modal-btn-taskToDo");
         $('#modal-title-body').html(getValueFromLanguage('TitleTaskToDoModalNav'));
-        $('#modal-div-body').html(loadAllValues(true, loadTaskToDo()));
+        $('#modal-div-body').html(loadAllValues(0, loadTaskToDo()));
         addEventNotif();
     }
 
