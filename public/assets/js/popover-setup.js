@@ -21,7 +21,7 @@ function setupCategoryPopover(element, getPopoverContent) {
 
 function setupSubCategoryPopover(element, getPopoverContent) {
     let id = element.getAttribute('data-id').toString();
-    popover.content = getPopoverContent(idCat, idTask)
+    popover.content = getPopoverContent(id)
     new bootstrap.Popover(element, popover)
 }
 
@@ -53,11 +53,7 @@ $(document).ready(function () {
     });
 
     $('[data-bs-popover=subcategory-default-popover]').each(function () {
-        setupSubCategoryPopover($(this)[0], getPopoverSubCategoryDefaultContent)
-    });
-
-    $('[data-bs-popover=subcategory-archive-popover]').each(function () {
-        setupSubCategoryPopover($(this)[0], getPopoverSubCategoryArchiveContent)
+        setupSubCategoryPopover($(this)[0], getPopoverSubCategoryContent)
     });
 
     $('[data-bs-popover=task-popover]').each(function () {

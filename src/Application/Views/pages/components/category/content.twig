@@ -26,11 +26,7 @@
 
     <div id="default-category-content" data-sortable="categories">
         {% for subCategory in category.category.subCategories %}
-            {% if subCategory.archived %}
-                {% include 'pages/components/sub-category/archive.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
-            {% else %}
-                {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
-            {% endif %}
+            {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
         {% endfor %}
         {% if (canEdit and category.category.archived == false) %}
             {% include 'pages/components/category/new.twig' with { 'catId' : category.category.id } %}

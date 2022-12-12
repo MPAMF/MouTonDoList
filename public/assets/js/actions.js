@@ -154,48 +154,16 @@ function leaveCategory(id) {
         window.location.replace("http://localhost:8090/dashboard");
 }
 
-
-
-
 function deleteSubcategory(id) {
-    $("[data-bs-popover=subcategory-popover]").popover('hide')
-    let elementDown = document.getElementById("Subcategory-" + id)
-    elementDown.remove();
+    let popoverElement = $('[data-id="' + id + '"]')[0]
+    popoverDispose(popoverElement)
+    let container = $('[data-idSubCat="' + id + '"]')[0]
+    container.remove()
 }
 
-function archiveSubcategory(id) {
-    let newPlacement = document.getElementById("sub-category-archive")
-    let element = $("#Subcategory-" + id)
-    let subcategory = document.getElementById("Subcategory-popover-" + id)
-    let attribute = subcategory.getElementsByTagName("a")
 
-    element.appendTo(newPlacement);
-    element.addClass('subcategory-archive');
 
-    $("#Sub-categoryNewTask-" + id).addClass('d-none');
 
-    attribute[0].setAttribute("data-archive", "true");
-}
-
-function deleteSubcategoryArchive(id) {
-    $("[data-bs-popover=subcategory-archive-popover]").popover('hide')
-    let elementDown = document.getElementById("Subcategory-" + id)
-    elementDown.remove();
-}
-
-function UnarchivedSubcategory(id) {
-    let newPlacement = document.getElementById("sub-category")
-    let element = $("#Subcategory-" + id)
-    let subcategory = document.getElementById("Subcategory-popover-" + id)
-    let attribute = subcategory.getElementsByTagName("a")
-
-    element.appendTo(newPlacement);
-    element.removeClass("subcategory-archive");
-
-    $("#Sub-categoryNewTask-" + id).removeClass('d-none');
-
-    attribute[0].setAttribute("data-archive", "false");
-}
 
 function DuplicateTask(idCat, idTask) {
     let originalElement = document.getElementById("Task-" + idCat + "-" + idTask);

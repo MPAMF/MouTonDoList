@@ -64,20 +64,10 @@ function getPopoverCategoryReadonlyContent(id) {
         '</div>'
 }
 
-function getPopoverSubCategoryDefaultContent(id) {
+function getPopoverSubCategoryContent(id) {
     return '<div class="btn-group-vertical" role="group" aria-label="' + getValueFromLanguage("PopoverSubCategoryAriaLabel") + '">' +
         '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalSubCategory(' + id + ')"><span class="mdi mdi-pencil-outline"></span> ' + getValueFromLanguage("PopoverSubCategoryEdit") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="archiveSubcategory(' + id + ')"><span class="mdi mdi-archive-outline"></span> ' + getValueFromLanguage("PopoverSubCategoryArchive") + '</button>' +
         '<button type="button" class="btn btn-sm btn-popover" onclick="deleteSubcategory(' + id + ')"><span class="mdi mdi-trash-can"></span> ' + getValueFromLanguage("PopoverSubCategoryDelete") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="AddSubcategoryBegin(' + id + ')"><span class="mdi mdi-arrow-up-bold-outline"> ' + getValueFromLanguage("PopoverSubCategoryAddUp") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="AddSubcategoryEnd(' + id + ')"><span class="mdi mdi-arrow-down-bold-outline"> ' + getValueFromLanguage("PopoverSubCategoryAddDown") + '</button>' +
-        '</div>'
-}
-
-function getPopoverSubCategoryArchiveContent(id) {
-    return '<div class="btn-group-vertical" role="group" aria-label="' + getValueFromLanguage("PopoverSubCategoryAriaLabel") + '">' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="UnarchivedSubcategory(' + id + ')"><span class="mdi mdi-archive-outline"></span> ' + getValueFromLanguage("PopoverSubCategoryUnarchive") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="deleteSubcategoryArchive(' + id + ')"><span class="mdi mdi-trash-can"></span> ' + getValueFromLanguage("PopoverSubCategoryDelete") + '</button>' +
         '</div>'
 }
 
