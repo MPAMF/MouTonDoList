@@ -621,6 +621,14 @@ input[type="checkbox"] {
 .sidebar-li-name {
     padding: .5rem .5rem;
     width: 100%;
+    word-wrap: break-word;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .btn-todolist-actions {
     opacity: 0;

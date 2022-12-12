@@ -9,12 +9,12 @@
                     <span class="mdi mdi-18px mdi-plus"></span>
                 </button>
             </div>
-            <div class="collapse show" id="category-active">
+            <div class="collapse show" id="category-default">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     {% for cat in categories|filter(cat => cat.category.ownerId == user.id) %}
                         <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}">
                             <a href="{{ url_for('dashboard', {'id':cat.category.id}) }}" class="d-inline-flex text-decoration-none rounded sidebar-li-name">{{ cat.category.name }}</a>
-                            <a data-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}">
+                            <a data-sidebar-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-default-popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}">
                                 <span class="mdi mdi-dots-horizontal"></span>
                             </a>
                         </li>
@@ -28,18 +28,18 @@
                     {% trans %}SidebarSharedProjectsName{% endtrans %}
                 </button>
             </div>
-            <div class="collapse show" id="category-active">
+            <div class="collapse show" id="category-shared">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     {% for cat in categories|filter(cat => cat.category.ownerId != user.id)%}
                         <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}">
                             <a href="{{ url_for('dashboard', {'id':cat.category.id}) }}" class="d-inline-flex text-decoration-none rounded sidebar-li-name">{{ cat.category.name }}</a>
-                            <a data-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}"
+                            <a data-sidebar-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}"
                                 {% if (canEdit) and (category.category.archived) %}
-                                    data-bs-popover="category-archive-popover">
+                                    data-bs-popover="category-shared-archive-popover">
                                 {% elseif (canEdit) %}
-                                    data-bs-popover="category-popover">
+                                    data-bs-popover="category-shared-popover">
                                 {% else %}
-                                    data-bs-popover="category-shared-readonly-popover">
+                                    data-bs-popover="category-readonly-popover">
                                 {% endif %}
                                 <span class="mdi mdi-dots-horizontal"></span>
                             </a>
@@ -51,7 +51,7 @@
         <li class="mb-3">
             <div class="sidebar-list-header">
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#category-archive" aria-expanded="true">
-                    {% trans %}SidebarSharedProjectsName{% endtrans %}
+                    {% trans %}SidebarArchivedProjectsName{% endtrans %}
                 </button>
             </div>
             <div class="collapse show" id="category-archive">
@@ -59,7 +59,7 @@
                     {% for cat in archivedCategories %}
                         <li class="sidebar-li rounded {{ cat.category.id == category.categoryId ? 'active' : '' }}">
                             <a href="{{ url_for('dashboard', {'id':cat.category.id}) }}" class="d-inline-flex text-decoration-none rounded sidebar-li-name">{{ cat.category.name }}</a>
-                            <a tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-archive-popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}">
+                            <a data-sidebar-id="{{ cat.category.id }}" tabindex="0" class="btn btn-todolist-actions" role="button" data-bs="popover" data-bs-popover="category-default-archive-popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}">
                                 <span class="mdi mdi-dots-horizontal"></span>
                             </a>
                         </li>

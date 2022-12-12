@@ -29,7 +29,7 @@ class UpdateCategoryServiceImpl extends Service implements UpdateCategoryService
     public CategoryRepository $categoryRepository;
 
     /**
-     * @Injec)
+     * @Inject
      * @var GetCategoryService
      */
     public GetCategoryService $getCategoryService;

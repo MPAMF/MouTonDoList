@@ -1,0 +1,36 @@
+<div class="d-grid">
+    <button class="btn btn-task-add" type="button" id="subCatAdd-{{ category.category.id }}">
+        <span class="mdi mdi-plus-circle"></span>
+        {% trans %}SubCategoryNewTaskButtonName{% endtrans %}
+    </button>
+</div>
+<form class="task-new" id="subCatNew-{{ catId }}">
+    <div class="mb-2">
+        <input type="text" class="form-control form-control-sm bg-secondary" id="subCatNewName-{{ catId }}" placeholder="{{ 'NewTaskNamePlaceholder'|trans|raw }}" title="{{ 'NewSubCatAriaLabel'|trans|raw }}" required>
+        <div id="error-subCatNew{{ catId }}" class="invalid-feedback" role="alert">{{ 'NewTaskNameError'|trans|raw }}</div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="subCatNewCancel-{{ catId }}">{% trans %}NewTaskCancel{% endtrans %}</button>
+        <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="subCatNewCreate-{{ catId }}" disabled>{% trans %}NewSubCatCreate{% endtrans %}</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    document.getElementById("subCatAdd-{{ catId }}").addEventListener('click', function (e) {
+        toggleForm("subCatAdd-{{ catId }}", "subCatNew-{{ catId }}", "error-subCatNew{{ catId }}", null)
+    });
+    document.getElementById("subCatNewCancel-{{ catId }}").addEventListener('click', function (e) {
+        toggleForm("subCatAdd-{{ catId }}", "subCatNew-{{ catId }}", null, "#subCatNewCreate-{{ catId }}")
+    });
+
+    $(document).ready(
+        $(document).on('click', "#subCatNewCreate-{{ catId }}", function (e) {
+            checkInputOnSubmit("#subCatNewName-{{ catId }}", "error-subCatNew{{ catId }}")
+        }),
+        $(document).on('keyup', "#subCatNewName-{{ catId }}", function (e) {
+            checkInputOnKeyup("#subCatNewName-{{ catId }}", "error-subCatNew{{ catId }}", "#subCatNewCreate-{{ catId }}")
+        })
+    )
+
+</script>

@@ -48,15 +48,21 @@
         input.addClass("is-invalid");
     }
 
-    function displayError(div,index,size) {
-        $('#validation-'+div).html(listTranslations[index] + size);
+    function displayError(div,index,size1,size2) {
+        if(index === 2){
+            $('#validation-'+div).html(listTranslations[index].replace('%size%', size1).replace('%size2%', size2));
+        }
+        else{
+            $('#validation-'+div).html(listTranslations[index].replace('%size%', size1));
+        }
+
         setInvalid(div);
     }
 
     $(document).ready(() => {
-        {% if has_error('email') %}displayError('email',1,"254");{% endif %}
-        {% if has_error('pseudo') %}displayError('pseudo',0,"64");{% endif %}
-        {% if has_error('password') %}displayError('password',2,"6 et 128");{% endif %}
-        {% if has_error('password-conf') %}displayError('password-conf',3,"");{% endif %}
+        {% if has_error('email') %}displayError('email',1,"254","");{% endif %}
+        {% if has_error('pseudo') %}displayError('pseudo',0,"64","");{% endif %}
+        {% if has_error('password') %}displayError('password',2,"6", "128");{% endif %}
+        {% if has_error('password-conf') %}displayError('password-conf',3,"","");{% endif %}
     })
 </script>

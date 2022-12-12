@@ -1,7 +1,7 @@
 
 /* Values */
 let body = document.body;
-let theme = researchTheme()
+let theme = getTheme()
 let themes = [
     'dark',
     'light'
@@ -14,12 +14,12 @@ body.onload = function (){
 function setToDarkMode(){
     theme = "dark";
     setTheme();
-    setThemeInDataBase();
+    switchTheme(theme);
 }
 function setToLightMode(){
     theme = "light";
     setTheme();
-    setThemeInDataBase();
+    switchTheme(theme);
 }
 
 function setTheme(){
@@ -34,13 +34,4 @@ function toggleThemes(element) {
         body.classList.add(theme);
     else
         body.classList.remove(element);
-}
-
-function researchTheme(){
-    //Get the database value
-    return "";
-}
-
-function setThemeInDataBase(){
-    //Set the database value
 }
