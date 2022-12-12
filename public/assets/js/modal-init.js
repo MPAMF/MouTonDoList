@@ -13,8 +13,8 @@ function openTaskDetails(subCatId, taskId)
         '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + '>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
-        '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + (task.assigned === null ? '' : task.assigned.name) + '</small>' +
-        '            <small class="form-text text-muted" title="' + getValueFromLanguage('TaskDescriptionTitle') + '">' + (task.description == null ? '' : task.description) + '</small>' +
+        '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + (task.assigned === null ? '' : task.assigned.username) + '</small>' +
+        '            <small class="form-text text-muted" title="' + getValueFromLanguage('TaskDescriptionTitle') + '">' + (task.description === null ? '' : task.description) + '</small>' +
         '        </div>' +
         '    </div>' +
         '</div>' +
@@ -102,14 +102,9 @@ function openEditModalCategory(catId)
     }
 
     let storageCategory = storageGetCategory(catId)
-    let hideArchived = storageCategory.hideArchived
     let hideChecked = storageCategory.hideChecked
 
     content +=
-            '<div class="col-12 checkbox">' +
-                '<input id="modal-checkbox-subcategory" class="form-check-input task-checkbox" type="checkbox" value=""' + (hideArchived ? "checked" : "") + '>' +
-                '<label for="modal-checkbox-subcategory">' + getValueFromLanguage('ModalProjectHideArchivedText') + '</label>' +
-            '</div>' +
             '<div class="col-12 checkbox">' +
                 '<input id="modal-checkbox-task" class="form-check-input task-checkbox" type="checkbox" value=""' + (hideChecked ? "checked" : "") + '>' +
                 '<label for="modal-checkbox-task">' + getValueFromLanguage('ModalProjectHideCheckedText') + '</label>' +
