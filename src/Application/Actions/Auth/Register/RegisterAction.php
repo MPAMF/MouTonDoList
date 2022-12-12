@@ -6,7 +6,7 @@ use App\Application\Actions\Action;
 use App\Application\Actions\Auth\AuthAction;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\RepositorySaveException;
-use App\Domain\Requests\Auth\RegisterUserRequest;
+use App\Domain\Requests\Auth\RegisterRequest;
 use App\Domain\Services\Auth\RegisterUserService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -22,8 +22,16 @@ class RegisterAction extends Action
 
     protected function action(): Response
     {
+        $data = $this->getFormData();
+        $request = new RegisterRequest(
+            email: $data['email'] ?? '',
+            username: $data['username'] ?? '',
+            password: $data['password'] ?? '',
+            passwordConf: $data['password-conf'] ?? ''
+        );
+
         try {
-            $this->registerUserService->register(new RegisterUserRequest($this->getFormData()));
+            $this->registerUserService->register($request);
         } catch (BadRequestException|RepositorySaveException $e) {
             return $this->withError($e->getMessage())->respondWithView('home/content.twig', []);
         }

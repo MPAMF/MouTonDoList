@@ -2,25 +2,42 @@
 
 namespace App\Domain\Requests\Auth;
 
-class RegisterUserRequest
+use App\Domain\Requests\Request;
+
+class RegisterRequest implements Request
 {
 
-    private array $data;
+    private string $email;
+    private string $username;
+    private string $password;
+    private string $passwordConf;
 
     /**
-     * @param array $data
+     * @param string $email
+     * @param string $username
+     * @param string $password
+     * @param string $passwordConf
      */
-    public function __construct(array $data)
+    public function __construct(string $email, string $username, string $password, string $passwordConf)
     {
-        $this->data = $data;
+        $this->email = $email;
+        $this->username = $username;
+        $this->password = $password;
+        $this->passwordConf = $passwordConf;
     }
+
 
     /**
      * @return array
      */
     public function getData(): array
     {
-        return $this->data;
+        return [
+            'email' => $this->email,
+            'username' => $this->username,
+            'password' => $this->password,
+            'password-conf' => $this->passwordConf
+        ];
     }
 
 }

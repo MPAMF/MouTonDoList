@@ -5,7 +5,7 @@ namespace App\Domain\Services\Auth;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Models\User\User;
-use App\Domain\Requests\Auth\RegisterUserRequest;
+use App\Domain\Requests\Auth\RegisterRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\UserRepository;
 use DI\Annotation\Inject;
@@ -23,7 +23,7 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
     /**
      * {@inheritDoc}
      */
-    public function register(RegisterUserRequest $request): User
+    public function register(RegisterRequest $request): User
     {
         $validator = $this->validator->validate($request->getData(), [
             'email' => Validator::notBlank()->email()->length(0, 254),
