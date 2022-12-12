@@ -1,7 +1,7 @@
 <div class="accordion accordion-flush categories">
     <div class="category-title">
         <h3 id="title" onclick="openEditModalCategory({{ category.category.id }})">{{ category.category.name }}</h3>
-        <div class="title-actions" id="CategoryActive{{ category.category.id }}">
+        <div class="title-actions">
             <a data-category-id="{{ category.category.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" aria-label="{{ 'CategoryPopoverAriaLabel'|trans|raw }}"
                 {% if (category.category.ownerId == user.id) and (category.category.archived) %}
                     data-bs-popover="category-default-archive-popover">

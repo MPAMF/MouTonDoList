@@ -13,9 +13,9 @@
                 {{ subCategory.name }}
         </button>
         {% if (canEdit) %}
-            <span class="category-button" id="Subcategory-popover-{{ subCategory.id }}">
+            <span class="category-button">
                 <span class="accordion-button">
-                    <a data-id="{{ subCategory.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" data-bs-popover="subcategory-popover" aria-label="{{ 'SubCategoryPopoverAriaLabel'|trans|raw }}">
+                    <a data-subcategory-id="{{ subCategory.id }}" tabindex="0" class="btn btn-category-actions" role="button" data-bs="popover" data-bs-popover="subcategory-popover" aria-label="{{ 'SubCategoryPopoverAriaLabel'|trans|raw }}">
                         <span class="mdi mdi-24px mdi-dots-horizontal"></span>
                     </a>
                 </span>
@@ -30,7 +30,7 @@
                 {% endfor %}
             </ul>
             {% if (canEdit) %}
-                <ul id="Sub-categoryNewTask-{{ subCategory.id }}" class="">
+                <ul>
                     {% include 'pages/components/task/new.twig' with { 'subCatId' : subCategory.id } %}
                 </ul>
             {% endif %}

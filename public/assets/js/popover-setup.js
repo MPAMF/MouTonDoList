@@ -20,7 +20,7 @@ function setupCategoryPopover(element, getPopoverContent) {
 }
 
 function setupSubCategoryPopover(element, getPopoverContent) {
-    let id = element.getAttribute('data-id').toString();
+    let id = element.getAttribute('data-subcategory-id').toString();
     popover.content = getPopoverContent(id)
     new bootstrap.Popover(element, popover)
 }
@@ -52,7 +52,7 @@ $(document).ready(function () {
         setupCategoryPopover($(this)[0], getPopoverCategoryReadonlyContent)
     });
 
-    $('[data-bs-popover=subcategory-default-popover]').each(function () {
+    $('[data-bs-popover=subcategory-popover]').each(function () {
         setupSubCategoryPopover($(this)[0], getPopoverSubCategoryContent)
     });
 

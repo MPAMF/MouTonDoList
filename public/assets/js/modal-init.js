@@ -87,7 +87,7 @@ function openEditModalCategory(catId)
     $("#modal-title").html(getValueFromLanguage('ModalCategoryEditName'))
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary" onclick="saveChangeCategoryName(' + catId + ')">' + getValueFromLanguage('SaveModalNav') + '</button>')
+        '<button type="button" id="modal-submit" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
 
     let content = '<form class="row g-3 form-check">'
 

@@ -75,10 +75,8 @@ function getPopoverTaskDefaultContent(idCat, idTask) {
     return '<div class="btn-group-vertical" role="group" aria-label="' + getValueFromLanguage("PopoverTaskAriaLabel") + '">' +
         '<button type="button" class="btn btn-sm btn-popover" onclick="openTaskDetails(' + idCat + ',' + idTask + ')"><span class="mdi mdi-application-outline"></span> ' + getValueFromLanguage("PopoverTaskDetails") + '</button>' +
         '<button type="button" class="btn btn-sm btn-popover" onclick="openEditModalTask(' + idCat + ',' + idTask + ')"><span class="mdi mdi-pencil-outline"></span> ' + getValueFromLanguage("PopoverTaskEdit") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="DuplicateTask(' + idCat + ',' + idTask + ')"><span class="mdi mdi-content-duplicate"> ' + getValueFromLanguage("PopoverTaskDuplicate") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="DeleteTask(' + idCat + ',' + idTask + ')"><span class="mdi mdi-trash-can"></span> ' + getValueFromLanguage("PopoverTaskDelete") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="NewTaskBegin(' + idCat + ',' + idTask + ')"><span class="mdi mdi-arrow-up-bold-outline"> ' + getValueFromLanguage("PopoverTaskAddUp") + '</button>' +
-        '<button type="button" class="btn btn-sm btn-popover" onclick="NewTaskEnd(' + idCat + ',' + idTask + ')"><span class="mdi mdi-arrow-down-bold-outline"> ' + getValueFromLanguage("PopoverTaskAddDown") + '</button>' +
+        '<button type="button" class="btn btn-sm btn-popover" onclick="duplicateTask(' + idCat + ',' + idTask + ')"><span class="mdi mdi-content-duplicate"> ' + getValueFromLanguage("PopoverTaskDuplicate") + '</button>' +
+        '<button type="button" class="btn btn-sm btn-popover" onclick="deleteTask(' + idCat + ',' + idTask + ')"><span class="mdi mdi-trash-can"></span> ' + getValueFromLanguage("PopoverTaskDelete") + '</button>' +
         '</div>'
 }
 

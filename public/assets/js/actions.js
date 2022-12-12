@@ -155,144 +155,39 @@ function leaveCategory(id) {
 }
 
 function deleteSubcategory(id) {
-    let popoverElement = $('[data-id="' + id + '"]')[0]
+    let popoverElement = $('[data-subcategory-id="' + id + '"]')[0]
     popoverDispose(popoverElement)
     let container = $('[data-idSubCat="' + id + '"]')[0]
     container.remove()
 }
 
+function duplicateTask(idCat, idTask) {
+    let newId = Math.floor(Math.random() * 10000).toString();
 
+    let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
+    let popoverElement = $('[data-task-id="' + idCat + '-' + idTask + '"]')[0]
+    popoverHide(popoverElement)
 
+    let copyElement = container.cloneNode(true)
+    copyElement.setAttribute("data-task", idCat + "-" + newId)
+    copyElement.setAttribute("data-idTask", newId)
 
+    let taskNameLabel = document.getElementById("taskViewInfo-" + idCat + "-" + idTask).firstElementChild
+    taskNameLabel.textContent += " " + getValueFromLanguage("CopyName")
 
-function DuplicateTask(idCat, idTask) {
-    let originalElement = document.getElementById("Task-" + idCat + "-" + idTask);
-    let cloneElement = originalElement.cloneNode(true)
-    cloneElement.id = "Task" + (idCat + 10) + "-" + (idTask + 10)
-    originalElement.parentNode.appendChild(cloneElement)
+    let lastChild = copyElement.lastElementChild
+    lastChild.setAttribute("data-task-id", idCat + "-" + newId)
+    let newPopover = defaultPopover()
+    popoverUpdateType(lastChild, "task-popover")
+    newPopover.content = getPopoverTaskDefaultContent(idCat, newId)
+    new bootstrap.Popover(lastChild, newPopover)
+
+    container.parentElement.prepend(copyElement)
 }
 
-function DeleteTask(idCat, idTask) {
-    $("[data-bs-popover=task-popover]").popover('hide')
-    let elementDown = document.getElementById("Task-" + idCat + "-" + idTask)
-    elementDown.remove();
-}
-
-function AddSubcategoryBegin(id) {
-    /*let subId = 10
-    let subcategory = getSubcategory(subId)
-    let element = document.getElementById("Subcategory-" + id)
-    element.insertAdjacentHTML('beforebegin', subcategory)
-    subCategoryNewTask(subId)*/
-}
-
-function AddSubcategoryEnd(id) {
-    /*let subId = 10
-    let subcategory = getSubcategory(subId)
-    let element = document.getElementById("Subcategory-" + id)
-    element.insertAdjacentHTML('beforeend', subcategory)
-    subCategoryNewTask(subId)*/
-}
-
-function NewTaskBegin(idCat, idTask) {
-    let task = getTask(idCat, idTask + 10)
-    let element = document.getElementById("Task-" + idCat + "-" + idTask)
-    element.insertAdjacentHTML('beforebegin', task)
-}
-
-function NewTaskEnd(idCat, idTask) {
-    let task = getTask(idCat, idTask + 10)
-    let element = document.getElementById("Task-" + idCat + "-" + idTask)
-    element.insertAdjacentHTML('afterend', task)
-}
-
-function getTask(idCat, idTask) {
-    return `<li class="list-group-item task-view" data-idCat="` + idCat + `" data-idTask="` + idTask + `" id="Task-` + idCat + `-` + idTask + `">
-        <button class="btn btn-sm btn-task-drag" type="button"
-                title="Attrape la tâche pour la changer d'emplacement">
-            <span class="mdi mdi-18px mdi-drag"></span>
-        </button>
-        <div class="form-check task-view-details">
-            <input class="form-check-input task-checkbox" type="checkbox" value="" checked="true" title="Etat de la tâche" onclick="checkTask(` + idCat + `,` + idTask + `)">
-                <div class="task-view-info" id="taskViewInfo-` + idCat + `-` + idTask + `"
-                     onClick="openTaskDetails(` + idCat + `,` + idTask + `)">
-                    <label class="form-check-label" title="Nom de la tâche">
-                        Nom de la tâche [` + idCat + `-` + idTask + `]
-                    </label>
-                    <small class="form-text text-muted assigned-member" title="Membre assignée à la tâche">@NOM
-                        Prénom</small>
-                    <small class="form-text text-muted" title="Description de la tâche">Description</small>
-                </div>
-        </div>
-        <a data-idCat="` + idCat + `" data-idTask="` + idTask + `" tabIndex="0" class="btn btn-sm btn-task-actions"
-           role="button" data-bs="popover" data-bs-popover="task-popover" aria-label="Actions de la tâche">
-            <span class="mdi mdi-dots-horizontal"></span>
-        </a>
-    </li>`
-}
-
-function subCategoryNewTask(sub_id) {
-    document.getElementById("taskAdd-" + sub_id).addEventListener('click', function (e) {
-        toggleForm("taskAdd-" + sub_id, "taskNew-" + sub_id, "error-taskNew" + sub_id, null)
-    });
-    document.getElementById("taskNewCancel-" + sub_id).addEventListener('click', function (e) {
-        toggleForm("taskAdd-" + sub_id, "taskNew-" + sub_id, null, "#taskNewCreate-" + sub_id)
-    });
-
-    $(document).ready(
-        $(document).on('click', "#taskNewCreate-" + sub_id, function (e) {
-            checkInputOnSubmit("#taskNewName-" + sub_id, "error-taskNew" + sub_id)
-        }),
-        $(document).on('keyup', "#taskNewName-" + sub_id, function (e) {
-            checkInputOnKeyup("#taskNewName-" + sub_id, "error-taskNew" + sub_id, "#taskNewCreate-" + sub_id)
-        })
-    )
-}
-
-let subCategoryCheckboxState = false
-let taskCheckboxState = false
-
-function saveChangeCategoryName() {
-    let input = document.getElementById("modal-input-name").value
-    const introPara = document.getElementById("title")
-    introPara.innerHTML = input
-
-    let subCategoryCheckbox = document.querySelector('input[id="modal-checkbox-subcategory"]')
-    let taskCheckbox = document.querySelector('input[id="modal-checkbox-task"]')
-    if (subCategoryCheckbox.checked) {
-        subCategoryCheckboxState = true
-        if ($("#sub-category-archive").hasClass("invisible") === false) {
-            $("#sub-category-archive").addClass('invisible')
-        }
-    } else {
-        subCategoryCheckboxState = false
-        if ($("#sub-category-archive").hasClass("invisible") === true) {
-            $("#sub-category-archive").removeClass('invisible')
-        }
-    }
-    if (taskCheckbox.checked) {
-        taskCheckboxState = true
-    } else {
-        taskCheckboxState = false
-    }
-}
-
-function checkTask(idSub, idTask) {
-    let taskCheck = document.querySelector('input[id="TaskCheckbox-' + idSub + '-' + idTask + '"]')
-    let task = document.getElementById("Task-" + idSub + "-" + idTask)
-    if (taskCheckboxState) {
-        if (taskCheck) {
-            if ($("#Task-" + idSub + "-" + idTask).hasClass("d-none") === false) {
-                $("#Task-" + idSub + "-" + idTask).addClass('d-none')
-            }
-        } else {
-            if ($("#Task-" + idSub + "-" + idTask).hasClass("d-none") === true) {
-                $("#Task-" + idSub + "-" + idTask).removeClass('d-none')
-            }
-        }
-    } else {
-        if ($("#Task-" + idSub + "-" + idTask).hasClass("d-none") === true) {
-            $("#Task-" + idSub + "-" + idTask).removeClass('d-none')
-        }
-    }
+function deleteTask(idCat, idTask) {
+    let popoverElement = $('[data-task-id="' + idCat + '-' + idTask + '"]')[0]
+    popoverDispose(popoverElement)
+    let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
+    container.remove()
 }
