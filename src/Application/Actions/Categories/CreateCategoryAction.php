@@ -8,7 +8,7 @@ use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Requests\Category\CreateCategoryRequest;
-use App\Domain\Services\Category\CreateCategoryService;
+use App\Domain\Services\Models\Category\CreateCategoryService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;

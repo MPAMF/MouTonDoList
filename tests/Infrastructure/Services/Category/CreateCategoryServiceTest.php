@@ -4,8 +4,8 @@ namespace Tests\Infrastructure\Services\Category;
 
 use App\Domain\Models\Category\Category;
 use App\Domain\Requests\Category\CreateCategoryRequest;
-use App\Domain\Services\Category\CreateCategoryService;
-use App\Domain\Services\Category\CreateCategoryServiceImpl;
+use App\Domain\Services\Models\Category\CreateCategoryService;
+use App\Domain\Services\Models\Category\CreateCategoryServiceImpl;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
 use Symfony\Component\Translation\TranslatorInterface;

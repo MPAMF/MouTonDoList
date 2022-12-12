@@ -25,6 +25,7 @@ use App\Application\Actions\Tasks\DeleteTaskAction;
 use App\Application\Actions\Tasks\ReadTaskAction;
 use App\Application\Actions\Tasks\UpdateTaskAction;
 use App\Application\Actions\User\ListUsersAction;
+use App\Application\Actions\User\UpdateUserAction;
 use App\Application\Actions\User\ViewUserAction;
 use App\Application\Middleware\Auth\UserConnectedMiddleware;
 use App\Application\Middleware\Auth\UserDisconnectedMiddleware;
@@ -93,6 +94,10 @@ return function (App $app) {
             $group->get('/{id}', ReadInvitationAction::class)->setName('actions.invitations.read');
             $group->put('/{id}', UpdateInvitationAction::class)->setName('actions.invitations.answer');
             $group->delete('/{id}', DeleteInvitationAction::class)->setName('actions.invitations.delete');
+        });
+
+        $group->group('/users', function (Group $group) {
+            $group->map(['PUT', 'PATCH'], '/{id}', UpdateUserAction::class)->setName('actions.users.update');
         });
 
     })->add(UserConnectedMiddleware::class);
