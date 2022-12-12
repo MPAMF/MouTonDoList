@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Domain\User;
+namespace Tests\Domain\Models\User;
 
 use App\Domain\Models\User\User;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    public function userProvider()
+    public function userProvider(): array
     {
         return [
             [1, 'paul', 'contact@schawnndev.fr', 'bla', 'fr', 'pomme', 'dark'],
