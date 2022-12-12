@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Repositories\InMemory;
 
 use App\Domain\Models\TaskComment\TaskComment;
-use App\Domain\Models\TaskComment\TaskCommentRepository;
+use App\Infrastructure\Repositories\TaskCommentRepository;
 
 class InMemoryTaskCommentRepository implements TaskCommentRepository
 {

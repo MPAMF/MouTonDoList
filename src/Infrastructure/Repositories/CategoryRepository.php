@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Domain\Models\Category;
+namespace App\Infrastructure\Repositories;
+
+use App\Domain\Models\Category\Category;
+use App\Domain\Models\Category\CategoryNotFoundException;
 
 interface CategoryRepository
 {

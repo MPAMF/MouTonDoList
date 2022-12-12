@@ -4,11 +4,11 @@ namespace App\Domain\Services\TaskComment;
 
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Models\TaskComment\TaskComment;
-use App\Domain\Models\TaskComment\TaskCommentRepository;
 use App\Domain\Requests\TaskComment\GetTaskCommentRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Service;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
+use App\Infrastructure\Repositories\TaskCommentRepository;
 use DI\Annotation\Inject;
 
 class GetTaskCommentServiceImpl extends Service implements GetTaskCommentService

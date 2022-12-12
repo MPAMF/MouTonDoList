@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\Models\User;
+namespace App\Infrastructure\Repositories;
+
+use App\Domain\Models\User\User;
+use App\Domain\Models\User\UserNotFoundException;
 
 interface UserRepository
 {

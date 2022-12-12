@@ -2,9 +2,9 @@
 
 namespace App\Domain\Services\Category;
 
-use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Requests\Category\DeleteCategoryRequest;
 use App\Domain\Requests\Category\GetCategoryRequest;
+use App\Infrastructure\Repositories\CategoryRepository;
 use DI\Annotation\Inject;
 
 class DeleteCategoryServiceImpl implements DeleteCategoryService

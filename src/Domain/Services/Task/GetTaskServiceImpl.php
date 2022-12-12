@@ -4,10 +4,10 @@ namespace App\Domain\Services\Task;
 
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\Task\Task;
-use App\Domain\Models\Task\TaskRepository;
 use App\Domain\Requests\Task\GetTaskRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
+use App\Infrastructure\Repositories\TaskRepository;
 use DI\Annotation\Inject;
 
 class GetTaskServiceImpl implements GetTaskService

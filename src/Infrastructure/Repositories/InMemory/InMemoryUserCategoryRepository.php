@@ -5,7 +5,7 @@ namespace App\Infrastructure\Repositories\InMemory;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\User\User;
 use App\Domain\Models\UserCategory\UserCategory;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 
 class InMemoryUserCategoryRepository implements UserCategoryRepository
 {

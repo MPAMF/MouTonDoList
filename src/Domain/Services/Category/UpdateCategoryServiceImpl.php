@@ -5,11 +5,11 @@ namespace App\Domain\Services\Category;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\Category;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\Category\GetCategoryRequest;
 use App\Domain\Requests\Category\UpdateCategoryRequest;
 use App\Domain\Services\Service;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use DI\Annotation\Inject;
 
 class UpdateCategoryServiceImpl extends Service implements UpdateCategoryService

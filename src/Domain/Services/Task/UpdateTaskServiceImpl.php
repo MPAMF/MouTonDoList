@@ -6,12 +6,12 @@ use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
-use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Models\Task\Task;
-use App\Domain\Models\Task\TaskRepository;
 use App\Domain\Requests\Task\GetTaskRequest;
 use App\Domain\Requests\Task\UpdateTaskRequest;
 use App\Domain\Services\Service;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\TaskRepository;
 use DI\Annotation\Inject;
 
 class UpdateTaskServiceImpl extends Service implements UpdateTaskService

@@ -6,13 +6,13 @@ namespace App\Infrastructure\Repositories\Eloquent;
 use App\Domain\DbCacheInterface;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Category\CategoryNotFoundException;
-use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Models\Task\Task;
 use App\Domain\Models\Task\TaskNotFoundException;
-use App\Domain\Models\Task\TaskRepository;
 use App\Domain\Models\User\UserNotFoundException;
-use App\Domain\Models\User\UserRepository;
+use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\Repository;
+use App\Infrastructure\Repositories\TaskRepository;
+use App\Infrastructure\Repositories\UserRepository;
 use Exception;
 use stdClass;
 

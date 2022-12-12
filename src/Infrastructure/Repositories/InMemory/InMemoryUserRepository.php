@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Repositories\InMemory;
 
 use App\Domain\Models\User\User;
-use App\Domain\Models\User\UserRepository;
+use App\Infrastructure\Repositories\UserRepository;
 use Illuminate\Support\Collection;
 
 class InMemoryUserRepository implements UserRepository

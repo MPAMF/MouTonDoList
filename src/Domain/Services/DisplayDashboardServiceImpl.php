@@ -2,12 +2,12 @@
 
 namespace App\Domain\Services;
 
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Task\TaskRepository;
-use App\Domain\Models\TaskComment\TaskCommentRepository;
 use App\Domain\Models\UserCategory\UserCategory;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\DisplayDashboardRequest;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\TaskCommentRepository;
+use App\Infrastructure\Repositories\TaskRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use DI\Annotation\Inject;
 
 class DisplayDashboardServiceImpl implements DisplayDashboardService

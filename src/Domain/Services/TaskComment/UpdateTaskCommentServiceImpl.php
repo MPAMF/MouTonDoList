@@ -6,10 +6,10 @@ use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\TaskComment\TaskComment;
-use App\Domain\Models\TaskComment\TaskCommentRepository;
 use App\Domain\Requests\TaskComment\GetTaskCommentRequest;
 use App\Domain\Requests\TaskComment\UpdateTaskCommentRequest;
 use App\Domain\Services\Service;
+use App\Infrastructure\Repositories\TaskCommentRepository;
 use DI\Annotation\Inject;
 
 class UpdateTaskCommentServiceImpl extends Service implements UpdateTaskCommentService

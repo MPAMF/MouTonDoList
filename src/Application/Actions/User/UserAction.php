@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Application\Actions\User;
 
 use App\Application\Actions\Action;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\Task\TaskRepository;
-use App\Domain\Models\User\UserRepository;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\TaskRepository;
+use App\Infrastructure\Repositories\UserRepository;
 use Psr\Log\LoggerInterface;
 
 abstract class UserAction extends Action

@@ -7,12 +7,12 @@ use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Category\CategoryNotFoundException;
-use App\Domain\Models\Category\CategoryRepository;
 use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Requests\Category\CreateCategoryRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Service;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
+use App\Infrastructure\Repositories\CategoryRepository;
 use DI\Annotation\Inject;
 
 class CreateCategoryServiceImpl extends Service implements CreateCategoryService

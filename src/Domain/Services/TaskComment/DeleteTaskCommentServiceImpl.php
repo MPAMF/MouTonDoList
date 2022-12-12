@@ -2,9 +2,9 @@
 
 namespace App\Domain\Services\TaskComment;
 
-use App\Domain\Models\TaskComment\TaskCommentRepository;
 use App\Domain\Requests\TaskComment\DeleteTaskCommentRequest;
 use App\Domain\Requests\TaskComment\GetTaskCommentRequest;
+use App\Infrastructure\Repositories\TaskCommentRepository;
 use DI\Annotation\Inject;
 
 class DeleteTaskCommentServiceImpl implements DeleteTaskCommentService

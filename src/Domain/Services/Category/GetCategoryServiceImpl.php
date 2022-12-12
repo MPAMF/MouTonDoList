@@ -4,11 +4,11 @@ namespace App\Domain\Services\Category;
 
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\Category;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\Category\GetCategoryRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\UserCategory\UserCategoryCheckPermissionService;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use DI\Annotation\Inject;
 
 class GetCategoryServiceImpl implements GetCategoryService

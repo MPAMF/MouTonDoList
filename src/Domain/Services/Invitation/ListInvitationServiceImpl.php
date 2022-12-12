@@ -2,8 +2,8 @@
 
 namespace App\Domain\Services\Invitation;
 
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\Invitation\ListInvitationRequest;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use DI\Annotation\Inject;
 
 class ListInvitationServiceImpl implements ListInvitationService

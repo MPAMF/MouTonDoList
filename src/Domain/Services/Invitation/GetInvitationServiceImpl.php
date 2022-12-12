@@ -5,8 +5,8 @@ namespace App\Domain\Services\Invitation;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\UserCategory\UserCategory;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\Invitation\GetInvitationRequest;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use DI\Annotation\Inject;
 
 class GetInvitationServiceImpl implements GetInvitationService

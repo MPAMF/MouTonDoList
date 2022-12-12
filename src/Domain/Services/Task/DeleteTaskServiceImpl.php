@@ -2,9 +2,9 @@
 
 namespace App\Domain\Services\Task;
 
-use App\Domain\Models\Task\TaskRepository;
 use App\Domain\Requests\Task\DeleteTaskRequest;
 use App\Domain\Requests\Task\GetTaskRequest;
+use App\Infrastructure\Repositories\TaskRepository;
 use DI\Annotation\Inject;
 
 class DeleteTaskServiceImpl implements DeleteTaskService

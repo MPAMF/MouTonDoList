@@ -4,7 +4,7 @@ namespace App\Infrastructure\Repositories\InMemory;
 
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Task\Task;
-use App\Domain\Models\Task\TaskRepository;
+use App\Infrastructure\Repositories\TaskRepository;
 
 class InMemoryTaskRepository implements TaskRepository
 {

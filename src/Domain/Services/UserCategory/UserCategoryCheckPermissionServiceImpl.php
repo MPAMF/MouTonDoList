@@ -3,8 +3,8 @@
 namespace App\Domain\Services\UserCategory;
 
 use App\Domain\Exceptions\NoPermissionException;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use DI\Annotation\Inject;
 
 class UserCategoryCheckPermissionServiceImpl implements UserCategoryCheckPermissionService

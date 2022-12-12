@@ -5,10 +5,10 @@ namespace App\Domain\Services\Invitation;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\UserCategory\UserCategory;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
 use App\Domain\Requests\Invitation\GetInvitationRequest;
 use App\Domain\Requests\Invitation\UpdateInvitationRequest;
 use App\Domain\Services\Service;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use DI\Annotation\Inject;
 
 class UpdateInvitationServiceImpl extends Service implements UpdateInvitationService
