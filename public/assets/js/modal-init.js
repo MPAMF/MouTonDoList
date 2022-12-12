@@ -192,7 +192,7 @@ function openEditModalSubCategory(catId)
     $("#modal-title").html(getValueFromLanguage('ModalSubCategoryEditName'))
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
+        '<button type="button" id="modal-submit-subcategory" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
     $("#modal-body").html('' +
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
@@ -311,6 +311,18 @@ $(document).ready(
         showToast(`edit category`, 'edit', 'success')
         bootstrap.Modal.getInstance($("#modal")).hide()
     }),
+    $(document).on('click', "#modal-submit-subcategory", function (e) {
+        let error = checkInputOnSubmit("#modal-input-name", "error-modal")
+
+        if(error) {
+            showToast(`edit subcategory`, 'edit', 'danger')
+            return;
+        }
+
+        // TODO : handle data
+        showToast(`edit subcategory`, 'edit', 'success')
+        bootstrap.Modal.getInstance($("#modal")).hide()
+    }),
     $(document).on('click', "#modal-submit", function (e) {
         checkInputOnSubmit("#modal-input-name", "error-modal")
         let memberSelectsName = document.getElementsByName("modal-member-select")
@@ -323,5 +335,6 @@ $(document).ready(
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {
         checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-category")
+        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-subcategory")
     })
 );
