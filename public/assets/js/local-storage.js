@@ -13,7 +13,7 @@ function updateStorageFromData() {
     loadStorage()
     data.categories.forEach(function (category) {
         if(!storageCategoryExists(category.category_id))
-            storagePushToCategories(category.category_id, false, false)
+            storagePushToCategories(category.category_id, false)
     })
 }
 
@@ -21,17 +21,17 @@ function storageSetCategories() {
     localStorage.setItem('categories', JSON.stringify(currentStorage.categories))
 }
 
-function storagePushToCategories(id, hideArchived, hideChecked) {
+function storagePushToCategories(id, hideChecked) {
     currentStorage.categories.push({
-        id: id, hideArchived: hideArchived, hideChecked: hideChecked
+        id: id, hideChecked: hideChecked
     })
     storageSetCategories()
 }
 
-function storageUpdateCategory(id, hideArchived, hideChecked) {
+function storageUpdateCategory(id, hideChecked) {
     let index = currentStorage.categories.findIndex(c => c.id.toString() === id.toString())
     currentStorage.categories[index] = {
-        id: parseInt(id), hideArchived: hideArchived, hideChecked: hideChecked
+        id: parseInt(id), hideChecked: hideChecked
     }
     storageSetCategories()
 }

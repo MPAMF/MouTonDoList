@@ -31,6 +31,8 @@ function getTaskInCurrentById(subCatId, taskId) {
     return currentSub.tasks[taskIdx]
 }
 
+function isCurrentCategory(id) { return id === data.currentCategoryId }
+
 function isCanEdit() { return data.canEdit }
 function isCanEditById(catId) { return getCategoryContainerById(catId).can_edit }
 

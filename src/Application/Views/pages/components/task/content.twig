@@ -1,4 +1,4 @@
-<li class="list-group-item task-view" data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}">
+<li class="list-group-item task-view" data-task="{{ task.categoryId }}-{{ task.id }}" data-idCat="{{ task.categoryId }}" data-idTask="{{ task.id }}">
     {% if (canEdit) %}
         <button class="btn btn-sm btn-task-drag" type="button" title="{{ 'TaskDragTitle'|trans|raw }}">
             <span class="mdi mdi-18px mdi-drag"></span>
@@ -14,7 +14,7 @@
             <small class="form-text text-muted" title="{{ 'TaskDescriptionTitle'|trans|raw }}">{{ task.description }}</small>
         </div>
     </div>
-    <a tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="{{ 'TaskPopoverAriaLabel'|trans|raw }}"
+    <a data-task-id="{{ task.categoryId }}-{{ task.id }}" tabindex="0" class="btn btn-sm btn-task-actions" role="button" data-bs="popover" aria-label="{{ 'TaskPopoverAriaLabel'|trans|raw }}"
         {% if (canEdit) %}
             data-bs-popover="task-popover">
         {% else %}

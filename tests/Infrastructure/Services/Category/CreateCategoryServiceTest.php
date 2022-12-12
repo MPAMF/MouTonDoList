@@ -21,10 +21,6 @@ class CreateCategoryServiceTest extends TestCase
 
     public function setUp(): void
     {
-        class_alias(
-            'Symfony\\Contracts\\Translation\\TranslatorInterface',
-            'Symfony\\Component\\Translation\\TranslatorInterface'
-        );
         $this->categoryRepository = $this->createMock(CategoryRepository::class);
         $this->userCategoryRepository = $this->createMock(UserCategoryRepository::class);
         $this->translator = $this->createMock(TranslatorInterface::class);

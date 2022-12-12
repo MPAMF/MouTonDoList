@@ -82,7 +82,7 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
         // Get current member
         $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
         $canEdit = $category->getCategory()->getOwnerId() == $userId || collect($category->members)
-                ->contains(fn(UserCategory $a) => $a->getUserId() == $this->get()->getId() && $a->isCanEdit());
+                ->contains(fn(UserCategory $a) => $a->getUserId() == $userId && $a->isCanEdit());
 
         // TODO: delete notifications => to rest get request
         $notifications = collect($this->userCategoryRepository->getCategories($userId, accepted: false));

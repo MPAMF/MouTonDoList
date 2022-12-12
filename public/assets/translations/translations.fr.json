@@ -7,7 +7,9 @@
   "ThemeDarkName": "Thème sombre",
   "ThemeLightName": "Thème clair",
 
-  "CloseAriaLabel": "Close",
+  "CloseAriaLabel": "Fermer",
+
+  "CopyName": "Copie",
 
   "SearchTypeAssigned": "Assigné",
   "SearchAssigned": "Assigné=",
@@ -81,7 +83,7 @@
   "LabelThemeModalNav": "Cliquez sur le thème de votre choix :",
   "TitleNotifModalNav": "Centre de notification :",
   "TitleTaskToDoModalNav": "Gestion des tâches :",
-  "LabelTaskToDoModalNav": "Date d'échéance : ",
+  "LabelTaskToDoModalNav": "Date d'échéance : %data%",
   "LightModalNav": "Clair",
   "DarkModalNav": "Sombre",
   "ParamLiModalNav": "Paramètres",
@@ -93,6 +95,12 @@
   "TaskToDoMoveToTaskModalNav": " Se déplacer vers la tâche",
   "TaskToDoDeleteToTaskModalNav": " Supprimer la notification",
 
+  "ModalDropdownLanguages": "Français",
+  "ModalDropdownLanguagesfr": "Français",
+  "ModalDropdownLanguagesen": "English",
+  "LanguageDoNotExist" : "La langue selectionnée n'existe pas",
+  "ModalLabelLanguage" : "Langue :",
+
   "ToastTitleErrorUpdateInvitation": "Erreur sur les ",
   "ToastErrorMessageUpdateInvitation": "Erreur avec l'invitation, essayez à nouveau plutard.",
 
@@ -101,7 +109,6 @@
   "MailAccount": "E-mail : ",
   "PasswordAccount": "Mot de passe",
   "ModificationPasswordAccount": "Modifier le mot de passe",
-  "LastPasswordAccount": "Mot de passe actuel",
   "NewPasswordAccount": "Nouveau mot de passe",
   "ConfPasswordAccount": "Confirmer le nouveau mot de passe",
 
@@ -113,9 +120,9 @@
   "AuthRegisterUserExist": "Un utilisateur possède déjà un compte avec cette adresse mail.",
   "AuthRegisterSuccess": "Création réussie!",
 
-  "RegexEmpty": "Ce champ ne peut pas être vide. Le nombre de caractère maximum est : ",
-  "RegexEmail": "L'adresse mail doit être de la forme : 'exemple@exemple.exemple'. Le nombre de caractère maximum est : ",
-  "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère doit être entre ",
+  "RegexEmpty": "Ce champ ne peut pas être vide. Le nombre de caractère maximum est : %size%",
+  "RegexEmail": "L'adresse mail doit être de la forme : 'exemple@exemple.exemple'. Le nombre de caractère maximum est : %size%",
+  "RegexPass": "Le mot de passe doit avoir au moins une majuscule, une minuscule, un chiffre et un caractère spéciale. Le nombre de caractère doit être entre %size% et %size2%",
   "RegexPassConf": "Les deux mots de passe sont différents.",
 
   "ConnectionFailed": "Adresse e-mail ou mot de passe erronés.",
@@ -132,6 +139,7 @@
   "SubCategoryDragTitle": "Attrape la sous-catégorie pour la changer d'emplacement",
   "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie",
   "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie archivée",
+  "SubCategoryNewTaskButtonName" : "Ajouter une sous-catégorie",
 
   "TaskDragTitle": "Attrape la tâche pour la changer d'emplacement",
   "TaskCheckboxTitle": "Etat de la tâche",
@@ -150,6 +158,36 @@
   "NewTaskNameError": "Veuillez indiquer un nom.",
   "NewTaskDescriptionAriaLabel": "Description de la nouvelle tâche",
   "NewTaskDescriptionPlaceholder": "Description",
+
+  "NewSubCatName": "section",
+  "NewSubCatAriaLabel": "Nom de la nouvelle section",
+  "NewSubCatCreate": "Ajouter une section",
+
+  "PopoverCategoryAriaLabel": "Actions d'une catégorie",
+  "PopoverCategoryEdit": "Modifier le projet",
+  "PopoverCategoryDuplicate": "Dupliquer le projet",
+  "PopoverCategoryArchive": "Archiver le projet",
+  "PopoverCategoryUnarchive": "Désarchiver le projet",
+  "PopoverCategoryDelete": "Supprimer le projet",
+  "PopoverCategoryAddSection": "Ajouter une section",
+  "PopoverCategoryLeave": "Quitter le projet",
+
+  "PopoverSubCategoryAriaLabel": "Actions d'une section",
+  "PopoverSubCategoryEdit": "Modifier la section",
+  "PopoverSubCategoryDuplicate": "Dupliquer la section",
+  "PopoverSubCategoryArchive": "Archiver la section",
+  "PopoverSubCategoryUnarchive": "Désarchiver la section",
+  "PopoverSubCategoryDelete": "Supprimer la section",
+  "PopoverSubCategoryAddUp": "Ajouter une section ci-dessus",
+  "PopoverSubCategoryAddDown": "Ajouter une section ci-dessous",
+
+  "PopoverTaskAriaLabel": "Actions d'une tâche",
+  "PopoverTaskDetails": "Ouvrir le détail",
+  "PopoverTaskEdit": "Modifier la tâche",
+  "PopoverTaskDuplicate": "Dupliquer la tâche",
+  "PopoverTaskDelete": "Supprimer la tâche",
+  "PopoverTaskAddUp": "Ajouter une tâche ci-dessus",
+  "PopoverTaskAddDown": "Ajouter une tâche ci-dessous",
 
   "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",

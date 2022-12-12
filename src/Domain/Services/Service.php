@@ -2,7 +2,7 @@
 
 namespace App\Domain\Services;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Tagliatti\SlimValidation\ValidatorInterface;
 
 abstract class Service
