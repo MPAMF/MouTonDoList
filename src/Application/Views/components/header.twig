@@ -415,7 +415,7 @@
         setActiveModal("modal-btn-taskToDo");
         $('#modal-title-body').html(getValueFromLanguage('TitleTaskToDoModalNav'));
         $('#modal-div-body').html(loadAllValues(0, loadTaskToDo()));
-        addEventNotif();
+        addEventTaskToDo();
     }
 
     function createTaskToDo(taskName, subCatId, taskId, date) {
@@ -441,7 +441,7 @@
         idTask = taskId;
     }
 
-    function addEventNotif() {
+    function addEventTaskToDo() {
         $("[data-bs-popover=taskToDo-popover]").popover({
             trigger: 'click',
             placement: 'right',
