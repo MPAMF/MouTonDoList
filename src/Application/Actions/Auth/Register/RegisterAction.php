@@ -3,7 +3,6 @@
 namespace App\Application\Actions\Auth\Register;
 
 use App\Application\Actions\Action;
-use App\Application\Actions\Auth\AuthAction;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Requests\Auth\RegisterRequest;

@@ -23,5 +23,5 @@ interface CreateInvitationService
      * @throws AlreadyExistsException
      * @throws RepositorySaveException
      */
-    public function create(CreateInvitationRequest $request) : UserCategory;
+    public function create(CreateInvitationRequest $request): UserCategory;
 }

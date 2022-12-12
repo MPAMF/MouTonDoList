@@ -8,6 +8,6 @@ interface Request
     /**
      * @return array|null
      */
-    public function getData() : ?array;
+    public function getData(): ?array;
 
 }
