@@ -38,8 +38,9 @@ interface UserRepository
     public function delete(User $user) : int;
 
     /**
-     * @param $id User id
+     * @param int|null $id User id
+     * @param string|null $email
      * @return bool User exists
      */
-    public function exists($id): bool;
+    public function exists(?int $id, ?string $email = null): bool;
 }
