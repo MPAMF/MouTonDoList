@@ -11,6 +11,7 @@ use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\TaskCommentRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 

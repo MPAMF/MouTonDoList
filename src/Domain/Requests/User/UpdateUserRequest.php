@@ -6,18 +6,18 @@ class UpdateUserRequest
 {
 
     private int $userId;
-    private int $categoryId;
+    private int $sessionUserId;
     private array $formData;
 
     /**
      * @param int $userId
-     * @param int $categoryId
+     * @param int $sessionUserId
      * @param array $formData
      */
-    public function __construct(int $userId, int $categoryId, array $formData)
+    public function __construct(int $userId, int $sessionUserId, array $formData)
     {
         $this->userId = $userId;
-        $this->categoryId = $categoryId;
+        $this->sessionUserId = $sessionUserId;
         $this->formData = $formData;
     }
 
@@ -32,9 +32,9 @@ class UpdateUserRequest
     /**
      * @return int
      */
-    public function getCategoryId(): int
+    public function getSessionUserId(): int
     {
-        return $this->categoryId;
+        return $this->sessionUserId;
     }
 
     /**

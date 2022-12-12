@@ -14,6 +14,7 @@ use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
 use App\Infrastructure\Repositories\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 

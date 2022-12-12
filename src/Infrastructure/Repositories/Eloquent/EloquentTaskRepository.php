@@ -13,6 +13,7 @@ use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 

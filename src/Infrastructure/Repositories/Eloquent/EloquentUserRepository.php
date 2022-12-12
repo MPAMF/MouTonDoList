@@ -8,6 +8,7 @@ use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserNotFoundException;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 

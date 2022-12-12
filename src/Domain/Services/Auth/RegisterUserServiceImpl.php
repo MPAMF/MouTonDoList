@@ -30,7 +30,7 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
             'username' => Validator::notBlank()->length(0, 64),
             'password' => Validator::notBlank()->regex('/[A-Z]/')->regex('/[a-z]/')
                 ->regex('/[1-9]/')->regex('/[-_*.!?#@&]/')->length(6, 128),
-            'password-conf' => Validator::equals($_POST['password']),
+            'password-conf' => Validator::equals($request->getPassword()),
         ]);
 
         if (!$validator->isValid()) {

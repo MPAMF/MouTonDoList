@@ -28,14 +28,7 @@ class LoginServiceImpl extends Service implements LoginService
     private AuthInterface $auth;
 
     /**
-     * @inheritDoc
-     */
-
-    /**
-     * @param LoginRequest $request
-     * @return User
-     * @throws BadRequestException
-     * @throws UserNotFoundException
+     * {@inheritDoc}
      */
     public function login(LoginRequest $request): User
     {

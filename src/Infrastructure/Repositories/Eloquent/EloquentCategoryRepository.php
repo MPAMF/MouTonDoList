@@ -10,6 +10,7 @@ use App\Domain\Models\User\UserNotFoundException;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 
