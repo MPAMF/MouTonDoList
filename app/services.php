@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+use App\Domain\Services\Auth\LoginService;
+use App\Domain\Services\Auth\LoginServiceImpl;
+use App\Domain\Services\Auth\LogoutService;
+use App\Domain\Services\Auth\LogoutServiceImpl;
 use App\Domain\Services\Auth\RegisterUserService;
 use App\Domain\Services\Auth\RegisterUserServiceImpl;
 use App\Domain\Services\Dashboard\DisplayDashboardService;
@@ -84,7 +88,8 @@ return function (ContainerBuilder $containerBuilder) {
 
         // Auth
         RegisterUserService::class => autowire(RegisterUserServiceImpl::class),
-
+        LoginService::class => autowire(LoginServiceImpl::class),
+        
         // UserCategories
         UserCategoryCheckPermissionService::class => autowire(UserCategoryCheckPermissionServiceImpl::class),
 

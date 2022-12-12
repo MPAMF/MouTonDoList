@@ -2,6 +2,7 @@
 
 namespace App\Application\Actions\Auth\Register;
 
+use App\Application\Actions\Action;
 use App\Application\Actions\Auth\AuthAction;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\RepositorySaveException;
@@ -10,7 +11,7 @@ use App\Domain\Services\Auth\RegisterUserService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class RegisterAction extends AuthAction
+class RegisterAction extends Action
 {
 
     /**

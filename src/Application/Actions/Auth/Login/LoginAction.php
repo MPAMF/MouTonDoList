@@ -2,37 +2,38 @@
 
 namespace App\Application\Actions\Auth\Login;
 
-use App\Application\Actions\Auth\AuthAction;
+use App\Application\Actions\Action;
+use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Models\User\UserNotFoundException;
+use App\Domain\Requests\Auth\LoginRequest;
+use App\Domain\Services\Auth\LoginService;
+use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
-use Respect\Validation\Validator;
 
-class LoginAction extends AuthAction
+class LoginAction extends Action
 {
+
+    /**
+     * @Inject
+     * @var LoginService
+     */
+    private LoginService $loginService;
 
     protected function action(): Response
     {
-        $validator = $this->validator->validate($this->request, [
-            'email' => Validator::notBlank()->email()->length(0, 254),
-            'password' => Validator::notBlank()->length(0, 128),
-        ]);
-
-        if (!$validator->isValid()) {
-            return $this->respondWithView('home/content.twig', []);
-        }
-
-        $data = $this->getFormData();
+        $request = new LoginRequest(
+            email: $this->getFormData()['email'] ?? '',
+            password: $this->getFormData()['password'] ?? ''
+        );
 
         try {
-            $user = $this->userRepository->logUser($data['email'], $data['password']);
+            $this->loginService->login($request);
+        } catch (BadRequestException) {
+            return $this->respondWithView('home/content.twig', []);
         } catch (UserNotFoundException) {
             return $this->withError($this->translator->trans('AuthLoginFailed'))->redirect('account.login');
         }
 
-        // Set user to session
-        $this->auth->setUser($user);
-
-        return $this->withSuccess($this->translator->trans('AuthLoginSuccess'))
-            ->redirect('dashboard');
+        return $this->withSuccess($this->translator->trans('AuthLoginSuccess'))->redirect('dashboard');
     }
 }
