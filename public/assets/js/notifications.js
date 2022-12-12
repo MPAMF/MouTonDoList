@@ -47,25 +47,24 @@ function loadTaskToDo() {
 function updateInvitation(invitationId, hasAccepted) {
     let invitationIdx = invitations.findIndex(c => c.id === invitationId);
     invitations[invitationIdx].accept = hasAccepted;
+    let userId = data.user.id;
 
     if (hasAccepted) {
         invitationRepository.update(invitations[invitationIdx])
             .then(function () {
                 removeInvitation(invitationId);
+                showToast(getValueFromLanguage('UpdateInvitationSuccess'), userId, 'success')
             })
-            .catch(e => {
-                showToast("invitations", invitations[invitationIdx].category.name);
-                console.log(e);
+            .catch(() => {
+                showToast(getValueFromLanguage('UpdateInvitationError'), userId, 'danger')
             });
     } else {
         invitationRepository.delete(invitations[invitationIdx])
             .then(function () {
                 removeInvitation(invitationId);
             })
-            .catch(e => {
-                showToast("invitations", invitations[invitationIdx].category.name);
-                console.log(e);
+            .catch(() => {
+                showToast(getValueFromLanguage('UpdateInvitationError'), userId, 'danger')
             });
     }
-
 }

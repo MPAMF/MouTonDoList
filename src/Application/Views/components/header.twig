@@ -132,7 +132,7 @@
 </nav>
 
 <div class="modal fade modal-edit" id="userModal" tabindex="-1" aria-labelledby="userModalLabel"
-     data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" role="dialog">
+     data-bs-keyboard="false" aria-hidden="true" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="container-fluid d-flex">
@@ -179,11 +179,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="btn-close-modal"
-                                data-bs-dismiss="modal">{% trans %}CloseModalNav{% endtrans %}</button>
-                        <button type="button" class="btn btn-primary">{% trans %}SaveModalNav{% endtrans %}</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -209,8 +204,11 @@
 
     /*  Theme */
     function modalTheme() {
+        let darkTheme = getValueFromLanguage('ThemeDarkName');
+        let lightTheme = getValueFromLanguage('ThemeLightName');
+
         setActiveModal("modal-btn-theme");
-        $('#modal-title-body').html(`{{ 'LabelThemeModalNav'|trans|raw }}`);
+        $('#modal-title-body').html(getValueFromLanguage('LabelThemeModalNav'));
         $('#modal-div-body').html(`
             <div class="btn btn-modal-theme" role="button" onclick="setToLightMode()" title="`+ lightTheme +`">
                 <div class="theme-modal-color">
@@ -233,19 +231,21 @@
 
     /* Account */
     function modalUser() {
-        let pseudo = `{{ 'PseudoAccount'|trans|raw }}`;
-        let mail = `{{ 'MailAccount'|trans|raw }}`;
-        let pass = `{{ 'PasswordAccount'|trans|raw }}`;
-        let btn = `{{ 'ModificationPasswordAccount'|trans|raw }}`;
+        let user = data.user;
+        let pseudo = getValueFromLanguage('PseudoAccount');
+        let mail = getValueFromLanguage('MailAccount');
+        let pass = getValueFromLanguage('PasswordAccount');
+        let btn = getValueFromLanguage('ModificationPasswordAccount');
+
         setActiveModal("modal-btn-account");
-        $('#modal-title-body').html(`{{ 'LabelAccount'|trans|raw }}`);
+        $('#modal-title-body').html(getValueFromLanguage('LabelAccount'));
         $('#modal-div-body').html(`
             <div class="d-flex flex-column">
                 <h6>` + pseudo + `</h6>
-                <p></p>
+                <p>`+ user.username +`</p>
 
                 <h6>` + mail + `</h6>
-                <p></p>
+                <p>`+ user.email +`</p>
 
                 <h6>` + pass + `</h6>
                 <button type="button" class="btn btn-abs-nav" onclick="modificationPassword()">` + btn + `</button>
@@ -254,21 +254,14 @@
     }
 
     function modificationPassword() {
-        let url = `{{ url_for('account.login') }}`;
-        let annulation = `{{ 'AnnulationModalNav'|trans|raw }}`;
-        let save = `{{ 'SaveModalNav'|trans|raw }}`;
-        let old_pass = `{{ 'LastPasswordAccount'|trans|raw }}`;
-        let new_pass = `{{ 'NewPasswordAccount'|trans|raw }}`;
-        let conf_pass = `{{ 'ConfPasswordAccount'|trans|raw }}`;
-        $('#modal-title-body').html(`{{ 'ModificationPasswordAccount'|trans|raw }}`);
+        let annulation = getValueFromLanguage('AnnulationModalNav');
+        let save = getValueFromLanguage('SaveModalNav');
+        let new_pass = getValueFromLanguage('NewPasswordAccount');
+        let conf_pass = getValueFromLanguage('ConfPasswordAccount');
+
+        $('#modal-title-body').html(getValueFromLanguage('ModificationPasswordAccount'));
         $('#modal-div-body').html(`
-        <form action="` + url + `" method="POST" class="form-account">
-            <div class="mb-3">
-                <label for="password-old" class="form-label">` + old_pass + `</label>
-                <input type="password" id="old-password" name="password-old" aria-describedby="validationPassword"
-                       class="form-control bg-secondary">
-                <div id="validation-password" class="invalid-feedback"></div>
-            </div>
+        <form class="form-account">
             <div class="mb-3">
                 <label for="password" class="form-label">` + new_pass + `</label>
                 <input type="password" id="new-password" name="password" aria-describedby="validationPassword"
@@ -283,35 +276,76 @@
             </div>
             <div class="d-flex justify-content-center">
                 <button type="button" class="btn btn-secondary me-2" onclick="modalUser()">` + annulation + `</button>
-                <button type="submit" class="btn btn-primary">` + save + `</button>
+                <button type="button" class="btn btn-primary" onclick="saveNewPassword()"> ` + save + `<button>
             </div>
         </form>
         `);
     }
 
-    /*  General */
-    function modalGeneral() {
-        setActiveModal("modal-btn-general");
-        $('#modal-title-body').html(`test`);
-        $('#modal-div-body').html(`
-            <div>
+    function saveNewPassword(){
+        let userId = data.user.id;
+        let pass = document.getElementById("password");
+        let passConf = document.getElementById("password-conf");
 
-            </div>
-        `);
+        let regexMdpSpe = /^[-_*.!?#\S]+$/;
+        let regexMdpMin = /^[a-z\S]+$/;
+        let regexMdpMaj = /^[A-Z\S]+$/;
+        let regexMdpNum = /^[0-9\S]+$/;
+
+        if(pass.value.trim() === ""){
+            showToast(getValueFromLanguage('RegexPass').replace('%size1%', 6).replace('%size2%', 128), userId, 'danger');
+            return;
+        }
+        else if(!regexMdpSpe.test(pass.value)){
+            showToast(getValueFromLanguage('RegexPass').replace('%size1%', 6).replace('%size2%', 128), userId, 'danger');
+            return;
+        }
+        else if(!regexMdpMin.test(pass.value)){
+            showToast(getValueFromLanguage('RegexPass').replace('%size1%', 6).replace('%size2%', 128), userId, 'danger');
+            return;
+        }
+        else if(!regexMdpMaj.test(pass.value)){
+            showToast(getValueFromLanguage('RegexPass').replace('%size1%', 6).replace('%size2%', 128), userId, 'danger');
+            return;
+        }
+        else if(!regexMdpNum.test(pass.value)){
+            showToast(getValueFromLanguage('RegexPass').replace('%size1%', 6).replace('%size2%', 128), userId, 'danger');
+            return;
+        }
+        else if((pass.value.length < 6)||(pass.value.length > 128)){
+            showToast(getValueFromLanguage('RegexPass').replace('%size1%', 0).replace('%size2%', 128), userId, 'danger');
+            return;
+        }
+
+        if(passConf.value !== pass.value){
+            showToast(getValueFromLanguage('RegexPassConf'), userId, 'danger');
+            return;
+        }
+
+        changePassword(pass);
     }
 
-    /*  Notification and TaskToDo */
-    function loadAllValues(isTasks, values) {
-        let res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
+    /*  General, Notification and TaskToDo */
+    function loadAllValues(typeValue, values) {
+        let res;
 
-        if (isTasks) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+        if (typeValue === 0) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+            res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
-                res += createTaskToDo(value[0], value[1], value[2], `{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value[3]);
+                res += createTaskToDo(value[0], value[1], value[2], getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value[3]));
             });
-        } else { /* [0]: categoryName; [1]: owner; [2]: creationDate; */
+        }
+        else if(typeValue === 1){
+            res = `<ul class="dropdown-menu dd-nav">`;
+            values.forEach(value => {
+                res += createLanguage(value);
+            });
+        }
+        else if(typeValue === 2){ /* [0]: categoryName; [1]: owner; [2]: creationDate; */
+            res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
                 res += createNotification(value.id, value.category.name, value.category.owner.username,
-                    `{{ 'LabelTaskToDoModalNav'|trans|raw }}` + value.date);
+                    getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value.date));
             });
         }
 
@@ -319,11 +353,34 @@
         return res;
     }
 
+    /*  General */
+    function modalGeneral() {
+        setActiveModal("modal-btn-general");
+        $('#modal-title-body').html(getValueFromLanguage('ModalLabelLanguage'));
+
+        let bodyValue = `<div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">`;
+        bodyValue += getValueFromLanguage('ModalDropdownLanguages'+data.user.language);
+        bodyValue += `</button>`;
+        bodyValue += loadAllValues(1, languages);
+        bodyValue += `</div>`;
+        $('#modal-div-body').html( bodyValue);
+
+    }
+
+    function createLanguage(language) {
+        return `
+        <li>
+            <button class="dropdown-item dropdown-item-nav" type="button" onclick="setLanguage("`+ language +`")">`+ getValueFromLanguage('ModalDropdownLanguages'+language)+ `</button>
+        </li>
+        `;
+    }
+
     /*  Notification */
     function modalNotification() {
         setActiveModal("modal-btn-notif");
-        $('#modal-title-body').html(`{{ 'TitleNotifModalNav'|trans|raw }}`);
-        $('#modal-div-body').html(loadAllValues(false, invitations));
+        $('#modal-title-body').html(getValueFromLanguage('TitleNotifModalNav'));
+        $('#modal-div-body').html(loadAllValues(2, invitations));
         addEventNotif();
     }
 
@@ -356,8 +413,8 @@
     /*  TaskToDo */
     function modalTaskToDo() {
         setActiveModal("modal-btn-taskToDo");
-        $('#modal-title-body').html(`{{ 'TitleTaskToDoModalNav'|trans|raw }}`);
-        $('#modal-div-body').html(loadAllValues(true, loadTaskToDo()));
+        $('#modal-title-body').html(getValueFromLanguage('TitleTaskToDoModalNav'));
+        $('#modal-div-body').html(loadAllValues(0, loadTaskToDo()));
         addEventNotif();
     }
 
@@ -393,8 +450,8 @@
             html: true,
             sanitize: false,
             content: () => {
-                let moveTrad = `{{ 'TaskToDoMoveToTaskModalNav'|trans|raw }}`;
-                let deleteTrad = `{{ 'TaskToDoDeleteToTaskModalNav'|trans|raw }}`;
+                let moveTrad = getValueFromLanguage('TaskToDoMoveToTaskModalNav');
+                let deleteTrad = getValueFromLanguage('TaskToDoDeleteToTaskModalNav');
                 return `
                 <div class="btn-group-vertical" id="taskToDo-popover-` + idCat + `-` + idTask + `" role="group" aria-label="Vertical button group">
                     <button type="button" class="btn btn-sm btn-popover" onclick="moveToSubCategory(` + idCat + `,` + idTask + `)">

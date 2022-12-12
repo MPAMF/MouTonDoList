@@ -1,7 +1,8 @@
 const repositories = {
     categories: new CategoryRepository(),
     tasks: new TaskRepository(),
-    taskComments: new CommentRepository()
+    taskComments: new CommentRepository(),
+    user: new UserRepository()
 }
 
 // Maybe move to another file?
@@ -185,9 +186,51 @@ function duplicateTask(idCat, idTask) {
     container.parentElement.prepend(copyElement)
 }
 
-function deleteTask(idCat, idTask) {
+function deleteTask(idCat, idTask)
+{
     let popoverElement = $('[data-task-id="' + idCat + '-' + idTask + '"]')[0]
     popoverDispose(popoverElement)
     let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
     container.remove()
+}
+
+function changePassword(newPassword) {
+    let userId = data.user.id;
+
+    repositories.user.get(userId).then(u => {
+        u.password = newPassword;
+        repositories.user.update(u).then(u => {
+            showToast(getValueFromLanguage('UpdateUserPasswordSuccess'), userId, 'success')
+        }).catch(e => showToast(getValueFromLanguage('UpdateUserPasswordError').replace('%code%', e.code), userId, 'danger'))
+    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+}
+
+function switchTheme(theme) {
+    let userId = data.user.id;
+
+    repositories.user.get(userId).then(u => {
+        if(u.theme === theme){
+            return;
+        }
+        u.theme = theme;
+        repositories.user.update(u).then(u => {
+
+        }).catch(e => showToast(getValueFromLanguage('UpdateUserPasswordError').replace('%code%', e.code), userId, 'danger'))
+    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+}
+
+function getTheme() {
+    let userId = data.user.id;
+
+    repositories.user.get(userId).then(u => {
+        return u.theme;
+    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+}
+
+function setUserLanguage(language) {
+    let userId = data.user.id;
+
+    repositories.user.get(userId).then(u => {
+        return u.language = language;
+    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
 }
