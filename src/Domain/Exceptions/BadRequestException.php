@@ -7,9 +7,20 @@ use Exception;
 class BadRequestException extends Exception
 {
 
-    public function __construct(string $message = "")
+    private array $errors;
+
+    public function __construct(string $message = "", array $errors = [])
     {
         parent::__construct($message);
+        $this->errors = $errors;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 
 }

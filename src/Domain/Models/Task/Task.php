@@ -10,6 +10,7 @@ use App\Domain\Models\ValidatorModel;
 use DateTime;
 use JsonSerializable;
 use Respect\Validation\Validator;
+use ReturnTypeWillChange;
 use stdClass;
 
 class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
@@ -44,20 +45,17 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
         $this->assigned_id = null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public static function getValidatorRules(): array
     {
-        return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
+        return [
+            'category_id' => Validator::intType(),
+            'name' => Validator::notEmpty()->stringType()->length(min: 3, max: 63),
+            'description' => Validator::stringType()->length(max: 1024),
+            'due_date' => Validator::dateTime('Y-m-d H:i:s'),
+            'checked' => Validator::boolVal(),
+            'position' => Validator::intType(), // limit
+            'assigned_id' => Validator::oneOf(Validator::nullType(), Validator::intType()),
+        ];
     }
 
     /**
@@ -75,6 +73,22 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
     {
         $this->category = $category;
         $this->category_id = $category->getId();
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -239,7 +253,46 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
         $this->assigned_id = $assigned_id;
     }
 
-    #[\ReturnTypeWillChange]
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        parent::fromRow($row);
+        $this->id = $row->id;
+        // stdClass must have loaded instances of other models
+        $this->category = $row->category ?? null;
+        $this->last_editor = $row->last_editor ?? null;
+        $this->assigned = $row->assigned ?? null;
+        $this->fromValidator($row);
+    }
+
+    public function fromValidator(array|object $data): void
+    {
+        $this->category_id = intval($data->category_id);
+        $this->name = $data->name;
+        $this->description = $data->description;
+        $this->due_date = DateTime::createFromFormat('Y-m-d H:i:s', $data->due_date);
+        $this->checked = boolval($data->checked);
+        $this->position = intval($data->position);
+        $this->last_editor_id = isset($data->last_editor_id) ? intval($data->last_editor_id) : null;
+        $this->assigned_id = isset($data->assigned_id) ? intval($data->assigned_id) : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        $row = $this->jsonSerialize();
+        unset($row['category']);
+        unset($row['last_editor']);
+        unset($row['assigned']);
+        unset($row['comments']);
+        return $row;
+    }
+
+    #[ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         $result = [
@@ -262,57 +315,5 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
         }
 
         return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fromRow(stdClass $row): void
-    {
-        parent::fromRow($row);
-        $this->id = $row->id;
-        // stdClass must have loaded instances of other models
-        $this->category = $row->category ?? null;
-        $this->last_editor = $row->last_editor ?? null;
-        $this->assigned = $row->assigned ?? null;
-        $this->fromValidator($row);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toRow(): array
-    {
-        $row = $this->jsonSerialize();
-        unset($row['category']);
-        unset($row['last_editor']);
-        unset($row['assigned']);
-        unset($row['comments']);
-        return $row;
-    }
-
-    public static function getValidatorRules(): array
-    {
-        return [
-            'category_id' => Validator::intType(),
-            'name' => Validator::notEmpty()->stringType()->length(min: 3, max: 63),
-            'description' => Validator::stringType()->length(max: 1024),
-            'due_date' => Validator::dateTime('Y-m-d H:i:s'),
-            'checked' => Validator::boolVal(),
-            'position' => Validator::intType(), // limit
-            'assigned_id' => Validator::oneOf(Validator::nullType(), Validator::intType()),
-        ];
-    }
-
-    public function fromValidator(array|object $data) : void
-    {
-        $this->category_id = intval($data->category_id);
-        $this->name = $data->name;
-        $this->description = $data->description;
-        $this->due_date = DateTime::createFromFormat('Y-m-d H:i:s', $data->due_date);
-        $this->checked = boolval($data->checked);
-        $this->position = intval($data->position);
-        $this->last_editor_id = isset($data->last_editor_id) ? intval($data->last_editor_id) : null;
-        $this->assigned_id = isset($data->assigned_id) ? intval($data->assigned_id) : null;
     }
 }

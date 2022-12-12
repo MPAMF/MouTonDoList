@@ -8,7 +8,7 @@ use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Requests\TaskComment\CreateTaskCommentRequest;
-use App\Domain\Services\TaskComment\CreateTaskCommentService;
+use App\Domain\Services\Models\TaskComment\CreateTaskCommentService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;

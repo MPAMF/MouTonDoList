@@ -9,7 +9,7 @@ use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\UserCategory\UserCategoryNotFoundException;
 use App\Domain\Requests\Invitation\UpdateInvitationRequest;
-use App\Domain\Services\Invitation\UpdateInvitationService;
+use App\Domain\Services\Models\Invitation\UpdateInvitationService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;

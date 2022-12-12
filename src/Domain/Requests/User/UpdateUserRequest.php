@@ -4,20 +4,22 @@ namespace App\Domain\Requests\User;
 
 class UpdateUserRequest
 {
-
     private int $userId;
-    private int $categoryId;
+    private int $sessionUserId;
     private array $formData;
+    private ?string $method;
 
     /**
      * @param int $userId
-     * @param int $categoryId
+     * @param int $sessionUserId
      * @param array $formData
+     * @param string|null $method
      */
-    public function __construct(int $userId, int $categoryId, array $formData)
+    public function __construct(int $userId, int $sessionUserId, array $formData, ?string $method = null)
     {
         $this->userId = $userId;
-        $this->categoryId = $categoryId;
+        $this->sessionUserId = $sessionUserId;
+        $this->method = $method;
         $this->formData = $formData;
     }
 
@@ -32,9 +34,17 @@ class UpdateUserRequest
     /**
      * @return int
      */
-    public function getCategoryId(): int
+    public function getSessionUserId(): int
     {
-        return $this->categoryId;
+        return $this->sessionUserId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMethod(): ?string
+    {
+        return $this->method;
     }
 
     /**
@@ -44,4 +54,5 @@ class UpdateUserRequest
     {
         return $this->formData;
     }
+
 }
