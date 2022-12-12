@@ -2,6 +2,7 @@
 
 namespace App\Domain\Services\Models\User;
 
+use App\Domain\Exceptions\AlreadyExistsException;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
@@ -15,9 +16,8 @@ interface CreateUserService
     /**
      * @param CreateUserRequest $request
      * @return User
+     * @throws AlreadyExistsException
      * @throws RepositorySaveException
-     * @throws BadRequestException
-     * @throws NoPermissionException
      * @throws ValidationException
      */
     public function create(CreateUserRequest $request): User;

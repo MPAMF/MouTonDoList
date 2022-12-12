@@ -6,13 +6,13 @@ class GetUserRequest
 {
 
     private int $userId;
-    private int $sessionUserId;
+    private ?int $sessionUserId;
 
     /**
      * @param int $userId
-     * @param int $sessionUserId
+     * @param int|null $sessionUserId
      */
-    public function __construct(int $userId, int $sessionUserId)
+    public function __construct(int $userId, ?int $sessionUserId)
     {
         $this->userId = $userId;
         $this->sessionUserId = $sessionUserId;
@@ -27,9 +27,9 @@ class GetUserRequest
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getSessionUserId(): int
+    public function getSessionUserId(): ?int
     {
         return $this->sessionUserId;
     }

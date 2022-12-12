@@ -61,11 +61,6 @@ return function (App $app) {
         $group->get('', DisplayDashboardAction::class)->setName('dashboard');
     })->add(UserConnectedMiddleware::class);
 
-    $app->group('/users', function (Group $group) {
-        $group->get('', ListUsersAction::class);
-        $group->get('/{id}', ViewUserAction::class);
-    });
-
     $app->group('/actions', function (Group $group) {
         $group->group('/categories', function (Group $group) {
             $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');

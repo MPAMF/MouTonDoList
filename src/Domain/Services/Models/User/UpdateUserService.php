@@ -7,6 +7,7 @@ use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\User\User;
+use App\Domain\Models\User\UserNotFoundException;
 use App\Domain\Requests\User\UpdateUserRequest;
 
 interface UpdateUserService
@@ -18,7 +19,7 @@ interface UpdateUserService
      * @throws RepositorySaveException
      * @throws ValidationException
      * @throws NoPermissionException
-     * @throws CategoryNotFoundException
+     * @throws UserNotFoundException
      */
     public function update(UpdateUserRequest $request): User;
 }
