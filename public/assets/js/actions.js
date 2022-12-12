@@ -194,6 +194,24 @@ function deleteTask(idCat, idTask)
     container.remove()
 }
 
+function toggleAllTasksVisibility() {
+    Array.from($('[data-task]')).forEach(function(task) {
+        let input = task.children.item(1).firstElementChild
+        let idCat = task.getAttribute("data-idCat")
+        let idTask = task.getAttribute("data-idTask")
+        checkTask(input, idCat, idTask)
+    })
+}
+
+function checkTask(element, idCat, idTask) {
+    let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
+
+    if(!isHideCheckedForCategory(data.currentCategoryId))
+        container.classList.remove("d-none")
+    else if (element.checked)
+        container.classList.add("d-none")
+}
+
 function changePassword(newPassword) {
     let userId = data.user.id;
 

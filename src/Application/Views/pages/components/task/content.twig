@@ -5,7 +5,7 @@
         </button>
     {% endif %}
     <div class="form-check task-view-details">
-        <input class="form-check-input task-checkbox" type="checkbox" value="" title="{{ 'TaskCheckboxTitle'|trans|raw }}" {{ task.checked ? 'checked' : '' }} {{ canEdit ? '' : 'disabled' }}>
+        <input class="form-check-input task-checkbox" type="checkbox" onclick="checkTask(this, {{ task.categoryId }},{{ task.id }})" title="{{ 'TaskCheckboxTitle'|trans|raw }}" {{ task.checked ? 'checked' : '' }} {{ canEdit ? '' : 'disabled' }}>
         <div class="task-view-info" id="taskViewInfo-{{ task.categoryId }}-{{ task.id }}" onclick="openTaskDetails({{ task.categoryId }},{{ task.id }})">
             <label class="form-check-label" title="{{ 'TaskNameTitle'|trans|raw }}">
                 {{ task.name }}

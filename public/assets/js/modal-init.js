@@ -10,7 +10,7 @@ function openTaskDetails(subCatId, taskId)
     let content = '' +
         '<div>' +
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + '>' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" onclick="checkTask(this,' + subCatId + ',' + taskId + ')" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + '>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
         '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + (task.assigned === null ? '' : task.assigned.username) + '</small>' +
@@ -87,7 +87,7 @@ function openEditModalCategory(catId)
     $("#modal-title").html(getValueFromLanguage('ModalCategoryEditName'))
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
+        '<button type="button" id="modal-submit-category" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
 
     let content = '<form class="row g-3 form-check">'
 
@@ -286,15 +286,25 @@ $(document).ready(
     }),
 
     /* Submit Modal */
+    $(document).on('click', "#modal-submit-category", function (e) {
+        checkInputOnSubmit("#modal-input-name", "error-modal")
+        let memberSelectsName = document.getElementsByName("modal-member-select")
+        if(memberSelectsName.length !== 0)
+            checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
+        let hideChecked = document.getElementById("modal-checkbox-task").checked
+        let catId = $("#modal-body").attr("data-id")
+        storageUpdateCategory(catId, hideChecked)
+        toggleAllTasksVisibility()
+        bootstrap.Modal.getInstance($("#modal")).hide()
+    }),
     $(document).on('click', "#modal-submit", function (e) {
         checkInputOnSubmit("#modal-input-name", "error-modal")
         let memberSelectsName = document.getElementsByName("modal-member-select")
         if(memberSelectsName.length !== 0)
             checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
-        let hideArchived = document.getElementById("modal-checkbox-subcategory").checked
         let hideChecked = document.getElementById("modal-checkbox-task").checked
         let catId = $("#modal-body").attr("data-id")
-        storageUpdateCategory(catId, hideArchived, hideChecked)
+        storageUpdateCategory(catId, hideChecked)
         bootstrap.Modal.getInstance($("#modal")).hide()
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {

@@ -56,3 +56,7 @@ function storageCategoryExists(id) {
 function storageCategoriesEmpty() {
     return currentStorage.categories === null || currentStorage.categories.length === 0
 }
+
+function isHideCheckedForCategory(id) {
+    return storageGetCategory(id).hideChecked
+}
