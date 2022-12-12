@@ -66,7 +66,7 @@
   "ModalProjectMemberEmailErrorText": "L'email indiqué n'est pas valide.",
   "ModalProjectMemberNewText": " Ajouter un membre",
   "ModalProjectMemberErrorText": "Le statut indiqué n'est pas valide.",
-  "ModalProjectMemberAddText": "Ajouter le membre",
+  "ModalProjectMemberAddText": "Inviter le membre",
 
   "ModalCommentsTitle": "Liste des commentaires",
   "ModalCommentAuthorUnknown": "Inconnu",

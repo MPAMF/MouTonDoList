@@ -212,6 +212,11 @@ function checkTask(element, idCat, idTask) {
         container.classList.add("d-none")
 }
 
+function removeMember(catId, userId) {
+    console.log(catId, userId)
+    showToast(`remove member`, 'member', 'success')
+}
+
 function changePassword(newPassword) {
     let userId = data.user.id;
 

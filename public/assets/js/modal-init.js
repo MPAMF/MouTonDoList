@@ -136,7 +136,7 @@ function openEditModalCategory(catId)
                 '</select>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<button type="button" class="btn btn-sm btn-modal-remove">' +
+                '<button type="button" class="btn btn-sm btn-modal-remove" onclick="removeMember(' + catId + ',' + member.id + ')">' +
                 '<span class="mdi mdi-14px mdi-close-thick"></span> <span class="hideMobile">' + getValueFromLanguage('ModalProjectMemberRemove') + '</span>' +
                 '</button>' +
                 '</div>' +
@@ -260,12 +260,19 @@ $(document).ready(
     }),
     $(document).on('click', "#memberNewCreate", function (e) {
         e.preventDefault()
-        checkEmailOnSubmit("#memberNewName", "error-memberNew")
+        let error = checkEmailOnSubmit("#memberNewName", "error-memberNew")
         let select = document.getElementById("modal-member-select-new")
-        if(authModalSelectMemberStatusValues.includes(select.value.toString()))
-            document.getElementById("error-memberStatusNew").style.display = "none";
-        else
-            document.getElementById("error-memberStatusNew").style.display = "block";
+        error = error || checkSelectValueOnSubmit(select, "error-memberStatusNew", authModalSelectMemberStatusValues)
+
+        if(error) {
+            showToast(`invitation`, 'invited', 'danger')
+            return;
+        }
+
+        let email = document.getElementById("memberNewName")
+        let selectedValue = select.value //authModalSelectMemberStatusValues
+        // TODO : handle
+        showToast(`invitation`, 'invited', 'success')
     }),
     $(document).on('keyup', "#memberNewName", function (e) {
         checkEmailOnKeyup("#memberNewName", "error-memberNew", "#memberNewCreate")
@@ -287,14 +294,21 @@ $(document).ready(
 
     /* Submit Modal */
     $(document).on('click', "#modal-submit-category", function (e) {
-        checkInputOnSubmit("#modal-input-name", "error-modal")
+        let error = checkInputOnSubmit("#modal-input-name", "error-modal")
         let memberSelectsName = document.getElementsByName("modal-member-select")
-        if(memberSelectsName.length !== 0)
-            checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
+        error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
         let hideChecked = document.getElementById("modal-checkbox-task").checked
         let catId = $("#modal-body").attr("data-id")
         storageUpdateCategory(catId, hideChecked)
         toggleAllTasksVisibility()
+
+        if(error) {
+            showToast(`edit category`, 'edit', 'danger')
+            return;
+        }
+
+        // TODO : handle data
+        showToast(`edit category`, 'edit', 'success')
         bootstrap.Modal.getInstance($("#modal")).hide()
     }),
     $(document).on('click', "#modal-submit", function (e) {
@@ -308,6 +322,6 @@ $(document).ready(
         bootstrap.Modal.getInstance($("#modal")).hide()
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {
-        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit")
+        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-category")
     })
 );
