@@ -40,6 +40,14 @@ function getCurrentCategoryMembersAsArray() {
     return result
 }
 
+function getMemberUsernameById(value) {
+    let members = getCurrentCategoryMembers()
+    members.forEach(function(member) {
+        if(member.id.toString() === value) return member.username
+    })
+    return null
+}
+
 function getCurrentMemberUsername() {
     return data.user.username
 }

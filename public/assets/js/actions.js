@@ -228,6 +228,14 @@ function prependComment() {
     container.prepend(getCommentContent(text))
 }
 
+function appendTask(catId, assignedValue) {
+    let container = $("[data-subcategory-list-id=" + catId +"]")[0]
+    let name = document.getElementById("taskNewName-" + catId).value
+    let desc = document.getElementById("taskNewDescription-" + catId).value
+    let assignedName = getMemberUsernameById(assignedValue)
+    container.append(getTaskContent(catId, name, desc, assignedName))
+}
+
 function changePassword(newPassword) {
     let userId = data.user.id;
 
