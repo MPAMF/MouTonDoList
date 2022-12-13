@@ -1,7 +1,7 @@
 
 /* Values */
 let body = document.body;
-let theme = getTheme()
+let theme = data.user.theme
 let themes = [
     'dark',
     'light'
