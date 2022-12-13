@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Application\Actions\Auth\Login\DisplayLoginAction;
 use App\Application\Actions\Auth\Login\LoginAction;
+use App\Application\Actions\Auth\Login\TokenLoginAction;
 use App\Application\Actions\Auth\Logout\LogoutAction;
 use App\Application\Actions\Auth\Register\DisplayRegisterAction;
 use App\Application\Actions\Auth\Register\RegisterAction;
@@ -28,6 +29,7 @@ use App\Application\Actions\User\CreateUserAction;
 use App\Application\Actions\User\DeleteUserAction;
 use App\Application\Actions\User\ReadUserAction;
 use App\Application\Actions\User\UpdateUserAction;
+use App\Application\Middleware\Auth\AuthMiddleware;
 use App\Application\Middleware\Auth\UserConnectedMiddleware;
 use App\Application\Middleware\Auth\UserDisconnectedMiddleware;
 use App\Application\Middleware\SessionMiddleware;
@@ -35,8 +37,10 @@ use App\Application\Middleware\TokenMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
+use Slim\Csrf\Guard as CsrfMiddleware;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Slim\Views\Twig;
+
 
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
@@ -44,12 +48,11 @@ return function (App $app) {
         return $response;
     });
 
-    // App
     $app->group('/', function (Group $group) {
 
         $group->get('', function (Request $request, Response $response) {
             return $this->get(Twig::class)->render($response, 'home/content.twig');
-        })->setName('home');
+        })->add(UserDisconnectedMiddleware::class)->setName('/home');
 
         $group->group('account', function (Group $group) {
             $group->get('/login', DisplayLoginAction::class)->setName('account.login');
@@ -67,7 +70,7 @@ return function (App $app) {
             $group->get('', DisplayDashboardAction::class)->setName('dashboard');
         })->add(UserConnectedMiddleware::class);
 
-        $group->group('actions', function (Group $group) {
+        $group->group('/actions', function (Group $group) {
             $group->group('/categories', function (Group $group) {
                 $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
                 $group->get('/{id}', ReadCategoryAction::class)->setName('actions.categories.read');
@@ -104,60 +107,53 @@ return function (App $app) {
 
         })->add(UserConnectedMiddleware::class);
 
-    })->add(SessionMiddleware::class);
+    })->add(AuthMiddleware::class)->add(CsrfMiddleware::class)->add(SessionMiddleware::class);
 
     // Rest API
     $app->group('/api', function (Group $group) {
 
         // Connected users
-        $group->group('/', function (Group $group) {
-            $group->group('/categories', function (Group $group) {
-                $group->post('', CreateCategoryAction::class);
-                $group->get('/{id}', ReadCategoryAction::class);
-                $group->put('/{id}', UpdateCategoryAction::class);
-                $group->delete('/{id}', DeleteCategoryAction::class);
-            });
+        $group->group('/categories', function (Group $group) {
+            $group->post('', CreateCategoryAction::class);
+            $group->get('/{id}', ReadCategoryAction::class);
+            $group->put('/{id}', UpdateCategoryAction::class);
+            $group->delete('/{id}', DeleteCategoryAction::class);
+        });
 
-            $group->group('/tasks', function (Group $group) {
-                $group->post('', CreateTaskAction::class);
-                $group->get('/{id}', ReadTaskAction::class);
-                $group->put('/{id}', UpdateTaskAction::class);
-                $group->delete('/{id}', DeleteTaskAction::class);
-            });
+        $group->group('/tasks', function (Group $group) {
+            $group->post('', CreateTaskAction::class);
+            $group->get('/{id}', ReadTaskAction::class);
+            $group->put('/{id}', UpdateTaskAction::class);
+            $group->delete('/{id}', DeleteTaskAction::class);
+        });
 
-            $group->group('/comments', function (Group $group) {
-                $group->post('', CreateTaskCommentAction::class);
-                $group->get('/{id}', ReadTaskCommentAction::class);
-                $group->put('/{id}', UpdateTaskCommentAction::class);
-                $group->delete('/{id}', DeleteTaskCommentAction::class);
-            });
+        $group->group('/comments', function (Group $group) {
+            $group->post('', CreateTaskCommentAction::class);
+            $group->get('/{id}', ReadTaskCommentAction::class);
+            $group->put('/{id}', UpdateTaskCommentAction::class);
+            $group->delete('/{id}', DeleteTaskCommentAction::class);
+        });
 
-            $group->group('/invitations', function (Group $group) {
-                $group->post('', CreateInvitationAction::class);
-                $group->get('', ListInvitationAction::class);
-                $group->get('/{id}', ReadInvitationAction::class);
-                $group->put('/{id}', UpdateInvitationAction::class);
-                $group->delete('/{id}', DeleteInvitationAction::class);
-            });
-
-            $group->group('/users', function (Group $group) {
-                $group->post('', CreateUserAction::class);
-                $group->get('/{id}', ReadUserAction::class);
-                $group->map(['PUT', 'PATCH'], '/{id}', UpdateUserAction::class);
-                $group->delete('/{id}', DeleteUserAction::class);
-            });
-
-        })->add(UserConnectedMiddleware::class);
-
-
-
+        $group->group('/invitations', function (Group $group) {
+            $group->post('', CreateInvitationAction::class);
+            $group->get('', ListInvitationAction::class);
+            $group->get('/{id}', ReadInvitationAction::class);
+            $group->put('/{id}', UpdateInvitationAction::class);
+            $group->delete('/{id}', DeleteInvitationAction::class);
+        });
 
         $group->group('/users', function (Group $group) {
             $group->post('', CreateUserAction::class);
             $group->get('/{id}', ReadUserAction::class);
             $group->map(['PUT', 'PATCH'], '/{id}', UpdateUserAction::class);
             $group->delete('/{id}', DeleteUserAction::class);
-        })->add(UserDisconnectedMiddleware::class);
+        });
+
     })->add(TokenMiddleware::class);
+
+
+    // Get token
+    $app->post('login', TokenLoginAction::class);
+
 
 };
