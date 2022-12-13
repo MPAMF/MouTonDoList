@@ -213,7 +213,7 @@ function openEditModalTask(subCatId, taskId)
     $("#modal-title").html(getValueFromLanguage('ModalTaskEditName'))
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
+        '<button type="button" id="modal-submit-task" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
 
     let content =
         '<form class="row g-3 form-check">' +
@@ -238,6 +238,7 @@ function openEditModalTask(subCatId, taskId)
     content +=
                 '</select>' +
             '</div>' +
+            '<div id="error-modal-members" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberExistenceErrorText') + '</div>' +
         '</form>'
 
     $("#modal-body").html(content)
@@ -323,18 +324,25 @@ $(document).ready(
         showToast(`edit subcategory`, 'edit', 'success')
         bootstrap.Modal.getInstance($("#modal")).hide()
     }),
-    $(document).on('click', "#modal-submit", function (e) {
-        checkInputOnSubmit("#modal-input-name", "error-modal")
-        let memberSelectsName = document.getElementsByName("modal-member-select")
-        if(memberSelectsName.length !== 0)
-            checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
-        let hideChecked = document.getElementById("modal-checkbox-task").checked
-        let catId = $("#modal-body").attr("data-id")
-        storageUpdateCategory(catId, hideChecked)
+    $(document).on('click', "#modal-submit-task", function (e) {
+        let error = checkInputOnSubmit("#modal-input-name", "error-modal")
+        let select = document.getElementById("modal-assign-member")
+        let members = getCurrentCategoryMembersAsArray()
+        members.push("0")
+        error = error || checkSelectValueOnSubmit(select, "error-modal-members", members)
+
+        if(error) {
+            showToast(`edit task`, 'edit', 'danger')
+            return;
+        }
+
+        // TODO : handle data
+        showToast(`edit task`, 'edit', 'success')
         bootstrap.Modal.getInstance($("#modal")).hide()
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {
         checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-category")
         checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-subcategory")
+        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-task")
     })
 );

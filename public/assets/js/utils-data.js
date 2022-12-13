@@ -31,6 +31,15 @@ function getTaskInCurrentById(subCatId, taskId) {
     return currentSub.tasks[taskIdx]
 }
 
+function getCurrentCategoryMembersAsArray() {
+    let members = getCurrentCategoryMembers()
+    let result = []
+    members.forEach(function(member) {
+        result.push(member.user_id.toString())
+    })
+    return result
+}
+
 function isCurrentCategory(id) { return id === data.currentCategoryId }
 
 function isCanEdit() { return data.canEdit }

@@ -63,6 +63,7 @@
   "ModalProjectMemberEditor": "Editeur",
   "ModalProjectMemberRemove": "Retirer",
   "ModalProjectMemberStatusErrorText": "Le rôle d'un des membres n'est pas valide.",
+  "ModalProjectMemberExistenceErrorText": "Le membre sélectionné n'est pas valide.",
   "ModalProjectMemberEmailErrorText": "L'email indiqué n'est pas valide.",
   "ModalProjectMemberNewText": " Ajouter un membre",
   "ModalProjectMemberErrorText": "Le statut indiqué n'est pas valide.",
@@ -129,7 +130,7 @@
 
   "SidebarAriaLabel": "Liste de mes listes de tâches",
   "SidebarMyProjectsName": "Mes projets",
-  "SidebarNewTodolistButton": "Création d'une liste de tâche",
+  "SidebarNewTodolistButton": "Création d'un projet",
   "SidebarSharedProjectsName": "Projets partagés",
   "SidebarArchivedProjectsName": "Mes projets archivés",
 
