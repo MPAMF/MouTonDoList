@@ -10,7 +10,7 @@ function openTaskDetails(subCatId, taskId)
     let content = '' +
         '<div>' +
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" onclick="checkTask(this,' + subCatId + ',' + taskId + ')" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + '>' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" onclick="checkTask(this,' + subCatId + ',' + taskId + ')" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + ' disabled>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
         '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + (task.assigned === null ? '' : task.assigned.username) + '</small>' +
@@ -27,21 +27,25 @@ function openTaskDetails(subCatId, taskId)
         '               </h2>' +
         '               <div id="accordion-body-comments" class="accordion-collapse collapse" aria-labelledby="accordion-header-comments" data-bs-parent="#accordion-comments">' +
         '                   <div class="accordion-body">' +
-        '                       <ul class="list-group list-group-flush">';
+        '                       <ul id="modalComments" class="list-group list-group-flush">';
 
     (task.comments).forEach(function(comment) {
         content +=
-        '            <li class="list-group-item modal-comment">' +
+        '            <li class="list-group-item modal-comment" data-comment="' + comment.id + '">' +
         '                <div class="d-flex justify-content-between align-items-center">' +
         '                    <p class="mb-1">' +
-        '                        ' + (comment.author === null ? getValueFromLanguage('ModalCommentAuthorUnknown') : comment.author.username) + ' <small class="form-text text-muted" title="' + getValueFromLanguage('ModalCommentDateTitle') + '">' + timeSince(Date.parse(comment.date)) + ' ago </small>' +
+        '                        ' + (comment.author === null ? getValueFromLanguage('ModalCommentAuthorUnknown') : comment.author.username) + ' <small class="form-text text-muted" title="' + getValueFromLanguage('ModalCommentDateTitle') + '">' + timeSince(Date.parse(comment.date)) + '</small>' +
         '                    </p>'
 
         if(isCanEdit()) {
             content +=
-                '<button class="btn btn-sm modal-delete-comment" type="button" title="' + getValueFromLanguage('ModalCommentDeleteTitle') + '">' +
+                '<button id="commentRemove-' + comment.id + '" class="btn btn-sm modal-delete-comment" type="button" title="' + getValueFromLanguage('ModalCommentDeleteTitle') + '">' +
                 '<span class="mdi mdi-18px mdi-trash-can"></span>' +
                 '</button>'
+
+            $(document).on('click', "#commentRemove-" + comment.id, function (e) {
+                removeComment(comment.id)
+            })
         }
 
         content +=
@@ -287,7 +291,16 @@ $(document).ready(
         toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
     }),
     $(document).on('click', "#commentNewCreate", function (e) {
-        checkInputOnSubmit("#commentNewDescription", "error-commentNew")
+        e.preventDefault()
+        let error = checkInputOnSubmit("#commentNewDescription", "error-commentNew")
+        if(error) {
+            showToast(`new comment`, 'comment', 'danger')
+            return;
+        }
+        prependComment()
+        toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
+        clearElementValue("commentNewDescription")
+        showToast(`new comment`, 'comment', 'success')
     }),
     $(document).on('keyup', "#commentNewDescription", function (e) {
         checkInputOnKeyup("#commentNewDescription", "error-commentNew", "#commentNewCreate")

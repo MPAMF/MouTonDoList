@@ -40,6 +40,10 @@ function getCurrentCategoryMembersAsArray() {
     return result
 }
 
+function getCurrentMemberUsername() {
+    return data.user.username
+}
+
 function isCurrentCategory(id) { return id === data.currentCategoryId }
 
 function isCanEdit() { return data.canEdit }
@@ -55,23 +59,23 @@ function timeSince(date) {
     var interval = seconds / 31536000;
 
     if (interval > 1) {
-        return Math.floor(interval) + " years";
+        return Math.floor(interval) + " " + getValueFromLanguage("TimeYears");
     }
     interval = seconds / 2592000;
     if (interval > 1) {
-        return Math.floor(interval) + " months";
+        return Math.floor(interval) + " " + getValueFromLanguage("TimeMonths");
     }
     interval = seconds / 86400;
     if (interval > 1) {
-        return Math.floor(interval) + " days";
+        return Math.floor(interval) + " " + getValueFromLanguage("TimeDays");
     }
     interval = seconds / 3600;
     if (interval > 1) {
-        return Math.floor(interval) + " hours";
+        return Math.floor(interval) + " " + getValueFromLanguage("TimeHours");
     }
     interval = seconds / 60;
     if (interval > 1) {
-        return Math.floor(interval) + " minutes";
+        return Math.floor(interval) + " " + getValueFromLanguage("TimeMinutes");
     }
-    return Math.floor(seconds) + " seconds";
+    return getValueFromLanguage("TimeNow");;
 }

@@ -190,6 +190,13 @@
   "PopoverTaskAddUp": "Ajouter une tâche ci-dessus",
   "PopoverTaskAddDown": "Ajouter une tâche ci-dessous",
 
+  "TimeYears": "années",
+  "TimeMonths" : "mois",
+  "TimeDays": "jours",
+  "TimeHours": "heures",
+  "TimeMinutes": "minutes",
+  "TimeNow": "à l'instant",
+
   "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",
   "FooterGithub": "Page GitHub du projet"

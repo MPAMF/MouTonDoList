@@ -217,6 +217,17 @@ function removeMember(catId, userId) {
     showToast(`remove member`, 'member', 'success')
 }
 
+function removeComment(id) {
+    $('[data-comment="' + id + '"]')[0].remove()
+    showToast(`remove member`, 'member', 'success')
+}
+
+function prependComment() {
+    let container = document.getElementById("modalComments")
+    let text = document.getElementById("commentNewDescription").value
+    container.prepend(getCommentContent(text))
+}
+
 function changePassword(newPassword) {
     let userId = data.user.id;
 

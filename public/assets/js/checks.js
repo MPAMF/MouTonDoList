@@ -83,3 +83,7 @@ function toggleForm(btnId, formId, errorId, secondBtnId)
     if (secondBtnId !== null)
         $(secondBtnId).prop('disabled', true);
 }
+
+function clearElementValue(inputId) {
+    document.getElementById(inputId).value = ""
+}
