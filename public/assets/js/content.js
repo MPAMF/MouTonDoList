@@ -1,6 +1,5 @@
-function getCommentContent(text) {
+function getCommentContent(newId, text) {
 
-    let newId = Math.floor(Math.random() * 10000).toString();
     let author = getCurrentMemberUsername()
 
     let comment = document.createElement("li")
@@ -32,9 +31,7 @@ function getCommentContent(text) {
     return comment
 }
 
-function getTaskContent(catId, name, desc, assigned) {
-
-    let newId = Math.floor(Math.random() * 10000).toString();
+function getTaskContent(catId, newId, name, desc, assigned) {
 
     let task = document.createElement("li")
     task.classList.add("list-group-item", "task-view")
@@ -66,9 +63,7 @@ function getTaskContent(catId, name, desc, assigned) {
     return task
 }
 
-function getSubCategoryContent(catId, name) {
-
-    let newId = Math.floor(Math.random() * 10000).toString();
+function getSubCategoryContent(catId, name, newId) {
 
     let head = document.createElement("h2")
     head.classList.add("accordion-header", "subcategory-header")

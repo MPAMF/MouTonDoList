@@ -44,7 +44,7 @@ function openTaskDetails(subCatId, taskId)
                 '</button>'
 
             $(document).on('click', "#commentRemove-" + comment.id, function (e) {
-                removeComment(comment.id)
+                removeComment(task.id, comment.id)
             })
         }
 
@@ -79,6 +79,7 @@ function openTaskDetails(subCatId, taskId)
         '</div>'
 
     $("#modal-body").html(content)
+    $("#modal-body").attr("data-id", task.id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -205,6 +206,8 @@ function openEditModalSubCategory(catId)
                 '<div id="error-modal" class="invalid-feedback" role="alert">' + getValueFromLanguage('NewTaskNameError') + '</div>' +
             '</div>' +
         '</form>')
+
+    $("#modal-body").attr("data-id", sub.id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -249,6 +252,7 @@ function openEditModalTask(subCatId, taskId)
     let select = document.getElementById("modal-assign-member")
     select.value = task.assigned_id === null ? '0' : task.assigned_id.toString()
 
+    $("#modal-body").attr("data-id", task.id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -264,20 +268,7 @@ $(document).ready(
         toggleForm("memberAdd", "memberNew", null, "#memberNewCreate")
     }),
     $(document).on('click', "#memberNewCreate", function (e) {
-        e.preventDefault()
-        let error = checkEmailOnSubmit("#memberNewName", "error-memberNew")
-        let select = document.getElementById("modal-member-select-new")
-        error = error || checkSelectValueOnSubmit(select, "error-memberStatusNew", authModalSelectMemberStatusValues)
-
-        if(error) {
-            showToast(`invitation`, 'invited', 'danger')
-            return;
-        }
-
-        let email = document.getElementById("memberNewName")
-        let selectedValue = select.value //authModalSelectMemberStatusValues
-        // TODO : handle
-        showToast(`invitation`, 'invited', 'success')
+        addMemberCheck(e)
     }),
     $(document).on('keyup', "#memberNewName", function (e) {
         checkEmailOnKeyup("#memberNewName", "error-memberNew", "#memberNewCreate")
@@ -291,16 +282,7 @@ $(document).ready(
         toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
     }),
     $(document).on('click', "#commentNewCreate", function (e) {
-        e.preventDefault()
-        let error = checkInputOnSubmit("#commentNewDescription", "error-commentNew")
-        if(error) {
-            showToast(`new comment`, 'comment', 'danger')
-            return;
-        }
-        prependComment()
-        toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
-        clearElementValue("commentNewDescription")
-        showToast(`new comment`, 'comment', 'success')
+        addCommentCheck(e)
     }),
     $(document).on('keyup', "#commentNewDescription", function (e) {
         checkInputOnKeyup("#commentNewDescription", "error-commentNew", "#commentNewCreate")
@@ -308,50 +290,13 @@ $(document).ready(
 
     /* Submit Modal */
     $(document).on('click', "#modal-submit-category", function (e) {
-        let error = checkInputOnSubmit("#modal-input-name", "error-modal")
-        let memberSelectsName = document.getElementsByName("modal-member-select")
-        error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
-        let hideChecked = document.getElementById("modal-checkbox-task").checked
-        let catId = $("#modal-body").attr("data-id")
-        storageUpdateCategory(catId, hideChecked)
-        toggleAllTasksVisibility()
-
-        if(error) {
-            showToast(`edit category`, 'edit', 'danger')
-            return;
-        }
-
-        // TODO : handle data
-        showToast(`edit category`, 'edit', 'success')
-        bootstrap.Modal.getInstance($("#modal")).hide()
+        submitModalCategory()
     }),
     $(document).on('click', "#modal-submit-subcategory", function (e) {
-        let error = checkInputOnSubmit("#modal-input-name", "error-modal")
-
-        if(error) {
-            showToast(`edit subcategory`, 'edit', 'danger')
-            return;
-        }
-
-        // TODO : handle data
-        showToast(`edit subcategory`, 'edit', 'success')
-        bootstrap.Modal.getInstance($("#modal")).hide()
+        submitModalSubCategory()
     }),
     $(document).on('click', "#modal-submit-task", function (e) {
-        let error = checkInputOnSubmit("#modal-input-name", "error-modal")
-        let select = document.getElementById("modal-assign-member")
-        let members = getCurrentCategoryMembersAsArray()
-        members.push("0")
-        error = error || checkSelectValueOnSubmit(select, "error-modal-members", members)
-
-        if(error) {
-            showToast(`edit task`, 'edit', 'danger')
-            return;
-        }
-
-        // TODO : handle data
-        showToast(`edit task`, 'edit', 'success')
-        bootstrap.Modal.getInstance($("#modal")).hide()
+        submitModalTask()
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {
         checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-category")
