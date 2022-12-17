@@ -10,7 +10,7 @@ function openTaskDetails(subCatId, taskId)
     let content = '' +
         '<div>' +
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + '>' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" onclick="checkTask(this,' + subCatId + ',' + taskId + ')" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + ' disabled>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
         '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + (task.assigned === null ? '' : task.assigned.username) + '</small>' +
@@ -27,21 +27,25 @@ function openTaskDetails(subCatId, taskId)
         '               </h2>' +
         '               <div id="accordion-body-comments" class="accordion-collapse collapse" aria-labelledby="accordion-header-comments" data-bs-parent="#accordion-comments">' +
         '                   <div class="accordion-body">' +
-        '                       <ul class="list-group list-group-flush">';
+        '                       <ul id="modalComments" class="list-group list-group-flush">';
 
     (task.comments).forEach(function(comment) {
         content +=
-        '            <li class="list-group-item modal-comment">' +
+        '            <li class="list-group-item modal-comment" data-comment="' + comment.id + '">' +
         '                <div class="d-flex justify-content-between align-items-center">' +
         '                    <p class="mb-1">' +
-        '                        ' + (comment.author === null ? getValueFromLanguage('ModalCommentAuthorUnknown') : comment.author.username) + ' <small class="form-text text-muted" title="' + getValueFromLanguage('ModalCommentDateTitle') + '">' + timeSince(Date.parse(comment.date)) + ' ago </small>' +
+        '                        ' + (comment.author === null ? getValueFromLanguage('ModalCommentAuthorUnknown') : comment.author.username) + ' <small class="form-text text-muted" title="' + getValueFromLanguage('ModalCommentDateTitle') + '">' + timeSince(Date.parse(comment.date)) + '</small>' +
         '                    </p>'
 
         if(isCanEdit()) {
             content +=
-                '<button class="btn btn-sm modal-delete-comment" type="button" title="' + getValueFromLanguage('ModalCommentDeleteTitle') + '">' +
+                '<button id="commentRemove-' + comment.id + '" class="btn btn-sm modal-delete-comment" type="button" title="' + getValueFromLanguage('ModalCommentDeleteTitle') + '">' +
                 '<span class="mdi mdi-18px mdi-trash-can"></span>' +
                 '</button>'
+
+            $(document).on('click', "#commentRemove-" + comment.id, function (e) {
+                removeComment(task.id, comment.id)
+            })
         }
 
         content +=
@@ -75,6 +79,7 @@ function openTaskDetails(subCatId, taskId)
         '</div>'
 
     $("#modal-body").html(content)
+    $("#modal-body").attr("data-id", task.id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -87,7 +92,7 @@ function openEditModalCategory(catId)
     $("#modal-title").html(getValueFromLanguage('ModalCategoryEditName'))
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
+        '<button type="button" id="modal-submit-category" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
 
     let content = '<form class="row g-3 form-check">'
 
@@ -136,7 +141,7 @@ function openEditModalCategory(catId)
                 '</select>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<button type="button" class="btn btn-sm btn-modal-remove">' +
+                '<button type="button" class="btn btn-sm btn-modal-remove" onclick="removeMember(' + catId + ',' + member.id + ')">' +
                 '<span class="mdi mdi-14px mdi-close-thick"></span> <span class="hideMobile">' + getValueFromLanguage('ModalProjectMemberRemove') + '</span>' +
                 '</button>' +
                 '</div>' +
@@ -192,7 +197,7 @@ function openEditModalSubCategory(catId)
     $("#modal-title").html(getValueFromLanguage('ModalSubCategoryEditName'))
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
+        '<button type="button" id="modal-submit-subcategory" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
     $("#modal-body").html('' +
         '<form class="row g-3 form-check">' +
             '<div class="col-12">' +
@@ -201,6 +206,8 @@ function openEditModalSubCategory(catId)
                 '<div id="error-modal" class="invalid-feedback" role="alert">' + getValueFromLanguage('NewTaskNameError') + '</div>' +
             '</div>' +
         '</form>')
+
+    $("#modal-body").attr("data-id", sub.id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -213,7 +220,7 @@ function openEditModalTask(subCatId, taskId)
     $("#modal-title").html(getValueFromLanguage('ModalTaskEditName'))
     $("#modal-footer").html('' +
         '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
-        '<button type="button" id="modal-submit" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
+        '<button type="button" id="modal-submit-task" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
 
     let content =
         '<form class="row g-3 form-check">' +
@@ -238,12 +245,14 @@ function openEditModalTask(subCatId, taskId)
     content +=
                 '</select>' +
             '</div>' +
+            '<div id="error-modal-members" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberExistenceErrorText') + '</div>' +
         '</form>'
 
     $("#modal-body").html(content)
     let select = document.getElementById("modal-assign-member")
     select.value = task.assigned_id === null ? '0' : task.assigned_id.toString()
 
+    $("#modal-body").attr("data-id", task.id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -259,13 +268,7 @@ $(document).ready(
         toggleForm("memberAdd", "memberNew", null, "#memberNewCreate")
     }),
     $(document).on('click', "#memberNewCreate", function (e) {
-        e.preventDefault()
-        checkEmailOnSubmit("#memberNewName", "error-memberNew")
-        let select = document.getElementById("modal-member-select-new")
-        if(authModalSelectMemberStatusValues.includes(select.value.toString()))
-            document.getElementById("error-memberStatusNew").style.display = "none";
-        else
-            document.getElementById("error-memberStatusNew").style.display = "block";
+        addMemberCheck(e)
     }),
     $(document).on('keyup', "#memberNewName", function (e) {
         checkEmailOnKeyup("#memberNewName", "error-memberNew", "#memberNewCreate")
@@ -279,25 +282,25 @@ $(document).ready(
         toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
     }),
     $(document).on('click', "#commentNewCreate", function (e) {
-        checkInputOnSubmit("#commentNewDescription", "error-commentNew")
+        addCommentCheck(e)
     }),
     $(document).on('keyup', "#commentNewDescription", function (e) {
         checkInputOnKeyup("#commentNewDescription", "error-commentNew", "#commentNewCreate")
     }),
 
     /* Submit Modal */
-    $(document).on('click', "#modal-submit", function (e) {
-        checkInputOnSubmit("#modal-input-name", "error-modal")
-        let memberSelectsName = document.getElementsByName("modal-member-select")
-        if(memberSelectsName.length !== 0)
-            checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
-        let hideArchived = document.getElementById("modal-checkbox-subcategory").checked
-        let hideChecked = document.getElementById("modal-checkbox-task").checked
-        let catId = $("#modal-body").attr("data-id")
-        storageUpdateCategory(catId, hideArchived, hideChecked)
-        bootstrap.Modal.getInstance($("#modal")).hide()
+    $(document).on('click', "#modal-submit-category", function (e) {
+        submitModalCategory()
+    }),
+    $(document).on('click', "#modal-submit-subcategory", function (e) {
+        submitModalSubCategory()
+    }),
+    $(document).on('click', "#modal-submit-task", function (e) {
+        submitModalTask()
     }),
     $(document).on('keyup', "#modal-input-name", function (e) {
-        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit")
+        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-category")
+        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-subcategory")
+        checkInputOnKeyup("#modal-input-name", "error-modal", "#modal-submit-task")
     })
 );

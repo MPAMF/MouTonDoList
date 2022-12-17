@@ -1,6 +1,18 @@
 const authModalSelectMemberStatusValues = ['READ', 'WRITE'];
 const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+function isErrorActive(errorId) { return document.getElementById(errorId).style.display === "block"; }
+
+function checkSelectValueOnSubmit(select, errorId, authValues) {
+    if(authValues.includes(select.value.toString()))
+    {
+        document.getElementById(errorId).style.display = "none";
+        return false
+    }
+    document.getElementById(errorId).style.display = "block";
+    return true
+}
+
 function checkSelectValuesOnSubmit(selectsName, errorId, authValues)
 {
     let checkAll = true
@@ -12,16 +24,18 @@ function checkSelectValuesOnSubmit(selectsName, errorId, authValues)
     });
     if(checkAll)
         document.getElementById(errorId).style.display = "none";
-    else
-        checkAll = false
+    return !checkAll
 }
 
 function checkInputOnSubmit(inputId, errorId)
 {
     if($(inputId).val().length < 1)
+    {
         document.getElementById(errorId).style.display = "block";
-    else
-        document.getElementById(errorId).style.display = "none";
+        return true
+    }
+    document.getElementById(errorId).style.display = "none";
+    return false
 }
 
 function checkInputOnKeyup(inputId, errorId, submitId)
@@ -40,9 +54,12 @@ function checkEmailOnSubmit(inputId, errorId)
 {
     let input = $(inputId).val()
     if(input.length < 1 || !input.match(mailformat))
+    {
         document.getElementById(errorId).style.display = "block";
-    else
-        document.getElementById(errorId).style.display = "none";
+        return true
+    }
+    document.getElementById(errorId).style.display = "none";
+    return false
 }
 
 function checkEmailOnKeyup(inputId, errorId, submitId)
@@ -65,4 +82,8 @@ function toggleForm(btnId, formId, errorId, secondBtnId)
         document.getElementById(errorId).style.display = "none";
     if (secondBtnId !== null)
         $(secondBtnId).prop('disabled', true);
+}
+
+function clearElementValue(inputId) {
+    document.getElementById(inputId).value = ""
 }
