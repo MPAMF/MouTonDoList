@@ -228,12 +228,60 @@ function prependComment() {
     container.prepend(getCommentContent(text))
 }
 
+function newTaskCheck(e, id) {
+    e.preventDefault()
+    let error = checkInputOnSubmit("#taskNewName-" + id, "error-taskNew" + id)
+    let select = document.getElementById("select-assign-member-" + id)
+    let members = getCurrentCategoryMembersAsArray()
+    members.push("0")
+    error = error || checkSelectValueOnSubmit(select, "error-assigned", members)
+
+    if(error) {
+        showToast(`new task`, 'new', 'danger')
+        return;
+    }
+
+    appendTask(id, select.value)
+    toggleForm("taskAdd-" + id, "taskNew-" + id, null, "#taskNewCreate-" + id)
+    clearElementValue("taskNewName-" + id)
+    clearElementValue("taskNewDescription-" + id)
+    select.selectedIndex = 0
+    // TODO : handle data
+    showToast(`new task`, 'new', 'success')
+}
+
 function appendTask(catId, assignedValue) {
     let container = $("[data-subcategory-list-id=" + catId +"]")[0]
     let name = document.getElementById("taskNewName-" + catId).value
     let desc = document.getElementById("taskNewDescription-" + catId).value
     let assignedName = getMemberUsernameById(assignedValue)
     container.append(getTaskContent(catId, name, desc, assignedName))
+}
+
+function newSubCategoryCheck(e, id) {
+    e.preventDefault()
+
+    if(checkInputOnSubmit("#subCatNewName", "error-subCatNew")) {
+        showToast(`new subcat`, 'new', 'danger')
+        return;
+    }
+
+    appendSubCategory(id, document.getElementById("subCatNewName").value)
+    toggleForm("subCatAdd", "subCatNew", null, "#subCatNewCreate")
+    clearElementValue("subCatNewName")
+    // TODO : handle data
+    showToast(`new subcat`, 'new', 'success')
+}
+
+function appendSubCategory(catId, name) {
+    let container = document.getElementById("default-category-content")
+    let content = getSubCategoryContent(catId, name)
+    if(isCanEdit()) {
+        let formAddElement = document.getElementById("newSubCatContainer")
+        container.insertBefore(content, formAddElement)
+    } else {
+        container.append(content)
+    }
 }
 
 function changePassword(newPassword) {

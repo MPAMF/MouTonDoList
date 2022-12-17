@@ -40,25 +40,7 @@
 
     $(document).ready(
         $(document).on('click', "#taskNewCreate-{{ subCatId }}", function (e) {
-            e.preventDefault()
-            let error = checkInputOnSubmit("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}")
-            let select = document.getElementById("select-assign-member-" + {{ subCatId }})
-            let members = getCurrentCategoryMembersAsArray()
-            members.push("0")
-            error = error || checkSelectValueOnSubmit(select, "error-assigned", members)
-
-            if(error) {
-                showToast(`new task`, 'new', 'danger')
-                return;
-            }
-
-            appendTask({{ subCatId }}, select.value)
-            toggleForm("taskAdd-{{ subCatId }}", "taskNew-{{ subCatId }}", null, "#taskNewCreate-{{ subCatId }}")
-            clearElementValue("taskNewName-{{ subCatId }}")
-            clearElementValue("taskNewDescription-{{ subCatId }}")
-            select.selectedIndex = 0
-            // TODO : handle data
-            showToast(`new task`, 'new', 'success')
+            newTaskCheck(e, {{ subCatId }})
         }),
         $(document).on('keyup', "#taskNewName-{{ subCatId }}", function (e) {
             checkInputOnKeyup("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}", "#taskNewCreate-{{ subCatId }}")
