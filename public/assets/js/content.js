@@ -181,9 +181,7 @@ function getNewTaskContent(id) {
     getCurrentCategoryMembers().forEach(function(member) {
         content += '<option value="' + member.user.id + '">' + member.user.username + '</option>'
     })
-                    /*{% for member in category.members %}
-                    <option value="{{ member.user.id }}"> {{member.user.username}}</option>
-                    {% endfor %}*/
+
     content +=
                 '</select>' +
                 '<div id="error-assigned" class="invalid-feedback" role="alert">' + getValueFromLanguage("ModalProjectMemberExistenceErrorText") + '</div>' +
@@ -196,4 +194,16 @@ function getNewTaskContent(id) {
     '</li>'
 
     return content
+}
+
+function getSidebarOwnedCategory(newId) {
+    let category = document.createElement("li")
+    category.classList.add("sidebar-li", "rounded")
+    category.innerHTML = '' +
+        '<a href="' + dashboard + '/' + newId + '" class="d-inline-flex text-decoration-none rounded sidebar-li-name">' + getValueFromLanguage("NewCategoryName") + '</a>' +
+        '<a data-sidebar-id="' + newId +'" tabIndex="0" class="btn btn-todolist-actions" role="button"' +
+           ' data-bs="popover" data-bs-popover="category-default-popover" aria-label="' + getValueFromLanguage("CategoryPopoverAriaLabel") + '">' +
+            '<span class="mdi mdi-dots-horizontal"></span>' +
+        '</a>'
+    return category
 }

@@ -122,7 +122,7 @@ function deleteCategory(id) {
         popoverDispose(category)
     });
     if(isCurrentCategory(id))
-        window.location.replace("http://localhost:8090/dashboard");
+        window.location.replace(dashboard);
 }
 
 function duplicateCategory(id) {
@@ -282,6 +282,12 @@ function appendSubCategory(catId, name) {
     } else {
         container.append(content)
     }
+}
+
+function newCategory() {
+    let newId = Math.floor(Math.random() * 10000).toString();
+    let container = document.getElementById("category-default").firstElementChild
+    container.prepend(getSidebarOwnedCategory(newId))
 }
 
 function changePassword(newPassword) {

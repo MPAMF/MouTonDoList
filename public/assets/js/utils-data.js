@@ -1,3 +1,5 @@
+const dashboard = "http://localhost:8090/dashboard"
+
 function getCurrentCategoryMembers() {
     return data.categories[data.currentCategoryIdx].members
 }
