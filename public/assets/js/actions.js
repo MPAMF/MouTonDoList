@@ -358,7 +358,7 @@ function newSubCategoryCheck(e, id) {
     }
 
     let newId = Math.floor(Math.random() * 10000).toString()
-    appendSubCategory(id, document.getElementById("subCatNewName").value)
+    appendSubCategory(id, newId, document.getElementById("subCatNewName").value)
     toggleForm("subCatAdd", "subCatNew", null, "#subCatNewCreate")
     clearElementValue("subCatNewName")
 
