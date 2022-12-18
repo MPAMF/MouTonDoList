@@ -184,8 +184,13 @@ function duplicateTask(idCat, idTask) {
     copyElement.setAttribute("data-task", idCat + "-" + newId)
     copyElement.setAttribute("data-idTask", newId)
 
-    let taskNameLabel = document.getElementById("taskViewInfo-" + idCat + "-" + idTask).firstElementChild
-    taskNameLabel.textContent += " " + getValueFromLanguage("CopyName")
+    let contentElement = copyElement.getElementsByTagName('div')[0]
+    contentElement.firstElementChild.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
+
+    let taskViewInfoElement = contentElement.getElementsByTagName('div')[0]
+    taskViewInfoElement.id = "taskViewInfo" + idCat + "-" + newId
+    taskViewInfoElement.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
+    taskViewInfoElement.firstElementChild.textContent += " " + getValueFromLanguage("CopyName")
 
     let lastChild = copyElement.lastElementChild
     lastChild.setAttribute("data-task-id", idCat + "-" + newId)
