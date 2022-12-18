@@ -1,4 +1,4 @@
-const dashboard = "http://localhost:8090/dashboard"
+const dashboard = "/dashboard"
 
 function getCurrentCategoryMembers() {
     return data.categories[data.currentCategoryIdx].members
@@ -44,10 +44,16 @@ function getCurrentCategoryMembersAsArray() {
 
 function getMemberUsernameById(value) {
     let members = getCurrentCategoryMembers()
+    let found = false
+    let username = null
     members.forEach(function(member) {
-        if(member.id.toString() === value) return member.username
+        if(found) return
+        if(member.user.id.toString() === value.toString()){
+            found = true
+            username = member.user.username
+        }
     })
-    return null
+    return username
 }
 
 function getCurrentMemberUsername() {
