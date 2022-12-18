@@ -326,7 +326,7 @@ function newTaskCheck(e, id) {
     }
 
     let newId = Math.floor(Math.random() * 10000).toString()
-    appendTask(id, select.value)
+    appendTask(id, newId, select.value)
     toggleForm("taskAdd-" + id, "taskNew-" + id, null, "#taskNewCreate-" + id)
     clearElementValue("taskNewName-" + id)
     clearElementValue("taskNewDescription-" + id)
@@ -345,6 +345,7 @@ function appendTask(catId, newId, assignedValue) {
     let name = document.getElementById("taskNewName-" + catId).value
     let desc = document.getElementById("taskNewDescription-" + catId).value
     let assignedName = getMemberUsernameById(assignedValue)
+    console.log(assignedValue, assignedName)
     container.append(getTaskContent(catId, newId, name, desc, assignedName))
 }
 
