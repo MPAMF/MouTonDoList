@@ -257,8 +257,6 @@ function checkTask(element, idCat, idTask) {
 
     toggleTaskCheck(element, idCat, idTask)
 
-    console.log(data)
-
     /* TODO : toggle task.checked :
         WHERE idTask={idTask}
         from subcategory WHERE subCatId={idCat}

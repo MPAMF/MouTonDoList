@@ -144,10 +144,9 @@ function setTaskChecked(idSubCat, idTask, value) {
     task.checked = value
 }
 
-function removeTaskFromData(idSubCat, idTask) {
+function removeTaskFromData(idSubCat, taskIdx) {
     let subCatIdx = getSubCategoryIdx(idSubCat)
     let subCat = getSubCategoryByIdx(subCatIdx)
-    let taskIdx = getTaskIdx(subCat, idTask)
     subCat.tasks.splice(taskIdx, 1)
 }
 
@@ -165,16 +164,27 @@ function duplicateTaskFromData(idSubCat, idTask, newTaskId, newTaskName) {
 function insertTaskFromData(task, idSubCat, taskIdx) {
     let subCatIdx = getSubCategoryIdx(idSubCat)
     let subCat = getSubCategoryByIdx(subCatIdx)
-    console.log(subCat)
+    console.log(subCat.tasks)
     subCat.tasks.splice(taskIdx, 0, task)
-    console.log(subCat)
+    console.log(subCat.tasks)
 }
 
 function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
+    if(oldSubCategoryId === newSubCategoryId)
+    {
+        console.log(oldIndex, newIndex)
+        if(oldIndex < newIndex)
+            newIndex++
+        else if(newIndex < oldIndex)
+            oldIndex++
+    }
     let task = {...getTask(oldSubCategoryId, taskId)}
-    insertTaskFromData(task, newSubCategoryId, newIndex)
-    removeTaskFromData(oldSubCategoryId, taskId)
-    let subCatIdx = getSubCategoryIdx(oldSubCategoryId)
+    let subCatIdx = getSubCategoryIdx(newSubCategoryId)
     let subCat = getSubCategoryByIdx(subCatIdx)
+    console.log(subCat.tasks)
+    subCat.tasks.splice(newIndex, 0, task)
+    console.log(subCat.tasks)
+
+    removeTaskFromData(oldSubCategoryId, oldIndex)
     console.log(subCat)
 }
