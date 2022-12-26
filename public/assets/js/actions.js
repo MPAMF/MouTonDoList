@@ -40,12 +40,6 @@ function showToast(text, title, type, duration = 3000) {
 }
 
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
-    console.log("taskId :" + taskId)
-    console.log("oldCatId :" + oldSubCategoryId)
-    console.log("oldIndex :" + oldIndex)
-    console.log("newCatId :" + newSubCategoryId)
-    console.log("newIndex :" + newIndex)
-
     moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
 
     // TODO : store changes : tasks positions
@@ -53,10 +47,10 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
 }
 
 function moveSubCategory(subCatId, oldIndex, newIndex) {
-    console.log("subCatId :" + subCatId)
-    console.log("oldIndex :" + oldIndex)
-    console.log("newIndex :" + newIndex)
+    moveSubCatFromData(subCatId, oldIndex, newIndex)
+
     // TODO : store changes : subcategories positions
+    showToast(`Moved subcatid: ${subCatId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
 }
 
 function archiveCategory(id) {
@@ -84,6 +78,8 @@ function archiveCategory(id) {
         let parentContainer = document.getElementById("category-archive")
         parentContainer.firstElementChild.prepend(category.parentElement)
     }
+
+    setCatToArchivedTrueFromData(id)
 
     // TODO : store changes : category WHERE id={id} is now archived
 }
@@ -114,6 +110,8 @@ function unarchiveCategory(id) {
         parentContainer.firstElementChild.prepend(category.parentElement)
     }
 
+    setCatToArchivedFalseFromData(id)
+
     // TODO : store changes : category WHERE id={id} is now unarchived
 }
 
@@ -122,7 +120,8 @@ function deleteCategory(id) {
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     let parent = category.parentElement
     repositories.categories.delete({id: id}).then(() => {
-        parent.remove();
+        parent.remove()
+        removeCatFromData(id)
         showToast(getValueFromLanguage('DeleteCategorySuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
@@ -155,6 +154,8 @@ function duplicateCategory(id) {
     document.getElementById("category-default").firstElementChild.prepend(copyElement)
     popoverHide(category)
 
+    duplicateCatFromData(id, newId)
+
     // TODO : get newId from database
     // TODO : store changes : duplicate category WHERE id={id} into id={newId}
 }
@@ -165,6 +166,9 @@ function leaveCategory(id) {
     popoverDispose(category)
     if(isCurrentCategory())
         window.location.replace("http://localhost:8090/dashboard");
+
+    removeCatFromData(id)
+
     // TODO : remove member from category.members WHERE id={id}
 }
 
@@ -173,6 +177,9 @@ function deleteSubcategory(id) {
     popoverDispose(popoverElement)
     let container = $('[data-idSubCat="' + id + '"]')[0]
     container.remove()
+
+    removeSubCatFromData(id)
+
     // TODO : remove subcategory from category WHERE catId={data.currentCategoryId} && subCatId={id}
 }
 

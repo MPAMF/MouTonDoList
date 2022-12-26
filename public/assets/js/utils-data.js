@@ -21,6 +21,10 @@ function getCategoryById(catId) {
     return getCategoryContainerById(catId).category
 }
 
+function getGlobalCategoryById(catId) {
+    return getCategoryContainerById(catId)
+}
+
 function getSubInCurrentById(subCatId) {
     let current = getCurrentCategory()
     let subCatIdx = current.subCategories.findIndex(c => c.id === subCatId)
@@ -161,14 +165,6 @@ function duplicateTaskFromData(idSubCat, idTask, newTaskId, newTaskName) {
     subCat.tasks.push(newTask)
 }
 
-function insertTaskFromData(task, idSubCat, taskIdx) {
-    let subCatIdx = getSubCategoryIdx(idSubCat)
-    let subCat = getSubCategoryByIdx(subCatIdx)
-    console.log(subCat.tasks)
-    subCat.tasks.splice(taskIdx, 0, task)
-    console.log(subCat.tasks)
-}
-
 function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
     if(oldSubCategoryId === newSubCategoryId)
     {
@@ -181,10 +177,58 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
     let task = {...getTask(oldSubCategoryId, taskId)}
     let subCatIdx = getSubCategoryIdx(newSubCategoryId)
     let subCat = getSubCategoryByIdx(subCatIdx)
-    console.log(subCat.tasks)
     subCat.tasks.splice(newIndex, 0, task)
-    console.log(subCat.tasks)
 
     removeTaskFromData(oldSubCategoryId, oldIndex)
     console.log(subCat)
+}
+
+
+function moveSubCatFromData(subCatId, oldIndex, newIndex) {
+    let a = getSubCategoryByIdx(oldIndex)
+    a.position = newIndex
+    let b = getSubCategoryByIdx(newIndex)
+    b.position = oldIndex
+}
+
+function setCatToArchivedTrueFromData(catId) {
+    let cat = getCategoryById(catId)
+    cat.archived = true
+}
+
+function setCatToArchivedFalseFromData(catId) {
+    let cat = getCategoryById(catId)
+    cat.archived = false
+}
+
+function getCategoryIdx(catId) {
+    return data.categories.findIndex(c => c.category_id === catId)
+}
+
+function removeCatFromData(catId) {
+    let catIdx = getCategoryIdx(catId)
+    data.categories.splice(catIdx, 1)
+}
+
+function duplicateCatFromData(id, newId) {
+    newId = parseInt(newId)
+    let cat = getGlobalCategoryById(id)
+    let newCat = {...cat}
+    newCat.category_id = newId
+    newCat.category.id = newId
+    newCat.category.subCategories.forEach(function (subcat) {
+        subcat.parent_category_id = newId
+    })
+    newCat.members.forEach(function(member) {
+        member.category_id = newId
+        member.category.id = newId
+    })
+    data.categories.push(newCat)
+}
+
+function removeSubCatFromData(id) {
+    let cat = getCurrentCategory()
+    let idx = getSubCategoryIdx(id)
+    cat.subCategories.splice(idx, 1)
+    console.log(cat.subCategories)
 }
