@@ -10,7 +10,7 @@ function openTaskDetails(subCatId, taskId)
     let content = '' +
         '<div>' +
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" onclick="checkTask(this,' + subCatId + ',' + taskId + ')" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + ' disabled>' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + ' disabled>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
         '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + (task.assigned === null ? '' : task.assigned.username) + '</small>' +

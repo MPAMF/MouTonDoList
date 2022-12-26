@@ -95,3 +95,86 @@ function timeSince(date) {
     }
     return getValueFromLanguage("TimeNow");;
 }
+
+function getSubCategories() {
+    return data.categories[data.currentCategoryIdx].category.subCategories
+}
+
+function getSubCategoryIdx(idSubCat) {
+    let subCategories = getSubCategories()
+    return subCategories.findIndex(c => c.id === idSubCat)
+}
+
+function getSubCategoryByIdx(subCatIdx) {
+    return data.categories[data.currentCategoryIdx].category.subCategories[subCatIdx]
+}
+
+function getTaskIdx(subCat, idTask) {
+    return subCat.tasks.findIndex(t => t.id === idTask)
+}
+
+function getTaskByIdx(subCat, taskIdx) {
+    return subCat.tasks[taskIdx]
+}
+
+function getTask(idSubCat, idTask) {
+    let subCatIdx = getSubCategoryIdx(idSubCat)
+    let subCat = getSubCategoryByIdx(subCatIdx)
+    let taskIdx = getTaskIdx(subCat, idTask)
+    return getTaskByIdx(subCat, taskIdx)
+}
+
+function getTaskName(idSubCat, idTask) {
+    return getTask(idSubCat, idTask).name
+}
+
+function setTaskNewId(task, newId) {
+    task.id = newId
+    task.comments.forEach(function(comment) {
+        comment.task_id = newId
+    })
+}
+
+function setTaskNewName(task, newName) {
+    task.name = newName
+}
+
+function setTaskChecked(idSubCat, idTask, value) {
+    let task = getTask(idSubCat, idTask)
+    task.checked = value
+}
+
+function removeTaskFromData(idSubCat, idTask) {
+    let subCatIdx = getSubCategoryIdx(idSubCat)
+    let subCat = getSubCategoryByIdx(subCatIdx)
+    let taskIdx = getTaskIdx(subCat, idTask)
+    subCat.tasks.splice(taskIdx, 1)
+}
+
+function duplicateTaskFromData(idSubCat, idTask, newTaskId, newTaskName) {
+    let subCatIdx = getSubCategoryIdx(idSubCat)
+    let subCat = getSubCategoryByIdx(subCatIdx)
+    let taskIdx = getTaskIdx(subCat, idTask)
+    let task = getTaskByIdx(subCat, taskIdx)
+    let newTask = {...task}
+    setTaskNewId(newTask, parseInt(newTaskId))
+    setTaskNewName(newTask, newTaskName)
+    subCat.tasks.push(newTask)
+}
+
+function insertTaskFromData(task, idSubCat, taskIdx) {
+    let subCatIdx = getSubCategoryIdx(idSubCat)
+    let subCat = getSubCategoryByIdx(subCatIdx)
+    console.log(subCat)
+    subCat.tasks.splice(taskIdx, 0, task)
+    console.log(subCat)
+}
+
+function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
+    let task = {...getTask(oldSubCategoryId, taskId)}
+    insertTaskFromData(task, newSubCategoryId, newIndex)
+    removeTaskFromData(oldSubCategoryId, taskId)
+    let subCatIdx = getSubCategoryIdx(oldSubCategoryId)
+    let subCat = getSubCategoryByIdx(subCatIdx)
+    console.log(subCat)
+}

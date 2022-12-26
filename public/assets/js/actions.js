@@ -45,6 +45,9 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
     console.log("oldIndex :" + oldIndex)
     console.log("newCatId :" + newSubCategoryId)
     console.log("newIndex :" + newIndex)
+
+    moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
+
     // TODO : store changes : tasks positions
     showToast(`Moved taskId: ${taskId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
 }
@@ -175,6 +178,8 @@ function deleteSubcategory(id) {
 
 function duplicateTask(idCat, idTask) {
     let newId = Math.floor(Math.random() * 10000).toString();
+    let oldName = getTaskName(idCat, idTask)
+    let newName = oldName + " " + getValueFromLanguage("CopyName")
 
     let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
     let popoverElement = $('[data-task-id="' + idCat + '-' + idTask + '"]')[0]
@@ -190,7 +195,7 @@ function duplicateTask(idCat, idTask) {
     let taskViewInfoElement = contentElement.getElementsByTagName('div')[0]
     taskViewInfoElement.id = "taskViewInfo" + idCat + "-" + newId
     taskViewInfoElement.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
-    taskViewInfoElement.firstElementChild.textContent += " " + getValueFromLanguage("CopyName")
+    taskViewInfoElement.firstElementChild.textContent = newName
 
     let lastChild = copyElement.lastElementChild
     lastChild.setAttribute("data-task-id", idCat + "-" + newId)
@@ -201,8 +206,11 @@ function duplicateTask(idCat, idTask) {
 
     container.parentElement.prepend(copyElement)
 
+    duplicateTaskFromData(idCat, idTask, newId, newName)
+
     /* TODO : duplicate task :
-        WHERE idTask={idTask} && newIdTask={newId}
+        WHERE idTask={idTask} && newIdTask={newId} && newNameTask={newName}
+        + update task.comments.task_id
         from subcategory WHERE subCatId={idCat}
         from category WHERE catId={data.currentCategoryId}
      */
@@ -213,6 +221,8 @@ function deleteTask(idCat, idTask) {
     popoverDispose(popoverElement)
     let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
     container.remove()
+
+    removeTaskFromData(idCat, idTask)
 
     /* TODO : remove task :
         WHERE idTask={idTask}
@@ -226,17 +236,28 @@ function toggleAllTasksVisibility() {
         let input = task.children.item(1).firstElementChild
         let idCat = task.getAttribute("data-idCat")
         let idTask = task.getAttribute("data-idTask")
-        checkTask(input, idCat, idTask)
+        toggleTaskCheck(input, idCat, idTask)
     })
 }
 
-function checkTask(element, idCat, idTask) {
+function toggleTaskCheck(element, idCat, idTask) {
     let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
-
     if(!isHideCheckedForCategory(data.currentCategoryId))
         container.classList.remove("d-none")
     else if (element.checked)
         container.classList.add("d-none")
+}
+
+function checkTask(element, idCat, idTask) {
+
+    if (element.checked)
+        setTaskChecked(idCat, idTask, true)
+    else
+        setTaskChecked(idCat, idTask, false)
+
+    toggleTaskCheck(element, idCat, idTask)
+
+    console.log(data)
 
     /* TODO : toggle task.checked :
         WHERE idTask={idTask}
