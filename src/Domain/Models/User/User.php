@@ -8,6 +8,7 @@ use App\Domain\Models\ValidatorModel;
 use DateTime;
 use JsonSerializable;
 use Respect\Validation\Validator;
+use ReturnTypeWillChange;
 use stdClass;
 
 class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
@@ -40,19 +41,19 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
     }
 
     /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -151,20 +152,6 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
         $this->language = $language;
     }
 
-
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'email' => $this->email,
-            'username' => $this->username,
-            'image_path' => $this->image_path,
-            'theme' => $this->theme,
-            'language' => $this->language
-        ];
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -174,6 +161,30 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
         $this->id = $row->id;
         $this->password = $row->password;
         $this->fromValidator($row);
+    }
+
+    public function fromValidator(object|array $data): void
+    {
+        $data = (object)$data;
+        $this->email = $data->email;
+        $this->username = $data->username;
+        $this->password = $data->password;
+        $this->image_path = $data->image_path;
+        $this->theme = $data->theme;
+        $this->language = $data->language;
+    }
+
+    public static function getValidatorRules(): array
+    {
+        return [
+            'email' => Validator::notBlank()->email()->length(0, 254),
+            'username' => Validator::notBlank()->length(0, 64),
+            'password' => Validator::notBlank()->regex('/[A-Z]/')->regex('/[a-z]/')
+                ->regex('/[1-9]/')->regex('/[-_*.!?#@&]/')->length(6, 128),
+            'image_path' => Validator::url(),
+            'theme' => Validator::stringType()->length(max: 16),
+            'language' => Validator::stringType()->length(max: 16)
+        ];
     }
 
     /**
@@ -186,24 +197,16 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
         return $row;
     }
 
-    public static function getValidatorRules(): array
+    #[ReturnTypeWillChange]
+    public function jsonSerialize(): array
     {
         return [
-            'email' => Validator::notBlank()->email()->length(0,254),
-            'username' => Validator::notBlank()->length(0,64),
-            'image_path' => Validator::url(),
-            'theme' => Validator::stringType()->length(max: 16),
-            'language' => Validator::stringType()->length(max: 16)
+            'id' => $this->id,
+            'email' => $this->email,
+            'username' => $this->username,
+            'image_path' => $this->image_path,
+            'theme' => $this->theme,
+            'language' => $this->language
         ];
-    }
-
-    public function fromValidator(object|array $data) : void
-    {
-        $data = (object)$data;
-        $this->email = $data->email;
-        $this->username = $data->username;
-        $this->image_path = $data->image_path;
-        $this->theme = $data->theme;
-        $this->language = $data->language;
     }
 }

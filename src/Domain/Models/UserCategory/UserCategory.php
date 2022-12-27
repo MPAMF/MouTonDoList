@@ -10,6 +10,7 @@ use App\Domain\Models\ValidatorModel;
 use DateTime;
 use JsonSerializable;
 use Respect\Validation\Validator;
+use ReturnTypeWillChange;
 use stdClass;
 
 class UserCategory extends TimeStampedModel implements JsonSerializable, ValidatorModel
@@ -34,20 +35,14 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
         $this->user = null;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public static function getValidatorRules(): array
     {
-        return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
+        return [
+            'accepted' => Validator::boolType(),
+            'can_edit' => Validator::boolType(),
+            'category_id' => Validator::intType(),
+            'user_id' => Validator::intType()
+        ];
     }
 
     /**
@@ -65,6 +60,22 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
     {
         $this->user = $user;
         $this->user_id = $user->getId();
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -148,7 +159,40 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
         $this->category_id = $category_id;
     }
 
-    #[\ReturnTypeWillChange]
+    /**
+     * {@inheritdoc}
+     */
+    public function fromRow(stdClass $row): void
+    {
+        parent::fromRow($row);
+        $this->id = $row->id;
+        $this->user = $row->user;
+        $this->category = $row->category;
+        $this->fromValidator($row);
+    }
+
+    public function fromValidator(object|array $data): void
+    {
+        $data = (object)$data;
+        $this->user_id = intval($data->user_id);
+        $this->category_id = $data->category_id;
+        $this->accepted = boolval($data->accepted);
+        $this->canEdit = boolval($data->can_edit);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toRow(): array
+    {
+        $result = $this->jsonSerialize();
+        unset($result['user']);
+        unset($result['category']);
+        unset($result['members']);
+        return $result;
+    }
+
+    #[ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         $result = [
@@ -167,48 +211,5 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
         }
 
         return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fromRow(stdClass $row): void
-    {
-        parent::fromRow($row);
-        $this->id = $row->id;
-        $this->user = $row->user;
-        $this->category = $row->category;
-        $this->fromValidator($row);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toRow(): array
-    {
-        $result = $this->jsonSerialize();
-        unset($result['user']);
-        unset($result['category']);
-        unset($result['members']);
-        return $result;
-    }
-
-    public static function getValidatorRules(): array
-    {
-        return [
-            'accepted' => Validator::boolType(),
-            'can_edit' => Validator::boolType(),
-            'category_id' => Validator::intType(),
-            'user_id' => Validator::intType()
-        ];
-    }
-
-    public function fromValidator(object|array $data): void
-    {
-        $data = (object)$data;
-        $this->user_id = intval($data->user_id);
-        $this->category_id = $data->category_id;
-        $this->accepted = boolval($data->accepted);
-        $this->canEdit = boolval($data->can_edit);
     }
 }

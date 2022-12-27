@@ -10,7 +10,7 @@ use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\Task\TaskNotFoundException;
 use App\Domain\Requests\Task\UpdateTaskRequest;
-use App\Domain\Services\Task\UpdateTaskService;
+use App\Domain\Services\Models\Task\UpdateTaskService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;

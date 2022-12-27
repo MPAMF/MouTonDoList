@@ -16,5 +16,5 @@ interface EloquentModel
     /**
      * @return array
      */
-    public function toRow() : array;
+    public function toRow(): array;
 }

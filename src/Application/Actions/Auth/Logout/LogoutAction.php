@@ -2,22 +2,23 @@
 
 namespace App\Application\Actions\Auth\Logout;
 
-use App\Application\Actions\Auth\AuthAction;
-use App\Domain\Models\User\UserNotFoundException;
+use App\Application\Actions\Action;
+use App\Domain\Auth\AuthInterface;
+use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class LogoutAction extends AuthAction
+class LogoutAction extends Action
 {
+
+    /**
+     * @Inject
+     * @var AuthInterface
+     */
+    private AuthInterface $auth;
 
     protected function action(): Response
     {
-        try {
-            // Set user to session
-            $this->auth->removeUser();
-
-        } catch (UserNotFoundException) {
-            return $this->withError($this->translator->trans('AuthLogOutFailed'))->redirect('dashboard');
-        }
+        $this->auth->removeUser();
 
         return $this->withSuccess($this->translator->trans('AuthLogOutSuccess'))
             ->redirect('home');

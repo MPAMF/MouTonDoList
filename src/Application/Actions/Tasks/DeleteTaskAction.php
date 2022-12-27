@@ -7,7 +7,7 @@ use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\Task\TaskNotFoundException;
 use App\Domain\Requests\Task\DeleteTaskRequest;
-use App\Domain\Services\Task\DeleteTaskService;
+use App\Domain\Services\Models\Task\DeleteTaskService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpForbiddenException;

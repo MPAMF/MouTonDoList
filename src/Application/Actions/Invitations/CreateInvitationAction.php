@@ -10,15 +10,13 @@ use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\User\UserNotFoundException;
 use App\Domain\Requests\Invitation\CreateInvitationRequest;
-use App\Domain\Services\Invitation\CreateInvitationService;
-use App\Domain\Services\Invitation\ListInvitationService;
+use App\Domain\Services\Models\Invitation\CreateInvitationService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Exception\HttpNotImplementedException;
 
 class CreateInvitationAction extends Action
 {

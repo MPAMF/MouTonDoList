@@ -7,7 +7,7 @@ use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\TaskComment\TaskCommentNotFoundException;
 use App\Domain\Requests\TaskComment\DeleteTaskCommentRequest;
-use App\Domain\Services\TaskComment\DeleteTaskCommentService;
+use App\Domain\Services\Models\TaskComment\DeleteTaskCommentService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;

@@ -6,19 +6,16 @@ class GetUserRequest
 {
 
     private int $userId;
-    private int $categoryId;
-    private bool $canEdit;
+    private ?int $sessionUserId;
 
     /**
      * @param int $userId
-     * @param int $categoryId
-     * @param bool $canEdit
+     * @param int|null $sessionUserId
      */
-    public function __construct(int $userId, int $categoryId, bool $canEdit = true)
+    public function __construct(int $userId, ?int $sessionUserId)
     {
         $this->userId = $userId;
-        $this->categoryId = $categoryId;
-        $this->canEdit = $canEdit;
+        $this->sessionUserId = $sessionUserId;
     }
 
     /**
@@ -30,18 +27,11 @@ class GetUserRequest
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getCategoryId(): int
+    public function getSessionUserId(): ?int
     {
-        return $this->categoryId;
+        return $this->sessionUserId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isCanEdit(): bool
-    {
-        return $this->canEdit;
-    }
 }

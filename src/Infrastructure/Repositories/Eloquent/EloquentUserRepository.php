@@ -6,8 +6,9 @@ namespace App\Infrastructure\Repositories\Eloquent;
 use App\Domain\DbCacheInterface;
 use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserNotFoundException;
-use App\Domain\Models\User\UserRepository;
 use App\Infrastructure\Repositories\Repository;
+use App\Infrastructure\Repositories\UserRepository;
+use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 
@@ -74,6 +75,9 @@ class EloquentUserRepository extends Repository implements UserRepository
         return $this->parseUser($found, $with);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function save(User $user): bool
     {
         // Create
@@ -87,13 +91,22 @@ class EloquentUserRepository extends Repository implements UserRepository
                 ->update($user->toRow()) != 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function delete(User $user): int
     {
         return $this->getTable()->delete($user->getId());
     }
 
-    public function exists($id): bool
+    /**
+     * {@inheritDoc}
+     */
+    public function exists(?int $id = null, ?string $email = null): bool
     {
-        return $this->getTable()->where('id', $id)->exists();
+        $builder = $this->getTable();
+        if (isset($id)) $builder = $builder->where('id', $id);
+        if (isset($email)) $builder = $builder->where('email', $email);
+        return $builder->exists();
     }
 }

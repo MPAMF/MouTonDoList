@@ -8,7 +8,7 @@ use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Requests\Category\UpdateCategoryRequest;
-use App\Domain\Services\Category\UpdateCategoryService;
+use App\Domain\Services\Models\Category\UpdateCategoryService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;

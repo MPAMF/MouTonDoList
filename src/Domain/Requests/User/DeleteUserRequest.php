@@ -6,16 +6,16 @@ class DeleteUserRequest
 {
 
     private int $userId;
-    private int $categoryId;
+    private int $sessionUserId;
 
     /**
      * @param int $userId
-     * @param int $categoryId
+     * @param int $sessionUserId
      */
-    public function __construct(int $userId, int $categoryId)
+    public function __construct(int $userId, int $sessionUserId)
     {
         $this->userId = $userId;
-        $this->categoryId = $categoryId;
+        $this->sessionUserId = $sessionUserId;
     }
 
     /**
@@ -29,8 +29,8 @@ class DeleteUserRequest
     /**
      * @return int
      */
-    public function getCategoryId(): int
+    public function getSessionUserId(): int
     {
-        return $this->categoryId;
+        return $this->sessionUserId;
     }
 }
