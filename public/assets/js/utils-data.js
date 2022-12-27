@@ -1,5 +1,63 @@
 const dashboard = "/dashboard"
 
+function getCommentTemplate() {
+    return {
+        author: null,
+        author_id: null,
+        content: null,
+        date: null,
+        id: null,
+        task: null,
+        task_id: null
+    }
+}
+
+function getTaskTemplate() {
+    return {
+        assigned: null,
+        assigned_id: null,
+        category: null,
+        category_id: null,
+        checked: null,
+        comments: null,
+        description: null,
+        due_date: null,
+        id: null,
+        last_editor: null,
+        last_editor_id: null,
+        name: null,
+        position: null
+    }
+}
+
+function getSubCatTemplate() {
+    return {
+        archived: null,
+        color: null,
+        id: null,
+        name: null,
+        owner: null,
+        owner_id: null,
+        parent_category: null,
+        parent_category_id: null,
+        position: null
+    }
+}
+
+function getCatTemplate() {
+    return {
+        accepted: null,
+        can_edit: null,
+        category_id: null,
+        date: null,
+        id: null,
+        members: null,
+        user: null,
+        user_id: null,
+        category: getSubCatTemplate()
+    }
+}
+
 function getCurrentCategoryMembers() {
     return data.categories[data.currentCategoryIdx].members
 }
@@ -23,6 +81,10 @@ function getCategoryById(catId) {
 
 function getGlobalCategoryById(catId) {
     return getCategoryContainerById(catId)
+}
+
+function getCurrentGlobalCategory() {
+    return data.categories[data.currentCategoryIdx]
 }
 
 function getSubInCurrentById(subCatId) {
@@ -71,6 +133,7 @@ function isCanEditById(catId) { return getCategoryContainerById(catId).can_edit 
 
 function isOwner() { return data.user.id === getCurrentCategory().owner_id }
 function isOwnerById(catId) { return data.user.id === getCategoryById(catId).owner_id }
+function userIsOwner(catId, userId) { return userId === getCategoryById(catId).owner_id }
 
 function timeSince(date) {
 
@@ -168,7 +231,6 @@ function duplicateTaskFromData(idSubCat, idTask, newTaskId, newTaskName) {
 function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
     if(oldSubCategoryId === newSubCategoryId)
     {
-        console.log(oldIndex, newIndex)
         if(oldIndex < newIndex)
             newIndex++
         else if(newIndex < oldIndex)
@@ -180,7 +242,6 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
     subCat.tasks.splice(newIndex, 0, task)
 
     removeTaskFromData(oldSubCategoryId, oldIndex)
-    console.log(subCat)
 }
 
 
@@ -230,5 +291,114 @@ function removeSubCatFromData(id) {
     let cat = getCurrentCategory()
     let idx = getSubCategoryIdx(id)
     cat.subCategories.splice(idx, 1)
-    console.log(cat.subCategories)
+}
+
+function removeMemberFromData(catId, userId) {
+    if(userIsOwner(catId, userId)) {
+        leaveCategory(catId)
+        return
+    }
+    let cat = getGlobalCategoryById(catId)
+    let idx = cat.members.findIndex(m => m.user_id === userId)
+    cat.members.splice(idx, 1)
+}
+
+function getCommentIdx(task, id) {
+    return task.comments.findIndex(c => c.id === id)
+}
+
+function removeCommentFromData(subCatId, taskId, id) {
+    let task = getTask(subCatId, taskId)
+    let idx = getCommentIdx(task, id)
+    task.comments.splice(idx, 1)
+}
+
+function addCommentToData(subCatId, taskId, newId, content) {
+    let comment = getCommentTemplate()
+    comment.author = data.user
+    comment.author_id = data.user.id
+    comment.content = content
+    comment.date = Date()
+    comment.id = newId
+    comment.task = null
+    comment.task_id = taskId
+    let task = getTask(subCatId, taskId)
+    task.comments.push(comment)
+}
+
+function getTaskMaxPosition(subCatId) {
+    let subcatIdx = getSubCategoryIdx(subCatId)
+    let subcat = getSubCategoryByIdx(subcatIdx)
+    let max = 0
+    subcat.tasks.forEach(function(task) {
+        if(task.position > max)
+            max = task.position
+    })
+    return max
+}
+
+function addTaskToData(assignedId, subCatId, newId, name, desc) {
+    let task = getTaskTemplate()
+
+    if(assignedId !== 0)
+        task.assigned_id = assignedId
+    task.category_id = subCatId
+    task.checked = false
+    task.comments = []
+    task.description = desc
+    task.id = newId
+    task.name = name
+    task.position = getTaskMaxPosition(subCatId) + 1
+
+    let subcatidx = getSubCategoryIdx(subCatId)
+    getSubCategoryByIdx(subcatidx).tasks.push(task)
+}
+
+function getSubCatMaxPosition() {
+    let cat = getCurrentCategory()
+    let max = 0
+    cat.subCategories.forEach(function(subCat) {
+        if(subCat.position > max)
+            max = subCat.position
+    })
+    return max
+}
+
+function addSubCatToData(id, name, newId) {
+    let subcat = getSubCatTemplate()
+
+    subcat.archived = false
+    subcat.id = newId
+    subcat.name = name
+    subcat.owner_id = data.user.id
+    subcat.parent_category_id = id
+    subcat.position = getSubCatMaxPosition() + 1
+
+    getCurrentCategory().subCategories.push(subcat)
+}
+
+function addCatToData(newId) {
+    let cat = getCatTemplate()
+
+    cat.accepted = true
+    cat.can_edit = true
+    cat.category_id = newId
+    cat.date = Date()
+    cat.user_id = data.user.id
+
+    cat.category.archived = false
+    cat.category.id = newId
+    cat.category.name = name
+    cat.category.owner_id = data.user.id
+    cat.category.position = 0
+    cat.category.subCategories = []
+
+    cat.members = []
+    cat.members.push({
+        user_id: data.user.id,
+        user: data.user
+    })
+
+    storagePushToCategories(newId, false)
+    data.categories.push(cat)
 }

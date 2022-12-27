@@ -164,7 +164,7 @@ function leaveCategory(id) {
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     category.parentElement.remove()
     popoverDispose(category)
-    if(isCurrentCategory())
+    if(isCurrentCategory(id))
         window.location.replace("http://localhost:8090/dashboard");
 
     removeCatFromData(id)
@@ -272,7 +272,9 @@ function checkTask(element, idCat, idTask) {
 }
 
 function removeMember(catId, userId) {
-    console.log(catId, userId)
+    $('[data-member="' + catId + '-' + userId + '"]')[0].remove()
+    removeMemberFromData(catId, userId)
+
     showToast(`remove member`, 'member', 'success')
     /* TODO : remove member :
         WHERE id={userId}
@@ -305,6 +307,8 @@ function addMemberCheck(e) {
 
 function removeComment(taskId, id) {
     $('[data-comment="' + id + '"]')[0].remove()
+    let subCatId = $("#modal-body").attr("data-subCat")
+    removeCommentFromData(parseInt(subCatId), taskId, id)
     showToast(`remove member`, 'member', 'success')
     /* TODO : remove comment from task :
         WHERE commentId={id} && taskId={taskId}
@@ -319,11 +323,15 @@ function addCommentCheck(e) {
         showToast(`new comment`, 'comment', 'danger')
         return;
     }
+
+    let content = document.getElementById("commentNewDescription").value
+    let subCatId = $("#modal-body").attr("data-subCat")
     let taskId = $("#modal-body").attr("data-id")
     let newId = Math.floor(Math.random() * 10000).toString()
     prependComment(newId)
     toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
     clearElementValue("commentNewDescription")
+    addCommentToData(parseInt(subCatId), parseInt(taskId), newId, content)
     showToast(`new comment`, 'comment', 'success')
 
     /* TODO : add comment to task :
@@ -351,12 +359,18 @@ function newTaskCheck(e, id) {
         return;
     }
 
+    let assignedId = parseInt(select.value)
+    let name = document.getElementById("taskNewName-" + id).value
+    let desc = document.getElementById("taskNewDescription-" + id).value
     let newId = Math.floor(Math.random() * 10000).toString()
+
     appendTask(id, newId, select.value)
     toggleForm("taskAdd-" + id, "taskNew-" + id, null, "#taskNewCreate-" + id)
     clearElementValue("taskNewName-" + id)
     clearElementValue("taskNewDescription-" + id)
     select.selectedIndex = 0
+
+    addTaskToData(assignedId, parseInt(id), parseInt(newId), name, desc)
 
     showToast(`new task`, 'new', 'success')
 
@@ -371,7 +385,6 @@ function appendTask(catId, newId, assignedValue) {
     let name = document.getElementById("taskNewName-" + catId).value
     let desc = document.getElementById("taskNewDescription-" + catId).value
     let assignedName = getMemberUsernameById(assignedValue)
-    console.log(assignedValue, assignedName)
     container.append(getTaskContent(catId, newId, name, desc, assignedName))
 }
 
@@ -383,10 +396,13 @@ function newSubCategoryCheck(e, id) {
         return;
     }
 
+    let name = document.getElementById("subCatNewName").value
     let newId = Math.floor(Math.random() * 10000).toString()
     appendSubCategory(id, newId, document.getElementById("subCatNewName").value)
     toggleForm("subCatAdd", "subCatNew", null, "#subCatNewCreate")
     clearElementValue("subCatNewName")
+
+    addSubCatToData(id, name, parseInt(newId))
 
     showToast(`new subcat`, 'new', 'success')
 
@@ -411,6 +427,13 @@ function newCategory() {
     let newId = Math.floor(Math.random() * 10000).toString()
     let container = document.getElementById("category-default").firstElementChild
     container.prepend(getSidebarOwnedCategory(newId))
+
+    let category = $('[data-sidebar-id="' + newId + '"]')[0]
+    let newPopover = defaultPopover()
+    newPopover.content = getPopoverCategoryDefaultContent(newId)
+    new bootstrap.Popover(category, newPopover)
+
+    addCatToData(parseInt(newId))
 
     /* TODO : add category : WHERE category={newId} */
 }

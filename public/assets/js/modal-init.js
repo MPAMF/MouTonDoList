@@ -80,6 +80,7 @@ function openTaskDetails(subCatId, taskId)
 
     $("#modal-body").html(content)
     $("#modal-body").attr("data-id", task.id)
+    $("#modal-body").attr("data-subCat", task.category_id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -130,7 +131,7 @@ function openEditModalCategory(catId)
 
         getCategoryMembersById(catId).forEach(function(member) {
             content +=
-                '<li class="list-group-item list-member">' +
+                '<li class="list-group-item list-member" data-member="' + catId + '-' + member.user.id + '">' +
                 '<div class="col py-1">' +
                 '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
@@ -141,11 +142,16 @@ function openEditModalCategory(catId)
                 '</select>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<button type="button" class="btn btn-sm btn-modal-remove" onclick="removeMember(' + catId + ',' + member.id + ')">' +
+                '<button type="button" class="btn btn-sm btn-modal-remove" id="removeMember' + catId + '-' + member.user.id + '">' +
                 '<span class="mdi mdi-14px mdi-close-thick"></span> <span class="hideMobile">' + getValueFromLanguage('ModalProjectMemberRemove') + '</span>' +
                 '</button>' +
                 '</div>' +
                 '</li>'
+
+            $(document).on('click', "#removeMember" + catId + "-" + member.user.id, function (e) {
+                e.preventDefault()
+                removeMember(catId, member.user.id)
+            })
         })
 
         content +=
