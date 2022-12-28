@@ -259,6 +259,7 @@ function openEditModalTask(subCatId, taskId)
     select.value = task.assigned_id === null ? '0' : task.assigned_id.toString()
 
     $("#modal-body").attr("data-id", task.id)
+    $("#modal-body").attr("data-subCat", task.category_id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }

@@ -454,6 +454,12 @@ function submitModalCategory() {
 
     let newName = document.getElementById("modal-input-name").value
 
+    document.getElementById("title").innerHTML = newName
+    let category = $('[data-sidebar-id="' + catId + '"]')[0]
+    category.parentElement.firstElementChild.innerHTML = newName
+
+    updateCatFromData(parseInt(catId), newName)
+
     showToast(`edit category`, 'edit', 'success')
     bootstrap.Modal.getInstance($("#modal")).hide()
 
@@ -470,6 +476,13 @@ function submitModalSubCategory() {
 
     let subCatId = $("#modal-body").attr("data-id")
     let newName = document.getElementById("modal-input-name").value
+
+    let container = $('[data-idsubcat="' + subCatId + '"]')[0]
+    let header = container.firstElementChild
+    let button = header.getElementsByTagName('button')[1]
+    button.innerHTML = newName
+
+    updateSubCatFromData(parseInt(subCatId), newName)
 
     showToast(`edit subcategory`, 'edit', 'success')
     bootstrap.Modal.getInstance($("#modal")).hide()
@@ -493,9 +506,18 @@ function submitModalTask() {
     }
 
     let taskId = $("#modal-body").attr("data-id")
+    let subCatId = $("#modal-body").attr("data-subcat")
     let newName = document.getElementById("modal-input-name").value
     let newDesc = document.getElementById("modal-input-description").value
-    let newAssigned = select.value
+    let newAssigned = parseInt(select.value)
+
+    let task = document.getElementById("taskViewInfo-" + subCatId + "-" + taskId)
+    task.firstElementChild.innerHTML = newName
+    task.lastElementChild.innerHTML = newDesc
+    let assigned = task.getElementsByTagName('small')[0]
+    assigned.innerHTML = newAssigned === 0 ? "" : getMemberUsernameById(newAssigned)
+
+    updateTaskFromData(parseInt(subCatId), parseInt(taskId), newName, newDesc, newAssigned)
 
     showToast(`edit task`, 'edit', 'success')
     bootstrap.Modal.getInstance($("#modal")).hide()

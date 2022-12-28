@@ -402,3 +402,29 @@ function addCatToData(newId) {
     storagePushToCategories(newId, false)
     data.categories.push(cat)
 }
+
+function getMember(userId) {
+    let cat = getCurrentGlobalCategory()
+    let idx = cat.members.findIndex(m => m.user_id === userId)
+    return cat.members[idx]
+}
+
+function updateTaskFromData(subCatId, taskId, newName, newDesc, newAssigned) {
+    let task = getTask(subCatId, taskId)
+    task.name = newName
+    task.description = newDesc
+    task.assigned_id = newAssigned
+    task.assigned = newAssigned === 0 ? null : getMember(newAssigned)
+}
+
+function updateSubCatFromData(subCatId, newName) {
+    let idx = getSubCategoryIdx(subCatId)
+    let subcat = getSubCategoryByIdx(idx)
+    subcat.name = newName
+}
+
+function updateCatFromData(catId, newName) {
+    let cat = getCategoryById(catId)
+    cat.name = newName
+    console.log(cat)
+}
