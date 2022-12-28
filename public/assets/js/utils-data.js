@@ -426,5 +426,12 @@ function updateSubCatFromData(subCatId, newName) {
 function updateCatFromData(catId, newName) {
     let cat = getCategoryById(catId)
     cat.name = newName
-    console.log(cat)
+}
+
+function setUserThemeFromData(theme) {
+    data.user.theme = theme
+}
+
+function setLanguageThemeFromData(language) {
+    data.user.language = language
 }

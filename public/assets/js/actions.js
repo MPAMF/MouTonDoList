@@ -543,6 +543,8 @@ function changePassword(newPassword) {
 function switchTheme(theme) {
     let userId = data.user.id;
 
+    setUserThemeFromData(theme)
+
     repositories.user.get(userId).then(u => {
         if(u.theme === theme){
             return;
@@ -556,6 +558,9 @@ function switchTheme(theme) {
 
 function setUserLanguage(language) {
     let userId = data.user.id;
+
+    setLanguageThemeFromData(language)
+    // TODO : found => reload with new language
 
     repositories.user.get(userId).then(u => {
         return u.language = language;
