@@ -10,7 +10,7 @@ function openTaskDetails(subCatId, taskId)
     let content = '' +
         '<div>' +
         '    <div class="form-check task-view-details">' +
-        '        <input class="form-check-input task-checkbox" type="checkbox" onclick="checkTask(this,' + subCatId + ',' + taskId + ')" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + (isCanEdit() ? "" : "disabled") + ' disabled>' +
+        '        <input class="form-check-input task-checkbox" type="checkbox" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? "checked" : "") + ' ' + ' disabled>' +
         '        <div class="task-view-info">' +
         '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
         '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + (task.assigned === null ? '' : task.assigned.username) + '</small>' +
@@ -80,6 +80,7 @@ function openTaskDetails(subCatId, taskId)
 
     $("#modal-body").html(content)
     $("#modal-body").attr("data-id", task.id)
+    $("#modal-body").attr("data-subCat", task.category_id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }
@@ -130,7 +131,7 @@ function openEditModalCategory(catId)
 
         getCategoryMembersById(catId).forEach(function(member) {
             content +=
-                '<li class="list-group-item list-member">' +
+                '<li class="list-group-item list-member" data-member="' + catId + '-' + member.user.id + '">' +
                 '<div class="col py-1">' +
                 '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
@@ -141,11 +142,16 @@ function openEditModalCategory(catId)
                 '</select>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<button type="button" class="btn btn-sm btn-modal-remove" onclick="removeMember(' + catId + ',' + member.id + ')">' +
+                '<button type="button" class="btn btn-sm btn-modal-remove" id="removeMember' + catId + '-' + member.user.id + '">' +
                 '<span class="mdi mdi-14px mdi-close-thick"></span> <span class="hideMobile">' + getValueFromLanguage('ModalProjectMemberRemove') + '</span>' +
                 '</button>' +
                 '</div>' +
                 '</li>'
+
+            $(document).on('click', "#removeMember" + catId + "-" + member.user.id, function (e) {
+                e.preventDefault()
+                removeMember(catId, member.user.id)
+            })
         })
 
         content +=
@@ -253,6 +259,7 @@ function openEditModalTask(subCatId, taskId)
     select.value = task.assigned_id === null ? '0' : task.assigned_id.toString()
 
     $("#modal-body").attr("data-id", task.id)
+    $("#modal-body").attr("data-subCat", task.category_id)
     const modal = new bootstrap.Modal('#modal', {})
     modal.show(document)
 }

@@ -26,9 +26,9 @@ function getTasksSortable() {
     sortable.onEnd = function (e) {
         removeGrabbing()
         let taskId = e.item.getAttribute("data-idTask")
-        let oldSubCategoryId = e.from.getAttribute("data-subcategory-id")
-        let newSubCategoryId = e.to.getAttribute("data-subcategory-id")
-        moveTask(taskId, oldSubCategoryId, e.oldIndex, newSubCategoryId, e.newIndex)
+        let oldSubCategoryId = e.from.getAttribute("data-subcategory-list-id")
+        let newSubCategoryId = e.to.getAttribute("data-subcategory-list-id")
+        moveTask(parseInt(taskId), parseInt(oldSubCategoryId), e.oldIndex, parseInt(newSubCategoryId), e.newIndex)
     }
     return sortable
 }

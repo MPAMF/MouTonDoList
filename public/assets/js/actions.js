@@ -40,20 +40,17 @@ function showToast(text, title, type, duration = 3000) {
 }
 
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
-    console.log("taskId :" + taskId)
-    console.log("oldCatId :" + oldSubCategoryId)
-    console.log("oldIndex :" + oldIndex)
-    console.log("newCatId :" + newSubCategoryId)
-    console.log("newIndex :" + newIndex)
+    moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
+
     // TODO : store changes : tasks positions
     showToast(`Moved taskId: ${taskId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
 }
 
 function moveSubCategory(subCatId, oldIndex, newIndex) {
-    console.log("subCatId :" + subCatId)
-    console.log("oldIndex :" + oldIndex)
-    console.log("newIndex :" + newIndex)
+    moveSubCatFromData(subCatId, oldIndex, newIndex)
+
     // TODO : store changes : subcategories positions
+    showToast(`Moved subcatid: ${subCatId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
 }
 
 function archiveCategory(id) {
@@ -81,6 +78,8 @@ function archiveCategory(id) {
         let parentContainer = document.getElementById("category-archive")
         parentContainer.firstElementChild.prepend(category.parentElement)
     }
+
+    setCatToArchivedTrueFromData(id)
 
     // TODO : store changes : category WHERE id={id} is now archived
 }
@@ -111,6 +110,8 @@ function unarchiveCategory(id) {
         parentContainer.firstElementChild.prepend(category.parentElement)
     }
 
+    setCatToArchivedFalseFromData(id)
+
     // TODO : store changes : category WHERE id={id} is now unarchived
 }
 
@@ -119,7 +120,8 @@ function deleteCategory(id) {
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     let parent = category.parentElement
     repositories.categories.delete({id: id}).then(() => {
-        parent.remove();
+        parent.remove()
+        removeCatFromData(id)
         showToast(getValueFromLanguage('DeleteCategorySuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
@@ -152,6 +154,8 @@ function duplicateCategory(id) {
     document.getElementById("category-default").firstElementChild.prepend(copyElement)
     popoverHide(category)
 
+    duplicateCatFromData(id, newId)
+
     // TODO : get newId from database
     // TODO : store changes : duplicate category WHERE id={id} into id={newId}
 }
@@ -160,8 +164,11 @@ function leaveCategory(id) {
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     category.parentElement.remove()
     popoverDispose(category)
-    if(isCurrentCategory())
+    if(isCurrentCategory(id))
         window.location.replace("http://localhost:8090/dashboard");
+
+    removeCatFromData(id)
+
     // TODO : remove member from category.members WHERE id={id}
 }
 
@@ -170,11 +177,16 @@ function deleteSubcategory(id) {
     popoverDispose(popoverElement)
     let container = $('[data-idSubCat="' + id + '"]')[0]
     container.remove()
+
+    removeSubCatFromData(id)
+
     // TODO : remove subcategory from category WHERE catId={data.currentCategoryId} && subCatId={id}
 }
 
 function duplicateTask(idCat, idTask) {
     let newId = Math.floor(Math.random() * 10000).toString();
+    let oldName = getTaskName(idCat, idTask)
+    let newName = oldName + " " + getValueFromLanguage("CopyName")
 
     let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
     let popoverElement = $('[data-task-id="' + idCat + '-' + idTask + '"]')[0]
@@ -190,7 +202,7 @@ function duplicateTask(idCat, idTask) {
     let taskViewInfoElement = contentElement.getElementsByTagName('div')[0]
     taskViewInfoElement.id = "taskViewInfo" + idCat + "-" + newId
     taskViewInfoElement.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
-    taskViewInfoElement.firstElementChild.textContent += " " + getValueFromLanguage("CopyName")
+    taskViewInfoElement.firstElementChild.textContent = newName
 
     let lastChild = copyElement.lastElementChild
     lastChild.setAttribute("data-task-id", idCat + "-" + newId)
@@ -201,8 +213,11 @@ function duplicateTask(idCat, idTask) {
 
     container.parentElement.prepend(copyElement)
 
+    duplicateTaskFromData(idCat, idTask, newId, newName)
+
     /* TODO : duplicate task :
-        WHERE idTask={idTask} && newIdTask={newId}
+        WHERE idTask={idTask} && newIdTask={newId} && newNameTask={newName}
+        + update task.comments.task_id
         from subcategory WHERE subCatId={idCat}
         from category WHERE catId={data.currentCategoryId}
      */
@@ -213,6 +228,8 @@ function deleteTask(idCat, idTask) {
     popoverDispose(popoverElement)
     let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
     container.remove()
+
+    removeTaskFromData(idCat, idTask)
 
     /* TODO : remove task :
         WHERE idTask={idTask}
@@ -226,17 +243,26 @@ function toggleAllTasksVisibility() {
         let input = task.children.item(1).firstElementChild
         let idCat = task.getAttribute("data-idCat")
         let idTask = task.getAttribute("data-idTask")
-        checkTask(input, idCat, idTask)
+        toggleTaskCheck(input, idCat, idTask)
     })
 }
 
-function checkTask(element, idCat, idTask) {
+function toggleTaskCheck(element, idCat, idTask) {
     let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
-
     if(!isHideCheckedForCategory(data.currentCategoryId))
         container.classList.remove("d-none")
     else if (element.checked)
         container.classList.add("d-none")
+}
+
+function checkTask(element, idCat, idTask) {
+
+    if (element.checked)
+        setTaskChecked(idCat, idTask, true)
+    else
+        setTaskChecked(idCat, idTask, false)
+
+    toggleTaskCheck(element, idCat, idTask)
 
     /* TODO : toggle task.checked :
         WHERE idTask={idTask}
@@ -246,7 +272,9 @@ function checkTask(element, idCat, idTask) {
 }
 
 function removeMember(catId, userId) {
-    console.log(catId, userId)
+    $('[data-member="' + catId + '-' + userId + '"]')[0].remove()
+    removeMemberFromData(catId, userId)
+
     showToast(`remove member`, 'member', 'success')
     /* TODO : remove member :
         WHERE id={userId}
@@ -279,6 +307,8 @@ function addMemberCheck(e) {
 
 function removeComment(taskId, id) {
     $('[data-comment="' + id + '"]')[0].remove()
+    let subCatId = $("#modal-body").attr("data-subCat")
+    removeCommentFromData(parseInt(subCatId), taskId, id)
     showToast(`remove member`, 'member', 'success')
     /* TODO : remove comment from task :
         WHERE commentId={id} && taskId={taskId}
@@ -293,11 +323,15 @@ function addCommentCheck(e) {
         showToast(`new comment`, 'comment', 'danger')
         return;
     }
+
+    let content = document.getElementById("commentNewDescription").value
+    let subCatId = $("#modal-body").attr("data-subCat")
     let taskId = $("#modal-body").attr("data-id")
     let newId = Math.floor(Math.random() * 10000).toString()
     prependComment(newId)
     toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
     clearElementValue("commentNewDescription")
+    addCommentToData(parseInt(subCatId), parseInt(taskId), newId, content)
     showToast(`new comment`, 'comment', 'success')
 
     /* TODO : add comment to task :
@@ -325,12 +359,18 @@ function newTaskCheck(e, id) {
         return;
     }
 
+    let assignedId = parseInt(select.value)
+    let name = document.getElementById("taskNewName-" + id).value
+    let desc = document.getElementById("taskNewDescription-" + id).value
     let newId = Math.floor(Math.random() * 10000).toString()
+
     appendTask(id, newId, select.value)
     toggleForm("taskAdd-" + id, "taskNew-" + id, null, "#taskNewCreate-" + id)
     clearElementValue("taskNewName-" + id)
     clearElementValue("taskNewDescription-" + id)
     select.selectedIndex = 0
+
+    addTaskToData(assignedId, parseInt(id), parseInt(newId), name, desc)
 
     showToast(`new task`, 'new', 'success')
 
@@ -345,7 +385,6 @@ function appendTask(catId, newId, assignedValue) {
     let name = document.getElementById("taskNewName-" + catId).value
     let desc = document.getElementById("taskNewDescription-" + catId).value
     let assignedName = getMemberUsernameById(assignedValue)
-    console.log(assignedValue, assignedName)
     container.append(getTaskContent(catId, newId, name, desc, assignedName))
 }
 
@@ -357,10 +396,13 @@ function newSubCategoryCheck(e, id) {
         return;
     }
 
+    let name = document.getElementById("subCatNewName").value
     let newId = Math.floor(Math.random() * 10000).toString()
     appendSubCategory(id, newId, document.getElementById("subCatNewName").value)
     toggleForm("subCatAdd", "subCatNew", null, "#subCatNewCreate")
     clearElementValue("subCatNewName")
+
+    addSubCatToData(id, name, parseInt(newId))
 
     showToast(`new subcat`, 'new', 'success')
 
@@ -386,6 +428,13 @@ function newCategory() {
     let container = document.getElementById("category-default").firstElementChild
     container.prepend(getSidebarOwnedCategory(newId))
 
+    let category = $('[data-sidebar-id="' + newId + '"]')[0]
+    let newPopover = defaultPopover()
+    newPopover.content = getPopoverCategoryDefaultContent(newId)
+    new bootstrap.Popover(category, newPopover)
+
+    addCatToData(parseInt(newId))
+
     /* TODO : add category : WHERE category={newId} */
 }
 
@@ -405,6 +454,12 @@ function submitModalCategory() {
 
     let newName = document.getElementById("modal-input-name").value
 
+    document.getElementById("title").innerHTML = newName
+    let category = $('[data-sidebar-id="' + catId + '"]')[0]
+    category.parentElement.firstElementChild.innerHTML = newName
+
+    updateCatFromData(parseInt(catId), newName)
+
     showToast(`edit category`, 'edit', 'success')
     bootstrap.Modal.getInstance($("#modal")).hide()
 
@@ -421,6 +476,13 @@ function submitModalSubCategory() {
 
     let subCatId = $("#modal-body").attr("data-id")
     let newName = document.getElementById("modal-input-name").value
+
+    let container = $('[data-idsubcat="' + subCatId + '"]')[0]
+    let header = container.firstElementChild
+    let button = header.getElementsByTagName('button')[1]
+    button.innerHTML = newName
+
+    updateSubCatFromData(parseInt(subCatId), newName)
 
     showToast(`edit subcategory`, 'edit', 'success')
     bootstrap.Modal.getInstance($("#modal")).hide()
@@ -444,9 +506,18 @@ function submitModalTask() {
     }
 
     let taskId = $("#modal-body").attr("data-id")
+    let subCatId = $("#modal-body").attr("data-subcat")
     let newName = document.getElementById("modal-input-name").value
     let newDesc = document.getElementById("modal-input-description").value
-    let newAssigned = select.value
+    let newAssigned = parseInt(select.value)
+
+    let task = document.getElementById("taskViewInfo-" + subCatId + "-" + taskId)
+    task.firstElementChild.innerHTML = newName
+    task.lastElementChild.innerHTML = newDesc
+    let assigned = task.getElementsByTagName('small')[0]
+    assigned.innerHTML = newAssigned === 0 ? "" : getMemberUsernameById(newAssigned)
+
+    updateTaskFromData(parseInt(subCatId), parseInt(taskId), newName, newDesc, newAssigned)
 
     showToast(`edit task`, 'edit', 'success')
     bootstrap.Modal.getInstance($("#modal")).hide()
@@ -472,6 +543,8 @@ function changePassword(newPassword) {
 function switchTheme(theme) {
     let userId = data.user.id;
 
+    setUserThemeFromData(theme)
+
     repositories.user.get(userId).then(u => {
         if(u.theme === theme){
             return;
@@ -485,6 +558,9 @@ function switchTheme(theme) {
 
 function setUserLanguage(language) {
     let userId = data.user.id;
+
+    setLanguageThemeFromData(language)
+    // TODO : found => reload with new language
 
     repositories.user.get(userId).then(u => {
         return u.language = language;
