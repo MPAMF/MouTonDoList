@@ -14,7 +14,7 @@
 <script type="text/javascript">
     $(document).ready(() => {
         $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-            let allowedMethod = ["post", "put", "delete"];
+            let allowedMethod = ["post", "put", "patch", "delete"];
 
             if (allowedMethod.includes(options.type.toLowerCase())) {
                 let newData = options.data

@@ -433,7 +433,17 @@ function newCategory() {
     newPopover.content = getPopoverCategoryDefaultContent(newId)
     new bootstrap.Popover(category, newPopover)
 
-    addCatToData(parseInt(newId))
+    newId = parseInt(newId)
+    addCatToData(newId)
+    let cat = getCategoryById(newId)
+
+    const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', newId)
+    repositories.categories.create(cat).then(() => {
+        showToast(getValueFromLanguage('CreateCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('CreateCategoryError').replace('%code%', e.code), title, 'danger')
+    });
 
     /* TODO : add category : WHERE category={newId} */
 }
@@ -542,27 +552,25 @@ function changePassword(newPassword) {
 
 function switchTheme(theme) {
     let userId = data.user.id;
-
-    setUserThemeFromData(theme)
-
-    repositories.user.get(userId).then(u => {
-        if(u.theme === theme){
-            return;
-        }
-        u.theme = theme;
-        repositories.user.update(u).then(u => {
-
-        }).catch(e => showToast(getValueFromLanguage('UpdateUserPasswordError').replace('%code%', e.code), userId, 'danger'))
-    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+    repositories.user.patch({
+        id: userId,
+        theme: theme
+    }).then(u => {
+        setUserThemeFromData(theme)
+    }).catch(e => showToast(getValueFromLanguage('UpdateUserThemeError').replace('%code%', e.code), userId, 'danger'))
 }
 
 function setUserLanguage(language) {
     let userId = data.user.id;
 
-    setLanguageThemeFromData(language)
-    // TODO : found => reload with new language
-
     repositories.user.get(userId).then(u => {
-        return u.language = language;
+        if(u.language === language){
+            return;
+        }
+        u.language = language;
+        repositories.user.update(u).then(u => {
+            setLanguageThemeFromData(language)
+            // TODO : found => reload with new language
+        }).catch(e => showToast(getValueFromLanguage('UpdateUserLanguageError').replace('%code%', e.code), userId, 'danger'))
     }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
 }

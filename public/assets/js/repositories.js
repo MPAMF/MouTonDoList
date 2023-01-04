@@ -3,7 +3,7 @@ class Repository {
     list(endpoint) {
         return new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}`,
-            type: 'get',
+            method: 'get',
             contentType: 'application/json; charset=utf-8',
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
@@ -11,7 +11,7 @@ class Repository {
     get(endpoint, id) {
         return  new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}/${id}`,
-            type: 'get',
+            method: 'get',
             contentType: 'application/json; charset=utf-8',
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
@@ -19,7 +19,17 @@ class Repository {
     put(endpoint, id, data = {}) {
         return new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}/${id}`,
-            type: 'put',
+            method: 'put',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: data
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
+    }
+
+    patch(endpoint, id, data = {}) {
+        return new Promise((resolve, reject) => $.ajax({
+            url: `${this.endpoint}/${id}`,
+            method: 'patch',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: data
@@ -29,7 +39,7 @@ class Repository {
     post(endpoint, data = {}) {
         return new Promise((resolve, reject) => $.ajax({
             url: this.endpoint,
-            type: 'post',
+            method: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: data
@@ -39,10 +49,10 @@ class Repository {
     delete(endpoint, id) {
         return new Promise((resolve, reject) => $.ajax({
             url: `${this.endpoint}/${id}`,
-            type: 'delete',
+            method: 'delete',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-        }).then(e => resolve(e.data)).catch(e => reject(e)))
+        }).then(e => resolve(e)).catch(e => reject(e)))
     }
 
 }
@@ -137,6 +147,10 @@ class UserRepository extends Repository {
 
     update(user) {
         return super.put(this.endpoint, user.id, user)
+    }
+
+    patch(user) {
+        return super.patch(this.endpoint, user.id, user)
     }
 
     // Not implemented
