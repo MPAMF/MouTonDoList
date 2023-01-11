@@ -5,10 +5,10 @@ namespace Tests\Infrastructure\Services\Task;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\Task\Task;
 use App\Domain\Requests\Task\GetTaskRequest;
-use App\Domain\Services\Task\GetTaskService;
-use App\Infrastructure\Services\Task\GetTaskServiceImpl;
-use App\Domain\Models\category\CategoryRepository;
-use App\Domain\Models\Task\TaskRepository;
+use App\Domain\Services\Models\Task\GetTaskService;
+use App\Domain\Services\Models\Task\GetTaskServiceImpl;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\TaskRepository;
 use PHPUnit\Framework\TestCase;
 
 class GetTaskServiceTest extends TestCase

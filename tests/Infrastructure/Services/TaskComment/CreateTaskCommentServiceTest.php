@@ -4,8 +4,8 @@ namespace Tests\Infrastructure\Services\TaskComment;
 
 use App\Domain\Models\TaskComment\TaskComment;
 use App\Domain\Requests\TaskComment\CreateTaskCommentRequest;
-use App\Domain\Services\TaskComment\CreateTaskCommentService;
-use App\Infrastructure\Services\TaskComment\CreateTaskCommentServiceImpl;
+use App\Domain\Services\Models\TaskComment\CreateTaskCommentService;
+use App\Domain\Services\Models\TaskComment\CreateTaskCommentServiceImpl;
 use PHPUnit\Framework\TestCase;
 
 class CreateTaskCommentServiceTest extends TestCase

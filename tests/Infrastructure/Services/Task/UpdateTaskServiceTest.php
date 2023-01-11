@@ -4,10 +4,10 @@ namespace Tests\Infrastructure\Services\Task;
 
 use App\Domain\Models\Task\Task;
 use App\Domain\Requests\Task\UpdateTaskRequest;
-use App\Domain\Services\Task\UpdateTaskService;
-use App\Infrastructure\Services\Task\UpdateTaskServiceImpl;
-use App\Domain\Models\category\CategoryRepository;
-use App\Domain\Models\Task\TaskRepository;
+use App\Domain\Services\Models\Task\UpdateTaskService;
+use App\Domain\Services\Models\Task\UpdateTaskServiceImpl;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\TaskRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Tagliatti\SlimValidation\Validator;
 use Tests\TestCase;

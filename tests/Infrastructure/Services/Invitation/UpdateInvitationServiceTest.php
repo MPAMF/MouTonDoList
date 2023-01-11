@@ -5,10 +5,10 @@ namespace Tests\Infrastructure\Services\Invitation;
 use App\Domain\Models\Category\Category;
 use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Requests\Invitation\UpdateInvitationRequest;
-use App\Domain\Services\Invitation\UpdateInvitationService;
-use App\Infrastructure\Services\Invitation\UpdateInvitationServiceImpl;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Domain\Services\Models\Invitation\UpdateInvitationService;
+use App\Domain\Services\Models\Invitation\UpdateInvitationServiceImpl;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use Tests\TestCase;
 
 class UpdateInvitationServiceTest extends TestCase

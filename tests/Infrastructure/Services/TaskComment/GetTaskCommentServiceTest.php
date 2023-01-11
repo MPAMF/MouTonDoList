@@ -4,9 +4,9 @@ namespace Tests\Infrastructure\Services\TaskComment;
 
 use App\Domain\Models\TaskComment\TaskComment;
 use App\Domain\Requests\TaskComment\GetTaskCommentRequest;
-use App\Domain\Services\TaskComment\GetTaskCommentService;
-use App\Domain\Models\TaskComment\TaskCommentRepository;
-use App\Infrastructure\Services\TaskComment\GetTaskCommentServiceImpl;
+use App\Domain\Services\Models\TaskComment\GetTaskCommentService;
+use App\Infrastructure\Repositories\TaskCommentRepository;
+use App\Domain\Services\Models\TaskComment\GetTaskCommentServiceImpl;
 use Tests\TestCase;
 
 class GetTaskCommentServiceTest extends TestCase

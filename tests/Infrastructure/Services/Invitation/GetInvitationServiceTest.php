@@ -4,10 +4,10 @@ namespace Tests\Infrastructure\Services\Invitation;
 
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Requests\Invitation\GetInvitationRequest;
-use App\Domain\Services\Invitation\GetInvitationService;
-use App\Infrastructure\Services\Invitation\GetInvitationServiceImpl;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Domain\Services\Models\Invitation\GetInvitationService;
+use App\Domain\Services\Models\Invitation\GetInvitationServiceImpl;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use Tests\TestCase;
 
 class GetInvitationServiceTest extends TestCase

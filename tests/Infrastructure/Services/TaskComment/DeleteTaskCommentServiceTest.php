@@ -4,9 +4,9 @@ namespace Tests\Infrastructure\Services\TaskComment;
 
 use App\Domain\Models\TaskComment\TaskComment;
 use App\Domain\Requests\TaskComment\DeleteTaskCommentRequest;
-use App\Domain\Services\TaskComment\DeleteTaskCommentService;
-use App\Domain\Models\TaskComment\TaskCommentRepository;
-use App\Infrastructure\Services\TaskComment\DeleteTaskCommentServiceImpl;
+use App\Domain\Services\Models\TaskComment\DeleteTaskCommentService;
+use App\Infrastructure\Repositories\TaskCommentRepository;
+use App\Domain\Services\Models\TaskComment\DeleteTaskCommentServiceImpl;
 use PHPUnit\Framework\TestCase;
 
 class DeleteTaskCommentServiceTest extends TestCase

@@ -4,9 +4,9 @@ namespace Tests\Infrastructure\Services\Task;
 
 use App\Domain\Models\Task\Task;
 use App\Domain\Requests\Task\CreateTaskRequest;
-use App\Domain\Services\Task\CreateTaskService;
-use App\Infrastructure\Services\Task\CreateTaskServiceImpl;
-use App\Domain\Models\Task\TaskRepository;
+use App\Domain\Services\Models\Task\CreateTaskService;
+use App\Domain\Services\Models\Task\CreateTaskServiceImpl;
+use App\Infrastructure\Repositories\TaskRepository;
 use Tests\TestCase;
 
 class CreateTaskServiceTest extends TestCase

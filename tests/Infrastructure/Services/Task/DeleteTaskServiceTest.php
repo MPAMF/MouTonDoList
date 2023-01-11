@@ -4,9 +4,9 @@ namespace Tests\Infrastructure\Services\Task;
 
 use App\Domain\Models\Task\Task;
 use App\Domain\Requests\Task\DeleteTaskRequest;
-use App\Domain\Services\Task\DeleteTaskService;
-use App\Infrastructure\Services\Task\DeleteTaskServiceImpl;
-use App\Domain\Models\Task\TaskRepository;
+use App\Domain\Services\Models\Task\DeleteTaskService;
+use App\Domain\Services\Models\Task\DeleteTaskServiceImpl;
+use App\Infrastructure\Repositories\TaskRepository;
 use Tests\TestCase;
 
 class DeleteTaskServiceTest extends TestCase

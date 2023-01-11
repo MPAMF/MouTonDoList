@@ -4,10 +4,10 @@ namespace Tests\Infrastructure\Services\Category;
 
 use App\Domain\Models\Category\Category;
 use App\Domain\Requests\Category\GetCategoryRequest;
-use App\Domain\Services\Category\GetCategoryService;
-use App\Infrastructure\Services\Category\GetCategoryServiceImpl;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Domain\Services\Models\Category\GetCategoryService;
+use App\Domain\Services\Models\Category\GetCategoryServiceImpl;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use Tests\TestCase;
 
 class GetCategoryServiceTest extends TestCase

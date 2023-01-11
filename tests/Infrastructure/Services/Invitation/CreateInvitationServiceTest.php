@@ -5,10 +5,10 @@ namespace Tests\Infrastructure\Services\Invitation;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Requests\Invitation\CreateInvitationRequest;
-use App\Domain\Services\Invitation\CreateInvitationService;
-use App\Infrastructure\Services\Invitation\CreateInvitationServiceImpl;
-use App\Domain\Models\Category\CategoryRepository;
-use App\Domain\Models\UserCategory\UserCategoryRepository;
+use App\Domain\Services\Models\Invitation\CreateInvitationService;
+use App\Domain\Services\Models\Invitation\CreateInvitationServiceImpl;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use Tests\TestCase;
 
 class CreateInvitationServiceTest extends TestCase
