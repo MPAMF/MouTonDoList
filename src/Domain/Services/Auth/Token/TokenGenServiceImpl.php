@@ -2,25 +2,17 @@
 
 namespace App\Domain\Services\Auth\Token;
 
-use App\Domain\Requests\Auth\LoginRequest;
-use App\Domain\Services\Auth\LoginService;
-use DI\Annotation\Inject;
+use App\Domain\Models\User\User;
 
 class TokenGenServiceImpl implements TokenGenService
 {
 
     /**
-     * @Inject
-     * @var LoginService
-     */
-    private LoginService $loginService;
-
-    /**
      * @inheritDoc
      */
-    public function generate(LoginRequest $request): string
+    public function generate(User $user): string
     {
-        $user = $this->loginService->login($request);
-        return base64_encode($user->getEmail());
+        // Hash here
+        return base64_encode($user->getId());
     }
 }
