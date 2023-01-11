@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Domain\Services\Auth;
+namespace App\Domain\Services\Auth\Token;
 
-use App\Domain\Exceptions\BadRequestException;
-use App\Domain\Models\User\UserNotFoundException;
 use App\Domain\Requests\Auth\LoginRequest;
+use App\Domain\Services\Auth\LoginService;
 use DI\Annotation\Inject;
 
-class TokenLoginServiceImpl implements TokenLoginService
+class TokenGenServiceImpl implements TokenGenService
 {
 
     /**
@@ -19,7 +18,7 @@ class TokenLoginServiceImpl implements TokenLoginService
     /**
      * @inheritDoc
      */
-    public function login(LoginRequest $request): string
+    public function generate(LoginRequest $request): string
     {
         $user = $this->loginService->login($request);
         return base64_encode($user->getEmail());

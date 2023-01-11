@@ -70,43 +70,6 @@ return function (App $app) {
             $group->get('', DisplayDashboardAction::class)->setName('dashboard');
         })->add(UserConnectedMiddleware::class);
 
-        $group->group('/actions', function (Group $group) {
-            $group->group('/categories', function (Group $group) {
-                $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
-                $group->get('/{id}', ReadCategoryAction::class)->setName('actions.categories.read');
-                $group->put('/{id}', UpdateCategoryAction::class)->setName('actions.categories.update');
-                $group->delete('/{id}', DeleteCategoryAction::class)->setName('actions.categories.delete');
-            });
-
-            $group->group('/tasks', function (Group $group) {
-                $group->post('', CreateTaskAction::class)->setName('actions.tasks.create');
-                $group->get('/{id}', ReadTaskAction::class)->setName('actions.tasks.read');
-                $group->put('/{id}', UpdateTaskAction::class)->setName('actions.tasks.update');
-                $group->delete('/{id}', DeleteTaskAction::class)->setName('actions.tasks.delete');
-            });
-
-            $group->group('/comments', function (Group $group) {
-                $group->post('', CreateTaskCommentAction::class)->setName('actions.comments.create');
-                $group->get('/{id}', ReadTaskCommentAction::class)->setName('actions.comments.read');
-                $group->put('/{id}', UpdateTaskCommentAction::class)->setName('actions.comments.update');
-                $group->delete('/{id}', DeleteTaskCommentAction::class)->setName('actions.comments.delete');
-            });
-
-            $group->group('/invitations', function (Group $group) {
-                $group->post('', CreateInvitationAction::class)->setName('actions.invitations.create');
-                $group->get('', ListInvitationAction::class)->setName('actions.invitations.list');
-                $group->get('/{id}', ReadInvitationAction::class)->setName('actions.invitations.read');
-                $group->put('/{id}', UpdateInvitationAction::class)->setName('actions.invitations.answer');
-                $group->delete('/{id}', DeleteInvitationAction::class)->setName('actions.invitations.delete');
-            });
-
-            $group->group('/users', function (Group $group) {
-                $group->get('/{id}', ReadUserAction::class)->setName('actions.users.read');
-                $group->map(['PUT', 'PATCH'], '/{id}', UpdateUserAction::class)->setName('actions.users.update');
-            });
-
-        })->add(UserConnectedMiddleware::class);
-
     })->add(AuthMiddleware::class)->add(CsrfMiddleware::class)->add(SessionMiddleware::class);
 
     // Rest API
@@ -114,46 +77,41 @@ return function (App $app) {
 
         // Connected users
         $group->group('/categories', function (Group $group) {
-            $group->post('', CreateCategoryAction::class);
-            $group->get('/{id}', ReadCategoryAction::class);
-            $group->put('/{id}', UpdateCategoryAction::class);
-            $group->delete('/{id}', DeleteCategoryAction::class);
+            $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
+            $group->get('/{id}', ReadCategoryAction::class)->setName('actions.categories.read');
+            $group->put('/{id}', UpdateCategoryAction::class)->setName('actions.categories.update');
+            $group->delete('/{id}', DeleteCategoryAction::class)->setName('actions.categories.delete');
         });
 
         $group->group('/tasks', function (Group $group) {
-            $group->post('', CreateTaskAction::class);
-            $group->get('/{id}', ReadTaskAction::class);
-            $group->put('/{id}', UpdateTaskAction::class);
-            $group->delete('/{id}', DeleteTaskAction::class);
+            $group->post('', CreateTaskAction::class)->setName('actions.tasks.create');
+            $group->get('/{id}', ReadTaskAction::class)->setName('actions.tasks.read');
+            $group->put('/{id}', UpdateTaskAction::class)->setName('actions.tasks.update');
+            $group->delete('/{id}', DeleteTaskAction::class)->setName('actions.tasks.delete');
         });
 
         $group->group('/comments', function (Group $group) {
-            $group->post('', CreateTaskCommentAction::class);
-            $group->get('/{id}', ReadTaskCommentAction::class);
-            $group->put('/{id}', UpdateTaskCommentAction::class);
-            $group->delete('/{id}', DeleteTaskCommentAction::class);
+            $group->post('', CreateTaskCommentAction::class)->setName('actions.comments.create');
+            $group->get('/{id}', ReadTaskCommentAction::class)->setName('actions.comments.read');
+            $group->put('/{id}', UpdateTaskCommentAction::class)->setName('actions.comments.update');
+            $group->delete('/{id}', DeleteTaskCommentAction::class)->setName('actions.comments.delete');
         });
 
         $group->group('/invitations', function (Group $group) {
-            $group->post('', CreateInvitationAction::class);
-            $group->get('', ListInvitationAction::class);
-            $group->get('/{id}', ReadInvitationAction::class);
-            $group->put('/{id}', UpdateInvitationAction::class);
-            $group->delete('/{id}', DeleteInvitationAction::class);
+            $group->post('', CreateInvitationAction::class)->setName('actions.invitations.create');
+            $group->get('', ListInvitationAction::class)->setName('actions.invitations.list');
+            $group->get('/{id}', ReadInvitationAction::class)->setName('actions.invitations.read');
+            $group->put('/{id}', UpdateInvitationAction::class)->setName('actions.invitations.answer');
+            $group->delete('/{id}', DeleteInvitationAction::class)->setName('actions.invitations.delete');
         });
 
         $group->group('/users', function (Group $group) {
-            $group->post('', CreateUserAction::class);
-            $group->get('/{id}', ReadUserAction::class);
-            $group->map(['PUT', 'PATCH'], '/{id}', UpdateUserAction::class);
-            $group->delete('/{id}', DeleteUserAction::class);
+            $group->get('/{id}', ReadUserAction::class)->setName('actions.users.read');
+            $group->map(['PUT', 'PATCH'], '/{id}', UpdateUserAction::class)->setName('actions.users.update');
+            $group->post('', CreateUserAction::class)->setName('actions.users.create');
+            $group->delete('/{id}', DeleteUserAction::class)->setName('actions.users.delete');
         });
 
     })->add(TokenMiddleware::class);
-
-
-    // Get token
-    $app->post('login', TokenLoginAction::class);
-
 
 };

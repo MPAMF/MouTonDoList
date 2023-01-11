@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Domain\Services\Auth;
+namespace App\Domain\Services\Auth\Token;
 
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Models\User\UserNotFoundException;
 use App\Domain\Requests\Auth\LoginRequest;
 
-interface TokenLoginService
+interface TokenGenService
 {
 
 
@@ -16,6 +16,6 @@ interface TokenLoginService
      * @throws BadRequestException
      * @throws UserNotFoundException
      */
-    public function login(LoginRequest $request) : string;
+    public function generate(LoginRequest $request) : string;
 
 }
