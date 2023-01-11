@@ -14,12 +14,13 @@
             <textarea class="form-control form-control-sm bg-secondary" rows="3" id="taskNewDescription-{{ subCatId }}" placeholder="{{ 'NewTaskDescriptionPlaceholder'|trans|raw }}" title="{{ 'NewTaskDescriptionAriaLabel'|trans|raw }}" ></textarea>
         </div>
         <div class="mb-2">
-            <select class="btn btn-sm btn-modal-select" aria-label="{{ 'TaskAssignedTitle'|trans|raw }}" required>
+            <select id="select-assign-member-{{ subCatId }}" class="btn btn-sm btn-modal-select" aria-label="{{ 'TaskAssignedTitle'|trans|raw }}" required>
                 <option value="0" selected>{% trans %}TaskNotAssigned{% endtrans %}</option>
                 {% for member in category.members %}
                     <option value="{{ member.user.id }}"> {{ member.user.username }}</option>
                 {% endfor %}
             </select>
+            <div id="error-assigned" class="invalid-feedback" role="alert"> {{ 'ModalProjectMemberExistenceErrorText'|trans|raw }}</div>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="taskNewCancel-{{ subCatId }}">{% trans %}NewTaskCancel{% endtrans %}</button>
@@ -39,7 +40,7 @@
 
     $(document).ready(
         $(document).on('click', "#taskNewCreate-{{ subCatId }}", function (e) {
-            checkInputOnSubmit("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}")
+            newTaskCheck(e, {{ subCatId }})
         }),
         $(document).on('keyup', "#taskNewName-{{ subCatId }}", function (e) {
             checkInputOnKeyup("#taskNewName-{{ subCatId }}", "error-taskNew{{ subCatId }}", "#taskNewCreate-{{ subCatId }}")

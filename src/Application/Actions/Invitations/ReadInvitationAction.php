@@ -7,7 +7,7 @@ use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\UserCategory\UserCategoryNotFoundException;
 use App\Domain\Requests\Invitation\GetInvitationRequest;
-use App\Domain\Services\Invitation\GetInvitationService;
+use App\Domain\Services\Models\Invitation\GetInvitationService;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;

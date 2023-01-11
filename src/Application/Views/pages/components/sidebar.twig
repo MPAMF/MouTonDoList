@@ -5,7 +5,7 @@
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#category-active" aria-expanded="true">
                     {% trans %}SidebarMyProjectsName{% endtrans %}
                 </button>
-                <button class="btn btn-sm btn-sidebar-add" type="button" title="{{ 'SidebarNewTodolistButton'|trans|raw }}">
+                <button class="btn btn-sm btn-sidebar-add" type="button" onclick="newCategory()" title="{{ 'SidebarNewTodolistButton'|trans|raw }}">
                     <span class="mdi mdi-18px mdi-plus"></span>
                 </button>
             </div>

@@ -98,20 +98,10 @@
                             {% trans %}DropDownParameters{% endtrans %}</button>
                     </li>
                     <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li>
                         <button class="dropdown-item dropdown-item-nav" type="button" data-bs-toggle="modal"
                                 data-bs-target="#userModal" onclick="modalTheme()"><span
                                     class="mdi mdi-palette-outline me-2"></span>
                             {% trans %}DropDownThemeNav{% endtrans %}</button>
-                    </li>
-
-                    <li>
-                        <button class="dropdown-item dropdown-item-nav" type="button"><span
-                                    class="mdi mdi-share me-2"></span>
-                            {% trans %}DropDownShareNav{% endtrans %}</button>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -161,7 +151,7 @@
                         </li>
                         <li class="sidebar-li rounded" id="modal-btn-taskToDo">
                             <button class="btn-user-modal" onclick="modalTaskToDo()">
-                                <span class="mdi mdi-bell me-2"></span> {% trans %}TaskToDoLiModalNav{% endtrans %}
+                                <span class="mdi mdi-calendar-check me-2"></span> {% trans %}TaskToDoLiModalNav{% endtrans %}
                             </button>
                         </li>
                     </ul>
@@ -371,7 +361,7 @@
     function createLanguage(language) {
         return `
         <li>
-            <button class="dropdown-item dropdown-item-nav" type="button" onclick="setLanguage("`+ language +`")">`+ getValueFromLanguage('ModalDropdownLanguages'+language)+ `</button>
+            <button class="dropdown-item dropdown-item-nav" type="button" onclick="setLanguage('`+ language +`')">`+ getValueFromLanguage('ModalDropdownLanguages'+language)+ `</button>
         </li>
         `;
     }
@@ -381,7 +371,6 @@
         setActiveModal("modal-btn-notif");
         $('#modal-title-body').html(getValueFromLanguage('TitleNotifModalNav'));
         $('#modal-div-body').html(loadAllValues(2, invitations));
-        addEventNotif();
     }
 
     function createNotification(invitationId, category, owner, date) {

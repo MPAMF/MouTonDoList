@@ -10,6 +10,7 @@ use App\Domain\Models\ValidatorModel;
 use DateTime;
 use JsonSerializable;
 use Respect\Validation\Validator;
+use ReturnTypeWillChange;
 use stdClass;
 
 class TaskComment extends TimeStampedModel implements JsonSerializable, ValidatorModel
@@ -168,7 +169,7 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
         return $result;
     }
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
         return [

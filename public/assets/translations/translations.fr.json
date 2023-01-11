@@ -9,6 +9,7 @@
 
   "CloseAriaLabel": "Fermer",
 
+  "NewCategoryName": "Nouveau projet",
   "CopyName": "Copie",
 
   "SearchTypeAssigned": "Assigné",
@@ -63,10 +64,11 @@
   "ModalProjectMemberEditor": "Editeur",
   "ModalProjectMemberRemove": "Retirer",
   "ModalProjectMemberStatusErrorText": "Le rôle d'un des membres n'est pas valide.",
+  "ModalProjectMemberExistenceErrorText": "Le membre sélectionné n'est pas valide.",
   "ModalProjectMemberEmailErrorText": "L'email indiqué n'est pas valide.",
   "ModalProjectMemberNewText": " Ajouter un membre",
   "ModalProjectMemberErrorText": "Le statut indiqué n'est pas valide.",
-  "ModalProjectMemberAddText": "Ajouter le membre",
+  "ModalProjectMemberAddText": "Inviter le membre",
 
   "ModalCommentsTitle": "Liste des commentaires",
   "ModalCommentAuthorUnknown": "Inconnu",
@@ -129,7 +131,7 @@
 
   "SidebarAriaLabel": "Liste de mes listes de tâches",
   "SidebarMyProjectsName": "Mes projets",
-  "SidebarNewTodolistButton": "Création d'une liste de tâche",
+  "SidebarNewTodolistButton": "Création d'un projet",
   "SidebarSharedProjectsName": "Projets partagés",
   "SidebarArchivedProjectsName": "Mes projets archivés",
 
@@ -188,6 +190,13 @@
   "PopoverTaskDelete": "Supprimer la tâche",
   "PopoverTaskAddUp": "Ajouter une tâche ci-dessus",
   "PopoverTaskAddDown": "Ajouter une tâche ci-dessous",
+
+  "TimeYears": "années",
+  "TimeMonths" : "mois",
+  "TimeDays": "jours",
+  "TimeHours": "heures",
+  "TimeMinutes": "minutes",
+  "TimeNow": "à l'instant",
 
   "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",

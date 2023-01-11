@@ -6,7 +6,7 @@ use App\Application\Actions\Action;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Requests\Category\GetCategoryRequest;
-use App\Domain\Services\Category\GetCategoryService;
+use App\Domain\Services\Models\Category\GetCategoryService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpForbiddenException;

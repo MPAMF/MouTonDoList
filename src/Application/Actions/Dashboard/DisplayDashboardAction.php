@@ -5,7 +5,7 @@ namespace App\Application\Actions\Dashboard;
 
 use App\Application\Actions\Action;
 use App\Domain\Requests\DisplayDashboardRequest;
-use App\Domain\Services\DisplayDashboardService;
+use App\Domain\Services\Dashboard\DisplayDashboardService;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class DisplayDashboardAction extends Action
