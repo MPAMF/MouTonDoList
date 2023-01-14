@@ -12,20 +12,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(() => {
-        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-            let allowedMethod = ["post", "put", "delete"];
-
-            if (allowedMethod.includes(options.type.toLowerCase())) {
-                let newData = options.data
-                if(!newData) newData = {};
-
-                newData['{{ csrf.keys.name }}'] = '{{ csrf.name }}'
-                newData['{{ csrf.keys.value }}'] = '{{ csrf.value}}'
-
-                options.data = JSON.stringify(newData)
-                console.log(options)
-            }
-        });
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        jqXHR.setRequestHeader('Authorization', '{{ apiToken }}');
     });
 </script>
