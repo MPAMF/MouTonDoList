@@ -54,17 +54,11 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
 }
 
 function archiveCategory(id) {
+    const title = getValueFromLanguage('ArchiveCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
 
-    popoverDispose(category)
-    popoverUpdateType(category, "category-default-archive-popover")
-
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
-    new bootstrap.Popover(category, newPopover)
-
-    if(isCurrentCategory(id)) {
-        let category = $('[data-category-id="' + id + '"]')[0]
+    let element = setCatToArchivedTrueFromData(id)
+    repositories.categories.update(element).then(() => {
 
         popoverDispose(category)
         popoverUpdateType(category, "category-default-archive-popover")
@@ -72,92 +66,126 @@ function archiveCategory(id) {
         let newPopover = defaultPopover()
         newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
         new bootstrap.Popover(category, newPopover)
-    }
 
-    if(isOwnerById(id)) {
-        let parentContainer = document.getElementById("category-archive")
-        parentContainer.firstElementChild.prepend(category.parentElement)
-    }
+        if(isCurrentCategory(id)) {
+            let currentCategory = $('[data-category-id="' + id + '"]')[0]
+            popoverDispose(currentCategory)
+            popoverUpdateType(currentCategory, "category-default-archive-popover")
 
-    setCatToArchivedTrueFromData(id)
+            let newPopover = defaultPopover()
+            newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
+            new bootstrap.Popover(currentCategory, newPopover)
+        }
 
-    // TODO : store changes : category WHERE id={id} is now archived
+        if(isOwnerById(id)) {
+            let parentContainer = document.getElementById("category-archive")
+            parentContainer.firstElementChild.prepend(category.parentElement)
+        }
+
+        showToast(getValueFromLanguage('ArchiveCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        setCatToArchivedFalseFromData(id)
+        showToast(getValueFromLanguage('ArchiveCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        popoverHide(category)
+    });
 }
 
 function unarchiveCategory(id) {
+
+    const title = getValueFromLanguage('UnarchiveCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
 
-    popoverDispose(category)
-    popoverUpdateType(category, "category-default-popover")
-
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultContent(id)
-    new bootstrap.Popover(category, newPopover)
-
-    if(isCurrentCategory(id)) {
-        let category = $('[data-category-id="' + id + '"]')[0]
+    let element = setCatToArchivedFalseFromData(id)
+    repositories.categories.update(element).then(() => {
 
         popoverDispose(category)
         popoverUpdateType(category, "category-default-popover")
 
         let newPopover = defaultPopover()
-        newPopover.content = getPopoverCategoryDefaultContent(id)
+        newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
         new bootstrap.Popover(category, newPopover)
-    }
 
-    if(isOwnerById(id)) {
-        let parentContainer = document.getElementById("category-default")
-        parentContainer.firstElementChild.prepend(category.parentElement)
-    }
+        if(isCurrentCategory(id)) {
+            let currentCategory = $('[data-category-id="' + id + '"]')[0]
+            popoverDispose(currentCategory)
+            popoverUpdateType(currentCategory, "category-default-popover")
 
-    setCatToArchivedFalseFromData(id)
+            let newPopover = defaultPopover()
+            newPopover.content = getPopoverCategoryDefaultContent(id)
+            new bootstrap.Popover(currentCategory, newPopover)
+        }
 
-    // TODO : store changes : category WHERE id={id} is now unarchived
+        if(isOwnerById(id)) {
+            let parentContainer = document.getElementById("category-default")
+            parentContainer.firstElementChild.prepend(category.parentElement)
+        }
+
+        showToast(getValueFromLanguage('UnarchiveCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        setCatToArchivedTrueFromData(id)
+        showToast(getValueFromLanguage('UnarchiveCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        popoverHide(category)
+    });
 }
 
 function deleteCategory(id) {
     const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     let parent = category.parentElement
-    repositories.categories.delete({id: id}).then(() => {
+
+    repositories.categories.delete(id).then(() => {
         parent.remove()
         removeCatFromData(id)
+        popoverDispose(category)
         showToast(getValueFromLanguage('DeleteCategorySuccess'), title, 'success')
+        if(isCurrentCategory(id))
+            window.location.replace(dashboard);
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('DeleteCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
-        popoverDispose(category)
+        popoverHide(category)
     });
-    if(isCurrentCategory(id))
-        window.location.replace(dashboard);
 }
 
 function duplicateCategory(id) {
-    let newId = Math.floor(Math.random() * 10000).toString();
 
+    const title = getValueFromLanguage('DuplicateCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
-    let copyElement = category.parentElement.cloneNode(true)
-    copyElement.classList.remove('active')
 
-    let firstChild = copyElement.firstElementChild
-    firstChild.href = firstChild.href.slice(0, firstChild.href.lastIndexOf('/')) + "/" + newId
-    firstChild.textContent += " " + getValueFromLanguage("CopyName")
+    // TODO : get newId
+    let newId = Math.floor(Math.random() * 10000).toString();
+    let cat = duplicateCatFromData(id, newId)
 
-    let lastChild = copyElement.lastElementChild
-    lastChild.setAttribute("data-sidebar-id", newId)
-    popoverUpdateType(lastChild, "category-default-popover")
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultContent(newId)
-    new bootstrap.Popover(lastChild, newPopover)
+    repositories.categories.create(cat).then(() => {
+        let copyElement = category.parentElement.cloneNode(true)
+        copyElement.classList.remove('active')
 
-    document.getElementById("category-default").firstElementChild.prepend(copyElement)
-    popoverHide(category)
+        let firstChild = copyElement.firstElementChild
+        firstChild.href = firstChild.href.slice(0, firstChild.href.lastIndexOf('/')) + "/" + newId
+        firstChild.textContent += " " + getValueFromLanguage("CopyName")
 
-    duplicateCatFromData(id, newId)
+        let lastChild = copyElement.lastElementChild
+        lastChild.setAttribute("data-sidebar-id", newId)
+        popoverUpdateType(lastChild, "category-default-popover")
+        let newPopover = defaultPopover()
+        newPopover.content = getPopoverCategoryDefaultContent(newId)
+        new bootstrap.Popover(lastChild, newPopover)
 
-    // TODO : get newId from database
-    // TODO : store changes : duplicate category WHERE id={id} into id={newId}
+        document.getElementById("category-default").firstElementChild.prepend(copyElement)
+        data.categories.push(cat)
+
+        showToast(getValueFromLanguage('DuplicateCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('DuplicateCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        popoverHide(category)
+    });
 }
 
 function leaveCategory(id) {
@@ -424,28 +452,27 @@ function appendSubCategory(catId, newId, name) {
 }
 
 function newCategory() {
-    let newId = Math.floor(Math.random() * 10000).toString()
-    let container = document.getElementById("category-default").firstElementChild
-    container.prepend(getSidebarOwnedCategory(newId))
-
-    let category = $('[data-sidebar-id="' + newId + '"]')[0]
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultContent(newId)
-    new bootstrap.Popover(category, newPopover)
-
-    newId = parseInt(newId)
-    addCatToData(newId)
-    let cat = getCategoryById(newId)
-
     const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', newId)
+
+    // TODO : get newId
+    let newId = Math.floor(Math.random() * 10000)
+    let cat = prepareCatForData(newId)
+
     repositories.categories.create(cat).then(() => {
+        let container = document.getElementById("category-default").firstElementChild
+        container.prepend(getSidebarOwnedCategory(newId))
+
+        let category = $('[data-sidebar-id="' + newId + '"]')[0]
+        let newPopover = defaultPopover()
+        newPopover.content = getPopoverCategoryDefaultContent(newId)
+        new bootstrap.Popover(category, newPopover)
+
+        addCatToData(cat)
         showToast(getValueFromLanguage('CreateCategorySuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('CreateCategoryError').replace('%code%', e.code), title, 'danger')
     });
-
-    /* TODO : add category : WHERE category={newId} */
 }
 
 function submitModalCategory() {

@@ -200,5 +200,21 @@
 
   "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",
-  "FooterGithub": "Page GitHub du projet"
+  "FooterGithub": "Page GitHub du projet",
+
+  "DeleteCategorySuccess": "Catégorie supprimée avec succès",
+  "DeleteCategoryError": "Erreur lors de la suppression de la catégorie",
+  "DeleteCategoryTitle": "Suppression de la catégorie %id%",
+  "ArchiveCategorySuccess": "Catégorie archivée avec succès",
+  "ArchiveCategoryError": "Erreur lors de l'archivage de la catégorie",
+  "ArchiveCategoryTitle": "Archivage de la catégorie %id%",
+  "UnarchiveCategorySuccess": "Catégorie désarchivée avec succès",
+  "UnarchiveCategoryError": "Erreur lors du désarchivage de la catégorie",
+  "UnarchiveCategoryTitle": "Désarchivage de la catégorie %id%",
+  "DuplicateCategorySuccess": "Catégorie désarchivée avec succès",
+  "DuplicateCategoryError": "Erreur lors du désarchivage de la catégorie",
+  "DuplicateCategoryTitle": "Désarchivage de la catégorie %id%",
+  "CreateCategorySuccess": "Catégorie créée avec succès",
+  "CreateCategoryError": "Erreur lors de la création de la catégorie",
+  "CreateCategoryTitle": "Création de la catégorie %id%"
 }

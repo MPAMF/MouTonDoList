@@ -100,8 +100,8 @@ class CategoryRepository extends Repository {
         return super.put(this.endpoint, category.id, category)
     }
 
-    delete(category) {
-        return super.delete(this.endpoint, category.id)
+    delete(id) {
+        return super.delete(this.endpoint, id)
     }
 }
 

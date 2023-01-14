@@ -255,11 +255,13 @@ function moveSubCatFromData(subCatId, oldIndex, newIndex) {
 function setCatToArchivedTrueFromData(catId) {
     let cat = getCategoryById(catId)
     cat.archived = true
+    return cat
 }
 
 function setCatToArchivedFalseFromData(catId) {
     let cat = getCategoryById(catId)
     cat.archived = false
+    return cat
 }
 
 function getCategoryIdx(catId) {
@@ -284,7 +286,7 @@ function duplicateCatFromData(id, newId) {
         member.category_id = newId
         member.category.id = newId
     })
-    data.categories.push(newCat)
+    return newCat
 }
 
 function removeSubCatFromData(id) {
@@ -377,7 +379,7 @@ function addSubCatToData(id, name, newId) {
     getCurrentCategory().subCategories.push(subcat)
 }
 
-function addCatToData(newId) {
+function prepareCatForData(newId) {
     let cat = getCatTemplate()
 
     cat.accepted = true
@@ -399,7 +401,11 @@ function addCatToData(newId) {
         user: data.user
     })
 
-    storagePushToCategories(newId, false)
+    return cat
+}
+
+function addCatToData(cat) {
+    storagePushToCategories(cat.category_id, false)
     data.categories.push(cat)
 }
 
