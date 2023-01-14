@@ -286,7 +286,7 @@ function duplicateCatFromData(id, newId) {
         member.category_id = newId
         member.category.id = newId
     })
-    return newCat
+    data.categories.push(cat)
 }
 
 function removeSubCatFromData(id) {
@@ -379,17 +379,15 @@ function addSubCatToData(id, name, newId) {
     getCurrentCategory().subCategories.push(subcat)
 }
 
-function prepareCatForData(newId) {
+function prepareCatForData() {
     let cat = getCatTemplate()
 
     cat.accepted = true
     cat.can_edit = true
-    cat.category_id = newId
     cat.date = Date()
     cat.user_id = data.user.id
 
     cat.category.archived = false
-    cat.category.id = newId
     cat.category.name = name
     cat.category.owner_id = data.user.id
     cat.category.position = 0

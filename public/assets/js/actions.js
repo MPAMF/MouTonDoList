@@ -104,7 +104,7 @@ function unarchiveCategory(id) {
         popoverUpdateType(category, "category-default-popover")
 
         let newPopover = defaultPopover()
-        newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
+        newPopover.content = getPopoverCategoryDefaultContent(id)
         new bootstrap.Popover(category, newPopover)
 
         if(isCurrentCategory(id)) {
@@ -157,11 +157,10 @@ function duplicateCategory(id) {
     const title = getValueFromLanguage('DuplicateCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
 
-    // TODO : get newId
-    let newId = Math.floor(Math.random() * 10000).toString();
-    let cat = duplicateCatFromData(id, newId)
+    repositories.categories.create(getCategoryById(id)).then((e) => {
 
-    repositories.categories.create(cat).then(() => {
+        let newId = e.data.id
+
         let copyElement = category.parentElement.cloneNode(true)
         copyElement.classList.remove('active')
 
@@ -177,7 +176,7 @@ function duplicateCategory(id) {
         new bootstrap.Popover(lastChild, newPopover)
 
         document.getElementById("category-default").firstElementChild.prepend(copyElement)
-        data.categories.push(cat)
+        duplicateCatFromData(id, newId)
 
         showToast(getValueFromLanguage('DuplicateCategorySuccess'), title, 'success')
     }).catch(e => {
@@ -452,13 +451,11 @@ function appendSubCategory(catId, newId, name) {
 }
 
 function newCategory() {
-    const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', newId)
+    const title = getValueFromLanguage('CreateCategoryTitle')
+    let cat = prepareCatForData()
 
-    // TODO : get newId
-    let newId = Math.floor(Math.random() * 10000)
-    let cat = prepareCatForData(newId)
-
-    repositories.categories.create(cat).then(() => {
+    repositories.categories.create(cat).then((e) => {
+        let newId = e.data.id
         let container = document.getElementById("category-default").firstElementChild
         container.prepend(getSidebarOwnedCategory(newId))
 
@@ -467,7 +464,10 @@ function newCategory() {
         newPopover.content = getPopoverCategoryDefaultContent(newId)
         new bootstrap.Popover(category, newPopover)
 
+        cat.category_id = newId
+        cat.category.id = newId
         addCatToData(cat)
+
         showToast(getValueFromLanguage('CreateCategorySuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
@@ -476,31 +476,39 @@ function newCategory() {
 }
 
 function submitModalCategory() {
+
     let error = checkInputOnSubmit("#modal-input-name", "error-modal")
     let memberSelectsName = document.getElementsByName("modal-member-select")
     error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
     let hideChecked = document.getElementById("modal-checkbox-task").checked
-    let catId = $("#modal-body").attr("data-id")
-    storageUpdateCategory(catId, hideChecked)
-    toggleAllTasksVisibility()
+    let catId = parseInt($("#modal-body").attr("data-id"))
 
     if(error) {
-        showToast(`edit category`, 'edit', 'danger')
+        showToast(getValueFromLanguage('InvalidData').replace('%code%', e.code), title, 'danger')
         return;
     }
 
-    let newName = document.getElementById("modal-input-name").value
+    const title = getValueFromLanguage('UpdateCategoryTitle').replace('%id%', catId)
 
-    document.getElementById("title").innerHTML = newName
-    let category = $('[data-sidebar-id="' + catId + '"]')[0]
-    category.parentElement.firstElementChild.innerHTML = newName
+    repositories.categories.update(getCategoryById(catId)).then(() => {
 
-    updateCatFromData(parseInt(catId), newName)
+        let newName = document.getElementById("modal-input-name").value
 
-    showToast(`edit category`, 'edit', 'success')
-    bootstrap.Modal.getInstance($("#modal")).hide()
+        document.getElementById("title").innerHTML = newName
+        let category = $('[data-sidebar-id="' + catId + '"]')[0]
+        category.parentElement.firstElementChild.innerHTML = newName
 
-    /* TODO : update category with name={newName} WHERE id={catId} */
+        updateCatFromData(catId, newName)
+        storageUpdateCategory(catId, hideChecked)
+        toggleAllTasksVisibility()
+
+        showToast(getValueFromLanguage('UpdateCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('UpdateCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        bootstrap.Modal.getInstance($("#modal")).hide()
+    });
 }
 
 function submitModalSubCategory() {

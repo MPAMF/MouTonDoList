@@ -211,10 +211,15 @@
   "UnarchiveCategorySuccess": "Catégorie désarchivée avec succès",
   "UnarchiveCategoryError": "Erreur lors du désarchivage de la catégorie",
   "UnarchiveCategoryTitle": "Désarchivage de la catégorie %id%",
-  "DuplicateCategorySuccess": "Catégorie désarchivée avec succès",
-  "DuplicateCategoryError": "Erreur lors du désarchivage de la catégorie",
-  "DuplicateCategoryTitle": "Désarchivage de la catégorie %id%",
+  "DuplicateCategorySuccess": "Catégorie dupliquée avec succès",
+  "DuplicateCategoryError": "Erreur lors du duplicage de la catégorie",
+  "DuplicateCategoryTitle": "Duplicage de la catégorie %id%",
   "CreateCategorySuccess": "Catégorie créée avec succès",
   "CreateCategoryError": "Erreur lors de la création de la catégorie",
-  "CreateCategoryTitle": "Création de la catégorie %id%"
+  "CreateCategoryTitle": "Création de la catégorie",
+  "UpdateCategorySuccess": "Catégorie mise à jour avec succès",
+  "UpdateCategoryError": "Erreur lors de la mise à jour de la catégorie",
+  "UpdateCategoryTitle": "Mise à jour de la catégorie  %id%",
+
+  "InvalidData": "Les données sont invalides"
 }
