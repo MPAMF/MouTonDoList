@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Application\Actions\Auth\Login\DisplayLoginAction;
 use App\Application\Actions\Auth\Login\LoginAction;
+use App\Application\Actions\Auth\Login\TokenLoginAction;
 use App\Application\Actions\Auth\Logout\LogoutAction;
 use App\Application\Actions\Auth\Register\DisplayRegisterAction;
 use App\Application\Actions\Auth\Register\RegisterAction;
@@ -24,16 +25,22 @@ use App\Application\Actions\Tasks\CreateTaskAction;
 use App\Application\Actions\Tasks\DeleteTaskAction;
 use App\Application\Actions\Tasks\ReadTaskAction;
 use App\Application\Actions\Tasks\UpdateTaskAction;
-use App\Application\Actions\User\ListUsersAction;
+use App\Application\Actions\User\CreateUserAction;
+use App\Application\Actions\User\DeleteUserAction;
+use App\Application\Actions\User\ReadUserAction;
 use App\Application\Actions\User\UpdateUserAction;
-use App\Application\Actions\User\ViewUserAction;
+use App\Application\Middleware\Auth\AuthMiddleware;
 use App\Application\Middleware\Auth\UserConnectedMiddleware;
 use App\Application\Middleware\Auth\UserDisconnectedMiddleware;
+use App\Application\Middleware\SessionMiddleware;
+use App\Application\Middleware\TokenMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
+use Slim\Csrf\Guard as CsrfMiddleware;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Slim\Views\Twig;
+
 
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
@@ -41,27 +48,34 @@ return function (App $app) {
         return $response;
     });
 
-    $app->get('/', function (Request $request, Response $response) {
-        return $this->get(Twig::class)->render($response, 'home/content.twig');
-    })->setName('home');
+    $app->group('/', function (Group $group) {
 
-    $app->group('/account', function (Group $group) {
-        $group->get('/login', DisplayLoginAction::class)->setName('account.login');
-        $group->post('/login', LoginAction::class);
+        $group->get('', function (Request $request, Response $response) {
+            return $this->get(Twig::class)->render($response, 'home/content.twig');
+        })->add(UserDisconnectedMiddleware::class)->setName('/home');
 
-        $group->get('/register', DisplayRegisterAction::class)->setName('account.register');
-        $group->post('/register', RegisterAction::class);
-    })->add(UserDisconnectedMiddleware::class);
+        $group->group('account', function (Group $group) {
+            $group->get('/login', DisplayLoginAction::class)->setName('account.login');
+            $group->post('/login', LoginAction::class);
 
-    $app->group('/account', function (Group $group) {
-        $group->post('/logout', LogoutAction::class)->setName('account.logout');
-    })->add(UserConnectedMiddleware::class);
+            $group->get('/register', DisplayRegisterAction::class)->setName('account.register');
+            $group->post('/register', RegisterAction::class);
+        })->add(UserDisconnectedMiddleware::class);
 
-    $app->group('/dashboard[/{id}]', function (Group $group) {
-        $group->get('', DisplayDashboardAction::class)->setName('dashboard');
-    })->add(UserConnectedMiddleware::class);
+        $group->group('account', function (Group $group) {
+            $group->post('/logout', LogoutAction::class)->setName('account.logout');
+        })->add(UserConnectedMiddleware::class);
 
-    $app->group('/actions', function (Group $group) {
+        $group->group('dashboard[/{id}]', function (Group $group) {
+            $group->get('', DisplayDashboardAction::class)->setName('dashboard');
+        })->add(UserConnectedMiddleware::class);
+
+    })->add(AuthMiddleware::class)->add(CsrfMiddleware::class)->add(SessionMiddleware::class);
+
+    // Rest API
+    $app->group('/api', function (Group $group) {
+
+        // Connected users
         $group->group('/categories', function (Group $group) {
             $group->post('', CreateCategoryAction::class)->setName('actions.categories.create');
             $group->get('/{id}', ReadCategoryAction::class)->setName('actions.categories.read');
@@ -92,8 +106,12 @@ return function (App $app) {
         });
 
         $group->group('/users', function (Group $group) {
+            $group->get('/{id}', ReadUserAction::class)->setName('actions.users.read');
             $group->map(['PUT', 'PATCH'], '/{id}', UpdateUserAction::class)->setName('actions.users.update');
+            $group->post('', CreateUserAction::class)->setName('actions.users.create');
+            $group->delete('/{id}', DeleteUserAction::class)->setName('actions.users.delete');
         });
 
-    })->add(UserConnectedMiddleware::class);
+    })->add(TokenMiddleware::class);
+
 };
