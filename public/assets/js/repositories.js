@@ -2,7 +2,7 @@ class Repository {
 
     list(endpoint) {
         return new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}`,
+            url: `${endpoint}`,
             type: 'get',
             contentType: 'application/json; charset=utf-8',
         }).then(e => resolve(e.data)).catch(e => reject(e)))
@@ -10,7 +10,7 @@ class Repository {
 
     get(endpoint, id) {
         return  new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}/${id}`,
+            url: `${endpoint}/${id}`,
             type: 'get',
             contentType: 'application/json; charset=utf-8',
         }).then(e => resolve(e.data)).catch(e => reject(e)))
@@ -18,7 +18,7 @@ class Repository {
 
     put(endpoint, id, data = {}) {
         return new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}/${id}`,
+            url: `${endpoint}/${id}`,
             type: 'put',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -28,7 +28,7 @@ class Repository {
 
     post(endpoint, data = {}) {
         return new Promise((resolve, reject) => $.ajax({
-            url: this.endpoint,
+            url: endpoint,
             type: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -38,7 +38,7 @@ class Repository {
 
     delete(endpoint, id) {
         return new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}/${id}`,
+            url: `${endpoint}/${id}`,
             type: 'delete',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -51,7 +51,7 @@ class TaskRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/tasks'
+        this.endpoint = '/api/tasks'
     }
 
     get(id) {
@@ -75,7 +75,7 @@ class CategoryRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/categories'
+        this.endpoint = '/api/categories'
     }
 
     get(id) {
@@ -99,7 +99,7 @@ class CommentRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/comments'
+        this.endpoint = '/api/comments'
     }
 
     get(id) {
@@ -123,7 +123,7 @@ class UserRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/users'
+        this.endpoint = '/api/users'
     }
 
     get(id) {
@@ -149,7 +149,7 @@ class InvitationRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/invitations'
+        this.endpoint = '/api/invitations'
     }
 
     list() {

@@ -8,6 +8,7 @@ use App\Domain\Services\Auth\LogoutServiceImpl;
 use App\Domain\Services\Auth\RegisterUserService;
 use App\Domain\Services\Auth\RegisterUserServiceImpl;
 use App\Domain\Services\Auth\Token\TokenDecodeService;
+use App\Domain\Services\Auth\Token\TokenDecodeServiceImpl;
 use App\Domain\Services\Auth\Token\TokenGenService;
 use App\Domain\Services\Auth\Token\TokenGenServiceImpl;
 use App\Domain\Services\Auth\TokenLoginService;
@@ -95,7 +96,7 @@ return function (ContainerBuilder $containerBuilder) {
         RegisterUserService::class => autowire(RegisterUserServiceImpl::class),
         LoginService::class => autowire(LoginServiceImpl::class),
         TokenGenService::class => autowire(TokenGenServiceImpl::class),
-        TokenDecodeService::class => autowire(TokenDecodeService::class),
+        TokenDecodeService::class => autowire(TokenDecodeServiceImpl::class),
         
         // UserCategories
         UserCategoryCheckPermissionService::class => autowire(UserCategoryCheckPermissionServiceImpl::class),
