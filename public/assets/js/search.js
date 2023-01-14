@@ -145,12 +145,8 @@ function doSearch(splitInputs) {
             }
 
             if (correspond) {
-                if(task.assigned === null)
-                {
-                    task.assigned = { name: ""}
-                }
-                else if (task.assigned.name === null)
-                    task.assigned.name = ""
+                if(task.assigned === null || task.assigned.username === null)
+                    task.assigned.username = ""
                 result.push(task)
                 correspond = false
             }
@@ -195,7 +191,7 @@ function buildTaskElement(task) {
         '        <input class="form-check-input task-checkbox" type="checkbox" value="" title="' + getValueFromLanguage('TaskCheckboxTitle') + '" ' + (task.checked ? 'checked' : '') + ' ' + (data.canEdit ? '' : 'disabled') +  '>' +
         '        <div class="task-view-info" id="taskViewInfo-' + task.category_id + '-' + task.id + '" onclick="openTaskDetails(' + task.category_id + ',' + task.id + ')">' +
         '            <label class="form-check-label" title="' + getValueFromLanguage('TaskNameTitle') + '">' + task.name + '</label>' +
-        '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + task.assigned.name + '</small>' +
+        '            <small class="form-text text-muted assigned-member" title="' + getValueFromLanguage('TaskAssignedTitle') + '">' + task.assigned.username + '</small>' +
         '            <small class="form-text text-muted" title="' + getValueFromLanguage('TaskDescriptionTitle') + '">' + task.description + '</small>' +
         '        </div>' +
         '    </div>'
@@ -216,8 +212,7 @@ function buildTaskElement(task) {
 }
 
 function displayResult(result) {
-    if(result.length > 0)
-        toggleResearch("on")
+    toggleResearch("on")
 
     let list = document.getElementById("research").getElementsByTagName("ul")[0]
     list.innerHTML = ""

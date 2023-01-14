@@ -54,17 +54,11 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
 }
 
 function archiveCategory(id) {
+    const title = getValueFromLanguage('ArchiveCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
 
-    popoverDispose(category)
-    popoverUpdateType(category, "category-default-archive-popover")
-
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
-    new bootstrap.Popover(category, newPopover)
-
-    if(isCurrentCategory(id)) {
-        let category = $('[data-category-id="' + id + '"]')[0]
+    let element = setCatToArchivedTrueFromData(id)
+    repositories.categories.update(element).then(() => {
 
         popoverDispose(category)
         popoverUpdateType(category, "category-default-archive-popover")
@@ -72,30 +66,39 @@ function archiveCategory(id) {
         let newPopover = defaultPopover()
         newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
         new bootstrap.Popover(category, newPopover)
-    }
 
-    if(isOwnerById(id)) {
-        let parentContainer = document.getElementById("category-archive")
-        parentContainer.firstElementChild.prepend(category.parentElement)
-    }
+        if(isCurrentCategory(id)) {
+            let currentCategory = $('[data-category-id="' + id + '"]')[0]
+            popoverDispose(currentCategory)
+            popoverUpdateType(currentCategory, "category-default-archive-popover")
 
-    setCatToArchivedTrueFromData(id)
+            let newPopover = defaultPopover()
+            newPopover.content = getPopoverCategoryDefaultArchiveContent(id)
+            new bootstrap.Popover(currentCategory, newPopover)
+        }
 
-    // TODO : store changes : category WHERE id={id} is now archived
+        if(isOwnerById(id)) {
+            let parentContainer = document.getElementById("category-archive")
+            parentContainer.firstElementChild.prepend(category.parentElement)
+        }
+
+        showToast(getValueFromLanguage('ArchiveCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        setCatToArchivedFalseFromData(id)
+        showToast(getValueFromLanguage('ArchiveCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        popoverHide(category)
+    });
 }
 
 function unarchiveCategory(id) {
+
+    const title = getValueFromLanguage('UnarchiveCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
 
-    popoverDispose(category)
-    popoverUpdateType(category, "category-default-popover")
-
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultContent(id)
-    new bootstrap.Popover(category, newPopover)
-
-    if(isCurrentCategory(id)) {
-        let category = $('[data-category-id="' + id + '"]')[0]
+    let element = setCatToArchivedFalseFromData(id)
+    repositories.categories.update(element).then(() => {
 
         popoverDispose(category)
         popoverUpdateType(category, "category-default-popover")
@@ -103,61 +106,85 @@ function unarchiveCategory(id) {
         let newPopover = defaultPopover()
         newPopover.content = getPopoverCategoryDefaultContent(id)
         new bootstrap.Popover(category, newPopover)
-    }
 
-    if(isOwnerById(id)) {
-        let parentContainer = document.getElementById("category-default")
-        parentContainer.firstElementChild.prepend(category.parentElement)
-    }
+        if(isCurrentCategory(id)) {
+            let currentCategory = $('[data-category-id="' + id + '"]')[0]
+            popoverDispose(currentCategory)
+            popoverUpdateType(currentCategory, "category-default-popover")
 
-    setCatToArchivedFalseFromData(id)
+            let newPopover = defaultPopover()
+            newPopover.content = getPopoverCategoryDefaultContent(id)
+            new bootstrap.Popover(currentCategory, newPopover)
+        }
 
-    // TODO : store changes : category WHERE id={id} is now unarchived
+        if(isOwnerById(id)) {
+            let parentContainer = document.getElementById("category-default")
+            parentContainer.firstElementChild.prepend(category.parentElement)
+        }
+
+        showToast(getValueFromLanguage('UnarchiveCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        setCatToArchivedTrueFromData(id)
+        showToast(getValueFromLanguage('UnarchiveCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        popoverHide(category)
+    });
 }
 
 function deleteCategory(id) {
     const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     let parent = category.parentElement
-    repositories.categories.delete({id: id}).then(() => {
+
+    repositories.categories.delete(id).then(() => {
         parent.remove()
         removeCatFromData(id)
+        popoverDispose(category)
         showToast(getValueFromLanguage('DeleteCategorySuccess'), title, 'success')
+        if(isCurrentCategory(id))
+            window.location.replace(dashboard);
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('DeleteCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
-        popoverDispose(category)
+        popoverHide(category)
     });
-    if(isCurrentCategory(id))
-        window.location.replace(dashboard);
 }
 
 function duplicateCategory(id) {
-    let newId = Math.floor(Math.random() * 10000).toString();
 
+    const title = getValueFromLanguage('DuplicateCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
-    let copyElement = category.parentElement.cloneNode(true)
-    copyElement.classList.remove('active')
 
-    let firstChild = copyElement.firstElementChild
-    firstChild.href = firstChild.href.slice(0, firstChild.href.lastIndexOf('/')) + "/" + newId
-    firstChild.textContent += " " + getValueFromLanguage("CopyName")
+    repositories.categories.create(getCategoryById(id)).then((e) => {
 
-    let lastChild = copyElement.lastElementChild
-    lastChild.setAttribute("data-sidebar-id", newId)
-    popoverUpdateType(lastChild, "category-default-popover")
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultContent(newId)
-    new bootstrap.Popover(lastChild, newPopover)
+        let newId = e.data.id
 
-    document.getElementById("category-default").firstElementChild.prepend(copyElement)
-    popoverHide(category)
+        let copyElement = category.parentElement.cloneNode(true)
+        copyElement.classList.remove('active')
 
-    duplicateCatFromData(id, newId)
+        let firstChild = copyElement.firstElementChild
+        firstChild.href = firstChild.href.slice(0, firstChild.href.lastIndexOf('/')) + "/" + newId
+        firstChild.textContent += " " + getValueFromLanguage("CopyName")
 
-    // TODO : get newId from database
-    // TODO : store changes : duplicate category WHERE id={id} into id={newId}
+        let lastChild = copyElement.lastElementChild
+        lastChild.setAttribute("data-sidebar-id", newId)
+        popoverUpdateType(lastChild, "category-default-popover")
+        let newPopover = defaultPopover()
+        newPopover.content = getPopoverCategoryDefaultContent(newId)
+        new bootstrap.Popover(lastChild, newPopover)
+
+        document.getElementById("category-default").firstElementChild.prepend(copyElement)
+        duplicateCatFromData(id, newId)
+
+        showToast(getValueFromLanguage('DuplicateCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('DuplicateCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        popoverHide(category)
+    });
 }
 
 function leaveCategory(id) {
@@ -424,46 +451,64 @@ function appendSubCategory(catId, newId, name) {
 }
 
 function newCategory() {
-    let newId = Math.floor(Math.random() * 10000).toString()
-    let container = document.getElementById("category-default").firstElementChild
-    container.prepend(getSidebarOwnedCategory(newId))
+    const title = getValueFromLanguage('CreateCategoryTitle')
+    let cat = prepareCatForData()
 
-    let category = $('[data-sidebar-id="' + newId + '"]')[0]
-    let newPopover = defaultPopover()
-    newPopover.content = getPopoverCategoryDefaultContent(newId)
-    new bootstrap.Popover(category, newPopover)
+    repositories.categories.create(cat).then((e) => {
+        let newId = e.data.id
+        let container = document.getElementById("category-default").firstElementChild
+        container.prepend(getSidebarOwnedCategory(newId))
 
-    addCatToData(parseInt(newId))
+        let category = $('[data-sidebar-id="' + newId + '"]')[0]
+        let newPopover = defaultPopover()
+        newPopover.content = getPopoverCategoryDefaultContent(newId)
+        new bootstrap.Popover(category, newPopover)
 
-    /* TODO : add category : WHERE category={newId} */
+        cat.category_id = newId
+        cat.category.id = newId
+        addCatToData(cat)
+
+        showToast(getValueFromLanguage('CreateCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('CreateCategoryError').replace('%code%', e.code), title, 'danger')
+    });
 }
 
 function submitModalCategory() {
+
     let error = checkInputOnSubmit("#modal-input-name", "error-modal")
     let memberSelectsName = document.getElementsByName("modal-member-select")
     error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
     let hideChecked = document.getElementById("modal-checkbox-task").checked
-    let catId = $("#modal-body").attr("data-id")
-    storageUpdateCategory(catId, hideChecked)
-    toggleAllTasksVisibility()
+    let catId = parseInt($("#modal-body").attr("data-id"))
 
     if(error) {
-        showToast(`edit category`, 'edit', 'danger')
+        showToast(getValueFromLanguage('InvalidData').replace('%code%', e.code), title, 'danger')
         return;
     }
 
-    let newName = document.getElementById("modal-input-name").value
+    const title = getValueFromLanguage('UpdateCategoryTitle').replace('%id%', catId)
 
-    document.getElementById("title").innerHTML = newName
-    let category = $('[data-sidebar-id="' + catId + '"]')[0]
-    category.parentElement.firstElementChild.innerHTML = newName
+    repositories.categories.update(getCategoryById(catId)).then(() => {
 
-    updateCatFromData(parseInt(catId), newName)
+        let newName = document.getElementById("modal-input-name").value
 
-    showToast(`edit category`, 'edit', 'success')
-    bootstrap.Modal.getInstance($("#modal")).hide()
+        document.getElementById("title").innerHTML = newName
+        let category = $('[data-sidebar-id="' + catId + '"]')[0]
+        category.parentElement.firstElementChild.innerHTML = newName
 
-    /* TODO : update category with name={newName} WHERE id={catId} */
+        updateCatFromData(catId, newName)
+        storageUpdateCategory(catId, hideChecked)
+        toggleAllTasksVisibility()
+
+        showToast(getValueFromLanguage('UpdateCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('UpdateCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        bootstrap.Modal.getInstance($("#modal")).hide()
+    });
 }
 
 function submitModalSubCategory() {
@@ -542,27 +587,25 @@ function changePassword(newPassword) {
 
 function switchTheme(theme) {
     let userId = data.user.id;
-
-    setUserThemeFromData(theme)
-
-    repositories.user.get(userId).then(u => {
-        if(u.theme === theme){
-            return;
-        }
-        u.theme = theme;
-        repositories.user.update(u).then(u => {
-
-        }).catch(e => showToast(getValueFromLanguage('UpdateUserPasswordError').replace('%code%', e.code), userId, 'danger'))
-    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+    repositories.user.patch({
+        id: userId,
+        theme: theme
+    }).then(u => {
+        setUserThemeFromData(theme)
+    }).catch(e => showToast(getValueFromLanguage('UpdateUserThemeError').replace('%code%', e.code), userId, 'danger'))
 }
 
 function setUserLanguage(language) {
     let userId = data.user.id;
 
-    setLanguageThemeFromData(language)
-    // TODO : found => reload with new language
-
     repositories.user.get(userId).then(u => {
-        return u.language = language;
+        if(u.language === language){
+            return;
+        }
+        u.language = language;
+        repositories.user.update(u).then(u => {
+            setLanguageThemeFromData(language)
+            // TODO : found => reload with new language
+        }).catch(e => showToast(getValueFromLanguage('UpdateUserLanguageError').replace('%code%', e.code), userId, 'danger'))
     }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
 }

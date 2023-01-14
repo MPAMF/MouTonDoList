@@ -8,8 +8,5 @@ use Slim\Views\TwigMiddleware;
 
 // Order: Last in, first executed
 return function (App $app) {
-    //$app->add(AuthMiddleware::class);
-    $app->add(CsrfMiddleware::class);
     $app->add(TwigMiddleware::createFromContainer($app, containerKey: Twig::class));
-    //$app->add(SessionMiddleware::class);
 };

@@ -9,7 +9,7 @@ class Repository {
     }
 
     get(endpoint, id) {
-        return  new Promise((resolve, reject) => $.ajax({
+        return new Promise((resolve, reject) => $.ajax({
             url: `${endpoint}/${id}`,
             type: 'get',
             contentType: 'application/json; charset=utf-8',
@@ -19,10 +19,20 @@ class Repository {
     put(endpoint, id, data = {}) {
         return new Promise((resolve, reject) => $.ajax({
             url: `${endpoint}/${id}`,
-            type: 'put',
+            method: 'put',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: data
+            data: JSON.stringify(data)
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
+    }
+
+    patch(endpoint, id, data = {}) {
+        return new Promise((resolve, reject) => $.ajax({
+            url: `${endpoint}/${id}`,
+            method: 'patch',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(data)
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
@@ -32,7 +42,7 @@ class Repository {
             type: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: data
+            data: JSON.stringify(data)
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
@@ -42,7 +52,7 @@ class Repository {
             type: 'delete',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-        }).then(e => resolve(e.data)).catch(e => reject(e)))
+        }).then(e => resolve(e)).catch(e => reject(e)))
     }
 
 }
@@ -90,8 +100,8 @@ class CategoryRepository extends Repository {
         return super.put(this.endpoint, category.id, category)
     }
 
-    delete(category) {
-        return super.delete(this.endpoint, category.id)
+    delete(id) {
+        return super.delete(this.endpoint, id)
     }
 }
 
@@ -137,6 +147,10 @@ class UserRepository extends Repository {
 
     update(user) {
         return super.put(this.endpoint, user.id, user)
+    }
+
+    patch(user) {
+        return super.patch(this.endpoint, user.id, user)
     }
 
     // Not implemented

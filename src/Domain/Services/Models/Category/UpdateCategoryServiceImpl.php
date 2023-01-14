@@ -52,7 +52,7 @@ class UpdateCategoryServiceImpl extends Service implements UpdateCategoryService
         $data = $validator->getValues();
 
         // cannot change parent_category_id
-        $data->parent_category_id = $category->getParentCategoryId();
+        $data['parent_category_id'] = $category->getParentCategoryId();
         $category->fromValidator($data);
 
         // Useless to check if something was deleted
