@@ -200,14 +200,22 @@ function leaveCategory(id) {
 }
 
 function deleteSubcategory(id) {
-    let popoverElement = $('[data-subcategory-id="' + id + '"]')[0]
-    popoverDispose(popoverElement)
-    let container = $('[data-idSubCat="' + id + '"]')[0]
-    container.remove()
 
-    removeSubCatFromData(id)
+    const title = getValueFromLanguage('DeleteSubCategoryTitle').replace('%id%', id)
+    id = parseInt(id)
 
-    // TODO : remove subcategory from category WHERE catId={data.currentCategoryId} && subCatId={id}
+    repositories.categories.delete(id).then(() => {
+        let popoverElement = $('[data-subcategory-id="' + id + '"]')[0]
+        popoverDispose(popoverElement)
+        let container = $('[data-idSubCat="' + id + '"]')[0]
+        container.remove()
+        removeSubCatFromData(id)
+
+        showToast(getValueFromLanguage('DeleteSubCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('DeleteSubCategoryError').replace('%code%', e.code), title, 'danger')
+    });
 }
 
 function duplicateTask(idCat, idTask) {
@@ -418,25 +426,30 @@ function appendTask(catId, newId, assignedValue) {
 function newSubCategoryCheck(e, id) {
     e.preventDefault()
 
+    const title = getValueFromLanguage('CreateSubCategoryTitle')
+
     if(checkInputOnSubmit("#subCatNewName", "error-subCatNew")) {
-        showToast(`new subcat`, 'new', 'danger')
+        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
         return;
     }
 
     let name = document.getElementById("subCatNewName").value
-    let newId = Math.floor(Math.random() * 10000).toString()
-    appendSubCategory(id, newId, document.getElementById("subCatNewName").value)
-    toggleForm("subCatAdd", "subCatNew", null, "#subCatNewCreate")
-    clearElementValue("subCatNewName")
+    let subCat = prepareSubCatToData(id, name)
 
-    addSubCatToData(id, name, parseInt(newId))
+    repositories.categories.create(subCat).then((e) => {
+        let newId = e.id
+        appendSubCategory(id, newId, document.getElementById("subCatNewName").value)
+        toggleForm("subCatAdd", "subCatNew", null, "#subCatNewCreate")
+        clearElementValue("subCatNewName")
 
-    showToast(`new subcat`, 'new', 'success')
+        subCat.id = newId
+        addSubCatToData(subCat)
 
-    /* TODO : add subcategory to category :
-        WHERE subCat={newId}
-        from category WHERE catId={data.currentCategoryId}
-     */
+        showToast(getValueFromLanguage('CreateSubCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('CreateSubCategoryError').replace('%code%', e.code), title, 'danger')
+    });
 }
 
 function appendSubCategory(catId, newId, name) {
@@ -483,12 +496,12 @@ function submitModalCategory() {
     let hideChecked = document.getElementById("modal-checkbox-task").checked
     let catId = parseInt($("#modal-body").attr("data-id"))
 
+    const title = getValueFromLanguage('UpdateCategoryTitle').replace('%id%', catId)
+
     if(error) {
-        showToast(getValueFromLanguage('InvalidData').replace('%code%', e.code), title, 'danger')
+        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
         return;
     }
-
-    const title = getValueFromLanguage('UpdateCategoryTitle').replace('%id%', catId)
 
     repositories.categories.update(getCategoryById(catId)).then(() => {
 
@@ -512,30 +525,36 @@ function submitModalCategory() {
 }
 
 function submitModalSubCategory() {
-    let error = checkInputOnSubmit("#modal-input-name", "error-modal")
 
-    if(error) {
-        showToast(`edit subcategory`, 'edit', 'danger')
+    let subCatId = $("#modal-body").attr("data-id")
+    const title = getValueFromLanguage('UpdateSubCategoryTitle').replace('%id%', subCatId)
+
+    if(checkInputOnSubmit("#modal-input-name", "error-modal")) {
+        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
         return;
     }
 
-    let subCatId = $("#modal-body").attr("data-id")
-    let newName = document.getElementById("modal-input-name").value
+    let subCatIdx = getSubCategoryIdx(parseInt(subCatId))
+    let subCat = getSubCategoryByIdx(subCatIdx)
 
-    let container = $('[data-idsubcat="' + subCatId + '"]')[0]
-    let header = container.firstElementChild
-    let button = header.getElementsByTagName('button')[1]
-    button.innerHTML = newName
+    repositories.categories.update(subCat).then(() => {
 
-    updateSubCatFromData(parseInt(subCatId), newName)
+        let newName = document.getElementById("modal-input-name").value
 
-    showToast(`edit subcategory`, 'edit', 'success')
-    bootstrap.Modal.getInstance($("#modal")).hide()
+        let container = $('[data-idsubcat="' + subCatId + '"]')[0]
+        let header = container.firstElementChild
+        let button = header.getElementsByTagName('button')[1]
+        button.innerHTML = newName
 
-    /* TODO : update subCategory with name={newName}
-        WHERE subCatId={subCatId}
-        from category WHERE catId={data.currentCategoryId}
-    */
+        updateSubCatFromData(subCatId, newName)
+
+        showToast(getValueFromLanguage('UpdateSubCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('UpdateSubCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        bootstrap.Modal.getInstance($("#modal")).hide()
+    });
 }
 
 function submitModalTask() {

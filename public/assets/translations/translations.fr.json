@@ -219,7 +219,17 @@
   "CreateCategoryTitle": "Création de la catégorie",
   "UpdateCategorySuccess": "Catégorie mise à jour avec succès",
   "UpdateCategoryError": "Erreur lors de la mise à jour de la catégorie",
-  "UpdateCategoryTitle": "Mise à jour de la catégorie  %id%",
+  "UpdateCategoryTitle": "Mise à jour de la catégorie %id%",
+
+  "DeleteSubCategorySuccess": "Section supprimée avec succès",
+  "DeleteSubCategoryError": "Erreur lors de la suppression de la section",
+  "DeleteSubCategoryTitle": "Suppression de la section %id%",
+  "CreateSubCategorySuccess": "Section créée avec succès",
+  "CreateSubCategoryError": "Erreur lors de la création de la section",
+  "CreateSubCategoryTitle": "Création de la section",
+  "UpdateSubCategorySuccess": "Section mise à jour avec succès",
+  "UpdateSubCategoryError": "Erreur lors de la mise à jour de la section",
+  "UpdateSubCategoryTitle": "Mise à jour de la section %id%",
 
   "InvalidData": "Les données sont invalides"
 }
