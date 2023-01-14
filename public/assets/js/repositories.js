@@ -22,7 +22,7 @@ class Repository {
             method: 'put',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: data
+            data: JSON.stringify(data)
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
@@ -32,7 +32,7 @@ class Repository {
             method: 'patch',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: data
+            data: JSON.stringify(data)
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
@@ -42,7 +42,7 @@ class Repository {
             type: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: data
+            data: JSON.stringify(data)
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
