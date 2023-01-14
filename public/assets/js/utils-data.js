@@ -366,17 +366,21 @@ function getSubCatMaxPosition() {
     return max
 }
 
-function addSubCatToData(id, name, newId) {
-    let subcat = getSubCatTemplate()
+function prepareSubCatToData(id, name) {
+    let subCat = getSubCatTemplate()
 
-    subcat.archived = false
-    subcat.id = newId
-    subcat.name = name
-    subcat.owner_id = data.user.id
-    subcat.parent_category_id = id
-    subcat.position = getSubCatMaxPosition() + 1
+    subCat.archived = false
+    subCat.color = "#DAF7A6" // temp
+    subCat.name = name
+    subCat.owner_id = data.user.id
+    subCat.parent_category_id = id
+    subCat.position = getSubCatMaxPosition() + 1
 
-    getCurrentCategory().subCategories.push(subcat)
+    return subCat
+}
+
+function addSubCatToData(subCat) {
+    getCurrentCategory().subCategories.push(subCat)
 }
 
 function prepareCatForData() {
