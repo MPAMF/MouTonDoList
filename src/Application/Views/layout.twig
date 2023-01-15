@@ -11,6 +11,13 @@
         {% endblock %}
     </head>
     <body class="d-flex flex-column h-100">
+
+        <section id="loader-container">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </section>
+
         <header role="banner">
             {% block header %} {% endblock %}
         </header>
