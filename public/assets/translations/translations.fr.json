@@ -247,6 +247,9 @@
   "UpdateTaskError": "Erreur lors de la mise à jour de la tâche",
   "UpdateTaskTitle": "Mise à jour de la tâche %id%",
 
+  "UpdateUserPasswordSuccess": "Mot de passe mis à jour avec succès",
+  "UpdateUserPasswordError": "Erreur lors de la mise à jour du mot de passe",
+  "UpdateUserPasswordTitle": "Mise à jour du mot de passe",
   "UpdateUserThemeSuccess": "Thème mis à jour avec succès",
   "UpdateUserThemeError": "Erreur lors de la mise à jour du thème",
   "UpdateUserThemeTitle": "Mise à jour du thème",

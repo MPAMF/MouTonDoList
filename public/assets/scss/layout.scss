@@ -4,6 +4,11 @@
   --#{$variable-prefix}btn-padding-y: 0;
 }
 
+/* Toast */
+.toast-container {
+  --#{$variable-prefix}toast-zindex: 9999;
+}
+
 /* Navbar */
 .btn-abs-nav{
   --#{$variable-prefix}btn-hover-color: black;
