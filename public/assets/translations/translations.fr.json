@@ -247,5 +247,12 @@
   "UpdateTaskError": "Erreur lors de la mise à jour de la tâche",
   "UpdateTaskTitle": "Mise à jour de la tâche %id%",
 
+  "UpdateUserThemeSuccess": "Thème mis à jour avec succès",
+  "UpdateUserThemeError": "Erreur lors de la mise à jour du thème",
+  "UpdateUserThemeTitle": "Mise à jour du thème",
+  "UpdateUserLanguageSuccess": "Langue mis à jour avec succès",
+  "UpdateUserLanguageError": "Erreur lors de la mise à jour de la langue",
+  "UpdateUserLanguageTitle": "Mise à jour de la langue",
+
   "InvalidData": "Les données sont invalides"
 }
