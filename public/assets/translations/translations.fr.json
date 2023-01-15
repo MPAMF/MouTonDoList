@@ -254,5 +254,12 @@
   "UpdateUserLanguageError": "Erreur lors de la mise à jour de la langue",
   "UpdateUserLanguageTitle": "Mise à jour de la langue",
 
+  "DeleteCommentSuccess": "Commentaire supprimée avec succès",
+  "DeleteCommentError": "Erreur lors de la suppression du commentaire",
+  "DeleteCommentTitle": "Suppression du commentaire %id%",
+  "CreateCommentSuccess": "Commentaire créée avec succès",
+  "CreateCommentError": "Erreur lors de la création du commentaire",
+  "CreateCommentTitle": "Création du commentaire",
+
   "InvalidData": "Les données sont invalides"
 }
