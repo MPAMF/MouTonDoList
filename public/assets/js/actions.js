@@ -48,20 +48,33 @@ function hideLoader() {
 }
 
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
+
+    showLoader()
+
     moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
 
     // TODO : store changes : tasks positions
     showToast(`Moved taskId: ${taskId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
+
+    hideLoader()
 }
 
 function moveSubCategory(subCatId, oldIndex, newIndex) {
+
+    showLoader()
+
     moveSubCatFromData(subCatId, oldIndex, newIndex)
 
     // TODO : store changes : subcategories positions
     showToast(`Moved subcatid: ${subCatId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
+
+    hideLoader()
 }
 
 function archiveCategory(id) {
+
+    showLoader()
+
     const title = getValueFromLanguage('ArchiveCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
 
@@ -97,10 +110,13 @@ function archiveCategory(id) {
         showToast(getValueFromLanguage('ArchiveCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         popoverHide(category)
+        hideLoader()
     });
 }
 
 function unarchiveCategory(id) {
+
+    showLoader()
 
     const title = getValueFromLanguage('UnarchiveCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
@@ -137,10 +153,14 @@ function unarchiveCategory(id) {
         showToast(getValueFromLanguage('UnarchiveCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         popoverHide(category)
+        hideLoader()
     });
 }
 
 function deleteCategory(id) {
+
+    showLoader()
+
     const title = getValueFromLanguage('DeleteCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     let parent = category.parentElement
@@ -157,10 +177,13 @@ function deleteCategory(id) {
         showToast(getValueFromLanguage('DeleteCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         popoverHide(category)
+        hideLoader()
     });
 }
 
 function duplicateCategory(id) {
+
+    showLoader()
 
     const title = getValueFromLanguage('DuplicateCategoryTitle').replace('%id%', id)
     let category = $('[data-sidebar-id="' + id + '"]')[0]
@@ -192,10 +215,14 @@ function duplicateCategory(id) {
         showToast(getValueFromLanguage('DuplicateCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         popoverHide(category)
+        hideLoader()
     });
 }
 
 function leaveCategory(id) {
+
+    showLoader()
+
     let category = $('[data-sidebar-id="' + id + '"]')[0]
     category.parentElement.remove()
     popoverDispose(category)
@@ -204,10 +231,13 @@ function leaveCategory(id) {
 
     removeCatFromData(id)
 
+    hideLoader()
     // TODO : remove member from category.members WHERE id={id}
 }
 
 function deleteSubcategory(id) {
+
+    showLoader()
 
     const title = getValueFromLanguage('DeleteSubCategoryTitle').replace('%id%', id)
     id = parseInt(id)
@@ -223,10 +253,14 @@ function deleteSubcategory(id) {
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('DeleteSubCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
 function duplicateTask(idCat, idTask) {
+
+    showLoader()
 
     const title = getValueFromLanguage('DuplicateTaskTitle').replace('%id%', idTask)
 
@@ -275,10 +309,13 @@ function duplicateTask(idCat, idTask) {
         showToast(getValueFromLanguage('DuplicateTaskError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         popoverHide(popoverElement)
+        hideLoader()
     });
 }
 
 function deleteTask(idCat, idTask) {
+
+    showLoader()
 
     const title = getValueFromLanguage('DeleteTaskTitle').replace('%id%', idTask)
     idTask = parseInt(idTask)
@@ -295,6 +332,8 @@ function deleteTask(idCat, idTask) {
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('DeleteTaskError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
@@ -317,6 +356,8 @@ function toggleTaskCheck(element, idCat, idTask) {
 
 function checkTask(element, idCat, idTask) {
 
+    showLoader()
+
     const title = getValueFromLanguage('CheckTaskTitle').replace('%id%', idTask)
 
     let task = getTempTaskCheck(idCat, idTask, element.checked)
@@ -330,14 +371,22 @@ function checkTask(element, idCat, idTask) {
         console.log(e)
         element.checked = !element.checked
         showToast(getValueFromLanguage('CheckTaskError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
 function removeMember(catId, userId) {
+
+    showLoader()
+
     $('[data-member="' + catId + '-' + userId + '"]')[0].remove()
     removeMemberFromData(catId, userId)
 
     showToast(`remove member`, 'member', 'success')
+
+    hideLoader()
+
     /* TODO : remove member :
         WHERE id={userId}
         from category WHERE catId={catId}
@@ -345,13 +394,17 @@ function removeMember(catId, userId) {
 }
 
 function addMemberCheck(e) {
+
     e.preventDefault()
+    showLoader()
+
     let error = checkEmailOnSubmit("#memberNewName", "error-memberNew")
     let select = document.getElementById("modal-member-select-new")
     error = error || checkSelectValueOnSubmit(select, "error-memberStatusNew", authModalSelectMemberStatusValues)
 
     if(error) {
         showToast(`invitation`, 'invited', 'danger')
+        hideLoader()
         return;
     }
 
@@ -365,9 +418,13 @@ function addMemberCheck(e) {
      */
 
     showToast(`invitation`, 'invited', 'success')
+
+    hideLoader()
 }
 
 function removeComment(taskId, id) {
+
+    showLoader()
 
     const title = getValueFromLanguage('DeleteCommentTitle').replace('%id%', id)
     id = parseInt(id)
@@ -381,16 +438,21 @@ function removeComment(taskId, id) {
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('DeleteCommentError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
 function addCommentCheck(e) {
+
     e.preventDefault()
+    showLoader()
 
     const title = getValueFromLanguage('CreateCommentTitle')
 
     if(checkInputOnSubmit("#commentNewDescription", "error-commentNew")) {
         showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+        hideLoader()
         return;
     }
 
@@ -416,6 +478,8 @@ function addCommentCheck(e) {
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('CreateCommentError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
@@ -426,7 +490,9 @@ function prependComment(newId) {
 }
 
 function newTaskCheck(e, id) {
+
     e.preventDefault()
+    showLoader()
 
     const title = getValueFromLanguage('CreateTaskTitle')
 
@@ -438,6 +504,7 @@ function newTaskCheck(e, id) {
 
     if(error) {
         showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+        hideLoader()
         return;
     }
 
@@ -466,6 +533,8 @@ function newTaskCheck(e, id) {
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('CreateTaskError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
@@ -478,12 +547,15 @@ function appendTask(catId, newId, assignedValue) {
 }
 
 function newSubCategoryCheck(e, id) {
+
     e.preventDefault()
+    showLoader()
 
     const title = getValueFromLanguage('CreateSubCategoryTitle')
 
     if(checkInputOnSubmit("#subCatNewName", "error-subCatNew")) {
         showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+        hideLoader()
         return;
     }
 
@@ -503,6 +575,8 @@ function newSubCategoryCheck(e, id) {
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('CreateSubCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
@@ -518,6 +592,9 @@ function appendSubCategory(catId, newId, name) {
 }
 
 function newCategory() {
+
+    showLoader()
+
     const title = getValueFromLanguage('CreateCategoryTitle')
     let cat = prepareCatForData()
 
@@ -539,10 +616,14 @@ function newCategory() {
     }).catch(e => {
         console.log(e)
         showToast(getValueFromLanguage('CreateCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
     });
 }
 
 function submitModalCategory() {
+
+    showLoader()
 
     let error = checkInputOnSubmit("#modal-input-name", "error-modal")
     let memberSelectsName = document.getElementsByName("modal-member-select")
@@ -554,6 +635,7 @@ function submitModalCategory() {
 
     if(error) {
         showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+        hideLoader()
         return;
     }
 
@@ -576,16 +658,20 @@ function submitModalCategory() {
         showToast(getValueFromLanguage('UpdateCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         bootstrap.Modal.getInstance($("#modal")).hide()
+        hideLoader()
     });
 }
 
 function submitModalSubCategory() {
+
+    showLoader()
 
     let subCatId = parseInt($("#modal-body").attr("data-id"))
     const title = getValueFromLanguage('UpdateSubCategoryTitle').replace('%id%', subCatId)
 
     if(checkInputOnSubmit("#modal-input-name", "error-modal")) {
         showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+        hideLoader()
         return;
     }
 
@@ -607,10 +693,13 @@ function submitModalSubCategory() {
         showToast(getValueFromLanguage('UpdateSubCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         bootstrap.Modal.getInstance($("#modal")).hide()
+        hideLoader()
     });
 }
 
 function submitModalTask() {
+
+    showLoader()
 
     let taskId = parseInt($("#modal-body").attr("data-id"))
     let subCatId = parseInt($("#modal-body").attr("data-subcat"))
@@ -624,6 +713,7 @@ function submitModalTask() {
 
     if(error) {
         showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+        hideLoader()
         return;
     }
 
@@ -648,10 +738,14 @@ function submitModalTask() {
         showToast(getValueFromLanguage('UpdateTaskError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         bootstrap.Modal.getInstance($("#modal")).hide()
+        hideLoader()
     });
 }
 
 function changePassword(newPassword) {
+
+    showLoader()
+
     let userId = data.user.id;
     const title = getValueFromLanguage('UpdateUserPasswordTitle')
 
@@ -662,10 +756,15 @@ function changePassword(newPassword) {
         showToast(getValueFromLanguage('UpdateUserPasswordSuccess'), title, 'success')
     }).catch(e => {
         showToast(getValueFromLanguage('UpdateUserPasswordError').replace('%code%', e.code), title, 'danger')
-    })
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function switchTheme(theme) {
+
+    showLoader()
+
     let userId = data.user.id
     const title = getValueFromLanguage('UpdateUserThemeTitle')
 
@@ -678,10 +777,14 @@ function switchTheme(theme) {
         setTheme();
     }).catch(e => {
         showToast(getValueFromLanguage('UpdateUserThemeError').replace('%code%', e.code), title, 'danger')
-    })
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function setUserLanguage(language) {
+
+    showLoader()
 
     let userId = data.user.id
     const title = getValueFromLanguage('UpdateUserLanguageTitle')
@@ -695,5 +798,7 @@ function setUserLanguage(language) {
         location.reload()
     }).catch(e => {
         showToast(getValueFromLanguage('UpdateUserLanguageError').replace('%code%', e.code), title, 'danger')
-    })
+    }).then(() => {
+        hideLoader()
+    });
 }
