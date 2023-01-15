@@ -39,6 +39,14 @@ function showToast(text, title, type, duration = 3000) {
 
 }
 
+function showLoader() {
+    $("#loader-container").css("display", "block")
+}
+
+function hideLoader() {
+    $("#loader-container").css("display", "none")
+}
+
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
     moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
 
