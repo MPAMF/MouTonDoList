@@ -503,9 +503,10 @@ function submitModalCategory() {
         return;
     }
 
-    repositories.categories.update(getCategoryById(catId)).then(() => {
+    let newName = document.getElementById("modal-input-name").value
+    let cat = getTempCatUpdate(catId, newName)
 
-        let newName = document.getElementById("modal-input-name").value
+    repositories.categories.update(cat).then(() => {
 
         document.getElementById("title").innerHTML = newName
         let category = $('[data-sidebar-id="' + catId + '"]')[0]
@@ -526,7 +527,7 @@ function submitModalCategory() {
 
 function submitModalSubCategory() {
 
-    let subCatId = $("#modal-body").attr("data-id")
+    let subCatId = parseInt($("#modal-body").attr("data-id"))
     const title = getValueFromLanguage('UpdateSubCategoryTitle').replace('%id%', subCatId)
 
     if(checkInputOnSubmit("#modal-input-name", "error-modal")) {
@@ -534,12 +535,10 @@ function submitModalSubCategory() {
         return;
     }
 
-    let subCatIdx = getSubCategoryIdx(parseInt(subCatId))
-    let subCat = getSubCategoryByIdx(subCatIdx)
+    let newName = document.getElementById("modal-input-name").value
+    let subCat = getTempSubCatUpdate(subCatId, newName)
 
     repositories.categories.update(subCat).then(() => {
-
-        let newName = document.getElementById("modal-input-name").value
 
         let container = $('[data-idsubcat="' + subCatId + '"]')[0]
         let header = container.firstElementChild
@@ -558,6 +557,11 @@ function submitModalSubCategory() {
 }
 
 function submitModalTask() {
+
+    let taskId = parseInt($("#modal-body").attr("data-id"))
+    let subCatId = parseInt($("#modal-body").attr("data-subcat"))
+    const title = getValueFromLanguage('UpdateTaskTitle').replace('%id%', taskId)
+
     let error = checkInputOnSubmit("#modal-input-name", "error-modal")
     let select = document.getElementById("modal-assign-member")
     let members = getCurrentCategoryMembersAsArray()
@@ -565,32 +569,32 @@ function submitModalTask() {
     error = error || checkSelectValueOnSubmit(select, "error-modal-members", members)
 
     if(error) {
-        showToast(`edit task`, 'edit', 'danger')
+        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
         return;
     }
 
-    let taskId = $("#modal-body").attr("data-id")
-    let subCatId = $("#modal-body").attr("data-subcat")
     let newName = document.getElementById("modal-input-name").value
     let newDesc = document.getElementById("modal-input-description").value
     let newAssigned = parseInt(select.value)
 
-    let task = document.getElementById("taskViewInfo-" + subCatId + "-" + taskId)
-    task.firstElementChild.innerHTML = newName
-    task.lastElementChild.innerHTML = newDesc
-    let assigned = task.getElementsByTagName('small')[0]
-    assigned.innerHTML = newAssigned === 0 ? "" : getMemberUsernameById(newAssigned)
+    let task = getTempTaskUpdate(subCatId, taskId, newName, newDesc, newAssigned)
+    repositories.tasks.update(task).then(() => {
 
-    updateTaskFromData(parseInt(subCatId), parseInt(taskId), newName, newDesc, newAssigned)
+        let task = document.getElementById("taskViewInfo-" + subCatId + "-" + taskId)
+        task.firstElementChild.innerHTML = newName
+        task.lastElementChild.innerHTML = newDesc
+        let assigned = task.getElementsByTagName('small')[0]
+        assigned.innerHTML = newAssigned === 0 ? "" : getMemberUsernameById(newAssigned)
 
-    showToast(`edit task`, 'edit', 'success')
-    bootstrap.Modal.getInstance($("#modal")).hide()
+        updateTaskFromData(subCatId, taskId, newName, newDesc, newAssigned)
 
-    /* TODO : update task
-        WITH name={newName} && desc={newDesc} && assigned={newAssigned}
-        WHERE taskId={taskId}
-        from category WHERE catId={data.currentCategoryId}
-    */
+        showToast(getValueFromLanguage('UpdateTaskSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('UpdateTaskError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        bootstrap.Modal.getInstance($("#modal")).hide()
+    });
 }
 
 function changePassword(newPassword) {

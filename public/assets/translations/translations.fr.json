@@ -231,5 +231,9 @@
   "UpdateSubCategoryError": "Erreur lors de la mise à jour de la section",
   "UpdateSubCategoryTitle": "Mise à jour de la section %id%",
 
+  "UpdateTaskSuccess": "Tâche mise à jour avec succès",
+  "UpdateTaskError": "Erreur lors de la mise à jour de la tâche",
+  "UpdateTaskTitle": "Mise à jour de la tâche %id%",
+
   "InvalidData": "Les données sont invalides"
 }

@@ -417,6 +417,16 @@ function getMember(userId) {
     return cat.members[idx]
 }
 
+function getTempTaskUpdate(subCatId, taskId, newName, newDesc, newAssigned) {
+    let origin = getTask(subCatId, taskId)
+    let task = {...origin}
+    task.name = newName
+    task.description = newDesc
+    task.assigned_id = newAssigned
+    task.assigned = newAssigned === 0 ? null : getMember(newAssigned)
+    return task
+}
+
 function updateTaskFromData(subCatId, taskId, newName, newDesc, newAssigned) {
     let task = getTask(subCatId, taskId)
     task.name = newName
@@ -425,10 +435,25 @@ function updateTaskFromData(subCatId, taskId, newName, newDesc, newAssigned) {
     task.assigned = newAssigned === 0 ? null : getMember(newAssigned)
 }
 
+function getTempSubCatUpdate(subCatId, newName) {
+    let idx = getSubCategoryIdx(subCatId)
+    let origin = getSubCategoryByIdx(idx)
+    let subcat = {...origin}
+    subcat.name = newName
+    return subcat
+}
+
 function updateSubCatFromData(subCatId, newName) {
     let idx = getSubCategoryIdx(subCatId)
     let subcat = getSubCategoryByIdx(idx)
     subcat.name = newName
+}
+
+function getTempCatUpdate(catId, newName) {
+    let origin = getCategoryById(catId)
+    let cat = {...origin}
+    cat.name = newName
+    return cat
 }
 
 function updateCatFromData(catId, newName) {
