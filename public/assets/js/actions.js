@@ -360,38 +360,55 @@ function addMemberCheck(e) {
 }
 
 function removeComment(taskId, id) {
-    $('[data-comment="' + id + '"]')[0].remove()
-    let subCatId = $("#modal-body").attr("data-subCat")
-    removeCommentFromData(parseInt(subCatId), taskId, id)
-    showToast(`remove member`, 'member', 'success')
-    /* TODO : remove comment from task :
-        WHERE commentId={id} && taskId={taskId}
-        from category WHERE catId={data.currentCategoryId}
-     */
+
+    const title = getValueFromLanguage('DeleteCommentTitle').replace('%id%', id)
+    id = parseInt(id)
+
+    repositories.taskComments.delete(id).then(() => {
+        $('[data-comment="' + id + '"]')[0].remove()
+        let subCatId = $("#modal-body").attr("data-subCat")
+        removeCommentFromData(parseInt(subCatId), taskId, id)
+
+        showToast(getValueFromLanguage('DeleteCommentSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('DeleteCommentError').replace('%code%', e.code), title, 'danger')
+    });
 }
 
 function addCommentCheck(e) {
     e.preventDefault()
-    let error = checkInputOnSubmit("#commentNewDescription", "error-commentNew")
-    if(error) {
-        showToast(`new comment`, 'comment', 'danger')
+
+    const title = getValueFromLanguage('CreateCommentTitle')
+
+    if(checkInputOnSubmit("#commentNewDescription", "error-commentNew")) {
+        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
         return;
     }
 
     let content = document.getElementById("commentNewDescription").value
-    let subCatId = $("#modal-body").attr("data-subCat")
-    let taskId = $("#modal-body").attr("data-id")
-    let newId = Math.floor(Math.random() * 10000).toString()
-    prependComment(newId)
-    toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
-    clearElementValue("commentNewDescription")
-    addCommentToData(parseInt(subCatId), parseInt(taskId), newId, content)
-    showToast(`new comment`, 'comment', 'success')
+    let subCatId = parseInt($("#modal-body").attr("data-subCat"))
+    let taskId = parseInt($("#modal-body").attr("data-id"))
 
-    /* TODO : add comment to task :
-        WHERE commentId={newId} && taskId={taskId}
-        from category WHERE catId={data.currentCategoryId}
-     */
+    let comment = addCommentToData(subCatId, taskId, content)
+    comment.assigned_id = 0
+
+    repositories.taskComments.create(comment).then((e) => {
+
+        let newId = e.id
+        prependComment(newId)
+        toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
+        clearElementValue("commentNewDescription")
+
+        comment.id = newId
+        let task = getTask(subCatId, taskId)
+        task.comments.push(comment)
+
+        showToast(getValueFromLanguage('CreateCommentSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('CreateCommentError').replace('%code%', e.code), title, 'danger')
+    });
 }
 
 function prependComment(newId) {
@@ -422,6 +439,8 @@ function newTaskCheck(e, id) {
     let desc = document.getElementById("taskNewDescription-" + id).value
 
     let task = tempAddTaskToData(assignedId, id, name, desc)
+    task.due_date = "2005-12-30 01:02:03"
+
     repositories.tasks.create(task).then((e) => {
         let newId = e.id
 
