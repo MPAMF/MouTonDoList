@@ -626,13 +626,16 @@ function submitModalTask() {
 
 function changePassword(newPassword) {
     let userId = data.user.id;
+    const title = getValueFromLanguage('UpdateUserPasswordTitle')
 
-    repositories.user.get(userId).then(u => {
-        u.password = newPassword;
-        repositories.user.update(u).then(u => {
-            showToast(getValueFromLanguage('UpdateUserPasswordSuccess'), userId, 'success')
-        }).catch(e => showToast(getValueFromLanguage('UpdateUserPasswordError').replace('%code%', e.code), userId, 'danger'))
-    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+    repositories.user.patch({
+        id: userId,
+        password: newPassword
+    }).then(() => {
+        showToast(getValueFromLanguage('UpdateUserPasswordSuccess'), title, 'success')
+    }).catch(e => {
+        showToast(getValueFromLanguage('UpdateUserPasswordError').replace('%code%', e.code), title, 'danger')
+    })
 }
 
 function switchTheme(theme) {
