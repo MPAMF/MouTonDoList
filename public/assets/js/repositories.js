@@ -124,8 +124,8 @@ class CommentRepository extends Repository {
         return super.put(this.endpoint, comment.id, comment)
     }
 
-    delete(comment) {
-        return super.delete(this.endpoint, comment.id)
+    delete(id) {
+        return super.delete(this.endpoint, id)
     }
 }
 

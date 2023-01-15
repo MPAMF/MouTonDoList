@@ -321,17 +321,15 @@ function removeCommentFromData(subCatId, taskId, id) {
     task.comments.splice(idx, 1)
 }
 
-function addCommentToData(subCatId, taskId, newId, content) {
+function addCommentToData(subCatId, taskId, content) {
     let comment = getCommentTemplate()
     comment.author = data.user
     comment.author_id = data.user.id
     comment.content = content
     comment.date = Date()
-    comment.id = newId
     comment.task = null
     comment.task_id = taskId
-    let task = getTask(subCatId, taskId)
-    task.comments.push(comment)
+    return comment
 }
 
 function getTaskMaxPosition(subCatId) {
