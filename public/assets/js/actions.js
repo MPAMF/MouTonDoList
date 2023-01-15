@@ -2,7 +2,8 @@ const repositories = {
     categories: new CategoryRepository(),
     tasks: new TaskRepository(),
     taskComments: new CommentRepository(),
-    user: new UserRepository()
+    user: new UserRepository(),
+    invitations: new InvitationRepository()
 }
 
 // Maybe move to another file?
@@ -223,16 +224,25 @@ function leaveCategory(id) {
 
     showLoader()
 
-    let category = $('[data-sidebar-id="' + id + '"]')[0]
-    category.parentElement.remove()
-    popoverDispose(category)
-    if(isCurrentCategory(id))
-        window.location.replace("http://localhost:8090/dashboard");
+    const title = getValueFromLanguage('LeaveMemberCatCommentTitle').replace('%id%', id)
 
-    removeCatFromData(id)
+    id = parseInt(id)
+    let userId = data.user.id
 
-    hideLoader()
-    // TODO : remove member from category.members WHERE id={id}
+    repositories.invitations.delete(userId).then(() => {
+        let category = $('[data-sidebar-id="' + id + '"]')[0]
+        category.parentElement.remove()
+        popoverDispose(category)
+        if(isCurrentCategory(id))
+            window.location.replace(dashboard);
+        removeCatFromData(id)
+        showToast(getValueFromLanguage('LeaveMemberCatSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('LeaveMemberCatCommentError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function deleteSubcategory(id) {
@@ -380,17 +390,21 @@ function removeMember(catId, userId) {
 
     showLoader()
 
-    $('[data-member="' + catId + '-' + userId + '"]')[0].remove()
-    removeMemberFromData(catId, userId)
+    const title = getValueFromLanguage('RemoveMemberCatCommentTitle').replace('%id%', userId)
 
-    showToast(`remove member`, 'member', 'success')
+    catId = parseInt(catId)
+    userId = parseInt(userId)
 
-    hideLoader()
-
-    /* TODO : remove member :
-        WHERE id={userId}
-        from category WHERE catId={catId}
-     */
+    repositories.invitations.delete(userId).then(() => {
+        $('[data-member="' + catId + '-' + userId + '"]')[0].remove()
+        removeMemberFromData(catId, userId)
+        showToast(getValueFromLanguage('RemoveMemberCatSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('RemoveMemberCatCommentError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function addMemberCheck(e) {
@@ -398,28 +412,29 @@ function addMemberCheck(e) {
     e.preventDefault()
     showLoader()
 
+    const title = getValueFromLanguage('AddMemberCatCommentTitle')
+
     let error = checkEmailOnSubmit("#memberNewName", "error-memberNew")
     let select = document.getElementById("modal-member-select-new")
     error = error || checkSelectValueOnSubmit(select, "error-memberStatusNew", authModalSelectMemberStatusValues)
 
     if(error) {
-        showToast(`invitation`, 'invited', 'danger')
+        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
         hideLoader()
         return;
     }
 
     let email = document.getElementById("memberNewName")
-    let selectedValue = select.value //authModalSelectMemberStatusValues
+    let selectedValue = select.value
 
-    // not instantly added to list since the user has to accept the invitation
-    /* TODO : send invitation to member :
-        WHERE userEmail={email.value} && userPermission={selectedValue}
-        from category WHERE catId={data.currentCategoryId}
-     */
-
-    showToast(`invitation`, 'invited', 'success')
-
-    hideLoader()
+    repositories.invitations.create(email, selectedValue).then(() => {
+        showToast(getValueFromLanguage('AddMemberCatSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('AddMemberCatCommentError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function removeComment(taskId, id) {

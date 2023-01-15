@@ -264,5 +264,15 @@
   "CreateCommentError": "Erreur lors de la création du commentaire",
   "CreateCommentTitle": "Création du commentaire",
 
+  "LeaveMemberCatSuccess": "Retiré avec succès",
+  "LeaveMemberCatCommentError": "Erreur lors de votre retrait",
+  "LeaveMemberCatCommentTitle": "Retrait du membre de la catégorie %id%",
+  "RemoveMemberCatSuccess": "Membre retiré avec succès",
+  "RemoveMemberCatCommentError": "Erreur lors du retrait du membre",
+  "RemoveMemberCatCommentTitle": "Retrait du membre de la catégorie %id%",
+  "AddMemberCatSuccess": "Membre invité avec succès",
+  "AddMemberCatCommentError": "Erreur lors de l'invitation du membre",
+  "AddMemberCatCommentTitle": "Invitation du membre à la catégorie",
+
   "InvalidData": "Les données sont invalides"
 }
