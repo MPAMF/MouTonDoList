@@ -636,26 +636,34 @@ function changePassword(newPassword) {
 }
 
 function switchTheme(theme) {
-    let userId = data.user.id;
+    let userId = data.user.id
+    const title = getValueFromLanguage('UpdateUserThemeTitle')
+
     repositories.user.patch({
         id: userId,
         theme: theme
-    }).then(u => {
+    }).then(() => {
         setUserThemeFromData(theme)
-    }).catch(e => showToast(getValueFromLanguage('UpdateUserThemeError').replace('%code%', e.code), userId, 'danger'))
+        showToast(getValueFromLanguage('UpdateTaskSuccess'), title, 'success')
+        setTheme();
+    }).catch(e => {
+        showToast(getValueFromLanguage('UpdateUserThemeError').replace('%code%', e.code), title, 'danger')
+    })
 }
 
 function setUserLanguage(language) {
-    let userId = data.user.id;
 
-    repositories.user.get(userId).then(u => {
-        if(u.language === language){
-            return;
-        }
-        u.language = language;
-        repositories.user.update(u).then(u => {
-            setLanguageThemeFromData(language)
-            // TODO : found => reload with new language
-        }).catch(e => showToast(getValueFromLanguage('UpdateUserLanguageError').replace('%code%', e.code), userId, 'danger'))
-    }).catch(e => showToast(getValueFromLanguage('GetUserError').replace('%code%', e.code), userId, 'danger'))
+    let userId = data.user.id
+    const title = getValueFromLanguage('UpdateUserLanguageTitle')
+
+    repositories.user.patch({
+        id: userId,
+        language: language
+    }).then(() => {
+        setLanguageThemeFromData(language)
+        showToast(getValueFromLanguage('UpdateUserLanguageSuccess'), title, 'success')
+        location.reload()
+    }).catch(e => {
+        showToast(getValueFromLanguage('UpdateUserLanguageError').replace('%code%', e.code), title, 'danger')
+    })
 }
