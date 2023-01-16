@@ -275,7 +275,7 @@ function deleteTask(idCat, idTask) {
     const title = getValueFromLanguage('DeleteTaskTitle').replace('%id%', idTask)
     idTask = parseInt(idTask)
 
-    repositories.categories.delete(idTask).then(() => {
+    repositories.tasks.delete({id: idTask}).then(() => {
         let popoverElement = $('[data-task-id="' + idCat + '-' + idTask + '"]')[0]
         popoverDispose(popoverElement)
         let container = $('[data-task="' + idCat + '-' + idTask + '"]')[0]
