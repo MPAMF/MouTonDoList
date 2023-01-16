@@ -252,10 +252,37 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
 
 
 function moveSubCatFromData(subCatId, oldIndex, newIndex) {
-    let a = getSubCategoryByIdx(oldIndex)
-    a.position = newIndex
-    let b = getSubCategoryByIdx(newIndex)
-    b.position = oldIndex
+    let cat = getCurrentCategory()
+
+    console.log(cat.subCategories)
+
+    if(oldIndex < newIndex)
+    {
+        console.log(1)
+        cat.subCategories.forEach(function (subCat) {
+            console.log(subCat)
+            if(subCat.position < oldIndex || subCat.position > newIndex) return
+            if(subCat.position === oldIndex)
+                subCat.position = newIndex
+            else
+                subCat.position--
+            console.log(subCat.position)
+        })
+    }
+    else
+    {
+        console.log(2)
+        cat.subCategories.forEach(function (subCat) {
+            console.log(subCat)
+            if(subCat.position > oldIndex || subCat.position < newIndex) return
+            if(subCat.position === oldIndex)
+                subCat.position = newIndex
+            else
+                subCat.position++
+            console.log(subCat.position)
+        })
+    }
+    console.log(cat.subCategories)
 }
 
 function setCatToArchivedTrueFromData(catId) {

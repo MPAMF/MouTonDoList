@@ -52,24 +52,48 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
 
     showLoader()
 
-    moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
+    const title = getValueFromLanguage('MoveTaskTitle').replace('%id%', taskId)
 
-    // TODO : store changes : tasks positions
-    showToast(`Moved taskId: ${taskId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
+    let subCat = getSubCategoryByIdx(oldIndex)
+    subCat.position = newIndex
 
-    hideLoader()
+    repositories.tasks.update(subCat).then(() => {
+
+        moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
+
+        showToast(getValueFromLanguage('MoveTaskSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('MoveTaskError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function moveSubCategory(subCatId, oldIndex, newIndex) {
+    if(oldIndex === newIndex) return
 
     showLoader()
 
+    const title = getValueFromLanguage('MoveSubCategoryTitle').replace('%id%', subCatId)
+
+    let subCat = {...getSubCategoryByIdx(oldIndex)}
+    subCat.position = newIndex
+
     moveSubCatFromData(subCatId, oldIndex, newIndex)
+    return
 
-    // TODO : store changes : subcategories positions
-    showToast(`Moved subcatid: ${subCatId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
+    repositories.categories.update(subCat).then(() => {
 
-    hideLoader()
+        moveSubCatFromData(subCatId, oldIndex, newIndex)
+
+        showToast(getValueFromLanguage('MoveSubCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('MoveSubCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function archiveCategory(id) {
