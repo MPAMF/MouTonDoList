@@ -269,14 +269,15 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
 
     public function fromValidator(array|object $data): void
     {
+        $data = (object)$data;
         $this->category_id = intval($data->category_id);
         $this->name = $data->name;
         $this->description = $data->description;
         $this->due_date = DateTime::createFromFormat('Y-m-d H:i:s', $data->due_date);
         $this->checked = boolval($data->checked);
         $this->position = intval($data->position);
-        $this->last_editor_id = isset($data->last_editor_id) ? intval($data->last_editor_id) : null;
-        $this->assigned_id = isset($data->assigned_id) ? intval($data->assigned_id) : null;
+        $this->last_editor_id = !empty($data->last_editor_id) ? intval($data->last_editor_id) : null;
+        $this->assigned_id = !empty($data->assigned_id) ? intval($data->assigned_id) : null;
     }
 
     /**
