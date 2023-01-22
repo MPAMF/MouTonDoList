@@ -52,8 +52,8 @@ class UpdateTaskCommentServiceImpl extends Service implements UpdateTaskCommentS
         }
 
         // Disable update of author_id and task_id
-        $data->author_id = $taskComment->getAuthorId();
-        $data->task_id = $taskComment->getTaskId();
+        $data['author_id'] = $taskComment->getAuthorId();
+        $data['task_id'] = $taskComment->getTaskId();
         //
         $taskComment->fromValidator($data);
 

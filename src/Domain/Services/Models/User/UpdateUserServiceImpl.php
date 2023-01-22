@@ -40,10 +40,15 @@ class UpdateUserServiceImpl extends Service implements UpdateUserService
         ));
 
         $rules = $user->getValidatorRules();
-        $patch = $request == 'PATCH';
+        $patch = $request->getMethod() == 'PATCH';
 
         // Set the rules to optional
         if ($patch) {
+
+            // ignore empty patch
+            if(empty($request->getFormData()))
+                return $user;
+
             $rules = collect($rules)->map(function ($value) {
                 return Validator::optional($value);
             })->toArray();
