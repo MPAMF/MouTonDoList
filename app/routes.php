@@ -52,7 +52,7 @@ return function (App $app) {
 
         $group->get('', function (Request $request, Response $response) {
             return $this->get(Twig::class)->render($response, 'home/content.twig');
-        })->add(UserDisconnectedMiddleware::class)->setName('/home');
+        })->add(UserDisconnectedMiddleware::class)->setName('home');
 
         $group->group('account', function (Group $group) {
             $group->get('/login', DisplayLoginAction::class)->setName('account.login');
