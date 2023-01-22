@@ -52,12 +52,27 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
 
     showLoader()
 
-    moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
+    const title = getValueFromLanguage('MoveTaskTitle').replace('%id%', taskId)
+    let result = moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
 
-    // TODO : store changes : tasks positions
-    showToast(`Moved taskId: ${taskId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
+    let oldSub = getSubInCurrentById(oldSubCategoryId)
+    let newSub = getSubInCurrentById(newSubCategoryId)
+    let task = newSub.tasks[newIndex]
 
-    hideLoader()
+    repositories.tasks.update(task).then(() => {
+        if(result.result !== undefined) {
+            oldSub = result.result
+        } else {
+            oldSub = result.oldSub
+            newSub = result.newSub
+        }
+        showToast(getValueFromLanguage('MoveTaskSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('MoveTaskError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function moveSubCategory(subCatId, oldIndex, newIndex) {
