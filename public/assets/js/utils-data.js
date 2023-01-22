@@ -234,8 +234,8 @@ function duplicateTaskFromData(idSubCat, idTask, newTaskName) {
     return newTask
 }
 
-function sortTasksByPosition(tasks) {
-    tasks.sort(function(a, b) {
+function sortByPosition(elements) {
+    elements.sort(function(a, b) {
         return parseInt(a.position) - parseInt(b.position);
     })
 }
@@ -243,7 +243,7 @@ function sortTasksByPosition(tasks) {
 function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
 
     let oldSub = getSubInCurrentById(oldSubCategoryId)
-    sortTasksByPosition(oldSub.tasks)
+    sortByPosition(oldSub.tasks)
 
     if(oldSubCategoryId === newSubCategoryId) {
         let result = structuredClone(oldSub)
@@ -270,13 +270,13 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
                 }
             })
         }
-        sortTasksByPosition(result.tasks)
+        sortByPosition(result.tasks)
         return {result}
     }
 
     let element = structuredClone(getTask(oldSubCategoryId, taskId))
     let newSub = getSubInCurrentById(newSubCategoryId)
-    sortTasksByPosition(newSub.tasks)
+    sortByPosition(newSub.tasks)
 
     let i = 0
     newSub.tasks.forEach(function(task) {
@@ -296,44 +296,44 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
     })
     oldSub.tasks.splice(oldIndex, 1)
 
-    sortTasksByPosition(oldSub.tasks)
-    sortTasksByPosition(newSub.tasks)
+    sortByPosition(oldSub.tasks)
+    sortByPosition(newSub.tasks)
     return {oldSub, newSub}
 }
 
 
 function moveSubCatFromData(subCatId, oldIndex, newIndex) {
+
     let cat = getCurrentCategory()
+    sortByPosition(cat.subCategories)
 
-    console.log(cat.subCategories)
-
-    if(oldIndex < newIndex)
-    {
-        console.log(1)
-        cat.subCategories.forEach(function (subCat) {
-            console.log(subCat)
-            if(subCat.position < oldIndex || subCat.position > newIndex) return
-            if(subCat.position === oldIndex)
-                subCat.position = newIndex
-            else
-                subCat.position--
-            console.log(subCat.position)
+    let result = structuredClone(cat)
+    let i = -1
+    if(oldIndex < newIndex) {
+        result.subCategories.forEach(function (subcat){
+            i++
+            if(i < oldIndex || newIndex < i) return // outside => ignore
+            else if(i === oldIndex) { // element to move
+                subcat.position = result.subCategories[newIndex].position
+            } else if(i <= newIndex) { // shift to the left
+                subcat.position--
+            }
+        })
+    } else {
+        let temp = result.subCategories[newIndex].position
+        result.subCategories.forEach(function (subcat){
+            i++
+            if(i < newIndex || oldIndex < i) return // outside => ignore
+            else if(i === oldIndex) { // element to move
+                subcat.position = temp
+            } else if(newIndex <= i) { // shift to the right
+                subcat.position++
+            }
         })
     }
-    else
-    {
-        console.log(2)
-        cat.subCategories.forEach(function (subCat) {
-            console.log(subCat)
-            if(subCat.position > oldIndex || subCat.position < newIndex) return
-            if(subCat.position === oldIndex)
-                subCat.position = newIndex
-            else
-                subCat.position++
-            console.log(subCat.position)
-        })
-    }
-    console.log(cat.subCategories)
+
+    sortByPosition(result.subCategories)
+    return result
 }
 
 function setCatToArchivedTrueFromData(catId) {

@@ -49,6 +49,7 @@ function hideLoader() {
 }
 
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
+    if(oldIndex === newIndex && oldSubCategoryId === newSubCategoryId) return
 
     showLoader()
 
@@ -82,16 +83,14 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
 
     const title = getValueFromLanguage('MoveSubCategoryTitle').replace('%id%', subCatId)
 
-    let subCat = {...getSubCategoryByIdx(oldIndex)}
-    subCat.position = newIndex
+    let result = moveSubCatFromData(subCatId, oldIndex, newIndex)
+    let subCat = result.subCategories[newIndex]
 
-    moveSubCatFromData(subCatId, oldIndex, newIndex)
-    return
+    /* let subCat = {...getSubCategoryByIdx(oldIndex)}
+    subCat.position = newIndex */
 
     repositories.categories.update(subCat).then(() => {
-
-        moveSubCatFromData(subCatId, oldIndex, newIndex)
-
+        data.categories[data.currentCategoryIdx].category = subCat
         showToast(getValueFromLanguage('MoveSubCategorySuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
