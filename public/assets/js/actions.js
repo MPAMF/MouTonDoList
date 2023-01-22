@@ -49,27 +49,55 @@ function hideLoader() {
 }
 
 function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
+    if(oldIndex === newIndex && oldSubCategoryId === newSubCategoryId) return
 
     showLoader()
 
-    moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
+    const title = getValueFromLanguage('MoveTaskTitle').replace('%id%', taskId)
+    let result = moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex)
 
-    // TODO : store changes : tasks positions
-    showToast(`Moved taskId: ${taskId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
+    let oldSub = getSubInCurrentById(oldSubCategoryId)
+    let newSub = getSubInCurrentById(newSubCategoryId)
+    let task = newSub.tasks[newIndex]
 
-    hideLoader()
+    repositories.tasks.update(task).then(() => {
+        if(result.result !== undefined) {
+            oldSub = result.result
+        } else {
+            oldSub = result.oldSub
+            newSub = result.newSub
+        }
+        showToast(getValueFromLanguage('MoveTaskSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('MoveTaskError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function moveSubCategory(subCatId, oldIndex, newIndex) {
+    if(oldIndex === newIndex) return
 
     showLoader()
 
-    moveSubCatFromData(subCatId, oldIndex, newIndex)
+    const title = getValueFromLanguage('MoveSubCategoryTitle').replace('%id%', subCatId)
 
-    // TODO : store changes : subcategories positions
-    showToast(`Moved subcatid: ${subCatId} from ${oldIndex} to ${newIndex}`, 'Moved', 'success')
+    let result = moveSubCatFromData(subCatId, oldIndex, newIndex)
+    let subCat = result.subCategories[newIndex]
 
-    hideLoader()
+    /* let subCat = {...getSubCategoryByIdx(oldIndex)}
+    subCat.position = newIndex */
+
+    repositories.categories.update(subCat).then(() => {
+        data.categories[data.currentCategoryIdx].category = subCat
+        showToast(getValueFromLanguage('MoveSubCategorySuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('MoveSubCategoryError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
 }
 
 function archiveCategory(id) {

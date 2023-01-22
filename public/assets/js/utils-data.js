@@ -234,28 +234,106 @@ function duplicateTaskFromData(idSubCat, idTask, newTaskName) {
     return newTask
 }
 
-function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
-    if(oldSubCategoryId === newSubCategoryId)
-    {
-        if(oldIndex < newIndex)
-            newIndex++
-        else if(newIndex < oldIndex)
-            oldIndex++
-    }
-    let task = {...getTask(oldSubCategoryId, taskId)}
-    let subCatIdx = getSubCategoryIdx(newSubCategoryId)
-    let subCat = getSubCategoryByIdx(subCatIdx)
-    subCat.tasks.splice(newIndex, 0, task)
+function sortByPosition(elements) {
+    elements.sort(function(a, b) {
+        return parseInt(a.position) - parseInt(b.position);
+    })
+}
 
-    removeTaskFromData(oldSubCategoryId, oldIndex)
+function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
+
+    let oldSub = getSubInCurrentById(oldSubCategoryId)
+    sortByPosition(oldSub.tasks)
+
+    if(oldSubCategoryId === newSubCategoryId) {
+        let result = structuredClone(oldSub)
+        let i = -1
+        if(oldIndex < newIndex) {
+            result.tasks.forEach(function (task){
+                i++
+                if(i < oldIndex || newIndex < i) return // outside => ignore
+                else if(i === oldIndex) { // element to move
+                    task.position = result.tasks[newIndex].position
+                } else if(i <= newIndex) { // shift to the left
+                    task.position--
+                }
+            })
+        } else {
+            let temp = result.tasks[newIndex].position
+            result.tasks.forEach(function (task){
+                i++
+                if(i < newIndex || oldIndex < i) return // outside => ignore
+                else if(i === oldIndex) { // element to move
+                    task.position = temp
+                } else if(newIndex <= i) { // shift to the right
+                    task.position++
+                }
+            })
+        }
+        sortByPosition(result.tasks)
+        return {result}
+    }
+
+    let element = structuredClone(getTask(oldSubCategoryId, taskId))
+    let newSub = getSubInCurrentById(newSubCategoryId)
+    sortByPosition(newSub.tasks)
+
+    let i = 0
+    newSub.tasks.forEach(function(task) {
+        if(i === newIndex)
+            element.position = task.position
+        if(newIndex <= i )
+            task.position++
+        i++
+    })
+    newSub.tasks.splice(newIndex, 0, element)
+
+    i = 0
+    oldSub.tasks.forEach(function(task) {
+        if(oldIndex <= i )
+            task.position--
+        i++
+    })
+    oldSub.tasks.splice(oldIndex, 1)
+
+    sortByPosition(oldSub.tasks)
+    sortByPosition(newSub.tasks)
+    return {oldSub, newSub}
 }
 
 
 function moveSubCatFromData(subCatId, oldIndex, newIndex) {
-    let a = getSubCategoryByIdx(oldIndex)
-    a.position = newIndex
-    let b = getSubCategoryByIdx(newIndex)
-    b.position = oldIndex
+
+    let cat = getCurrentCategory()
+    sortByPosition(cat.subCategories)
+
+    let result = structuredClone(cat)
+    let i = -1
+    if(oldIndex < newIndex) {
+        result.subCategories.forEach(function (subcat){
+            i++
+            if(i < oldIndex || newIndex < i) return // outside => ignore
+            else if(i === oldIndex) { // element to move
+                subcat.position = result.subCategories[newIndex].position
+            } else if(i <= newIndex) { // shift to the left
+                subcat.position--
+            }
+        })
+    } else {
+        let temp = result.subCategories[newIndex].position
+        result.subCategories.forEach(function (subcat){
+            i++
+            if(i < newIndex || oldIndex < i) return // outside => ignore
+            else if(i === oldIndex) { // element to move
+                subcat.position = temp
+            } else if(newIndex <= i) { // shift to the right
+                subcat.position++
+            }
+        })
+    }
+
+    sortByPosition(result.subCategories)
+    return result
 }
 
 function setCatToArchivedTrueFromData(catId) {
