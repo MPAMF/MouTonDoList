@@ -32,6 +32,9 @@ class DeleteTaskServiceImpl implements DeleteTaskService
             canEdit: true
         ));
 
-        return $this->taskRepository->delete($task) != 0;
+        if($this->taskRepository->delete($task) == 0) return false;
+
+        // reorder positions
+        return $this->taskRepository->orderTasks($task, 0, 0, true);
     }
 }

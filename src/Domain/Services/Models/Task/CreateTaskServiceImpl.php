@@ -91,6 +91,9 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
             throw new RepositorySaveException($this->translator->trans('TaskCreateDBError'));
         }
 
+        // drag & drop handling
+        $this->taskRepository->orderTasks($task, $task->getPosition(), -1, false);
+
         return $task;
     }
 }

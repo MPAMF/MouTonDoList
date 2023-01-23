@@ -107,11 +107,11 @@ class EloquentTaskRepository extends Repository implements TaskRepository
     public function get($id, array|null $with = null): Task
     {
         $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
-        if(is_array($found)) $found = (object) $found;
+        if (is_array($found)) $found = (object)$found;
         return $this->parseTask($found, $with);
     }
 
-    public function save(Task $task) : bool
+    public function save(Task $task): bool
     {
         // Create
         if ($task->getId() == null) {
@@ -124,7 +124,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
                 ->update($task->toRow()) != 0;
     }
 
-    public function delete(Task $task) : int
+    public function delete(Task $task): int
     {
         return $this->getTable()->delete($task->getId());
     }
@@ -149,4 +149,74 @@ class EloquentTaskRepository extends Repository implements TaskRepository
 
         return $tasks;
     }
+
+    /**
+     * {@inheritDoc}
+     * @param bool $isDelete
+     * @param int $newPosition
+     * @param int $oldPosition
+     */
+    public function orderTasks(Task $task, int $newPosition, int $oldPosition, bool $isDelete): bool
+    {
+
+        if ($isDelete) {
+            return $this->getTable()
+                    ->where('category_id', $task->getCategoryId())
+                    ->where('position', '>', $task->getPosition())
+                    ->update(['position' => 'position - 1']) != 0;
+        }
+
+        if ($newPosition == $oldPosition)
+            return true;
+
+        // First check if task position is not greater than the highest position in db
+        $highest = $this->getTable()
+            ->where('id', '!=', $task->getId())
+            ->where('category_id', '=', $task->getCategoryId())
+            ->max('position');
+
+        if (empty($highest)) {
+            $task->setPosition(0);
+        } else if ($task->getPosition() >= $highest + 1) { // If higher, then set to last position +1
+            $task->setPosition($highest + 1);
+        } else {
+            // si newPosition < oldPosition: update all pos + 1 where position > newPosition && position < oldPosition
+            // 0 <-|    //  3 -> 0
+            // 1   ^    // 0 -> 1
+            // 2   ^    // 1 -> 2
+            // 3 ->|    // 2 -> 3
+            // 4
+
+            $query = $this->getTable()
+                ->where('id', '!=', $task->getId())
+                ->where('category_id', $task->getCategoryId());
+
+            // when add
+            if ($oldPosition < 0) {
+                return $query->where('position' ,'>=', $newPosition)
+                        ->update(['position' => 'position + 1']) != 0;
+            }
+
+            if ($newPosition < $oldPosition) {
+                return $query->where('position', '>', $newPosition)
+                        ->where('position', '<', $oldPosition)
+                        ->update(['position' => 'position + 1']) != 0;
+            }
+            // si newPosition > oldPosition => update all pos - 1 where position > oldPosition && position < newPosition
+            // 0 >-|    // 0 -> 3
+            // 1   |    // 1 -> 0
+            // 2   |    // 2 -> 1
+            // 3 <-|    // 3 -> 2
+            // 4
+            return $query->where('position', '>', $oldPosition)
+                    ->where('position', '<', $newPosition)
+                    ->update(['position' => 'position - 1']) != 0;
+        }
+
+        // Check if task position is not greater than the highest position in db
+        return $this->getTable()
+                ->where('id', $task->getId())
+                ->update(['position' => $task->getPosition()]) != 0;
+    }
+
 }

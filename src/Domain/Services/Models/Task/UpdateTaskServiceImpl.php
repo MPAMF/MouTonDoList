@@ -66,6 +66,7 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
             }
         }
 
+        $oldPosition = $task->getPosition();
         $task->fromValidator($data);
         $task->setLastEditorId($userId);
 
@@ -74,6 +75,9 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
             // return with error?
             throw new RepositorySaveException($this->translator->trans('TaskUpdateDBError'));
         }
+
+        // drag & drop handling
+        $this->taskRepository->orderTasks($task, $task->getPosition(), $oldPosition, false);
 
         return $task;
     }
