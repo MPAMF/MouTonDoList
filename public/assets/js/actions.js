@@ -205,7 +205,6 @@ function deleteCategory(id) {
         console.log(e)
         showToast(getValueFromLanguage('DeleteCategoryError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
-        popoverHide(category)
         hideLoader()
     });
 }
