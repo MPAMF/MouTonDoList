@@ -31,7 +31,7 @@
   "FormSubmit": "Connexion",
   "SignIn": "Inscription",
 
-  "SignInPage": "SingInMouton",
+  "SignInPage": "SignInMouton",
   "FormSignInTitle": "Créez votre compte",
   "FormUsername": "Votre pseudonyme",
   "FormConfPwd": "Confirmez votre mot de passe",
@@ -80,7 +80,7 @@
 
   "TitreModalNav": "Données du compte",
   "CloseModalNav": "Fermer",
-  "AnnulationModalNav": "Annuler",
+  "CancelModalNav": "Annuler",
   "SaveModalNav": "Sauvegarder",
   "LabelThemeModalNav": "Cliquez sur le thème de votre choix :",
   "TitleNotifModalNav": "Centre de notification :",
@@ -198,7 +198,7 @@
   "TimeMinutes": "minutes",
   "TimeNow": "à l'instant",
 
-  "FooterName": "&copy; 2022 Mouton Group \uD83D\uDC11",
+  "FooterName": "&copy; 2023 Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",
   "FooterGithub": "Page GitHub du projet",
 
