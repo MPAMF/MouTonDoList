@@ -8,7 +8,7 @@ use App\Domain\Services\Models\Category\CreateCategoryService;
 use App\Domain\Services\Models\Category\CreateCategoryServiceImpl;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use Illuminate\Contracts\Translation\Translator;
+use Symfony\Component\Translation\Translator;
 use Tagliatti\SlimValidation\Validator;
 use Tests\TestCase;
 
