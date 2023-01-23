@@ -56,3 +56,38 @@ Dans `View/home` se trouve `content.twig` qui reprend le template de base et app
 ### Pages
 
 Dans `View/pages` se trouve `dashboard.twig` qui le template de base et applique ses propres composants qu'on retrouve dans `Views/pages/components`. Cela représente les éléments auxquelles un utilisateur connecté aura accès : catégorie, sous-catégorie, tâche, barre verticale, etc...
+
+## Fonctionnement général
+
+### Hors connexion
+
+- Page d'accueil : http://localhost:8080/
+- Création de compte : http://localhost:8080/account/register
+- Connexion : http://localhost:8080/account/login
+
+### Dashboard
+
+- Dashboard : http://localhost:8080/dashboard
+
+#### Projet
+
+- un projet correspond à une to-do-list
+- un projet comporte à minima une section, éventuellement plusieurs sections
+- un projet peut-être partagé ou archivé
+
+#### Utilisateur
+
+- un utilisateur est membre d'un projet
+- un utilisateur peut-être propriétaire ou invité
+- un invité a les droits de lecteur ou d'éditeur
+- les permissions d'un utilisateur varient donc en fonction de son statut
+
+#### Section
+
+- une section peut comporter plusieurs tâches.
+
+#### Tâche
+
+- une tâche peut-être validée
+- une tâche peut-être assignée à un utilisateur ou non assignée
+- une tâche possède une liste de commentaires (éventuellement vide)
