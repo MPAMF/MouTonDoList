@@ -3,6 +3,7 @@
 namespace App\Domain\Services\Models\Invitation;
 
 use App\Domain\Exceptions\AlreadyExistsException;
+use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
@@ -38,6 +39,7 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
 
     /**
      * {@inheritDoc}
+     * @throws BadRequestException
      */
     public function create(CreateInvitationRequest $request): UserCategory
     {
@@ -51,7 +53,14 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
         $data = $validator->getValues();
         //
         $userCategory->fromValidator($data);
+
         $userCategory->setCategory($this->categoryRepository->get($userCategory->getCategoryId()));
+
+        // should be a parent category
+        if($userCategory->getCategory()->getParentCategoryId() != NULL)
+        {
+            throw new BadRequestException($this->translator->trans('CategoryNotParentCategory'));
+        }
 
         if ($userCategory->getCategory()->getOwnerId() != $request->getUserId()) {
             throw new NoPermissionException();
@@ -65,6 +74,8 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
         )) {
             throw new AlreadyExistsException($this->translator->trans('InvitationAlreadyExists'));
         }
+
+        $userCategory->setAccepted(false);
 
         if (!$this->userCategoryRepository->save($userCategory)) {
             // return with error?
