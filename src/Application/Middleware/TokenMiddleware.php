@@ -6,7 +6,6 @@ use App\Domain\Auth\AuthInterface;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\User\UserNotFoundException;
 use App\Domain\Services\Auth\Token\TokenDecodeService;
-use App\Infrastructure\Repositories\UserRepository;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,7 +13,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Flash\Messages;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 class TokenMiddleware extends Middleware
 {
@@ -23,7 +22,7 @@ class TokenMiddleware extends Middleware
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,
-        TranslatorInterface      $translator,
+        Translator      $translator,
         Messages                 $messages,
         AuthInterface            $auth,
         TokenDecodeService $tokenDecodeService,
