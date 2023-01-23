@@ -75,13 +75,6 @@ Dans `View/pages` se trouve `dashboard.twig` qui le template de base et applique
 - un projet comporte à minima une section, éventuellement plusieurs sections
 - un projet peut-être partagé ou archivé
 
-#### Utilisateur
-
-- un utilisateur est membre d'un projet
-- un utilisateur peut-être propriétaire ou invité
-- un invité a les droits de lecteur ou d'éditeur
-- les permissions d'un utilisateur varient donc en fonction de son statut
-
 #### Section
 
 - une section peut comporter plusieurs tâches.
@@ -91,3 +84,63 @@ Dans `View/pages` se trouve `dashboard.twig` qui le template de base et applique
 - une tâche peut-être validée
 - une tâche peut-être assignée à un utilisateur ou non assignée
 - une tâche possède une liste de commentaires (éventuellement vide)
+
+#### Utilisateur
+
+- un utilisateur est membre d'un projet
+- un utilisateur peut-être propriétaire ou invité
+- un invité a les droits de lecteur ou d'éditeur
+- les permissions d'un utilisateur varient donc en fonction de son statut
+
+## Fonctionnalités
+
+### Hors connexion
+
+- création de compte
+- connexion
+
+### Dashboard
+
+- déconnexion
+- édition du mot de passe
+- changer de thème
+- changer de langue
+
+#### Projet
+
+Selon les permissions :
+- création (depuis la sidebar)
+- duplication
+- suppression/quitter
+- archivage/désarchivage
+- modifier le nom
+- masquer les tâches validées
+- inviter un utilisateur
+- retirer un membre
+- changer le rôle d'un membre
+
+#### Section
+
+Selon les permissions :
+- créer/supprimer
+- déplacer (drag-and-drop)
+
+#### Tâche
+
+Selon les permissions :
+- créer
+- supprimer
+- dupliquer
+- valider
+- modifier nom, description et membre assigné
+- déplacer (drag-and-drop)
+
+#### Autres
+
+Autres fonctionnalités accessibles depuis la barre de navigation :
+
+- lorsqu'un utilisateur est invité à un projet, il peut y répondre depuis le centre des notifications
+- lorsqu'un membre est assigné à une tâche, il peut retrouver la liste (par date) de ses affectations
+- fonctionnalité de recherche des tâches dans le projet courant : par nom d'utilisateur (suggéré) ou par mots clés
+
+Attention cependant : l'attribution d'une date à une tâche n'est pas encore implémentée au niveau du front, notamment par manque de temps mais aussi car cette fonctionnalité n'est pas obligatoire vis à vis du sujet.
