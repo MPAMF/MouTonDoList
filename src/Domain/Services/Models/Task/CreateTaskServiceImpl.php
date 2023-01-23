@@ -62,7 +62,7 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
         $task->setLastEditorId($request->getUserId());
 
         // Check category validity
-        $task->setCategory($this->categoryRepository->get($task->getId()));
+        $task->setCategory($this->categoryRepository->get($task->getCategoryId()));
 
         // Only accept to create tasks in subcategories
         if ($task->getCategory()->getParentCategoryId() == null) {
@@ -80,15 +80,10 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
         // Check assigned_id
         if ($task->getAssignedId() != null) {
             // Check if assigned user has access to the project
-            if (!$this->userCategoryRepository->exists(null, $task->getCategoryId(), $task->getAssignedId(), accepted: true)) {
+            if (!$this->userCategoryRepository->exists(null, $task->getCategory()->getParentCategoryId(), $task->getAssignedId(), accepted: true)) {
                 throw new BadRequestException($this->translator->trans('AssignedUserNotFoundException'));
             }
 
-            $this->userCategoryCheckPermissionService->exists(new UserCategoryCheckPermissionRequest(
-                userId: $task->getAssignedId(),
-                categoryId: $task->getCategoryId(),
-                checkAccepted: false
-            ));
         }
 
         if (!$this->taskRepository->save($task)) {
