@@ -7,7 +7,7 @@ use App\Application\Handlers\RedirectHandler;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Slim\Flash\Messages;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 abstract class Middleware implements MiddlewareInterface
 {
@@ -15,11 +15,11 @@ abstract class Middleware implements MiddlewareInterface
     use FlashMessageHandler;
 
     protected ResponseFactoryInterface $responseFactory;
-    protected TranslatorInterface $translator;
+    protected Translator $translator;
     protected Messages $messages;
 
     public function __construct(ResponseFactoryInterface $responseFactory,
-                                TranslatorInterface $translator,
+                                Translator $translator,
                                 Messages $messages)
     {
         $this->responseFactory = $responseFactory;

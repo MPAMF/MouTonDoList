@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use Slim\Csrf\Guard;
 use Slim\Flash\Messages;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * Source: https://github.com/middlewares/php-session/blob/master/src/PhpSession.php
@@ -21,7 +21,7 @@ class SessionMiddleware extends Middleware
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,
-        TranslatorInterface      $translator,
+        Translator      $translator,
         Messages                 $messages,
         Guard                    $guard
     ) {

@@ -23,7 +23,6 @@ use Slim\Views\Twig;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Loader\JsonFileLoader;
 use Symfony\Component\Translation\Translator;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Tagliatti\SlimValidation\Validator;
 use Tagliatti\SlimValidation\ValidatorExtension;
 use Tagliatti\SlimValidation\ValidatorInterface;
@@ -45,7 +44,7 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
-        TranslatorInterface::class => function (ContainerInterface $c) {
+        Translator::class => function (ContainerInterface $c) {
             // creates the Translator
             $translator = new Translator('fr');
             // somehow load some translations into it
@@ -70,7 +69,7 @@ return function (ContainerBuilder $containerBuilder) {
             $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
 
             // Twig view extensions
-            $twig->addExtension(new TranslationExtension($c->get(TranslatorInterface::class)));
+            $twig->addExtension(new TranslationExtension($c->get(Translator::class)));
             $twig->addExtension(new CsrfExtension($c->get(Guard::class)));
             $twig->addExtension(new FlashMessageExtension($c->get(Messages::class)));
             $twig->addExtension(new ValidatorExtension($c->get(ValidatorInterface::class)));
