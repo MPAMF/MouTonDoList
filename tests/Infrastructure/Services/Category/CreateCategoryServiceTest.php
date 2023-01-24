@@ -68,18 +68,4 @@ class CreateCategoryServiceTest extends TestCase
 
         $this->assertEquals($createdCategory, $expected);
     }
-
-    public function testDeleteCategory(): void
-    {
-        $this->categoryRepository->expects($this->once())
-            ->method('delete')
-            ->with(1)
-            ->willReturn(true);
-
-        $result = $this->createCategoryService->delete(1);
-
-        $this->assertTrue($result);
-    }
-
-
 }
