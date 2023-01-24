@@ -383,7 +383,11 @@ function duplicateCatFromData(id, newId) {
 function removeSubCatFromData(id) {
     let cat = getCurrentCategory()
     let idx = getSubCategoryIdx(id)
+
+    let position = cat.subCategories[idx].position
     cat.subCategories.splice(idx, 1)
+    shiftPositionsLeft(cat.subCategories, position)
+    console.log(cat.subCategories)
 }
 
 function removeMemberFromData(catId, userId) {
