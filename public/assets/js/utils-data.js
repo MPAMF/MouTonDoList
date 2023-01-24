@@ -457,6 +457,17 @@ function getSubCatMaxPosition() {
     return max
 }
 
+function getCatMaxPosition() {
+    let cat = getCurrentCategory()
+    let max = 0
+    cat.categories.forEach(function(cat) {
+        let temp = cat.category.position
+        if(temp > max)
+            max = temp
+    })
+    return max
+}
+
 function prepareSubCatToData(id, name) {
     let subCat = getSubCatTemplate()
 
@@ -484,10 +495,11 @@ function prepareCatForData() {
     cat.user_id = data.user.id
 
     cat.category.archived = false
-    cat.category.name = name
+    cat.category.name = getValueFromLanguage("NewCategoryName")
     cat.category.owner_id = data.user.id
     cat.category.position = 0
     cat.category.subCategories = []
+    cat.category.color = "#FF5733" // temp
 
     cat.members = []
     cat.members.push({
@@ -500,6 +512,8 @@ function prepareCatForData() {
 
 function addCatToData(cat) {
     storagePushToCategories(cat.category_id, false)
+    shiftCatPositionsRight()
+    console.log(cat)
     data.categories.push(cat)
 }
 
@@ -576,5 +590,11 @@ function shiftPositionsLeft(elements, start) {
     elements.forEach(function (element) {
         if(element.position > start)
             element.position--
+    })
+}
+
+function shiftCatPositionsRight() {
+    data.categories.forEach(function (element) {
+        element.category.position++
     })
 }

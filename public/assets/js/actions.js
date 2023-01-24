@@ -647,7 +647,7 @@ function newCategory() {
     const title = getValueFromLanguage('CreateCategoryTitle')
     let cat = prepareCatForData()
 
-    repositories.categories.create(cat).then((e) => {
+    repositories.categories.create(cat.category).then((e) => {
         let newId = e.id
         let container = document.getElementById("category-default").firstElementChild
         container.prepend(getSidebarOwnedCategory(newId))
