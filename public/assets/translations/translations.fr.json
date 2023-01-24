@@ -117,6 +117,7 @@
   "AuthUserNotFoundError": "Votre utilisateur n'a pas été trouvé, veuillez vous reconnecter.",
   "AuthUserNotConnected": "Veuillez vous connecter pour accéder à cette page.",
   "AuthLoginSuccess": "Connexion réussie!",
+  "AuthUserAlreadyConnected": "Vous êtes déjà connecté!",
 
   "AuthRegisterFailed": "Erreur lors de la création de l'utilisateur.",
   "AuthRegisterUserExist": "Un utilisateur possède déjà un compte avec cette adresse mail.",

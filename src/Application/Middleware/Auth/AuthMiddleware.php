@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Flash\Messages;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 /**
  * This middleware check's if there's an active user session
@@ -25,7 +25,7 @@ class AuthMiddleware extends Middleware
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,
-        TranslatorInterface      $translator,
+        Translator      $translator,
         Messages                 $messages,
         AuthInterface            $auth
     ) {

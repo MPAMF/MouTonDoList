@@ -130,13 +130,14 @@ function openEditModalCategory(catId)
             '<ul class="list-group list-group-flush tasks">';
 
         getCategoryMembersById(catId).forEach(function(member) {
+            if(member.user_id === data.user.id) return
             content +=
                 '<li class="list-group-item list-member" data-member="' + catId + '-' + member.user.id + '">' +
                 '<div class="col py-1">' +
                 '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+                '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" disabled>' +
                 '<option value="READ"' + (member.canEdit ? "selected" : "") + '>' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
                 '<option value="WRITE"' + (member.canEdit ? "" : "selected") + '>' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
                 '</select>' +

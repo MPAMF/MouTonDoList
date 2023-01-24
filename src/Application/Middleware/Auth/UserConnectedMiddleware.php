@@ -23,6 +23,12 @@ class UserConnectedMiddleware extends Middleware
                 ->redirect('account.login', $request);
         }
 
+        // set language
+        if(!empty($user->getLanguage()))
+        {
+            $this->translator->setLocale($user->getLanguage());
+        }
+
         return $handler->handle($request);
     }
 }

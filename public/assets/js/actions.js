@@ -254,9 +254,9 @@ function leaveCategory(id) {
     const title = getValueFromLanguage('LeaveMemberCatCommentTitle').replace('%id%', id)
 
     id = parseInt(id)
-    let userId = data.user.id
+    let invitationId = getInvitationIdByCategoryId(id)
 
-    repositories.invitations.delete(userId).then(() => {
+    repositories.invitations.delete(invitationId).then(() => {
         let category = $('[data-sidebar-id="' + id + '"]')[0]
         category.parentElement.remove()
         popoverDispose(category)
@@ -415,14 +415,17 @@ function checkTask(element, idCat, idTask) {
 
 function removeMember(catId, userId) {
 
+    if(userId === data.user.id) return
+
     showLoader()
 
     const title = getValueFromLanguage('RemoveMemberCatCommentTitle').replace('%id%', userId)
 
     catId = parseInt(catId)
     userId = parseInt(userId)
+    let invitationId = getInvitationIdByCategoryIdForMember(catId, userId)
 
-    repositories.invitations.delete(userId).then(() => {
+    repositories.invitations.delete(invitationId).then(() => {
         $('[data-member="' + catId + '-' + userId + '"]')[0].remove()
         removeMemberFromData(catId, userId)
         showToast(getValueFromLanguage('RemoveMemberCatSuccess'), title, 'success')
