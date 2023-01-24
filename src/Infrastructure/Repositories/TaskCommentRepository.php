@@ -14,14 +14,14 @@ interface TaskCommentRepository
      * @param array|null $with Load instances of 'author' or/and 'task'
      * @return array All comments of a user
      */
-    public function getUserComments(int $user_id, array|null $with = null) : array;
+    public function getUserComments(int $user_id, array|null $with = null): array;
 
     /**
      * @param int $task_id
      * @param array|null $with Load instances of 'author' or/and 'task'
      * @return array All comments of a task
      */
-    public function getTaskComments(int $task_id, array|null $with = null) : array;
+    public function getTaskComments(int $task_id, array|null $with = null): array;
 
     /**
      * @param $id
@@ -41,7 +41,7 @@ interface TaskCommentRepository
      * @param TaskComment $taskComment User
      * @return int Number of records deleted
      */
-    public function delete(TaskComment $taskComment) : int;
+    public function delete(TaskComment $taskComment): int;
 
     /**
      * @param int $id TaskComment id

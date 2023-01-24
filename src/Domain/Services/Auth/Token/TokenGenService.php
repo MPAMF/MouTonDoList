@@ -5,7 +5,6 @@ namespace App\Domain\Services\Auth\Token;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserNotFoundException;
-use App\Domain\Requests\Auth\LoginRequest;
 
 interface TokenGenService
 {
@@ -16,6 +15,6 @@ interface TokenGenService
      * @throws BadRequestException
      * @throws UserNotFoundException
      */
-    public function generate(User $user) : string;
+    public function generate(User $user): string;
 
 }

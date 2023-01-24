@@ -9,7 +9,6 @@ use App\Domain\Requests\Invitation\GetInvitationRequest;
 use App\Domain\Requests\Invitation\UpdateInvitationRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class UpdateInvitationServiceImpl extends Service implements UpdateInvitationService
 {

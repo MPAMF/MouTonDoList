@@ -9,7 +9,6 @@ use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskCommentRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class DisplayDashboardServiceImpl implements DisplayDashboardService
 {

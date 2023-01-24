@@ -14,7 +14,6 @@ use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class CreateTaskServiceImpl extends Service implements CreateTaskService
 {

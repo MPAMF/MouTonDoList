@@ -13,7 +13,6 @@ use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 
@@ -41,6 +40,42 @@ class EloquentTaskRepository extends Repository implements TaskRepository
     public function __construct()
     {
         parent::__construct('tasks');
+    }
+
+    public function delete(Task $task): int
+    {
+        return $this->getTable()->delete($task->getId());
+    }
+
+    public function getTasks(int|Category $category, array|null $with = null): array
+    {
+        $tasks = [];
+        $id = $category instanceof Category ? $category->getId() : $category;
+
+        $foundTasks = $this->getTable()
+            ->where('category_id', $id)
+            ->orderBy('position')
+            ->get();
+
+        foreach ($foundTasks as $task) {
+            try {
+                $tasks[] = $this->parseTask($task, $with);
+            } catch (TaskNotFoundException) {
+                // do nothing
+            }
+        }
+
+        return $tasks;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($id, array|null $with = null): Task
+    {
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if (is_array($found)) $found = (object)$found;
+        return $this->parseTask($found, $with);
     }
 
     /**
@@ -101,16 +136,6 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         return $parsed;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get($id, array|null $with = null): Task
-    {
-        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
-        if (is_array($found)) $found = (object)$found;
-        return $this->parseTask($found, $with);
-    }
-
     public function save(Task $task): bool
     {
         // Create
@@ -121,34 +146,8 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         }
 
         $this->getTable()->where('id', $task->getId())
-                ->update($task->toRow());
+            ->update($task->toRow());
         return true;
-    }
-
-    public function delete(Task $task): int
-    {
-        return $this->getTable()->delete($task->getId());
-    }
-
-    public function getTasks(int|Category $category, array|null $with = null): array
-    {
-        $tasks = [];
-        $id = $category instanceof Category ? $category->getId() : $category;
-
-        $foundTasks = $this->getTable()
-            ->where('category_id', $id)
-            ->orderBy('position')
-            ->get();
-
-        foreach ($foundTasks as $task) {
-            try {
-                $tasks[] = $this->parseTask($task, $with);
-            } catch (TaskNotFoundException) {
-                // do nothing
-            }
-        }
-
-        return $tasks;
     }
 
     /**
@@ -181,12 +180,6 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         } else if ($task->getPosition() >= $highest + 1) { // If higher, then set to last position +1
             $task->setPosition($highest + 1);
         } else {
-            // si newPosition < oldPosition: update all pos + 1 where position > newPosition && position < oldPosition
-            // 0 <-|    //  3 -> 0
-            // 1   ^    // 0 -> 1
-            // 2   ^    // 1 -> 2
-            // 3 ->|    // 2 -> 3
-            // 4
 
             $query = $this->getTable()
                 ->where('id', '!=', $task->getId())
@@ -194,7 +187,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
 
             // when add
             if ($oldPosition < 0) {
-                return $query->where('position' ,'>=', $newPosition)
+                return $query->where('position', '>=', $newPosition)
                         ->increment('position') != 0;
             }
 
@@ -203,12 +196,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
                         ->where('position', '<', $oldPosition)
                         ->increment('position') != 0;
             }
-            // si newPosition > oldPosition => update all pos - 1 where position > oldPosition && position < newPosition
-            // 0 >-|    // 0 -> 3
-            // 1   |    // 1 -> 0
-            // 2   |    // 2 -> 1
-            // 3 <-|    // 3 -> 2
-            // 4
+
             return $query->where('position', '>', $oldPosition)
                     ->where('position', '<=', $newPosition)
                     ->decrement('position') != 0;

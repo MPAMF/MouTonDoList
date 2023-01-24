@@ -12,7 +12,6 @@ use App\Domain\Requests\Task\UpdateTaskRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskRepository;
-use DI\Annotation\Inject;
 
 class UpdateTaskServiceImpl extends Service implements UpdateTaskService
 {
@@ -77,8 +76,7 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
         }
 
         // Category has changed, so reorder positions
-        if($task->getCategoryId() != $oldCategoryId)
-        {
+        if ($task->getCategoryId() != $oldCategoryId) {
             $newCategoryId = $task->getCategoryId();
             $task->setCategoryId($oldCategoryId);
             $this->taskRepository->orderTasks($task, 0, $oldPosition, true);

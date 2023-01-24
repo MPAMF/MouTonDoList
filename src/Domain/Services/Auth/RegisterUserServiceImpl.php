@@ -8,7 +8,6 @@ use App\Domain\Models\User\User;
 use App\Domain\Requests\Auth\RegisterRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Respect\Validation\Validator;
 
 class RegisterUserServiceImpl extends Service implements RegisterUserService
