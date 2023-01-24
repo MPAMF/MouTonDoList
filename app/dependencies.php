@@ -66,7 +66,7 @@ return function (ContainerBuilder $containerBuilder) {
         },
         Twig::class => function (ContainerInterface $c) {
             // PROD :  return Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
-            $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => false]);
+            $twig = Twig::create(__DIR__ . '/../src/Application/Views', ['cache' => __DIR__ . '/../var/cache']);
 
             // Twig view extensions
             $twig->addExtension(new TranslationExtension($c->get(Translator::class)));
