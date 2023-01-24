@@ -460,8 +460,17 @@ function addMemberCheck(e) {
 
     let email = document.getElementById("memberNewName")
     let selectedValue = select.value
+    let can_edit = selectedValue === authModalSelectMemberStatusValues[1]
+    let catId = parseInt($("#modal-body").attr("data-id"))
 
-    repositories.invitations.create(email, selectedValue).then(() => {
+    let invite = {
+        "accepted": false,
+        "can_edit": can_edit,
+        "category_id": catId,
+        "email": email.value
+    }
+
+    repositories.invitations.create(invite).then(() => {
         showToast(getValueFromLanguage('AddMemberCatSuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
