@@ -5,7 +5,7 @@
                     data-bs-target="#verticalNavbar" aria-expanded="false" aria-controls="verticalNavbar">
                 <span class="mdi mdi-menu span-nav"></span>
             </button>
-            <a class="nav-link active d-flex me-1" href=".">
+            <a class="nav-link active d-flex me-1" href="/dashboard">
                 <img src="/assets/img/appImg.jpg" alt="Logo" class="rounded-circle logo">
                 <p class="appName">{% trans %}AppName{% endtrans %}</p>
             </a>
@@ -224,7 +224,6 @@
         let user = data.user;
         let pseudo = getValueFromLanguage('PseudoAccount');
         let mail = getValueFromLanguage('MailAccount');
-        let pass = getValueFromLanguage('PasswordAccount');
         let btn = getValueFromLanguage('ModificationPasswordAccount');
 
         setActiveModal("modal-btn-account");
@@ -237,14 +236,18 @@
                 <h6>` + mail + `</h6>
                 <p>`+ user.email +`</p>
 
-                <h6>` + pass + `</h6>
-                <button type="button" class="btn btn-abs-nav" onclick="modificationPassword()">` + btn + `</button>
+                <button type="button" id="edit-password" class="btn btn-abs-nav">` + btn + `</button>
             </div>
         `);
+
+        $(document).on('click', "#edit-password", function (e) {
+            e.preventDefault()
+            modificationPassword()
+        })
     }
 
     function modificationPassword() {
-        let annulation = getValueFromLanguage('AnnulationModalNav');
+        let annulation = getValueFromLanguage('CancelModalNav');
         let save = getValueFromLanguage('SaveModalNav');
         let new_pass = getValueFromLanguage('NewPasswordAccount');
         let conf_pass = getValueFromLanguage('ConfPasswordAccount');
@@ -265,17 +268,32 @@
                 <div id="validation-password-conf" class="invalid-feedback"></div>
             </div>
             <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-secondary me-2" onclick="modalUser()">` + annulation + `</button>
-                <button type="button" class="btn btn-primary" onclick="saveNewPassword()"> ` + save + `<button>
+                <button type="button" id="edit-password-cancel" class="btn btn-secondary me-2">` + annulation + `</button>
+                <button type="button" id="edit-password-save" class="btn btn-primary"> ` + save + `<button>
             </div>
         </form>
         `);
+
+        $(document).on('click', "#edit-password-cancel", function (e) {
+            e.preventDefault()
+            modalUser()
+        })
+        $(document).on('click', "#edit-password-save", function (e) {
+            e.preventDefault()
+            saveNewPassword()
+        })
     }
 
     function saveNewPassword(){
         let userId = data.user.id;
-        let pass = document.getElementById("password");
-        let passConf = document.getElementById("password-conf");
+        let pass = document.getElementById("new-password");
+        let passConf = document.getElementById("conf-password");
+
+        if(pass.value.length === 0 || passConf.value.length === 0)
+        {
+            showToast(getValueFromLanguage('InvalidData'), userId, 'danger');
+            return
+        }
 
         let regexMdpSpe = /^[-_*.!?#\S]+$/;
         let regexMdpMin = /^[a-z\S]+$/;
@@ -312,7 +330,7 @@
             return;
         }
 
-        changePassword(pass);
+        changePassword(pass.value);
     }
 
     /*  General, Notification and TaskToDo */

@@ -10,7 +10,6 @@ use App\Domain\Models\User\UserNotFoundException;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 
@@ -32,6 +31,50 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     public function __construct()
     {
         parent::__construct('categories');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete(Category $category): int
+    {
+        return $this->getDB()->table('categories')->delete($category->getId());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCategories($user_id, array|null $with = ['parentCategory', 'owner']): array
+    {
+        $categories = [];
+
+        $foundCategories = $this->getDB()->table('categories')
+            ->where('owner_id', $user_id)
+            ->where('parent_category_id', null) // no sub-categories
+            ->orderBy('position')
+            ->get();
+
+        foreach ($foundCategories as $category) {
+
+            try {
+                $categories[] = $this->parseCategory($category, $with);
+            } catch (CategoryNotFoundException) {
+                // do nothing
+            }
+
+        }
+
+        return $categories;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($id, array|null $with = null): Category
+    {
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if (is_array($found)) $found = (object)$found;
+        return $this->parseCategory($found, $with);
     }
 
     /**
@@ -82,16 +125,6 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
     /**
      * {@inheritdoc}
      */
-    public function get($id, array|null $with = null): Category
-    {
-        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
-        if(is_array($found)) $found = (object) $found;
-        return $this->parseCategory($found, $with);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function save(Category $category): bool
     {
         // Create
@@ -101,42 +134,9 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $category->getId())
-                ->update($category->toRow()) != 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(Category $category): int
-    {
-        return $this->getDB()->table('categories')->delete($category->getId());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCategories($user_id, array|null $with = ['parentCategory', 'owner']): array
-    {
-        $categories = [];
-
-        $foundCategories = $this->getDB()->table('categories')
-            ->where('owner_id', $user_id)
-            ->where('parent_category_id', null) // no sub-categories
-            ->orderBy('position')
-            ->get();
-
-        foreach ($foundCategories as $category) {
-
-            try {
-                $categories[] = $this->parseCategory($category, $with);
-            } catch (CategoryNotFoundException) {
-                // do nothing
-            }
-
-        }
-
-        return $categories;
+        $this->getTable()->where('id', $category->getId())
+            ->update($category->toRow());
+        return true;
     }
 
     /**

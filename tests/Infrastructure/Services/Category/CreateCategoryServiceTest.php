@@ -8,7 +8,7 @@ use App\Domain\Services\Models\Category\CreateCategoryService;
 use App\Domain\Services\Models\Category\CreateCategoryServiceImpl;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 use Tagliatti\SlimValidation\Validator;
 use Tests\TestCase;
 
@@ -17,13 +17,13 @@ class CreateCategoryServiceTest extends TestCase
     private CategoryRepository $categoryRepository;
     private UserCategoryRepository $userCategoryRepository;
     private CreateCategoryService $createCategoryService;
-    private TranslatorInterface $translator;
+    private Translator $translator;
 
     public function setUp(): void
     {
         $this->categoryRepository = $this->createMock(CategoryRepository::class);
         $this->userCategoryRepository = $this->createMock(UserCategoryRepository::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->translator = $this->createMock(Translator::class);
         $this->createCategoryService = new CreateCategoryServiceImpl(new Validator(), $this->translator);
         $this->createCategoryService->userCategoryRepository = $this->userCategoryRepository;
         $this->createCategoryService->categoryRepository = $this->categoryRepository;

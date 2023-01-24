@@ -2,16 +2,13 @@
 
 namespace App\Domain\Services\Models\User;
 
-use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
 use App\Domain\Models\User\User;
-use App\Domain\Models\User\UserNotFoundException;
 use App\Domain\Requests\User\GetUserRequest;
 use App\Domain\Requests\User\UpdateUserRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Respect\Validation\Validator;
 
 class UpdateUserServiceImpl extends Service implements UpdateUserService
@@ -40,10 +37,15 @@ class UpdateUserServiceImpl extends Service implements UpdateUserService
         ));
 
         $rules = $user->getValidatorRules();
-        $patch = $request == 'PATCH';
+        $patch = $request->getMethod() == 'PATCH';
 
         // Set the rules to optional
         if ($patch) {
+
+            // ignore empty patch
+            if (empty($request->getFormData()))
+                return $user;
+
             $rules = collect($rules)->map(function ($value) {
                 return Validator::optional($value);
             })->toArray();

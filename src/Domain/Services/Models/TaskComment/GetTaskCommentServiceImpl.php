@@ -9,7 +9,6 @@ use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Models\UserCategory\UserCategoryCheckPermissionService;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\TaskCommentRepository;
-use DI\Annotation\Inject;
 
 class GetTaskCommentServiceImpl extends Service implements GetTaskCommentService
 {

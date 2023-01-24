@@ -17,7 +17,7 @@ use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Flash\Messages;
 use Slim\Views\Twig;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 use Tagliatti\SlimValidation\ValidatorInterface;
 
 abstract class Action
@@ -38,7 +38,7 @@ abstract class Action
 
     protected Messages $messages;
 
-    protected TranslatorInterface $translator;
+    protected Translator $translator;
 
     protected ValidatorInterface $validator;
 
@@ -47,7 +47,7 @@ abstract class Action
         Twig                     $twig,
         ResponseFactoryInterface $responseFactory,
         Messages                 $messages,
-        TranslatorInterface      $translator,
+        Translator      $translator,
         ValidatorInterface       $validator
     )
     {
@@ -87,7 +87,7 @@ abstract class Action
      */
     protected function getFormData(): object|array
     {
-        return $this->request->getParsedBody();
+        return $this->request->getParsedBody() ?? [];
     }
 
     /**

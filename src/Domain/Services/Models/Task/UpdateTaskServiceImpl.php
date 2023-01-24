@@ -12,7 +12,6 @@ use App\Domain\Requests\Task\UpdateTaskRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskRepository;
-use DI\Annotation\Inject;
 
 class UpdateTaskServiceImpl extends Service implements UpdateTaskService
 {
@@ -56,24 +55,37 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
         $userId = $request->getUserId();
 
         // Check category validity
-        if (!isset($data->category_id)) {
+        if (!isset($data['category_id'])) {
             // categoryId == null is main category, cannot create tasks in those categories
             throw new BadRequestException($this->translator->trans('CategoryIdNotValid'));
         } else {
             // Check if current category has same parentCategory
-            if (!$this->categoryRepository->exists($data->category_id, $task->getCategory()->getParentCategoryId())) {
+            if (!$this->categoryRepository->exists($data['category_id'], $task->getCategory()->getParentCategoryId())) {
                 throw new NoPermissionException();
             }
         }
 
+        $oldPosition = $task->getPosition();
+        $oldCategoryId = $task->getCategoryId();
         $task->fromValidator($data);
         $task->setLastEditorId($userId);
 
-        // Useless to check if something was deleted
         if (!$this->taskRepository->save($task)) {
             // return with error?
             throw new RepositorySaveException($this->translator->trans('TaskUpdateDBError'));
         }
+
+        // Category has changed, so reorder positions
+        if ($task->getCategoryId() != $oldCategoryId) {
+            $newCategoryId = $task->getCategoryId();
+            $task->setCategoryId($oldCategoryId);
+            $this->taskRepository->orderTasks($task, 0, $oldPosition, true);
+            $task->setCategoryId($newCategoryId);
+        }
+
+        // drag & drop handling
+        $this->taskRepository->orderTasks($task, $task->getPosition(),
+            $task->getCategoryId() != $oldCategoryId ? -1 : $oldPosition, false);
 
         return $task;
     }

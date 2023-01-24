@@ -8,7 +8,6 @@ use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserNotFoundException;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 
@@ -24,6 +23,20 @@ class EloquentUserRepository extends Repository implements UserRepository
     public function __construct()
     {
         parent::__construct('users');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function logUser(string $email, string $password): User
+    {
+        $found = $this->getTable()->where('email', $email)->first();
+
+        if (empty($found) || !password_verify($password, $found->password)) {
+            throw new UserNotFoundException();
+        }
+
+        return $this->parseUser($found);
     }
 
     /**
@@ -52,30 +65,6 @@ class EloquentUserRepository extends Repository implements UserRepository
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function logUser(string $email, string $password): User
-    {
-        $found = $this->getTable()->where('email', $email)->first();
-
-        if (empty($found) || !password_verify($password, $found->password)) {
-            throw new UserNotFoundException();
-        }
-
-        return $this->parseUser($found);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get($id, array|null $with = null): User
-    {
-        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
-        if (is_array($found)) $found = (object)$found;
-        return $this->parseUser($found, $with);
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function save(User $user): bool
@@ -87,8 +76,19 @@ class EloquentUserRepository extends Repository implements UserRepository
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $user->getId())
-                ->update($user->toRow()) != 0;
+        $this->getTable()->where('id', $user->getId())
+            ->update($user->toRow());
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($id, array|null $with = null): User
+    {
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if (is_array($found)) $found = (object)$found;
+        return $this->parseUser($found, $with);
     }
 
     /**

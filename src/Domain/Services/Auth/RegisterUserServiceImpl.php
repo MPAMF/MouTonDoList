@@ -8,7 +8,6 @@ use App\Domain\Models\User\User;
 use App\Domain\Requests\Auth\RegisterRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Respect\Validation\Validator;
 
 class RegisterUserServiceImpl extends Service implements RegisterUserService
@@ -39,7 +38,7 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
 
         $data = $validator->getValues();
 
-        if ($this->userRepository->exists($data['email'])) {
+        if ($this->userRepository->exists(email: $data['email'])) {
             throw new BadRequestException($this->translator->trans('AuthRegisterUserExist'));
         }
 

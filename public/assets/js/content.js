@@ -1,4 +1,4 @@
-function getCommentContent(newId, text) {
+function getCommentContent(taskId, newId, text) {
 
     let author = getCurrentMemberUsername()
 
@@ -19,7 +19,7 @@ function getCommentContent(newId, text) {
             '</button>'
 
         $(document).on('click', "#commentRemove-" + newId, function () {
-            removeComment(newId)
+            removeComment(taskId, newId)
         })
     }
 

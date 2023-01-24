@@ -9,7 +9,6 @@ use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Models\UserCategory\UserCategoryCheckPermissionService;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class GetCategoryServiceImpl implements GetCategoryService
 {

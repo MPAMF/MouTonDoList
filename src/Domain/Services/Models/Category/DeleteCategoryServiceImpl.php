@@ -5,7 +5,6 @@ namespace App\Domain\Services\Models\Category;
 use App\Domain\Requests\Category\DeleteCategoryRequest;
 use App\Domain\Requests\Category\GetCategoryRequest;
 use App\Infrastructure\Repositories\CategoryRepository;
-use DI\Annotation\Inject;
 
 class DeleteCategoryServiceImpl implements DeleteCategoryService
 {

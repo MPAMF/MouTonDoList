@@ -4,11 +4,11 @@ namespace App\Domain\Services\Dashboard;
 
 use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Requests\DisplayDashboardRequest;
+use App\Domain\Services\Auth\Token\TokenGenService;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskCommentRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class DisplayDashboardServiceImpl implements DisplayDashboardService
 {
@@ -36,6 +36,12 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
      * @var TaskCommentRepository
      */
     private TaskCommentRepository $taskCommentRepository;
+
+    /**
+     * @Inject
+     * @var TokenGenService
+     */
+    private TokenGenService $tokenGenService;
 
     /**
      * {@inheritDoc}
@@ -87,13 +93,16 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
         // TODO: delete notifications => to rest get request
         $notifications = collect($this->userCategoryRepository->getCategories($userId, accepted: false));
 
+        $apiToken = $this->tokenGenService->generate($request->getUser());
+
         return [
             'category' => $category,
             'categories' => $categories,
             'archivedCategories' => $archivedCategories,
             'user' => $request->getUser(),
             'canEdit' => $canEdit,
-            'notifications' => $notifications
+            'notifications' => $notifications,
+            'apiToken' => $apiToken
         ];
     }
 }

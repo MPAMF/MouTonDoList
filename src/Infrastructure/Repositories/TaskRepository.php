@@ -10,7 +10,7 @@ interface TaskRepository
 {
 
     /**
-     * @param int|Category $category Id or category object
+     * @param int|Category $category ID or category object
      * @param array|null $with ['category', 'last_editor', 'assigned'] load objects
      * @return array
      */
@@ -35,4 +35,12 @@ interface TaskRepository
      * @return int Number of records deleted
      */
     public function delete(Task $task): int;
+
+    /**
+     * @param Task $updatedTask Task that was created or updated
+     * @param int $newPosition
+     * @param int $oldPosition
+     * @param bool $isDelete
+     */
+    public function orderTasks(Task $task, int $newPosition, int $oldPosition, bool $isDelete): bool;
 }

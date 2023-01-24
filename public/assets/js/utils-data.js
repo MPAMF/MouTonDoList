@@ -206,60 +206,153 @@ function setTaskNewName(task, newName) {
     task.name = newName
 }
 
+function getTempTaskCheck(idSubCat, idTask, value) {
+    let origin = getTask(idSubCat, idTask)
+    let task = {...origin}
+    task.checked = value
+    return task
+}
+
 function setTaskChecked(idSubCat, idTask, value) {
     let task = getTask(idSubCat, idTask)
     task.checked = value
 }
 
-function removeTaskFromData(idSubCat, taskIdx) {
+function removeTaskFromData(idSubCat, taskId) {
     let subCatIdx = getSubCategoryIdx(idSubCat)
     let subCat = getSubCategoryByIdx(subCatIdx)
+    let taskIdx = subCat.tasks.findIndex(t => t.id === taskId)
+    let position = subCat.tasks[taskIdx].position
     subCat.tasks.splice(taskIdx, 1)
+    shiftPositionsLeft(subCat.tasks, position)
 }
 
-function duplicateTaskFromData(idSubCat, idTask, newTaskId, newTaskName) {
+function duplicateTaskFromData(idSubCat, idTask, newTaskName) {
     let subCatIdx = getSubCategoryIdx(idSubCat)
     let subCat = getSubCategoryByIdx(subCatIdx)
     let taskIdx = getTaskIdx(subCat, idTask)
     let task = getTaskByIdx(subCat, taskIdx)
     let newTask = {...task}
-    setTaskNewId(newTask, parseInt(newTaskId))
+    newTask.position = getTaskMaxPosition(idSubCat) + 1
     setTaskNewName(newTask, newTaskName)
-    subCat.tasks.push(newTask)
+    return newTask
+}
+
+function sortByPosition(elements) {
+    elements.sort(function(a, b) {
+        return parseInt(a.position) - parseInt(b.position);
+    })
 }
 
 function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex) {
-    if(oldSubCategoryId === newSubCategoryId)
-    {
-        if(oldIndex < newIndex)
-            newIndex++
-        else if(newIndex < oldIndex)
-            oldIndex++
-    }
-    let task = {...getTask(oldSubCategoryId, taskId)}
-    let subCatIdx = getSubCategoryIdx(newSubCategoryId)
-    let subCat = getSubCategoryByIdx(subCatIdx)
-    subCat.tasks.splice(newIndex, 0, task)
 
-    removeTaskFromData(oldSubCategoryId, oldIndex)
+    let oldSub = getSubInCurrentById(oldSubCategoryId)
+    sortByPosition(oldSub.tasks)
+
+    if(oldSubCategoryId === newSubCategoryId) {
+        let result = structuredClone(oldSub)
+        let i = -1
+        if(oldIndex < newIndex) {
+            result.tasks.forEach(function (task){
+                i++
+                if(i < oldIndex || newIndex < i) return // outside => ignore
+                else if(i === oldIndex) { // element to move
+                    task.position = result.tasks[newIndex].position
+                } else if(i <= newIndex) { // shift to the left
+                    task.position--
+                }
+            })
+        } else {
+            let temp = result.tasks[newIndex].position
+            result.tasks.forEach(function (task){
+                i++
+                if(i < newIndex || oldIndex < i) return // outside => ignore
+                else if(i === oldIndex) { // element to move
+                    task.position = temp
+                } else if(newIndex <= i) { // shift to the right
+                    task.position++
+                }
+            })
+        }
+        sortByPosition(result.tasks)
+        return {result}
+    }
+
+    let element = structuredClone(getTask(oldSubCategoryId, taskId))
+    element.category_id = newSubCategoryId
+    let newSub = getSubInCurrentById(newSubCategoryId)
+    sortByPosition(newSub.tasks)
+
+    let i = 0
+    newSub.tasks.forEach(function(task) {
+        if(i === newIndex)
+        {
+            element.position = task.position
+        }
+        if(newIndex <= i )
+            task.position++
+        i++
+    })
+    newSub.tasks.splice(newIndex, 0, element)
+
+    i = 0
+    oldSub.tasks.forEach(function(task) {
+        if(oldIndex <= i )
+            task.position--
+        i++
+    })
+    oldSub.tasks.splice(oldIndex, 1)
+
+    sortByPosition(oldSub.tasks)
+    sortByPosition(newSub.tasks)
+    return {oldSub, newSub}
 }
 
 
 function moveSubCatFromData(subCatId, oldIndex, newIndex) {
-    let a = getSubCategoryByIdx(oldIndex)
-    a.position = newIndex
-    let b = getSubCategoryByIdx(newIndex)
-    b.position = oldIndex
+
+    let cat = getCurrentCategory()
+    sortByPosition(cat.subCategories)
+
+    let result = structuredClone(cat)
+    let i = -1
+    if(oldIndex < newIndex) {
+        result.subCategories.forEach(function (subcat){
+            i++
+            if(i < oldIndex || newIndex < i) return // outside => ignore
+            else if(i === oldIndex) { // element to move
+                subcat.position = result.subCategories[newIndex].position
+            } else if(i <= newIndex) { // shift to the left
+                subcat.position--
+            }
+        })
+    } else {
+        let temp = result.subCategories[newIndex].position
+        result.subCategories.forEach(function (subcat){
+            i++
+            if(i < newIndex || oldIndex < i) return // outside => ignore
+            else if(i === oldIndex) { // element to move
+                subcat.position = temp
+            } else if(newIndex <= i) { // shift to the right
+                subcat.position++
+            }
+        })
+    }
+
+    sortByPosition(result.subCategories)
+    return result
 }
 
 function setCatToArchivedTrueFromData(catId) {
     let cat = getCategoryById(catId)
     cat.archived = true
+    return cat
 }
 
 function setCatToArchivedFalseFromData(catId) {
     let cat = getCategoryById(catId)
     cat.archived = false
+    return cat
 }
 
 function getCategoryIdx(catId) {
@@ -284,13 +377,17 @@ function duplicateCatFromData(id, newId) {
         member.category_id = newId
         member.category.id = newId
     })
-    data.categories.push(newCat)
+    data.categories.push(cat)
 }
 
 function removeSubCatFromData(id) {
     let cat = getCurrentCategory()
     let idx = getSubCategoryIdx(id)
+
+    let position = cat.subCategories[idx].position
     cat.subCategories.splice(idx, 1)
+    shiftPositionsLeft(cat.subCategories, position)
+    console.log(cat.subCategories)
 }
 
 function removeMemberFromData(catId, userId) {
@@ -313,17 +410,15 @@ function removeCommentFromData(subCatId, taskId, id) {
     task.comments.splice(idx, 1)
 }
 
-function addCommentToData(subCatId, taskId, newId, content) {
+function addCommentToData(subCatId, taskId, content) {
     let comment = getCommentTemplate()
     comment.author = data.user
     comment.author_id = data.user.id
     comment.content = content
     comment.date = Date()
-    comment.id = newId
     comment.task = null
     comment.task_id = taskId
-    let task = getTask(subCatId, taskId)
-    task.comments.push(comment)
+    return comment
 }
 
 function getTaskMaxPosition(subCatId) {
@@ -337,7 +432,7 @@ function getTaskMaxPosition(subCatId) {
     return max
 }
 
-function addTaskToData(assignedId, subCatId, newId, name, desc) {
+function tempAddTaskToData(assignedId, subCatId, name, desc) {
     let task = getTaskTemplate()
 
     if(assignedId !== 0)
@@ -346,12 +441,10 @@ function addTaskToData(assignedId, subCatId, newId, name, desc) {
     task.checked = false
     task.comments = []
     task.description = desc
-    task.id = newId
     task.name = name
     task.position = getTaskMaxPosition(subCatId) + 1
 
-    let subcatidx = getSubCategoryIdx(subCatId)
-    getSubCategoryByIdx(subcatidx).tasks.push(task)
+    return task
 }
 
 function getSubCatMaxPosition() {
@@ -364,34 +457,49 @@ function getSubCatMaxPosition() {
     return max
 }
 
-function addSubCatToData(id, name, newId) {
-    let subcat = getSubCatTemplate()
-
-    subcat.archived = false
-    subcat.id = newId
-    subcat.name = name
-    subcat.owner_id = data.user.id
-    subcat.parent_category_id = id
-    subcat.position = getSubCatMaxPosition() + 1
-
-    getCurrentCategory().subCategories.push(subcat)
+function getCatMaxPosition() {
+    let cat = getCurrentCategory()
+    let max = 0
+    cat.categories.forEach(function(cat) {
+        let temp = cat.category.position
+        if(temp > max)
+            max = temp
+    })
+    return max
 }
 
-function addCatToData(newId) {
+function prepareSubCatToData(id, name) {
+    let subCat = getSubCatTemplate()
+
+    subCat.archived = false
+    subCat.color = "#DAF7A6" // temp
+    subCat.name = name
+    subCat.owner_id = data.user.id
+    subCat.parent_category_id = id
+    subCat.position = getSubCatMaxPosition() + 1
+    subCat.tasks = []
+
+    return subCat
+}
+
+function addSubCatToData(subCat) {
+    getCurrentCategory().subCategories.push(subCat)
+}
+
+function prepareCatForData() {
     let cat = getCatTemplate()
 
     cat.accepted = true
     cat.can_edit = true
-    cat.category_id = newId
     cat.date = Date()
     cat.user_id = data.user.id
 
     cat.category.archived = false
-    cat.category.id = newId
-    cat.category.name = name
+    cat.category.name = getValueFromLanguage("NewCategoryName")
     cat.category.owner_id = data.user.id
     cat.category.position = 0
     cat.category.subCategories = []
+    cat.category.color = "#FF5733" // temp
 
     cat.members = []
     cat.members.push({
@@ -399,7 +507,13 @@ function addCatToData(newId) {
         user: data.user
     })
 
-    storagePushToCategories(newId, false)
+    return cat
+}
+
+function addCatToData(cat) {
+    storagePushToCategories(cat.category_id, false)
+    shiftCatPositionsRight()
+    console.log(cat)
     data.categories.push(cat)
 }
 
@@ -407,6 +521,16 @@ function getMember(userId) {
     let cat = getCurrentGlobalCategory()
     let idx = cat.members.findIndex(m => m.user_id === userId)
     return cat.members[idx]
+}
+
+function getTempTaskUpdate(subCatId, taskId, newName, newDesc, newAssigned) {
+    let origin = getTask(subCatId, taskId)
+    let task = {...origin}
+    task.name = newName
+    task.description = newDesc
+    task.assigned_id = newAssigned
+    task.assigned = newAssigned === 0 ? null : getMember(newAssigned)
+    return task
 }
 
 function updateTaskFromData(subCatId, taskId, newName, newDesc, newAssigned) {
@@ -417,10 +541,25 @@ function updateTaskFromData(subCatId, taskId, newName, newDesc, newAssigned) {
     task.assigned = newAssigned === 0 ? null : getMember(newAssigned)
 }
 
+function getTempSubCatUpdate(subCatId, newName) {
+    let idx = getSubCategoryIdx(subCatId)
+    let origin = getSubCategoryByIdx(idx)
+    let subcat = {...origin}
+    subcat.name = newName
+    return subcat
+}
+
 function updateSubCatFromData(subCatId, newName) {
     let idx = getSubCategoryIdx(subCatId)
     let subcat = getSubCategoryByIdx(idx)
     subcat.name = newName
+}
+
+function getTempCatUpdate(catId, newName) {
+    let origin = getCategoryById(catId)
+    let cat = {...origin}
+    cat.name = newName
+    return cat
 }
 
 function updateCatFromData(catId, newName) {
@@ -434,4 +573,28 @@ function setUserThemeFromData(theme) {
 
 function setLanguageThemeFromData(language) {
     data.user.language = language
+}
+
+function getInvitationIdByCategoryId(categoryId) {
+    let idx = data.categories.findIndex(c => c.category_id === categoryId)
+    return data.categories[idx].id
+}
+
+function getInvitationIdByCategoryIdForMember(categoryId, memberId) {
+    let catidx = data.categories.findIndex(c => c.category_id === categoryId)
+    let memberidx = data.categories[catidx].members.findIndex(m => m.user_id === memberId)
+    return data.categories[catidx].members[memberidx].id
+}
+
+function shiftPositionsLeft(elements, start) {
+    elements.forEach(function (element) {
+        if(element.position > start)
+            element.position--
+    })
+}
+
+function shiftCatPositionsRight() {
+    data.categories.forEach(function (element) {
+        element.category.position++
+    })
 }

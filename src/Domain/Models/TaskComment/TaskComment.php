@@ -38,7 +38,8 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
         return [
             'content' => Validator::stringType()->length(min: 1),
             'author_id' => Validator::intType(),
-            'assigned_id' => Validator::intType()
+            'assigned_id' => Validator::intType(),
+            'task_id' => Validator::intType()
         ];
     }
 
@@ -153,8 +154,8 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
     {
         $data = (object)$data;
         $this->content = $data->content;
-        $this->author_id = isset($data->author_id) ? intval($data->author_id) : null;
-        $this->task_id = isset($data->task_id) ? intval($data->task_id) : null;
+        $this->author_id = !empty($data->author_id) ? intval($data->author_id) : null;
+        $this->task_id = !empty($data->task_id) ? intval($data->task_id) : null;
     }
 
     /**

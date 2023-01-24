@@ -13,12 +13,10 @@ body.onload = function (){
 
 function setToDarkMode(){
     theme = "dark";
-    setTheme();
     switchTheme(theme);
 }
 function setToLightMode(){
     theme = "light";
-    setTheme();
     switchTheme(theme);
 }
 

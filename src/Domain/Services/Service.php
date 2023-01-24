@@ -2,20 +2,20 @@
 
 namespace App\Domain\Services;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 use Tagliatti\SlimValidation\ValidatorInterface;
 
 abstract class Service
 {
 
     protected ValidatorInterface $validator;
-    protected TranslatorInterface $translator;
+    protected Translator $translator;
 
     /**
      * @param ValidatorInterface $validator
-     * @param TranslatorInterface $translator
+     * @param Translator $translator
      */
-    public function __construct(ValidatorInterface $validator, TranslatorInterface $translator)
+    public function __construct(ValidatorInterface $validator, Translator $translator)
     {
         $this->validator = $validator;
         $this->translator = $translator;

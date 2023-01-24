@@ -14,7 +14,6 @@ use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 
@@ -41,6 +40,48 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     public function __construct()
     {
         parent::__construct('user_categories');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete(UserCategory $userCategory): int
+    {
+        return $this->getTable()->delete($userCategory->getId());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCategories(User|int $user, ?bool $accepted = null, array|null $with = null): array
+    {
+        $categories = [];
+        $id = $user instanceof User ? $user->getId() : $user;
+        $foundCategories = $this->getTable()->where('user_id', $id);
+        if (isset($accepted)) $foundCategories = $foundCategories->where('accepted', $accepted);
+        $foundCategories = $foundCategories->latest('updated_at')->get();
+
+        foreach ($foundCategories as $category) {
+
+            try {
+                $categories[] = $this->parseUserCategory($category, $with);
+            } catch (UserCategoryNotFoundException) {
+                // do nothing
+            }
+
+        }
+
+        return $categories;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($id, array|null $with = null): UserCategory
+    {
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if (is_array($found)) $found = (object)$found;
+        return $this->parseUserCategory($found, $with);
     }
 
     /**
@@ -89,16 +130,6 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
     /**
      * {@inheritdoc}
      */
-    public function get($id, array|null $with = null): UserCategory
-    {
-        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
-        if (is_array($found)) $found = (object)$found;
-        return $this->parseUserCategory($found, $with);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function save(UserCategory $userCategory): bool
     {
         // Create
@@ -108,40 +139,9 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $userCategory->getId())
-                ->update($userCategory->toRow()) != 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(UserCategory $userCategory): int
-    {
-        return $this->getTable()->delete($userCategory->getId());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCategories(User|int $user, ?bool $accepted = null, array|null $with = null): array
-    {
-        $categories = [];
-        $id = $user instanceof User ? $user->getId() : $user;
-        $foundCategories = $this->getTable()->where('user_id', $id);
-        if (isset($accepted)) $foundCategories = $foundCategories->where('accepted', $accepted);
-        $foundCategories = $foundCategories->latest('updated_at')->get();
-
-        foreach ($foundCategories as $category) {
-
-            try {
-                $categories[] = $this->parseUserCategory($category, $with);
-            } catch (UserCategoryNotFoundException) {
-                // do nothing
-            }
-
-        }
-
-        return $categories;
+        $this->getTable()->where('id', $userCategory->getId())
+            ->update($userCategory->toRow());
+        return true;
     }
 
     /**

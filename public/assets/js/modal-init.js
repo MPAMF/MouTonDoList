@@ -5,7 +5,7 @@ function openTaskDetails(subCatId, taskId)
     // get from categories where id=id
     $("#modal-title").html(getValueFromLanguage('ModalTaskDetailsName'))
     $("#modal-footer").html('' +
-        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>')
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('CancelModalNav') + '</button>')
 
     let content = '' +
         '<div>' +
@@ -69,7 +69,7 @@ function openTaskDetails(subCatId, taskId)
             '                <div id="error-commentNew" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalCommentErrorText') + '</div>' +
             '            </div>' +
             '            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
-            '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="commentNewCancel">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
+            '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="commentNewCancel">' + getValueFromLanguage('CancelModalNav') + '</button>' +
             '                <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="commentNewCreate" disabled>' + getValueFromLanguage('ModalCommentAddText') + '</button>' +
             '            </div>' +
             '        </form>'
@@ -92,7 +92,7 @@ function openEditModalCategory(catId)
     // get from categories where id=id
     $("#modal-title").html(getValueFromLanguage('ModalCategoryEditName'))
     $("#modal-footer").html('' +
-        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('CancelModalNav') + '</button>' +
         '<button type="button" id="modal-submit-category" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
 
     let content = '<form class="row g-3 form-check">'
@@ -130,13 +130,14 @@ function openEditModalCategory(catId)
             '<ul class="list-group list-group-flush tasks">';
 
         getCategoryMembersById(catId).forEach(function(member) {
+            if(member.user_id === data.user.id) return
             content +=
                 '<li class="list-group-item list-member" data-member="' + catId + '-' + member.user.id + '">' +
                 '<div class="col py-1">' +
                 '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+                '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" disabled>' +
                 '<option value="READ"' + (member.canEdit ? "selected" : "") + '>' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
                 '<option value="WRITE"' + (member.canEdit ? "" : "selected") + '>' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
                 '</select>' +
@@ -176,7 +177,7 @@ function openEditModalCategory(catId)
             '                <div id="error-memberStatusNew" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberErrorText') + '</div>' +
             '            </div>' +
             '            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
-            '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="memberNewCancel">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
+            '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="memberNewCancel">' + getValueFromLanguage('CancelModalNav') + '</button>' +
             '                <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="memberNewCreate" disabled>' + getValueFromLanguage('ModalProjectMemberAddText') + '</button>' +
             '            </div>' +
             '        </div>'
@@ -202,7 +203,7 @@ function openEditModalSubCategory(catId)
     // get from categories where id=id
     $("#modal-title").html(getValueFromLanguage('ModalSubCategoryEditName'))
     $("#modal-footer").html('' +
-        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('CancelModalNav') + '</button>' +
         '<button type="button" id="modal-submit-subcategory" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
     $("#modal-body").html('' +
         '<form class="row g-3 form-check">' +
@@ -225,7 +226,7 @@ function openEditModalTask(subCatId, taskId)
     // get from categories where id=id
     $("#modal-title").html(getValueFromLanguage('ModalTaskEditName'))
     $("#modal-footer").html('' +
-        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('AnnulationModalNav') + '</button>' +
+        '<button type="reset" id="modal-cancel" class="btn btn-secondary" data-bs-dismiss="modal">' + getValueFromLanguage('CancelModalNav') + '</button>' +
         '<button type="button" id="modal-submit-task" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
 
     let content =

@@ -2,15 +2,15 @@ class Repository {
 
     list(endpoint) {
         return new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}`,
+            url: `${endpoint}`,
             type: 'get',
             contentType: 'application/json; charset=utf-8',
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
     get(endpoint, id) {
-        return  new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}/${id}`,
+        return new Promise((resolve, reject) => $.ajax({
+            url: `${endpoint}/${id}`,
             type: 'get',
             contentType: 'application/json; charset=utf-8',
         }).then(e => resolve(e.data)).catch(e => reject(e)))
@@ -18,31 +18,41 @@ class Repository {
 
     put(endpoint, id, data = {}) {
         return new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}/${id}`,
-            type: 'put',
+            url: `${endpoint}/${id}`,
+            method: 'put',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: data
+            data: JSON.stringify(data)
+        }).then(e => resolve(e.data)).catch(e => reject(e)))
+    }
+
+    patch(endpoint, id, data = {}) {
+        return new Promise((resolve, reject) => $.ajax({
+            url: `${endpoint}/${id}`,
+            method: 'patch',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(data)
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
     post(endpoint, data = {}) {
         return new Promise((resolve, reject) => $.ajax({
-            url: this.endpoint,
+            url: endpoint,
             type: 'post',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: data
+            data: JSON.stringify(data)
         }).then(e => resolve(e.data)).catch(e => reject(e)))
     }
 
     delete(endpoint, id) {
         return new Promise((resolve, reject) => $.ajax({
-            url: `${this.endpoint}/${id}`,
+            url: `${endpoint}/${id}`,
             type: 'delete',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-        }).then(e => resolve(e.data)).catch(e => reject(e)))
+        }).then(e => resolve(e)).catch(e => reject(e)))
     }
 
 }
@@ -51,7 +61,7 @@ class TaskRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/tasks'
+        this.endpoint = '/api/tasks'
     }
 
     get(id) {
@@ -75,7 +85,7 @@ class CategoryRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/categories'
+        this.endpoint = '/api/categories'
     }
 
     get(id) {
@@ -90,8 +100,8 @@ class CategoryRepository extends Repository {
         return super.put(this.endpoint, category.id, category)
     }
 
-    delete(category) {
-        return super.delete(this.endpoint, category.id)
+    delete(id) {
+        return super.delete(this.endpoint, id)
     }
 }
 
@@ -99,7 +109,7 @@ class CommentRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/comments'
+        this.endpoint = '/api/comments'
     }
 
     get(id) {
@@ -114,8 +124,8 @@ class CommentRepository extends Repository {
         return super.put(this.endpoint, comment.id, comment)
     }
 
-    delete(comment) {
-        return super.delete(this.endpoint, comment.id)
+    delete(id) {
+        return super.delete(this.endpoint, id)
     }
 }
 
@@ -123,7 +133,7 @@ class UserRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/users'
+        this.endpoint = '/api/users'
     }
 
     get(id) {
@@ -139,6 +149,10 @@ class UserRepository extends Repository {
         return super.put(this.endpoint, user.id, user)
     }
 
+    patch(user) {
+        return super.patch(this.endpoint, user.id, user)
+    }
+
     // Not implemented
     delete(user) {
         return new Promise((resolve, reject) => reject());
@@ -149,7 +163,7 @@ class InvitationRepository extends Repository {
 
     constructor() {
         super();
-        this.endpoint = '/actions/invitations'
+        this.endpoint = '/api/invitations'
     }
 
     list() {

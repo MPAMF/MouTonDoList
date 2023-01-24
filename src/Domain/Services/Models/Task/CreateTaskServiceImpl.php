@@ -14,7 +14,6 @@ use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class CreateTaskServiceImpl extends Service implements CreateTaskService
 {
@@ -62,7 +61,7 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
         $task->setLastEditorId($request->getUserId());
 
         // Check category validity
-        $task->setCategory($this->categoryRepository->get($task->getId()));
+        $task->setCategory($this->categoryRepository->get($task->getCategoryId()));
 
         // Only accept to create tasks in subcategories
         if ($task->getCategory()->getParentCategoryId() == null) {
@@ -80,21 +79,19 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
         // Check assigned_id
         if ($task->getAssignedId() != null) {
             // Check if assigned user has access to the project
-            if (!$this->userCategoryRepository->exists(null, $task->getCategoryId(), $task->getAssignedId(), accepted: true)) {
+            if (!$this->userCategoryRepository->exists(null, $task->getCategory()->getParentCategoryId(), $task->getAssignedId(), accepted: true)) {
                 throw new BadRequestException($this->translator->trans('AssignedUserNotFoundException'));
             }
 
-            $this->userCategoryCheckPermissionService->exists(new UserCategoryCheckPermissionRequest(
-                userId: $task->getAssignedId(),
-                categoryId: $task->getCategoryId(),
-                checkAccepted: false
-            ));
         }
 
         if (!$this->taskRepository->save($task)) {
             // return with error?
             throw new RepositorySaveException($this->translator->trans('TaskCreateDBError'));
         }
+
+        // drag & drop handling
+        $this->taskRepository->orderTasks($task, $task->getPosition(), -1, false);
 
         return $task;
     }

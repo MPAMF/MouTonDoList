@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Domain\Services\Models\User;
+namespace App\Domain\Services\Auth\Token;
 
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\User\User;
 use App\Domain\Models\User\UserNotFoundException;
-use App\Domain\Requests\User\GetUserRequest;
 
-interface GetUserService
+interface TokenDecodeService
 {
 
     /**
-     * @param GetUserRequest $request
+     * @param string $token
      * @return User
      * @throws NoPermissionException
      * @throws UserNotFoundException
      */
-    public function get(GetUserRequest $request): User;
+    public function decode(string $token): User;
+
 }

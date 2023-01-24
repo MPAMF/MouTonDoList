@@ -9,7 +9,6 @@ use App\Domain\Models\User\User;
 use App\Domain\Requests\User\CreateUserRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 
 class CreateUserServiceImpl extends Service implements CreateUserService
 {
@@ -35,8 +34,7 @@ class CreateUserServiceImpl extends Service implements CreateUserService
         $data = $validator->getValues();
         $user->fromValidator($data);
 
-        if($this->userRepository->exists(null, $user->getEmail()))
-        {
+        if ($this->userRepository->exists(null, $user->getEmail())) {
             // already exists
             throw new AlreadyExistsException($this->translator->trans('UserAlreadyExists'));
         }
@@ -44,7 +42,7 @@ class CreateUserServiceImpl extends Service implements CreateUserService
         // Hash password
         $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
 
-        if(!$this->userRepository->save($user)) {
+        if (!$this->userRepository->save($user)) {
             throw new RepositorySaveException($this->translator->trans('UserCreateDBError'));
         }
 
