@@ -162,7 +162,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         if ($isDelete) {
             return $this->getTable()
                     ->where('category_id', $task->getCategoryId())
-                    ->where('position', '>', $task->getPosition())
+                    ->where('position', '>', $oldPosition)
                     ->decrement('position') != 0;
         }
 
