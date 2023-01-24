@@ -136,7 +136,7 @@ function openEditModalCategory(catId)
                 '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" required>' +
+                '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" disabled>' +
                 '<option value="READ"' + (member.canEdit ? "selected" : "") + '>' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
                 '<option value="WRITE"' + (member.canEdit ? "" : "selected") + '>' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
                 '</select>' +
