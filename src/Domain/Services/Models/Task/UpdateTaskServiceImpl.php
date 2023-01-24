@@ -86,7 +86,8 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
         }
 
         // drag & drop handling
-        $this->taskRepository->orderTasks($task, $task->getPosition(), $oldPosition, false);
+        $this->taskRepository->orderTasks($task, $task->getPosition(),
+            $task->getCategoryId() != $oldCategoryId ? -1 : $oldPosition, false);
 
         return $task;
     }
