@@ -9,7 +9,7 @@ use App\Domain\Services\Models\Category\UpdateCategoryService;
 use App\Domain\Services\Models\Category\UpdateCategoryServiceImpl;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 use Tagliatti\SlimValidation\Validator;
 use Tests\TestCase;
 
@@ -18,14 +18,14 @@ class UpdateCategoryServiceTest extends TestCase
     private CategoryRepository $categoryRepository;
     private UserCategoryRepository $userCategoryRepository;
     private UpdateCategoryService $updateCategoryService;
-    private TranslatorInterface $translator;
+    private Translator $translator;
     private GetCategoryService $getCategoryService;
 
     public function setUp(): void
     {
         $this->categoryRepository = $this->createMock(CategoryRepository::class);
         $this->userCategoryRepository = $this->createMock(UserCategoryRepository::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->translator = $this->createMock(Translator::class);
         $this->updateCategoryService = new UpdateCategoryServiceImpl(new Validator(), $this->translator);
         $this->updateCategoryService->userCategoryRepository = $this->userCategoryRepository;
         $this->updateCategoryService->categoryRepository = $this->categoryRepository;
@@ -35,8 +35,8 @@ class UpdateCategoryServiceTest extends TestCase
 
     public function testUpdateCategory(): void
     {
-        $this->userCategoryRepository->expects($this->once())
-            ->method('save');
+        $this->categoryRepository->expects($this->once())
+            ->method('save')->willReturn(true);
 
         $expected = new Category();
         $expected->setId(1);
@@ -64,7 +64,9 @@ class UpdateCategoryServiceTest extends TestCase
                 return true;
             }))->willReturn(true);
 
-        $this->getCategoryService->expects($this->once())->method('get')->willReturn(new Category());
+        $cat= new Category();
+        $cat->setOwnerId(1);
+        $this->getCategoryService->expects($this->once())->method('get')->willReturn($cat);
 
         $updatedCategory = $this->updateCategoryService->update($request);
 
@@ -72,6 +74,6 @@ class UpdateCategoryServiceTest extends TestCase
         $updatedCategory->setCreatedAt($expected->getCreatedAt());
         $updatedCategory->setUpdatedAt($expected->getUpdatedAt());
 
-        $this->assertEquals($updatedCategory, $expected);
+        $this->assertEquals($expected, $updatedCategory);
     }
 }

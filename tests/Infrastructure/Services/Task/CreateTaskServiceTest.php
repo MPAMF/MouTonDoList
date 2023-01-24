@@ -10,8 +10,8 @@ use App\Domain\Services\Models\Task\CreateTaskServiceImpl;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Tagliatti\SlimValidation\Validator;
+use Symfony\Component\Translation\Translator;
 use Tests\TestCase;
 
 class CreateTaskServiceTest extends TestCase
@@ -20,14 +20,14 @@ class CreateTaskServiceTest extends TestCase
     private CategoryRepository $categoryRepository;
     private UserCategoryRepository $userCategoryRepository;
     private CreateTaskService $createTaskService;
-    private TranslatorInterface $translator;
+    private Translator $translator;
 
     public function setUp(): void
     {
         $this->taskRepository = $this->createMock(TaskRepository::class);
         $this->categoryRepository = $this->createMock(CategoryRepository::class);
         $this->userCategoryRepository = $this->createMock(UserCategoryRepository::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
+        $this->translator = $this->createMock(Translator::class);
         $this->createTaskService = new CreateTaskServiceImpl(new Validator(), $this->translator);
         $this->createTaskService->taskRepository = $this->taskRepository;
         $this->createTaskService->categoryRepository = $this->categoryRepository;
@@ -52,7 +52,6 @@ class CreateTaskServiceTest extends TestCase
         $expected->setId(1);
         $expected->setName('Test task');
         $expected->setDescription('Test description');
-        $expected->setDueDate(new \DateTime());
         $expected->setChecked(false);
         $expected->setPosition(0);
         $expected->setCategoryId(1);
@@ -62,7 +61,6 @@ class CreateTaskServiceTest extends TestCase
         $data = [
             'name' => 'Test task',
             'description' => 'Test description',
-            'due_date' => '2022-01-01',
             'checked' => false,
             'position' => 0,
             'category_id' => 1,
