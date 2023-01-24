@@ -87,8 +87,9 @@ class EloquentUserRepository extends Repository implements UserRepository
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $user->getId())
-                ->update($user->toRow()) != 0;
+        $this->getTable()->where('id', $user->getId())
+                ->update($user->toRow());
+        return true;
     }
 
     /**

@@ -120,8 +120,9 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $task->getId())
-                ->update($task->toRow()) != 0;
+        $this->getTable()->where('id', $task->getId())
+                ->update($task->toRow());
+        return true;
     }
 
     public function delete(Task $task) : int

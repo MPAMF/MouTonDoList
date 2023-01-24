@@ -153,8 +153,9 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $taskComment->getId())
-                ->update($taskComment->toRow()) != 0;
+        $this->getTable()->where('id', $taskComment->getId())
+                ->update($taskComment->toRow());
+        return true;
     }
 
     /**
