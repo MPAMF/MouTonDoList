@@ -218,10 +218,13 @@ function setTaskChecked(idSubCat, idTask, value) {
     task.checked = value
 }
 
-function removeTaskFromData(idSubCat, taskIdx) {
+function removeTaskFromData(idSubCat, taskId) {
     let subCatIdx = getSubCategoryIdx(idSubCat)
     let subCat = getSubCategoryByIdx(subCatIdx)
+    let taskIdx = subCat.tasks.findIndex(t => t.id === taskId)
+    let position = subCat.tasks[taskIdx].position
     subCat.tasks.splice(taskIdx, 1)
+    shiftPositionsLeft(subCat.tasks, position)
 }
 
 function duplicateTaskFromData(idSubCat, idTask, newTaskName) {
@@ -230,6 +233,7 @@ function duplicateTaskFromData(idSubCat, idTask, newTaskName) {
     let taskIdx = getTaskIdx(subCat, idTask)
     let task = getTaskByIdx(subCat, taskIdx)
     let newTask = {...task}
+    newTask.position = getTaskMaxPosition(idSubCat) + 1
     setTaskNewName(newTask, newTaskName)
     return newTask
 }
@@ -562,4 +566,11 @@ function getInvitationIdByCategoryIdForMember(categoryId, memberId) {
     let catidx = data.categories.findIndex(c => c.category_id === categoryId)
     let memberidx = data.categories[catidx].members.findIndex(m => m.user_id === memberId)
     return data.categories[catidx].members[memberidx].id
+}
+
+function shiftPositionsLeft(elements, start) {
+    elements.forEach(function (element) {
+        if(element.position > start)
+            element.position--
+    })
 }

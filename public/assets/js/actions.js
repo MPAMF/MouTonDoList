@@ -65,8 +65,6 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
     else
         task = result.newSub.tasks[newIndex]
 
-    console.log(result.newSub, task)
-
     repositories.tasks.update(task).then(() => {
         if(result.result !== undefined) {
             oldSub = result.result
@@ -337,12 +335,13 @@ function duplicateTask(idCat, idTask) {
         newPopover.content = getPopoverTaskDefaultContent(idCat, newId)
         new bootstrap.Popover(lastChild, newPopover)
 
-        container.parentElement.prepend(copyElement)
+        container.parentElement.append(copyElement)
 
         let subCatIdx = getSubCategoryIdx(idCat)
         let subCat = getSubCategoryByIdx(subCatIdx)
         setTaskNewId(newTask, newId)
         subCat.tasks.push(newTask)
+        sortByPosition(subCat.tasks)
 
         showToast(getValueFromLanguage('DuplicateTaskSuccess'), title, 'success')
     }).catch(e => {
