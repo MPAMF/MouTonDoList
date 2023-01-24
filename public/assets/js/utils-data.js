@@ -458,6 +458,7 @@ function prepareSubCatToData(id, name) {
     subCat.owner_id = data.user.id
     subCat.parent_category_id = id
     subCat.position = getSubCatMaxPosition() + 1
+    subCat.tasks = []
 
     return subCat
 }
