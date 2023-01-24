@@ -5,7 +5,6 @@ namespace App\Domain\Services\Models\User;
 use App\Domain\Requests\User\DeleteUserRequest;
 use App\Domain\Requests\User\GetUserRequest;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 
 class DeleteUserServiceImpl implements DeleteUserService
 {

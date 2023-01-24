@@ -13,7 +13,6 @@ use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 
 class CreateInvitationServiceImpl extends Service implements CreateInvitationService
 {
@@ -63,8 +62,7 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
         $userCategory->setCategory($this->categoryRepository->get($userCategory->getCategoryId()));
 
         // should be a parent category
-        if($userCategory->getCategory()->getParentCategoryId() != NULL)
-        {
+        if ($userCategory->getCategory()->getParentCategoryId() != NULL) {
             throw new BadRequestException($this->translator->trans('CategoryNotParentCategory'));
         }
 

@@ -8,7 +8,6 @@ use App\Domain\Requests\Task\GetTaskRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
 use App\Domain\Services\Models\UserCategory\UserCategoryCheckPermissionService;
 use App\Infrastructure\Repositories\TaskRepository;
-use DI\Annotation\Inject;
 
 class GetTaskServiceImpl implements GetTaskService
 {

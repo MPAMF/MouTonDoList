@@ -5,7 +5,6 @@ namespace App\Domain\Services\Models\Invitation;
 use App\Domain\Requests\Invitation\DeleteInvitationRequest;
 use App\Domain\Requests\Invitation\GetInvitationRequest;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class DeleteInvitationServiceImpl implements DeleteInvitationService
 {

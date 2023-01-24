@@ -40,6 +40,19 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
         $this->language = "";
     }
 
+    public static function getValidatorRules(): array
+    {
+        return [
+            'email' => Validator::notBlank()->email()->length(0, 254),
+            'username' => Validator::notBlank()->length(0, 64),
+            'password' => Validator::notBlank()->regex('/[A-Z]/')->regex('/[a-z]/')
+                ->regex('/[1-9]/')->regex('/[-_*.!?#@&]/')->length(6, 128),
+            'image_path' => Validator::url(),
+            'theme' => Validator::stringType()->length(max: 16),
+            'language' => Validator::stringType()->length(max: 16)
+        ];
+    }
+
     /**
      * @return int|null
      */
@@ -172,19 +185,6 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
         $this->image_path = $data->image_path;
         $this->theme = $data->theme;
         $this->language = $data->language;
-    }
-
-    public static function getValidatorRules(): array
-    {
-        return [
-            'email' => Validator::notBlank()->email()->length(0, 254),
-            'username' => Validator::notBlank()->length(0, 64),
-            'password' => Validator::notBlank()->regex('/[A-Z]/')->regex('/[a-z]/')
-                ->regex('/[1-9]/')->regex('/[-_*.!?#@&]/')->length(6, 128),
-            'image_path' => Validator::url(),
-            'theme' => Validator::stringType()->length(max: 16),
-            'language' => Validator::stringType()->length(max: 16)
-        ];
     }
 
     /**

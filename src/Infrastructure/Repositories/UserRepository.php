@@ -43,7 +43,7 @@ interface UserRepository
      * @param User $user User
      * @return int Number of records deleted
      */
-    public function delete(User $user) : int;
+    public function delete(User $user): int;
 
     /**
      * @param int|null $id User id

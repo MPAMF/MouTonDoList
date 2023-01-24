@@ -9,7 +9,6 @@ use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskCommentRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class DisplayDashboardServiceImpl implements DisplayDashboardService
 {
@@ -79,7 +78,6 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
         }
 
         // Filter categories: archives / normal
-        // TODO: utile de faire deux collections?
         $categories->each(function (UserCategory $a) {
             $a->members = $this->userCategoryRepository->getUsers($a->getCategoryId());
         });

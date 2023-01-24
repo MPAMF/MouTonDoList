@@ -11,7 +11,6 @@ use App\Infrastructure\Repositories\Repository;
 use App\Infrastructure\Repositories\TaskCommentRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Exception;
 use stdClass;
 
@@ -39,6 +38,52 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
     public function __construct()
     {
         parent::__construct('task_comments');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUserComments(int $user_id, array|null $with = null): array
+    {
+        return $this->getComments($user_id, true, $with);
+    }
+
+    /**
+     * @param int $id
+     * @param bool $user
+     * @param array|null $with
+     * @return array
+     */
+    private function getComments(int $id, bool $user = false, array|null $with = null): array
+    {
+        $comments = [];
+
+        $foundComments = $this->getTable()
+            ->where($user ? 'user_id' : 'task_id', $id)
+            ->latest()
+            ->get();
+
+        foreach ($foundComments as $comment) {
+
+            try {
+                $comments[] = $this->parseTaskComment($comment, $with);
+            } catch (TaskCommentNotFoundException) {
+                // do nothing
+            }
+
+        }
+
+        return $comments;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get($id, array|null $with = null): TaskComment
+    {
+        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
+        if (is_array($found)) $found = (object)$found;
+        return $this->parseTaskComment($found, $with);
     }
 
     /**
@@ -88,60 +133,6 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
     }
 
     /**
-     * @param int $id
-     * @param bool $user
-     * @param array|null $with
-     * @return array
-     */
-    private function getComments(int $id, bool $user = false, array|null $with = null): array
-    {
-        $comments = [];
-
-        $foundComments = $this->getTable()
-            ->where($user ? 'user_id' : 'task_id', $id)
-            ->latest()
-            ->get();
-
-        foreach ($foundComments as $comment) {
-
-            try {
-                $comments[] = $this->parseTaskComment($comment, $with);
-            } catch (TaskCommentNotFoundException) {
-                // do nothing
-            }
-
-        }
-
-        return $comments;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getUserComments(int $user_id, array|null $with = null): array
-    {
-        return $this->getComments($user_id, true, $with);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTaskComments(int $task_id, array|null $with = null): array
-    {
-        return $this->getComments($task_id, false, $with);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function get($id, array|null $with = null): TaskComment
-    {
-        $found = $this->dbCache->load($this->tableName, $id) ?? $this->getTable()->where('id', $id)->first();
-        if(is_array($found)) $found = (object) $found;
-        return $this->parseTaskComment($found, $with);
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function save(TaskComment $taskComment): bool
@@ -154,8 +145,16 @@ class EloquentTaskCommentRepository extends Repository implements TaskCommentRep
         }
 
         $this->getTable()->where('id', $taskComment->getId())
-                ->update($taskComment->toRow());
+            ->update($taskComment->toRow());
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTaskComments(int $task_id, array|null $with = null): array
+    {
+        return $this->getComments($task_id, false, $with);
     }
 
     /**

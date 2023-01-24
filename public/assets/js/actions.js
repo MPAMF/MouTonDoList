@@ -65,11 +65,10 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
     else
         task = result.newSub.tasks[newIndex]
 
-    console.log(result.newSub, task)
-
     repositories.tasks.update(task).then(() => {
         if(result.result !== undefined) {
             oldSub = result.result
+            console.log("old", oldSub)
         } else {
             oldSub = result.oldSub
             newSub = result.newSub
@@ -222,7 +221,7 @@ function duplicateCategory(id) {
 
     repositories.categories.create(getCategoryById(id)).then((e) => {
 
-        let newId = e.data.id
+        let newId = e.id
 
         let copyElement = category.parentElement.cloneNode(true)
         copyElement.classList.remove('active')
@@ -326,7 +325,7 @@ function duplicateTask(idCat, idTask) {
         contentElement.firstElementChild.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
 
         let taskViewInfoElement = contentElement.getElementsByTagName('div')[0]
-        taskViewInfoElement.id = "taskViewInfo" + idCat + "-" + newId
+        taskViewInfoElement.id = "taskViewInfo-" + idCat + "-" + newId
         taskViewInfoElement.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
         taskViewInfoElement.firstElementChild.textContent = newName
 
@@ -337,12 +336,13 @@ function duplicateTask(idCat, idTask) {
         newPopover.content = getPopoverTaskDefaultContent(idCat, newId)
         new bootstrap.Popover(lastChild, newPopover)
 
-        container.parentElement.prepend(copyElement)
+        container.parentElement.append(copyElement)
 
         let subCatIdx = getSubCategoryIdx(idCat)
         let subCat = getSubCategoryByIdx(subCatIdx)
         setTaskNewId(newTask, newId)
         subCat.tasks.push(newTask)
+        sortByPosition(subCat.tasks)
 
         showToast(getValueFromLanguage('DuplicateTaskSuccess'), title, 'success')
     }).catch(e => {
@@ -656,8 +656,8 @@ function newCategory() {
     const title = getValueFromLanguage('CreateCategoryTitle')
     let cat = prepareCatForData()
 
-    repositories.categories.create(cat).then((e) => {
-        let newId = e.data.id
+    repositories.categories.create(cat.category).then((e) => {
+        let newId = e.id
         let container = document.getElementById("category-default").firstElementChild
         container.prepend(getSidebarOwnedCategory(newId))
 

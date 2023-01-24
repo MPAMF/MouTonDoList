@@ -6,7 +6,6 @@ use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\User\User;
 use App\Domain\Requests\User\GetUserRequest;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 
 class GetUserServiceImpl implements GetUserService
 {

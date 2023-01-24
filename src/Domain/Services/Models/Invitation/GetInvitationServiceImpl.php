@@ -7,7 +7,6 @@ use App\Domain\Models\Category\CategoryNotFoundException;
 use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Requests\Invitation\GetInvitationRequest;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class GetInvitationServiceImpl implements GetInvitationService
 {

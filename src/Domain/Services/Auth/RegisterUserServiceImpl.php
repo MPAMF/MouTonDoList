@@ -4,11 +4,14 @@ namespace App\Domain\Services\Auth;
 
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\RepositorySaveException;
+use App\Domain\Models\Category\Category;
 use App\Domain\Models\User\User;
+use App\Domain\Models\UserCategory\UserCategory;
 use App\Domain\Requests\Auth\RegisterRequest;
 use App\Domain\Services\Service;
+use App\Infrastructure\Repositories\CategoryRepository;
+use App\Infrastructure\Repositories\UserCategoryRepository;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Respect\Validation\Validator;
 
 class RegisterUserServiceImpl extends Service implements RegisterUserService
@@ -19,6 +22,18 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
      * @var UserRepository
      */
     public UserRepository $userRepository;
+
+    /**
+     * @Inject
+     * @var CategoryRepository
+     */
+    public CategoryRepository $categoryRepository;
+
+    /**
+     * @Inject
+     * @var UserCategoryRepository
+     */
+    public UserCategoryRepository $userCategoryRepository;
 
     /**
      * {@inheritDoc}
@@ -39,7 +54,7 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
 
         $data = $validator->getValues();
 
-        if ($this->userRepository->exists($data['email'])) {
+        if ($this->userRepository->exists(email: $data['email'])) {
             throw new BadRequestException($this->translator->trans('AuthRegisterUserExist'));
         }
 
@@ -49,6 +64,25 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
         $user->setPassword(password_hash($data['password'], PASSWORD_DEFAULT));
 
         if (!($this->userRepository->save($user))) {
+            throw new RepositorySaveException($this->translator->trans('AuthRegisterFailed'));
+        }
+
+        // Create an example category for user
+        $category = new Category();
+        $category->setOwner($user);
+        $category->setName("Example category");
+
+        if (!$this->categoryRepository->save($category)) {
+            throw new RepositorySaveException($this->translator->trans('AuthRegisterFailed'));
+        }
+
+        $userCategory = new UserCategory();
+        $userCategory->setAccepted(true);
+        $userCategory->setCanEdit(true);
+        $userCategory->setCategory($category);
+        $userCategory->setUser($user);
+
+        if (!$this->userCategoryRepository->save($userCategory)) {
             throw new RepositorySaveException($this->translator->trans('AuthRegisterFailed'));
         }
 

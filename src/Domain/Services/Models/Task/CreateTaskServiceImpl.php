@@ -14,7 +14,6 @@ use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\CategoryRepository;
 use App\Infrastructure\Repositories\TaskRepository;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class CreateTaskServiceImpl extends Service implements CreateTaskService
 {
@@ -90,6 +89,9 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
             // return with error?
             throw new RepositorySaveException($this->translator->trans('TaskCreateDBError'));
         }
+
+        // drag & drop handling
+        $this->taskRepository->orderTasks($task, $task->getPosition(), -1, false);
 
         return $task;
     }

@@ -10,7 +10,6 @@ use App\Domain\Requests\TaskComment\GetTaskCommentRequest;
 use App\Domain\Requests\TaskComment\UpdateTaskCommentRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\TaskCommentRepository;
-use DI\Annotation\Inject;
 
 class UpdateTaskCommentServiceImpl extends Service implements UpdateTaskCommentService
 {
