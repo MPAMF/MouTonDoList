@@ -58,7 +58,14 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
 
     let oldSub = getSubInCurrentById(oldSubCategoryId)
     let newSub = getSubInCurrentById(newSubCategoryId)
-    let task = newSub.tasks[newIndex]
+
+    let task
+    if(result.result !== undefined)
+        task = result.result.tasks[newIndex]
+    else
+        task = result.newSub.tasks[newIndex]
+
+    console.log(result.newSub, task)
 
     repositories.tasks.update(task).then(() => {
         if(result.result !== undefined) {
@@ -86,9 +93,6 @@ function moveSubCategory(subCatId, oldIndex, newIndex) {
 
     let result = moveSubCatFromData(subCatId, oldIndex, newIndex)
     let subCat = result.subCategories[newIndex]
-
-    /* let subCat = {...getSubCategoryByIdx(oldIndex)}
-    subCat.position = newIndex */
 
     repositories.categories.update(subCat).then(() => {
         data.categories[data.currentCategoryIdx].category = subCat

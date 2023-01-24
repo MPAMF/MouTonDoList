@@ -281,7 +281,10 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
     let i = 0
     newSub.tasks.forEach(function(task) {
         if(i === newIndex)
+        {
             element.position = task.position
+            element.category_id = newSubCategoryId
+        }
         if(newIndex <= i )
             task.position++
         i++
