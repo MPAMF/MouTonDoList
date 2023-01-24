@@ -163,7 +163,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             return $this->getTable()
                     ->where('category_id', $task->getCategoryId())
                     ->where('position', '>', $task->getPosition())
-                    ->update(['position' => 'position - 1']) != 0;
+                    ->decrement('position') != 0;
         }
 
         if ($newPosition == $oldPosition)
@@ -172,7 +172,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
         // First check if task position is not greater than the highest position in db
         $highest = $this->getTable()
             ->where('id', '!=', $task->getId())
-            ->where('category_id', '=', $task->getCategoryId())
+            ->where('category_id', $task->getCategoryId())
             ->max('position');
 
         if (empty($highest)) {
@@ -194,13 +194,13 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             // when add
             if ($oldPosition < 0) {
                 return $query->where('position' ,'>=', $newPosition)
-                        ->update(['position' => 'position + 1']) != 0;
+                        ->increment('position') != 0;
             }
 
             if ($newPosition < $oldPosition) {
                 return $query->where('position', '>', $newPosition)
                         ->where('position', '<', $oldPosition)
-                        ->update(['position' => 'position + 1']) != 0;
+                        ->increment('position') != 0;
             }
             // si newPosition > oldPosition => update all pos - 1 where position > oldPosition && position < newPosition
             // 0 >-|    // 0 -> 3
@@ -210,7 +210,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             // 4
             return $query->where('position', '>', $oldPosition)
                     ->where('position', '<', $newPosition)
-                    ->update(['position' => 'position - 1']) != 0;
+                    ->decrement('position') != 0;
         }
 
         // Check if task position is not greater than the highest position in db

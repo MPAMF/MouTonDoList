@@ -70,7 +70,6 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
         $task->fromValidator($data);
         $task->setLastEditorId($userId);
 
-        // Useless to check if something was deleted
         if (!$this->taskRepository->save($task)) {
             // return with error?
             throw new RepositorySaveException($this->translator->trans('TaskUpdateDBError'));
