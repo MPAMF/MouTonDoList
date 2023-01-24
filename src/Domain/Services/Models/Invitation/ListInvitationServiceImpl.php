@@ -4,7 +4,6 @@ namespace App\Domain\Services\Models\Invitation;
 
 use App\Domain\Requests\Invitation\ListInvitationRequest;
 use App\Infrastructure\Repositories\UserCategoryRepository;
-use DI\Annotation\Inject;
 
 class ListInvitationServiceImpl implements ListInvitationService
 {

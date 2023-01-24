@@ -5,11 +5,9 @@ namespace App\Domain\Services\Auth;
 use App\Domain\Auth\AuthInterface;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Models\User\User;
-use App\Domain\Models\User\UserNotFoundException;
 use App\Domain\Requests\Auth\LoginRequest;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 use Respect\Validation\Validator;
 
 class LoginServiceImpl extends Service implements LoginService

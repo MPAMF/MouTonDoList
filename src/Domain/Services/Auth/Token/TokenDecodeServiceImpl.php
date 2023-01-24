@@ -5,7 +5,6 @@ namespace App\Domain\Services\Auth\Token;
 use App\Domain\Exceptions\NoPermissionException;
 use App\Domain\Models\User\User;
 use App\Infrastructure\Repositories\UserRepository;
-use DI\Annotation\Inject;
 
 class TokenDecodeServiceImpl implements TokenDecodeService
 {
@@ -32,8 +31,7 @@ class TokenDecodeServiceImpl implements TokenDecodeService
 
         $userId = intval($token);
 
-        if($userId == 0)
-        {
+        if ($userId == 0) {
             throw new NoPermissionException();
         }
 

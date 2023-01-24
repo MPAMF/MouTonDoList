@@ -4,7 +4,6 @@ namespace App\Domain\Services\Models\TaskComment;
 
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Exceptions\ValidationException;
-use App\Domain\Models\Task\TaskNotFoundException;
 use App\Domain\Models\TaskComment\TaskComment;
 use App\Domain\Requests\TaskComment\CreateTaskCommentRequest;
 use App\Domain\Requests\UserCategory\UserCategoryCheckPermissionRequest;
@@ -12,7 +11,6 @@ use App\Domain\Services\Models\UserCategory\UserCategoryCheckPermissionService;
 use App\Domain\Services\Service;
 use App\Infrastructure\Repositories\TaskCommentRepository;
 use App\Infrastructure\Repositories\TaskRepository;
-use DI\Annotation\Inject;
 
 class CreateTaskCommentServiceImpl extends Service implements CreateTaskCommentService
 {
