@@ -39,7 +39,7 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
 
         $data = $validator->getValues();
 
-        if ($this->userRepository->exists($data['email'])) {
+        if ($this->userRepository->exists(email: $data['email'])) {
             throw new BadRequestException($this->translator->trans('AuthRegisterUserExist'));
         }
 

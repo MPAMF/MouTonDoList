@@ -53,7 +53,7 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
             'description' => Validator::stringType()->length(max: 1024),
             'due_date' => Validator::dateTime('Y-m-d H:i:s'),
             'checked' => Validator::boolVal(),
-            'position' => Validator::intType(), // limit
+            'position' => Validator::intType()->min(0), // limit
             'assigned_id' => Validator::oneOf(Validator::nullType(), Validator::intType()),
         ];
     }

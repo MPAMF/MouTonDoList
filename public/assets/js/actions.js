@@ -70,6 +70,7 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
     repositories.tasks.update(task).then(() => {
         if(result.result !== undefined) {
             oldSub = result.result
+            console.log("old", oldSub)
         } else {
             oldSub = result.oldSub
             newSub = result.newSub
@@ -222,7 +223,7 @@ function duplicateCategory(id) {
 
     repositories.categories.create(getCategoryById(id)).then((e) => {
 
-        let newId = e.data.id
+        let newId = e.id
 
         let copyElement = category.parentElement.cloneNode(true)
         copyElement.classList.remove('active')
@@ -648,7 +649,7 @@ function newCategory() {
     let cat = prepareCatForData()
 
     repositories.categories.create(cat).then((e) => {
-        let newId = e.data.id
+        let newId = e.id
         let container = document.getElementById("category-default").firstElementChild
         container.prepend(getSidebarOwnedCategory(newId))
 

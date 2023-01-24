@@ -66,14 +66,28 @@ class UpdateTaskServiceImpl extends Service implements UpdateTaskService
             }
         }
 
+        $oldPosition = $task->getPosition();
+        $oldCategoryId = $task->getCategoryId();
         $task->fromValidator($data);
         $task->setLastEditorId($userId);
 
-        // Useless to check if something was deleted
         if (!$this->taskRepository->save($task)) {
             // return with error?
             throw new RepositorySaveException($this->translator->trans('TaskUpdateDBError'));
         }
+
+        // Category has changed, so reorder positions
+        if($task->getCategoryId() != $oldCategoryId)
+        {
+            $newCategoryId = $task->getCategoryId();
+            $task->setCategoryId($oldCategoryId);
+            $this->taskRepository->orderTasks($task, 0, $oldPosition, true);
+            $task->setCategoryId($newCategoryId);
+        }
+
+        // drag & drop handling
+        $this->taskRepository->orderTasks($task, $task->getPosition(),
+            $task->getCategoryId() != $oldCategoryId ? -1 : $oldPosition, false);
 
         return $task;
     }

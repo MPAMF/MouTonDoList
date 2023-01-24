@@ -275,6 +275,7 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
     }
 
     let element = structuredClone(getTask(oldSubCategoryId, taskId))
+    element.category_id = newSubCategoryId
     let newSub = getSubInCurrentById(newSubCategoryId)
     sortByPosition(newSub.tasks)
 
@@ -283,7 +284,6 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
         if(i === newIndex)
         {
             element.position = task.position
-            element.category_id = newSubCategoryId
         }
         if(newIndex <= i )
             task.position++
