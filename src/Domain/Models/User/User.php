@@ -193,7 +193,6 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
     public function toRow(): array
     {
         $row = $this->jsonSerialize();
-        $row['username'] = $this->username;
         $row['password'] = $this->password;
         return $row;
     }
@@ -204,7 +203,7 @@ class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'username' => htmlspecialchars($this->username),
+            'username' => $this->username,
             'image_path' => $this->image_path,
             'theme' => $this->theme,
             'language' => $this->language

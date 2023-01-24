@@ -225,7 +225,6 @@ class Category extends TimeStampedModel implements JsonSerializable, ValidatorMo
     public function toRow(): array
     {
         $row = $this->jsonSerialize();
-        $row['name'] = $this->name;
         unset($row['parent_category']);
         unset($row['owner']);
         unset($row['subCategories']);
@@ -243,7 +242,7 @@ class Category extends TimeStampedModel implements JsonSerializable, ValidatorMo
             'owner_id' => $this->owner_id,
             'parent_category' => isset($this->parentCategory) ? $this->parentCategory->jsonSerialize() : null,
             'parent_category_id' => $this->parent_category_id,
-            'name' => htmlspecialchars($this->name),
+            'name' => $this->name,
             'color' => $this->color,
             'position' => $this->position,
             'archived' => $this->archived
