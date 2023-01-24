@@ -446,7 +446,7 @@ function addMemberCheck(e) {
     e.preventDefault()
     showLoader()
 
-    const title = getValueFromLanguage('AddMemberCatCommentTitle')
+    const title = getValueFromLanguage('AddMemberCatTitle')
 
     let error = checkEmailOnSubmit("#memberNewName", "error-memberNew")
     let select = document.getElementById("modal-member-select-new")
@@ -465,7 +465,7 @@ function addMemberCheck(e) {
         showToast(getValueFromLanguage('AddMemberCatSuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
-        showToast(getValueFromLanguage('AddMemberCatCommentError').replace('%code%', e.code), title, 'danger')
+        showToast(getValueFromLanguage('AddMemberCatError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         hideLoader()
     });

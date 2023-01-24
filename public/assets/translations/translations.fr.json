@@ -278,8 +278,8 @@
   "RemoveMemberCatCommentError": "Erreur lors du retrait du membre",
   "RemoveMemberCatCommentTitle": "Retrait du membre de la catégorie %id%",
   "AddMemberCatSuccess": "Membre invité avec succès",
-  "AddMemberCatCommentError": "Erreur lors de l'invitation du membre",
-  "AddMemberCatCommentTitle": "Invitation du membre à la catégorie",
+  "AddMemberCatError": "Erreur lors de l'invitation du membre",
+  "AddMemberCatTitle": "Invitation du membre à la catégorie",
 
   "InvalidData": "Les données sont invalides"
 }
