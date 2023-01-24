@@ -117,6 +117,7 @@
   "AuthUserNotFoundError": "Your user was not found, please log in again.",
   "AuthUserNotConnected": "Please login to access this page.",
   "AuthLoginSuccess": "Login successful!",
+  "AuthUserAlreadyConnected": "You are already logged in!",
 
   "AuthRegisterFailed": "Error while creating the user.",
   "AuthRegisterUserExist": "A user already has an account with this email address.",
