@@ -199,7 +199,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             }
 
             if ($newPosition < $oldPosition) {
-                return $query->where('position', '>', $newPosition)
+                return $query->where('position', '>=', $newPosition)
                         ->where('position', '<', $oldPosition)
                         ->increment('position') != 0;
             }
@@ -210,7 +210,7 @@ class EloquentTaskRepository extends Repository implements TaskRepository
             // 3 <-|    // 3 -> 2
             // 4
             return $query->where('position', '>', $oldPosition)
-                    ->where('position', '<', $newPosition)
+                    ->where('position', '<=', $newPosition)
                     ->decrement('position') != 0;
         }
 
