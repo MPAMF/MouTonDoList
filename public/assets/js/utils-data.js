@@ -548,3 +548,14 @@ function setUserThemeFromData(theme) {
 function setLanguageThemeFromData(language) {
     data.user.language = language
 }
+
+function getInvitationIdByCategoryId(categoryId) {
+    let idx = data.categories.findIndex(c => c.category_id === categoryId)
+    return data.categories[idx].id
+}
+
+function getInvitationIdByCategoryIdForMember(categoryId, memberId) {
+    let catidx = data.categories.findIndex(c => c.category_id === categoryId)
+    let memberidx = data.categories[catidx].members.findIndex(m => m.user_id === memberId)
+    return data.categories[catidx].members[memberidx].id
+}
