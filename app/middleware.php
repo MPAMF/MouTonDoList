@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 use Slim\App;
-use Slim\Csrf\Guard as CsrfMiddleware;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 

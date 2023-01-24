@@ -97,7 +97,7 @@ return function (ContainerBuilder $containerBuilder) {
         LoginService::class => autowire(LoginServiceImpl::class),
         TokenGenService::class => autowire(TokenGenServiceImpl::class),
         TokenDecodeService::class => autowire(TokenDecodeServiceImpl::class),
-        
+
         // UserCategories
         UserCategoryCheckPermissionService::class => autowire(UserCategoryCheckPermissionServiceImpl::class),
 
