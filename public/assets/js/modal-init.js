@@ -130,6 +130,7 @@ function openEditModalCategory(catId)
             '<ul class="list-group list-group-flush tasks">';
 
         getCategoryMembersById(catId).forEach(function(member) {
+            if(member.user_id === data.user.id) return
             content +=
                 '<li class="list-group-item list-member" data-member="' + catId + '-' + member.user.id + '">' +
                 '<div class="col py-1">' +
