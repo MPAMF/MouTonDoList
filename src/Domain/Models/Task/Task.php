@@ -286,6 +286,8 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
     public function toRow(): array
     {
         $row = $this->jsonSerialize();
+        $row['name'] = $this->name;
+        $row['description'] = $this->description;
         unset($row['category']);
         unset($row['last_editor']);
         unset($row['assigned']);
@@ -300,8 +302,8 @@ class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
             'id' => $this->id,
             'category_id' => $this->category_id,
             'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
-            'name' => $this->name,
-            'description' => $this->description,
+            'name' => htmlspecialchars($this->name),
+            'description' => htmlspecialchars($this->description),
             'due_date' => $this->due_date->format('Y-m-d H:i:s'),
             'checked' => $this->checked,
             'position' => $this->position,

@@ -164,6 +164,7 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
     public function toRow(): array
     {
         $result = $this->jsonSerialize();
+        $result['content'] = $this->content;
         unset($result['author']);
         unset($result['task']);
         unset($result['date']);
@@ -175,7 +176,7 @@ class TaskComment extends TimeStampedModel implements JsonSerializable, Validato
     {
         return [
             'id' => $this->id,
-            'content' => $this->content,
+            'content' => htmlspecialchars($this->content),
             'author_id' => $this->author_id,
             'author' => isset($this->author) ? $this->author->jsonSerialize() : null,
             'task_id' => $this->task_id,
