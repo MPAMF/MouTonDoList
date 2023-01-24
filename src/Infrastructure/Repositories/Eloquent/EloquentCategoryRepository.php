@@ -101,8 +101,9 @@ class EloquentCategoryRepository extends Repository implements CategoryRepositor
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $category->getId())
-                ->update($category->toRow()) != 0;
+        $this->getTable()->where('id', $category->getId())
+                ->update($category->toRow());
+        return true;
     }
 
     /**

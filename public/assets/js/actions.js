@@ -512,7 +512,7 @@ function addCommentCheck(e) {
     repositories.taskComments.create(comment).then((e) => {
 
         let newId = e.id
-        prependComment(newId)
+        prependComment(taskId, newId)
         toggleForm("commentAdd", "commentNew", null, "#commentNewCreate")
         clearElementValue("commentNewDescription")
 
@@ -529,10 +529,10 @@ function addCommentCheck(e) {
     });
 }
 
-function prependComment(newId) {
+function prependComment(taskId, newId) {
     let container = document.getElementById("modalComments")
     let text = document.getElementById("commentNewDescription").value
-    container.prepend(getCommentContent(newId, text))
+    container.prepend(getCommentContent(taskId, newId, text))
 }
 
 function newTaskCheck(e, id) {

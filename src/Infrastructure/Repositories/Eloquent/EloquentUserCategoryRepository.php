@@ -108,8 +108,9 @@ class EloquentUserCategoryRepository extends Repository implements UserCategoryR
             return $id != 0;
         }
 
-        return $this->getTable()->where('id', $userCategory->getId())
-                ->update($userCategory->toRow()) != 0;
+        $this->getTable()->where('id', $userCategory->getId())
+                ->update($userCategory->toRow());
+        return true;
     }
 
     /**
