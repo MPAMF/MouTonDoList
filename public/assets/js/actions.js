@@ -325,7 +325,7 @@ function duplicateTask(idCat, idTask) {
         contentElement.firstElementChild.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
 
         let taskViewInfoElement = contentElement.getElementsByTagName('div')[0]
-        taskViewInfoElement.id = "taskViewInfo" + idCat + "-" + newId
+        taskViewInfoElement.id = "taskViewInfo-" + idCat + "-" + newId
         taskViewInfoElement.setAttribute('onclick',"openTaskDetails(" + idCat + "," + newId + ")")
         taskViewInfoElement.firstElementChild.textContent = newName
 
