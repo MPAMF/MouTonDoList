@@ -70,13 +70,13 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
             throw new NoPermissionException();
         }
 
-        if(empty($data['user_id']) && !empty($data['email']))
+        if($userCategory->getUserId() == 0 && !empty($data['email']))
         {
             $user = $this->userRepository->getByEmail($data['email']);
-            $data['user_id'] = empty($user) ? 0 : $user->getId();
+            $userCategory->setUser($user);
+        } else {
+            $userCategory->setUser($this->userRepository->get($userCategory->getUserId()));
         }
-
-        $userCategory->setUser($this->userRepository->get($userCategory->getUserId()));
 
         // Already exists
         if ($this->userCategoryRepository->exists(
