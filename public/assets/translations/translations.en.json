@@ -203,7 +203,7 @@
   "TimeMinutes": "minutes",
   "TimeNow": "right now",
 
-  "FooterName": "&copy; 2023 Mouton Group \uD83D\uDC11",
+  "FooterName": "&copy; %year% Mouton Group \uD83D\uDC11",
   "FooterGitalb": "GitLab page of the project",
   "FooterGithub": "GitHub page of the project",
 
