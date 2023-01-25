@@ -26,6 +26,14 @@ interface UserRepository
     public function get($id, array|null $with = null): User;
 
     /**
+     * @param $email
+     * @param array|null $with
+     * @return User
+     * @throws UserNotFoundException
+     */
+    public function getByEmail($email, array|null $with = null): User;
+
+    /**
      * @param User $user
      * @return bool Save or update is successful
      */

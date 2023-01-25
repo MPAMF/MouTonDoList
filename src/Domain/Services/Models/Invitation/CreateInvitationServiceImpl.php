@@ -50,7 +50,13 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
         }
 
         $data = $validator->getValues();
-        //
+
+        if(empty($data['user_id']) && empty($data['email']))
+            throw new BadRequestException($this->translator->trans('UserIdOrEmailExpected'));
+
+        if(empty($data['user_id']) && !empty($data['email']))
+            $data['user_id'] = 0;
+
         $userCategory->fromValidator($data);
 
         $userCategory->setCategory($this->categoryRepository->get($userCategory->getCategoryId()));
@@ -64,7 +70,13 @@ class CreateInvitationServiceImpl extends Service implements CreateInvitationSer
             throw new NoPermissionException();
         }
 
-        $userCategory->setUser($this->userRepository->get($userCategory->getUserId()));
+        if($userCategory->getUserId() == 0 && !empty($data['email']))
+        {
+            $user = $this->userRepository->getByEmail($data['email']);
+            $userCategory->setUser($user);
+        } else {
+            $userCategory->setUser($this->userRepository->get($userCategory->getUserId()));
+        }
 
         // Already exists
         if ($this->userCategoryRepository->exists(
