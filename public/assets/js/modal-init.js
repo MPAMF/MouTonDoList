@@ -22,7 +22,7 @@ function openTaskDetails(subCatId, taskId)
         '           <div class="accordion-item accordion-item-tasks">' +
         '               <h2 class="accordion-header subcategory-header" id="accordion-header-comments">' +
         '                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-body-comments" aria-expanded="false" aria-controls="accordion-body-comments">' +
-                                getValueFromLanguage('ModalCommentsTitle') +
+        getValueFromLanguage('ModalCommentsTitle') +
         '                   </button>' +
         '               </h2>' +
         '               <div id="accordion-body-comments" class="accordion-collapse collapse" aria-labelledby="accordion-header-comments" data-bs-parent="#accordion-comments">' +
@@ -31,11 +31,11 @@ function openTaskDetails(subCatId, taskId)
 
     (task.comments).forEach(function(comment) {
         content +=
-        '            <li class="list-group-item modal-comment" data-comment="' + comment.id + '">' +
-        '                <div class="d-flex justify-content-between align-items-center">' +
-        '                    <p class="mb-1">' +
-        '                        ' + (comment.author === null ? getValueFromLanguage('ModalCommentAuthorUnknown') : comment.author.username) + ' <small class="form-text text-muted" title="' + getValueFromLanguage('ModalCommentDateTitle') + '">' + timeSince(Date.parse(comment.date)) + '</small>' +
-        '                    </p>'
+            '            <li class="list-group-item modal-comment" data-comment="' + comment.id + '">' +
+            '                <div class="d-flex justify-content-between align-items-center">' +
+            '                    <p class="mb-1">' +
+            '                        ' + (comment.author === null ? getValueFromLanguage('ModalCommentAuthorUnknown') : comment.author.username) + ' <small class="form-text text-muted" title="' + getValueFromLanguage('ModalCommentDateTitle') + '">' + timeSince(Date.parse(comment.date)) + '</small>' +
+            '                    </p>'
 
         if(isCanEdit()) {
             content +=
@@ -49,9 +49,9 @@ function openTaskDetails(subCatId, taskId)
         }
 
         content +=
-        '                </div>' +
-        '                <p class="small mb-0">' + comment.content + '</p>' +
-        '            </li>'
+            '                </div>' +
+            '                <p class="small mb-0">' + comment.content + '</p>' +
+            '            </li>'
     })
 
     content += '</ul>'
@@ -97,7 +97,7 @@ function openEditModalCategory(catId)
 
     let content = '<form class="row g-3 form-check">'
 
-    if(isOwnerById(catId) && isCatArchivedFalse(catId))
+    if(isCanEditById(catId))
     {
         content +=
             '<div class="col-12">' +
@@ -111,12 +111,12 @@ function openEditModalCategory(catId)
     let hideChecked = storageCategory.hideChecked
 
     content +=
-            '<div class="col-12 checkbox">' +
-                '<input id="modal-checkbox-task" class="form-check-input task-checkbox" type="checkbox" value=""' + (hideChecked ? "checked" : "") + '>' +
-                '<label for="modal-checkbox-task">' + getValueFromLanguage('ModalProjectHideCheckedText') + '</label>' +
-            '</div>'
+        '<div class="col-12 checkbox">' +
+        '<input id="modal-checkbox-task" class="form-check-input task-checkbox" type="checkbox" value=""' + (hideChecked ? "checked" : "") + '>' +
+        '<label for="modal-checkbox-task">' + getValueFromLanguage('ModalProjectHideCheckedText') + '</label>' +
+        '</div>'
 
-    if(isOwnerById(catId) && isCatArchivedFalse(catId)) {
+    if(isOwnerById(catId)) {
         content +=
             '<div class="accordion accordion-flush">' +
             '<div class="accordion-item accordion-item-tasks">' +
@@ -131,15 +131,16 @@ function openEditModalCategory(catId)
 
         getCategoryMembersById(catId).forEach(function(member) {
             if(member.user_id === data.user.id) return
+            console.log(member.can_edit)
             content +=
                 '<li class="list-group-item list-member" data-member="' + catId + '-' + member.user.id + '">' +
                 '<div class="col py-1">' +
                 '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<select name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="Rôle du membre" disabled>' +
-                '<option value="READ"' + (member.canEdit ? "selected" : "") + '>' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
-                '<option value="WRITE"' + (member.canEdit ? "" : "selected") + '>' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
+                '<select id="member-role-' + member.user.id + '" name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('ModalProjectMemberStatus') + '">' +
+                '<option value="' + authModalSelectMemberStatusValues[0] + '"' + (member.can_edit ? "" : "selected") + '>' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
+                '<option value="' + authModalSelectMemberStatusValues[1] + '"' + (member.can_edit ? "selected" : "") + '>' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
                 '</select>' +
                 '</div>' +
                 '<div class="col py-1">' +
@@ -148,6 +149,10 @@ function openEditModalCategory(catId)
                 '</button>' +
                 '</div>' +
                 '</li>'
+
+            $(document).on('change', "#member-role-" + member.user.id, function (e) {
+                updateMember(catId, member.user.id, document.getElementById("member-role-" + member.user.id))
+            })
 
             $(document).on('click', "#removeMember" + catId + "-" + member.user.id, function (e) {
                 e.preventDefault()
@@ -171,8 +176,8 @@ function openEditModalCategory(catId)
             '            </div>' +
             '            <div class="mb-2">' +
             '                <select id="modal-member-select-new" class="btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('ModalProjectMemberStatus') + '" required>' +
-            '                    <option value="READ">' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
-            '                    <option value="WRITE">' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
+            '                    <option value="' + authModalSelectMemberStatusValues[0] + '">' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
+            '                    <option value="' + authModalSelectMemberStatusValues[1] + '">' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
             '                </select>' +
             '                <div id="error-memberStatusNew" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberErrorText') + '</div>' +
             '            </div>' +
@@ -184,10 +189,10 @@ function openEditModalCategory(catId)
     }
 
     content +=
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-            '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
         '</form>'
 
     $("#modal-body").html(content)
@@ -207,11 +212,11 @@ function openEditModalSubCategory(catId)
         '<button type="button" id="modal-submit-subcategory" class="btn btn-primary">' + getValueFromLanguage('SaveModalNav') + '</button>')
     $("#modal-body").html('' +
         '<form class="row g-3 form-check">' +
-            '<div class="col-12">' +
-                '<label for="modal-input-name" class="form-label">' + getValueFromLanguage('ModalInputName') + '</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" value="' + sub.name + '" placeholder="' + getValueFromLanguage('ModalInputCategoryName') + '" title="' + getValueFromLanguage('ModalInputCategoryName') + '" required>' +
-                '<div id="error-modal" class="invalid-feedback" role="alert">' + getValueFromLanguage('NewTaskNameError') + '</div>' +
-            '</div>' +
+        '<div class="col-12">' +
+        '<label for="modal-input-name" class="form-label">' + getValueFromLanguage('ModalInputName') + '</label>' +
+        '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" value="' + sub.name + '" placeholder="' + getValueFromLanguage('ModalInputCategoryName') + '" title="' + getValueFromLanguage('ModalInputCategoryName') + '" required>' +
+        '<div id="error-modal" class="invalid-feedback" role="alert">' + getValueFromLanguage('NewTaskNameError') + '</div>' +
+        '</div>' +
         '</form>')
 
     $("#modal-body").attr("data-id", sub.id)
@@ -231,28 +236,28 @@ function openEditModalTask(subCatId, taskId)
 
     let content =
         '<form class="row g-3 form-check">' +
-            '<div class="col-12">' +
-                '<label for="modal-input-name" class="form-label">' + getValueFromLanguage('ModalInputName') + '</label>' +
-                '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" value="' + task.name + '" placeholder="' + getValueFromLanguage('ModalInputTaskName') + '" title="' + getValueFromLanguage('ModalInputTaskName') + '" required>' +
-                '<div id="error-modal" class="invalid-feedback" role="alert">' + getValueFromLanguage('NewTaskNameError') + '</div>' +
-            '</div>' +
-            '<div class="col-12">' +
-                '<label for="modal-input-description" class="form-label">' + getValueFromLanguage('ModalInputDescription') + '</label>' +
-                '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="' + getValueFromLanguage('TaskDescriptionTitle') + '" title="' + getValueFromLanguage('TaskDescriptionTitle') + '">' + task.description + '</textarea>' +
-            '</div>' +
-            '<div class="col-12 modal-form-label-select">' +
-                '<label for="modal-assign-member" class="form-label">' + getValueFromLanguage('SearchTypeAssigned') + '</label>' +
-                '<select id="modal-assign-member" class="mb-2 btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('TaskAssignedTitle') + '" required>' +
-                    '<option value="0">' + getValueFromLanguage('TaskNotAssigned') + '</option>';
+        '<div class="col-12">' +
+        '<label for="modal-input-name" class="form-label">' + getValueFromLanguage('ModalInputName') + '</label>' +
+        '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" value="' + task.name + '" placeholder="' + getValueFromLanguage('ModalInputTaskName') + '" title="' + getValueFromLanguage('ModalInputTaskName') + '" required>' +
+        '<div id="error-modal" class="invalid-feedback" role="alert">' + getValueFromLanguage('NewTaskNameError') + '</div>' +
+        '</div>' +
+        '<div class="col-12">' +
+        '<label for="modal-input-description" class="form-label">' + getValueFromLanguage('ModalInputDescription') + '</label>' +
+        '<textarea id="modal-input-description" class="form-control form-control-sm bg-secondary" rows="3" placeholder="' + getValueFromLanguage('TaskDescriptionTitle') + '" title="' + getValueFromLanguage('TaskDescriptionTitle') + '">' + task.description + '</textarea>' +
+        '</div>' +
+        '<div class="col-12 modal-form-label-select">' +
+        '<label for="modal-assign-member" class="form-label">' + getValueFromLanguage('SearchTypeAssigned') + '</label>' +
+        '<select id="modal-assign-member" class="mb-2 btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('TaskAssignedTitle') + '" required>' +
+        '<option value="0">' + getValueFromLanguage('TaskNotAssigned') + '</option>';
 
     getCurrentCategoryMembers().forEach(function(member) {
-            content += '<option value="' + member.user.id + '">' + member.user.username + '</option>'
+        content += '<option value="' + member.user.id + '">' + member.user.username + '</option>'
     })
 
     content +=
-                '</select>' +
-            '</div>' +
-            '<div id="error-modal-members" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberExistenceErrorText') + '</div>' +
+        '</select>' +
+        '</div>' +
+        '<div id="error-modal-members" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberExistenceErrorText') + '</div>' +
         '</form>'
 
     $("#modal-body").html(content)
