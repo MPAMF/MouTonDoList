@@ -37,10 +37,20 @@ interface TaskRepository
     public function delete(Task $task): int;
 
     /**
-     * @param Task $updatedTask Task that was created or updated
+     * @param Task $task
      * @param int $newPosition
      * @param int $oldPosition
      * @param bool $isDelete
+     * @return bool
      */
     public function orderTasks(Task $task, int $newPosition, int $oldPosition, bool $isDelete): bool;
+
+    /**
+     * @param string $name
+     * @param int $userId
+     * @param array|null $with
+     * @return array
+     */
+    public function searchTasks(string $name, int $userId, array|null $with = null) : array;
+
 }
