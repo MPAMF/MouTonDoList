@@ -1,6 +1,8 @@
 function openTaskDetails(subCatId, taskId)
 {
     let task = getTaskInCurrentById(subCatId, taskId)
+    let isArchived = getCategoryBySubcatId(subCatId).category.archived
+    console.log(isArchived)
 
     // get from categories where id=id
     $("#modal-title").html(getValueFromLanguage('ModalTaskDetailsName'))
@@ -37,7 +39,7 @@ function openTaskDetails(subCatId, taskId)
             '                        ' + (comment.author === null ? getValueFromLanguage('ModalCommentAuthorUnknown') : comment.author.username) + ' <small class="form-text text-muted" title="' + getValueFromLanguage('ModalCommentDateTitle') + '">' + timeSince(Date.parse(comment.date)) + '</small>' +
             '                    </p>'
 
-        if(isCanEdit()) {
+        if(isCanEdit() && !isArchived) {
             content +=
                 '<button id="commentRemove-' + comment.id + '" class="btn btn-sm modal-delete-comment" type="button" title="' + getValueFromLanguage('ModalCommentDeleteTitle') + '">' +
                 '<span class="mdi mdi-18px mdi-trash-can"></span>' +
@@ -56,7 +58,7 @@ function openTaskDetails(subCatId, taskId)
 
     content += '</ul>'
 
-    if(isCanEdit()) {
+    if(isCanEdit() && !isArchived) {
         content +=
             '        <div>' +
             '            <button class="btn btn-task-add" type="button" id="commentAdd">' +
@@ -102,7 +104,7 @@ function openEditModalCategory(catId)
         content +=
             '<div class="col-12">' +
             '<label for="modal-input-name" class="form-label">' + getValueFromLanguage('ModalInputName') + '</label>' +
-            '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="' + getValueFromLanguage('ModalInputProjectName') + '" title="' + getValueFromLanguage('ModalInputProjectName') + '" value="' + category.name + '" required>' +
+            '<input type="text" id="modal-input-name" class="form-control form-control-sm bg-secondary" placeholder="' + getValueFromLanguage('ModalInputProjectName') + '" title="' + getValueFromLanguage('ModalInputProjectName') + '" value="' + category.name + '" ' + (isCatArchivedFalse(catId) ? '' : 'disabled') + ' required>' +
             '<div id="error-modal" class="invalid-feedback" role="alert">' + getValueFromLanguage('NewTaskNameError') + '</div>' +
             '</div>'
     }
@@ -116,7 +118,8 @@ function openEditModalCategory(catId)
         '<label for="modal-checkbox-task">' + getValueFromLanguage('ModalProjectHideCheckedText') + '</label>' +
         '</div>'
 
-    if(isOwnerById(catId)) {
+    let categoryMembers = getCategoryMembersById(catId)
+    if(isOwnerById(catId) && (isCatArchivedFalse(catId) || categoryMembers.length > 1)) {
         content +=
             '<div class="accordion accordion-flush">' +
             '<div class="accordion-item accordion-item-tasks">' +
@@ -129,63 +132,72 @@ function openEditModalCategory(catId)
             '<div class="accordion-body">' +
             '<ul class="list-group list-group-flush tasks">';
 
-        getCategoryMembersById(catId).forEach(function(member) {
+        categoryMembers.forEach(function(member) {
             if(member.user_id === data.user.id) return
-            console.log(member.can_edit)
             content +=
                 '<li class="list-group-item list-member" data-member="' + catId + '-' + member.user.id + '">' +
                 '<div class="col py-1">' +
                 '<label class="my-0 fw-normal">' + member.user.username + '</label>' +
                 '</div>' +
                 '<div class="col py-1">' +
-                '<select id="member-role-' + member.user.id + '" name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('ModalProjectMemberStatus') + '">' +
+                '<select id="member-role-' + member.user.id + '" name="modal-member-select" class="btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('ModalProjectMemberStatus') + '"' + (isCatArchivedFalse(catId) ? '' : 'disabled') + '>' +
                 '<option value="' + authModalSelectMemberStatusValues[0] + '"' + (member.can_edit ? "" : "selected") + '>' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
                 '<option value="' + authModalSelectMemberStatusValues[1] + '"' + (member.can_edit ? "selected" : "") + '>' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
                 '</select>' +
-                '</div>' +
-                '<div class="col py-1">' +
-                '<button type="button" class="btn btn-sm btn-modal-remove" id="removeMember' + catId + '-' + member.user.id + '">' +
-                '<span class="mdi mdi-14px mdi-close-thick"></span> <span class="hideMobile">' + getValueFromLanguage('ModalProjectMemberRemove') + '</span>' +
-                '</button>' +
-                '</div>' +
-                '</li>'
+                '</div>'
 
-            $(document).on('change', "#member-role-" + member.user.id, function (e) {
-                updateMember(catId, member.user.id, document.getElementById("member-role-" + member.user.id))
-            })
+            if(isCatArchivedFalse(catId))
+            {
+                content +=  '<div class="col py-1">' +
+                    '<button type="button" class="btn btn-sm btn-modal-remove" id="removeMember' + catId + '-' + member.user.id + '">' +
+                    '<span class="mdi mdi-14px mdi-close-thick"></span> <span class="hideMobile">' + getValueFromLanguage('ModalProjectMemberRemove') + '</span>' +
+                    '</button>' +
+                    '</div>'
 
-            $(document).on('click', "#removeMember" + catId + "-" + member.user.id, function (e) {
-                e.preventDefault()
-                removeMember(catId, member.user.id)
-            })
+                $(document).on('change', "#member-role-" + member.user.id, function (e) {
+                    updateMember(catId, member.user.id, document.getElementById("member-role-" + member.user.id))
+                })
+
+                $(document).on('click', "#removeMember" + catId + "-" + member.user.id, function (e) {
+                    e.preventDefault()
+                    removeMember(catId, member.user.id)
+                })
+            }
+
+            content += '</li>'
         })
 
         content +=
             '<li class="list-group-item list-member"></li>' +
             '</ul>' +
-            '<div id="error-modal-members" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberStatusErrorText') + '</div>' +
-            '        <div>' +
-            '            <button class="btn btn-task-add" type="button" id="memberAdd">' +
-            '                <span class="mdi mdi-plus-circle"></span>' + getValueFromLanguage('ModalProjectMemberNewText') +
-            '            </button>' +
-            '        </div>' +
-            '        <div class="task-new" id="memberNew">' +
-            '            <div class="mb-2">' +
-            '                <input class="form-control form-control-sm bg-secondary" id="memberNewName" placeholder="Mail du membre" title="Mail du membre" required></input>' +
-            '                <div id="error-memberNew" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberEmailErrorText') + '</div>' +
-            '            </div>' +
-            '            <div class="mb-2">' +
-            '                <select id="modal-member-select-new" class="btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('ModalProjectMemberStatus') + '" required>' +
-            '                    <option value="' + authModalSelectMemberStatusValues[0] + '">' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
-            '                    <option value="' + authModalSelectMemberStatusValues[1] + '">' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
-            '                </select>' +
-            '                <div id="error-memberStatusNew" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberErrorText') + '</div>' +
-            '            </div>' +
-            '            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
-            '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="memberNewCancel">' + getValueFromLanguage('CancelModalNav') + '</button>' +
-            '                <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="memberNewCreate" disabled>' + getValueFromLanguage('ModalProjectMemberAddText') + '</button>' +
-            '            </div>' +
-            '        </div>'
+            '<div id="error-modal-members" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberStatusErrorText') + '</div>'
+
+        if(isCatArchivedFalse(catId))
+        {
+            content +=
+                '        <div>' +
+                '            <button class="btn btn-task-add" type="button" id="memberAdd">' +
+                '                <span class="mdi mdi-plus-circle"></span>' + getValueFromLanguage('ModalProjectMemberNewText') +
+                '            </button>' +
+                '        </div>' +
+                '        <div class="task-new" id="memberNew">' +
+                '            <div class="mb-2">' +
+                '                <input class="form-control form-control-sm bg-secondary" id="memberNewName" placeholder="Mail du membre" title="Mail du membre" required></input>' +
+                '                <div id="error-memberNew" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberEmailErrorText') + '</div>' +
+                '            </div>' +
+                '            <div class="mb-2">' +
+                '                <select id="modal-member-select-new" class="btn btn-sm btn-modal-select" aria-label="' + getValueFromLanguage('ModalProjectMemberStatus') + '" required>' +
+                '                    <option value="' + authModalSelectMemberStatusValues[0] + '">' + getValueFromLanguage('ModalProjectMemberReader') + '</option>' +
+                '                    <option value="' + authModalSelectMemberStatusValues[1] + '">' + getValueFromLanguage('ModalProjectMemberEditor') + '</option>' +
+                '                </select>' +
+                '                <div id="error-memberStatusNew" class="invalid-feedback" role="alert">' + getValueFromLanguage('ModalProjectMemberErrorText') + '</div>' +
+                '            </div>' +
+                '            <div class="d-grid gap-2 d-md-flex justify-content-md-end">' +
+                '                <button class="btn btn-secondary btn-sm me-md-2" type="reset" id="memberNewCancel">' + getValueFromLanguage('CancelModalNav') + '</button>' +
+                '                <button class="btn btn-primary btn-sm btn-task-create" type="submit" id="memberNewCreate" disabled>' + getValueFromLanguage('ModalProjectMemberAddText') + '</button>' +
+                '            </div>' +
+                '        </div>'
+        }
     }
 
     content +=
