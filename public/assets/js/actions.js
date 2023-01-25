@@ -446,7 +446,7 @@ function addMemberCheck(e) {
     e.preventDefault()
     showLoader()
 
-    const title = getValueFromLanguage('AddMemberCatCommentTitle')
+    const title = getValueFromLanguage('AddMemberCatTitle')
 
     let error = checkEmailOnSubmit("#memberNewName", "error-memberNew")
     let select = document.getElementById("modal-member-select-new")
@@ -460,12 +460,21 @@ function addMemberCheck(e) {
 
     let email = document.getElementById("memberNewName")
     let selectedValue = select.value
+    let can_edit = selectedValue === authModalSelectMemberStatusValues[1]
+    let catId = parseInt($("#modal-body").attr("data-id"))
 
-    repositories.invitations.create(email, selectedValue).then(() => {
+    let invite = {
+        "accepted": false,
+        "can_edit": can_edit,
+        "category_id": catId,
+        "email": email.value
+    }
+
+    repositories.invitations.create(invite).then(() => {
         showToast(getValueFromLanguage('AddMemberCatSuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
-        showToast(getValueFromLanguage('AddMemberCatCommentError').replace('%code%', e.code), title, 'danger')
+        showToast(getValueFromLanguage('AddMemberCatError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         hideLoader()
     });
@@ -674,19 +683,21 @@ function submitModalCategory() {
 
     showLoader()
 
-    let error = checkInputOnSubmit("#modal-input-name", "error-modal")
-    let memberSelectsName = document.getElementsByName("modal-member-select")
-    error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
-    let hideChecked = document.getElementById("modal-checkbox-task").checked
     let catId = parseInt($("#modal-body").attr("data-id"))
-
     const title = getValueFromLanguage('UpdateCategoryTitle').replace('%id%', catId)
 
-    if(error) {
-        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
-        hideLoader()
-        return;
+    if(isOwnerById(catId)) {
+        let error = checkInputOnSubmit("#modal-input-name", "error-modal")
+        let memberSelectsName = document.getElementsByName("modal-member-select")
+        error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
+
+        if(error) {
+            showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+            hideLoader()
+            return;
+        }
     }
+    let hideChecked = document.getElementById("modal-checkbox-task").checked
 
     let newName = document.getElementById("modal-input-name").value
     let cat = getTempCatUpdate(catId, newName)

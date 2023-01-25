@@ -109,4 +109,14 @@ class EloquentUserRepository extends Repository implements UserRepository
         if (isset($email)) $builder = $builder->where('email', $email);
         return $builder->exists();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getByEmail($email, array|null $with = null): User
+    {
+        $found = $this->getTable()->where('email', $email)->first();
+        if (is_array($found)) $found = (object)$found;
+        return $this->parseUser($found, $with);
+    }
 }

@@ -97,7 +97,7 @@ function openEditModalCategory(catId)
 
     let content = '<form class="row g-3 form-check">'
 
-    if(isCanEditById(catId))
+    if(isOwnerById(catId) && isCatArchivedFalse(catId))
     {
         content +=
             '<div class="col-12">' +
@@ -116,7 +116,7 @@ function openEditModalCategory(catId)
                 '<label for="modal-checkbox-task">' + getValueFromLanguage('ModalProjectHideCheckedText') + '</label>' +
             '</div>'
 
-    if(isOwnerById(catId)) {
+    if(isOwnerById(catId) && isCatArchivedFalse(catId)) {
         content +=
             '<div class="accordion accordion-flush">' +
             '<div class="accordion-item accordion-item-tasks">' +

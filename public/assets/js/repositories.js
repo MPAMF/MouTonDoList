@@ -170,9 +170,8 @@ class InvitationRepository extends Repository {
         return super.list(this.endpoint)
     }
 
-    // Not implemented
-    create(user) {
-        return new Promise((resolve, reject) => reject());
+    create(category) {
+        return super.post(this.endpoint, category)
     }
 
     update(category) {

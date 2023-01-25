@@ -279,8 +279,8 @@
   "RemoveMemberCatCommentError": "Error while removing member",
   "RemoveMemberCatCommentTitle": "Removed member from category %id%",
   "AddMemberCatSuccess": "Member invited successfully",
-  "AddMemberCatCommentError": "Error while inviting member",
-  "AddMemberCatCommentTitle": "Invitation of the member to the category",
+  "AddMemberCatError": "Error while inviting member",
+  "AddMemberCatTitle": "Invitation of the member to the category",
 
   "InvalidData": "Data is invalid"
 }

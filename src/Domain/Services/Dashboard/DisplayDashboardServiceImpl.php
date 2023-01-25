@@ -61,9 +61,6 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
         }
 
         if (isset($category)) {
-            if (!$category->isAccepted()) {
-                // TODO: Send message : accept invite and redirect maybe to notifications page ?
-            }
 
             $category->getCategory()->subCategories = $this->categoryRepository
                 ->getSubCategories($category->getCategory()->getId());
@@ -75,19 +72,20 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
                     $task->comments = $this->taskCommentRepository->getTaskComments($task->getId(), ['author']);
                 }
             }
+
+            // Filter categories: archives / normal
+            $categories->each(function (UserCategory $a) {
+                $a->members = $this->userCategoryRepository->getUsers($a->getCategoryId());
+            });
+            $archivedCategories = $categories->filter(fn(UserCategory $a) => $a->getCategory()->isArchived());
+            $categories = $categories->filter(fn(UserCategory $a) => !$a->getCategory()->isArchived());
+
+            // Get current member
+            $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
+            $canEdit = $category->getCategory()->getOwnerId() == $userId || collect($category->members)
+                    ->contains(fn(UserCategory $a) => $a->getUserId() == $userId && $a->isCanEdit());
+
         }
-
-        // Filter categories: archives / normal
-        $categories->each(function (UserCategory $a) {
-            $a->members = $this->userCategoryRepository->getUsers($a->getCategoryId());
-        });
-        $archivedCategories = $categories->filter(fn(UserCategory $a) => $a->getCategory()->isArchived());
-        $categories = $categories->filter(fn(UserCategory $a) => !$a->getCategory()->isArchived());
-
-        // Get current member
-        $category->members = $this->userCategoryRepository->getUsers($category->getCategoryId());
-        $canEdit = $category->getCategory()->getOwnerId() == $userId || collect($category->members)
-                ->contains(fn(UserCategory $a) => $a->getUserId() == $userId && $a->isCanEdit());
 
         // TODO: delete notifications => to rest get request
         $notifications = collect($this->userCategoryRepository->getCategories($userId, accepted: false));
@@ -96,10 +94,10 @@ class DisplayDashboardServiceImpl implements DisplayDashboardService
 
         return [
             'category' => $category,
-            'categories' => $categories,
-            'archivedCategories' => $archivedCategories,
+            'categories' => $categories ?? collect(),
+            'archivedCategories' => $archivedCategories ?? collect(),
             'user' => $request->getUser(),
-            'canEdit' => $canEdit,
+            'canEdit' => $canEdit ?? false,
             'notifications' => $notifications,
             'apiToken' => $apiToken
         ];

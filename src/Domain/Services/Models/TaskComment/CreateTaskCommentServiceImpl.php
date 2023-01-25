@@ -59,7 +59,7 @@ class CreateTaskCommentServiceImpl extends Service implements CreateTaskCommentS
         if ($taskComment->getTask()->getCategory()->getOwnerId() != $userId) {
             $this->userCategoryCheckPermissionService->exists(new UserCategoryCheckPermissionRequest(
                 userId: $userId,
-                categoryId: $taskComment->getTask()->getCategoryId(),
+                categoryId: $taskComment->getTask()->getCategory()->getParentCategoryId(),
             ));
         }
 

@@ -42,7 +42,7 @@ function loadTaskToDo() {
 
 function updateInvitation(invitationId, hasAccepted) {
     let invitationIdx = invitations.findIndex(c => c.id === invitationId);
-    invitations[invitationIdx].accept = hasAccepted;
+    invitations[invitationIdx].accepted = hasAccepted;
     let userId = data.user.id;
 
     if (hasAccepted) {

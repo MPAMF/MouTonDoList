@@ -44,7 +44,8 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
             'accepted' => Validator::boolType(),
             'can_edit' => Validator::boolType(),
             'category_id' => Validator::intType(),
-            'user_id' => Validator::intType()
+            'user_id' => Validator::optional(Validator::intType()),
+            'email' => Validator::optional(Validator::email()),
         ];
     }
 

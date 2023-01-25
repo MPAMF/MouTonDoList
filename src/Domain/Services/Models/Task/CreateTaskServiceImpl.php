@@ -72,7 +72,7 @@ class CreateTaskServiceImpl extends Service implements CreateTaskService
         if ($task->getCategory()->getOwnerId() != $request->getUserId()) {
             $this->userCategoryCheckPermissionService->exists(new UserCategoryCheckPermissionRequest(
                 userId: $request->getUserId(),
-                categoryId: $task->getCategoryId(),
+                categoryId: $task->getCategory()->getParentCategoryId(),
             ));
         }
 
