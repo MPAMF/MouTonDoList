@@ -210,7 +210,29 @@ class EloquentTaskRepository extends Repository implements TaskRepository
 
     public function searchTasks(string $name, int $userId, ?array $with = null): array
     {
-        // TODO: Implement searchTasks() method.
-        return [];
+        if (empty($name) || empty($userId)) return [];
+
+        $tasks = [];
+
+        $foundTasks = $this->getDB()->table('user_categories', 'uc')
+            ->select('t.*')
+            ->leftJoin('categories as c', 'c.parent_category_id', '=', 'uc.category_id')
+            ->leftJoin('tasks as t', 'c.id', '=', 't.category_id')
+            ->where('uc.accepted', true)
+            ->where('uc.user_id', $userId)
+            ->where('t.name', 'LIKE', '%' . $name . '%')
+            ->get();
+
+        foreach ($foundTasks as $task) {
+
+            try {
+                $tasks[] = $this->parseTask($task, $with);
+            } catch (TaskNotFoundException) {
+                // do nothing
+            }
+
+        }
+
+        return $tasks;
     }
 }
