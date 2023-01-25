@@ -1,5 +1,7 @@
 # Projet Todo
 
+/!\ Important à lire /!\
+
 ## Installation & démarrage
 
 - Copier .env-example à .env puis le remplir
@@ -19,6 +21,16 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 `vendor/bin/phinx seed:run`
 
 ## Fonctionnement général
+
+### API
+
+Notre API couvre toutes les actions de l'application.
+
+Vous pouvez trouver la documentation ici : http://localhost:8080/swagger
+
+Si toute fois le fichier swagger.json ne se génère pas, utilisez la commande suivante :
+
+`./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .`
 
 ### Hors connexion
 
@@ -56,12 +68,6 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 - un utilisateur peut-être propriétaire ou invité
 - un invité a les droits de lecteur ou d'éditeur
 - les permissions d'un utilisateur varient donc en fonction de son statut
-
-### API
-
-Notre API couvre toutes les actions de l'application.
-
-Vous pouvez trouver la documentation ici : http://localhost:8080/swagger
 
 ## Fonctionnalités
 
