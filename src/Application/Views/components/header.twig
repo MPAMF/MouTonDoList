@@ -353,7 +353,7 @@
             res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
                 res += createNotification(value.id, value.category.name, value.category.owner.username,
-                    timeSince(Date.parse(value.date)));
+                    timeSince(Date.parse(value.created_at)));
             });
         }
 
