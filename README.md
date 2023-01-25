@@ -14,7 +14,7 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 
 #### Seeder la base de données (seulement en dev)
 
-**Important:** Il faut que la base de données soit vide avant de lancer la génération de données de test. Sinon il y'aura des erreurs conséquentes.
+**Important:** Il faut que la base de données soit vide avant de lancer la génération de données de test. Sinon il y'aura des incohérances et des duplications dans la base de données.
 
 `vendor/bin/phinx seed:run`
 
@@ -52,6 +52,12 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 - un utilisateur peut-être propriétaire ou invité
 - un invité a les droits de lecteur ou d'éditeur
 - les permissions d'un utilisateur varient donc en fonction de son statut
+
+### API
+
+Notre API couvre toutes les actions de l'application.
+
+Vous pouvez trouver la documentation ici : http://localhost:8080/swagger
 
 ## Fonctionnalités
 
