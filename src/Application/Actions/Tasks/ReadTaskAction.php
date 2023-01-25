@@ -13,6 +13,28 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Get(
+ *     path="/api/tasks/{id}",
+ *     description="Gets a task",
+ *     @OA\Response(
+ *          response="200",
+ *          description="Gets a task",
+ *          @OA\JsonContent(ref="#/components/schemas/Task")
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="Task id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(response="404", description="Task or category not found"),
+ *     @OA\Response(response="403", description="User should be the owner of the category or the invitation to get it.")
+ * )
+ */
 class ReadTaskAction extends Action
 {
 
