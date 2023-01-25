@@ -12,6 +12,28 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Get(
+ *     path="/api/invitations/{id}",
+ *     description="Gets an invitation",
+ *     @OA\Response(
+ *          response="200",
+ *          description="Gets an invitation",
+ *          @OA\JsonContent(ref="#/components/schemas/Invitation")
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="Invitation id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(response="404", description="Given category or user not found"),
+ *     @OA\Response(response="403", description="User should be the owner of the category or the invitation to get it.")
+ * )
+ */
 class ReadInvitationAction extends Action
 {
     /**
