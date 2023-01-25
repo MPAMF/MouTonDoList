@@ -20,6 +20,23 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 
 `vendor/bin/phinx seed:run`
 
+#### Données de test
+
+Via le seed, voici la liste des utilisateurs de test :
+- Paul 
+  - Email : contact@schawnndev.fr
+  - Mot de passe : paul
+- Matthieu
+  - Email : contact@matthieu-freitag.com
+  - Mot de passe : matthieu
+- Quentin
+  - Email : quentin.gerling@gmail.com
+  - Mot de passe : quentin
+- Victor
+  - Email : victor.hahn@gmail.com
+  - Mot de passe : victor
+
+Servez-vous!
 
 ## Fonctionnement général
 
