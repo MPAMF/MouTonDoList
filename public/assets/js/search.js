@@ -118,8 +118,6 @@ function doSearch(splitInputs) {
             let name = false
             let desc = false
 
-            console.log(task)
-
             if(task.assigned !== null && task.assigned.username !== null)
                 user = (task.assigned.username.toLowerCase().split(" ")).some(r => splitInputs.includes(r))
             if(task.name !== null)

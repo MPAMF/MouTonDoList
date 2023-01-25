@@ -387,7 +387,6 @@ function removeSubCatFromData(id) {
     let position = cat.subCategories[idx].position
     cat.subCategories.splice(idx, 1)
     shiftPositionsLeft(cat.subCategories, position)
-    console.log(cat.subCategories)
 }
 
 function removeMemberFromData(catId, userId) {
@@ -513,7 +512,6 @@ function prepareCatForData() {
 function addCatToData(cat) {
     storagePushToCategories(cat.category_id, false)
     shiftCatPositionsRight()
-    console.log(cat)
     data.categories.push(cat)
 }
 
@@ -609,6 +607,5 @@ function getCategoryBySubcatId(subcatId) {
     let catId = subcat.parent_category_id
     let catIdx = data.categories.findIndex(c => c.category_id === catId)
     let cat = data.categories[catIdx]
-    console.log(cat)
     return cat
 }
