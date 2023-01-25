@@ -314,8 +314,6 @@ function moveSubCatFromData(subCatId, oldIndex, newIndex) {
     let cat = getCurrentCategory()
     sortByPosition(cat.subCategories)
 
-    console.log(cat)
-
     let result = structuredClone(cat)
     let i = -1
     if(oldIndex < newIndex) {
@@ -342,7 +340,6 @@ function moveSubCatFromData(subCatId, oldIndex, newIndex) {
     }
 
     sortByPosition(result.subCategories)
-    console.log(result)
     return result
 }
 
