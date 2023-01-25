@@ -26,13 +26,13 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 - Création de compte : http://localhost:8080/account/register
 - Connexion : http://localhost:8080/account/login
 
-![Default view of the app](public/assets/readme-images/view-default.png)
+![Default view of the app](resources/docs/readme-images/view-default.png)
 
 ### Dashboard
 
 - Dashboard : http://localhost:8080/dashboard
 
-![View of the app when logged in](public/assets/readme-images/view-dashboard.png)
+![View of the app when logged in](resources/docs/readme-images/view-dashboard.png)
 
 #### Projet
 
@@ -120,7 +120,7 @@ Attention cependant : l'attribution d'une date à une tâche n'est pas encore im
 
 ### Code Twig
 
-![Logo Twig](public/assets/readme-images/logo-twig.png)
+![Logo Twig](resources/docs/readme-images/logo-twig.png)
 
 On retrouve les fichiers twig dans `src/Application/Views`. Le fichier `layout.twig` sert de template général aux autres fichiers.
 
@@ -138,7 +138,7 @@ Dans `/pages` se trouve `dashboard.twig` qui le template de base et applique ses
 
 ### Traductions
 
-![JSON Translations](public/assets/readme-images/translations.png)
+![JSON Translations](resources/docs/readme-images/translations.png)
 
 Dans `/public/assets/translations/` on retrouve des fichiers au format `JSON` qui contiennent chacun les labels de leur langue.
 
@@ -148,7 +148,7 @@ Langues pour l'instant disponibles :
 
 ###  Feuilles de style
 
-![Logo SCSS](public/assets/readme-images/logo-scss.png)
+![Logo SCSS](resources/docs/readme-images/logo-scss.png)
 
 - SCSS => `/public/assets/scss/`
 - CSS => `/public/assets/css/`
@@ -179,7 +179,7 @@ C’est le fichier `layout.css`. Il doit être importé comme stylesheet dans le
 
 ### Javascript
 
-![Logo JS](public/assets/readme-images/logo-js.png)
+![Logo JS](resources/docs/readme-images/logo-js.png)
 
 - `actions.js` => exécute les actions front et appels API
 - `check-connection.js` => exécute des vérifications à la connexion
