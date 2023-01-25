@@ -598,3 +598,7 @@ function shiftCatPositionsRight() {
         element.category.position++
     })
 }
+
+function isCatArchivedFalse(catId) {
+    return getCategoryById(catId).archived === false
+}
