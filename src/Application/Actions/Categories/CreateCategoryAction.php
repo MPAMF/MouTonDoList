@@ -15,6 +15,27 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpInternalServerErrorException;
 
+/**
+ * @OA\Post(
+ *     path="/api/categories",
+ *     @OA\RequestBody(
+ *         description="Category object",
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/Category")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="Creates an category",
+ *          @OA\JsonContent(ref="#/components/schemas/Category")
+ *     ),
+ *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
+ *     @OA\Response(response="500", description="Repository (database) error"),
+ *     @OA\Response(response="403", description="User should be the owner of the parent_category to create an sub-category")
+ * )
+ */
 class CreateCategoryAction extends Action
 {
 
