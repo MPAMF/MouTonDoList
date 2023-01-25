@@ -16,6 +16,7 @@ use Slim\Exception\HttpNotFoundException;
  * @OA\Get(
  *     path="/api/categories/{id}",
  *     description="Gets an category",
+ *     security = {{"apiKey": {}}},
  *     @OA\Response(
  *          response="200",
  *          description="Gets an category",
