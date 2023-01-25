@@ -43,7 +43,7 @@ use Slim\Exception\HttpNotFoundException;
  *     ),
  *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
  *     @OA\Response(response="500", description="Repository (database) error"),
- *     @OA\Response(response="403", description="User should be the owner of the parent_category to create an sub-category")
+ *     @OA\Response(response="403", description="User should be the owner of the parent_category to create an sub-category"),
  *     @OA\Response(response="404", description="Category not found.")
  * )
  */
