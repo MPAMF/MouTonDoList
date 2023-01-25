@@ -31,8 +31,8 @@ use Slim\Exception\HttpInternalServerErrorException;
  *          @OA\JsonContent(ref="#/components/schemas/User")
  *     ),
  *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
- *     @OA\Response(response="403", description="This user already existe")
- *     @OA\Response(response="500", description="Repository (database) error"),
+ *     @OA\Response(response="403", description="This user already existe"),
+ *     @OA\Response(response="500", description="Repository (database) error")
  * )
  */
 class CreateUserAction extends Action

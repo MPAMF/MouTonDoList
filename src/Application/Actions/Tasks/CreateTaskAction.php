@@ -34,9 +34,9 @@ use Slim\Exception\HttpNotFoundException;
  *          @OA\JsonContent(ref="#/components/schemas/Task")
  *     ),
  *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
- *     @OA\Response(response="403", description="User should have the write permission on the parent category")
- *     @OA\Response(response="404", description="Given category not found")
- *     @OA\Response(response="500", description="Repository (database) error"),
+ *     @OA\Response(response="403", description="User should have the write permission on the parent category"),
+ *     @OA\Response(response="404", description="Given category not found"),
+ *     @OA\Response(response="500", description="Repository (database) error")
  * )
  */
 class CreateTaskAction extends Action
