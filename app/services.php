@@ -39,6 +39,8 @@ use App\Domain\Services\Models\Task\DeleteTaskService;
 use App\Domain\Services\Models\Task\DeleteTaskServiceImpl;
 use App\Domain\Services\Models\Task\GetTaskService;
 use App\Domain\Services\Models\Task\GetTaskServiceImpl;
+use App\Domain\Services\Models\Task\SearchTaskService;
+use App\Domain\Services\Models\Task\SearchTaskServiceImpl;
 use App\Domain\Services\Models\Task\UpdateTaskService;
 use App\Domain\Services\Models\Task\UpdateTaskServiceImpl;
 use App\Domain\Services\Models\TaskComment\CreateTaskCommentService;
@@ -76,6 +78,7 @@ return function (ContainerBuilder $containerBuilder) {
         UpdateTaskService::class => autowire(UpdateTaskServiceImpl::class),
         GetTaskService::class => autowire(GetTaskServiceImpl::class),
         DeleteTaskService::class => autowire(DeleteTaskServiceImpl::class),
+        SearchTaskService::class => autowire(SearchTaskServiceImpl::class),
 
         // TaskComments
         CreateTaskCommentService::class => autowire(CreateTaskCommentServiceImpl::class),

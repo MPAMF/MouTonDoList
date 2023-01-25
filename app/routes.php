@@ -24,6 +24,7 @@ use App\Application\Actions\TaskComments\UpdateTaskCommentAction;
 use App\Application\Actions\Tasks\CreateTaskAction;
 use App\Application\Actions\Tasks\DeleteTaskAction;
 use App\Application\Actions\Tasks\ReadTaskAction;
+use App\Application\Actions\Tasks\SearchTaskAction;
 use App\Application\Actions\Tasks\UpdateTaskAction;
 use App\Application\Actions\User\CreateUserAction;
 use App\Application\Actions\User\DeleteUserAction;
@@ -84,6 +85,7 @@ return function (App $app) {
         });
 
         $group->group('/tasks', function (Group $group) {
+            $group->get('/search/{input}', SearchTaskAction::class)->setName('actions.tasks.search');
             $group->post('', CreateTaskAction::class)->setName('actions.tasks.create');
             $group->get('/{id}', ReadTaskAction::class)->setName('actions.tasks.read');
             $group->put('/{id}', UpdateTaskAction::class)->setName('actions.tasks.update');
