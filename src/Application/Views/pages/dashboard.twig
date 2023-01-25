@@ -6,8 +6,8 @@
     <script type="text/javascript">
         const data = {
             categories: JSON.parse(`{{ categories.values()|json_encode|raw }}`),
-            currentUserCategoryId: {{ category.id }},
-            currentCategoryId: {{ category.category.id }},
+            currentUserCategoryId: {{ category == null ? 0 : category.id }},
+            currentCategoryId: {{ category == null ? 0 : category.category.id }},
             currentCategoryIdx: 0,
             canEdit: {{ canEdit|json_encode|raw }},
             user: {{ user|json_encode|raw }},

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Services\Auth;
 
+use App\Domain\Auth\AuthInterface;
 use App\Domain\Exceptions\BadRequestException;
 use App\Domain\Exceptions\RepositorySaveException;
 use App\Domain\Models\Category\Category;
@@ -34,6 +35,12 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
      * @var UserCategoryRepository
      */
     public UserCategoryRepository $userCategoryRepository;
+
+    /**
+     * @Inject
+     * @var AuthInterface
+     */
+    private AuthInterface $auth;
 
     /**
      * {@inheritDoc}
@@ -85,6 +92,9 @@ class RegisterUserServiceImpl extends Service implements RegisterUserService
         if (!$this->userCategoryRepository->save($userCategory)) {
             throw new RepositorySaveException($this->translator->trans('AuthRegisterFailed'));
         }
+
+        // Set user to session
+        $this->auth->setUser($user);
 
         return $user;
     }

@@ -9,7 +9,12 @@
         <div class="main-category">
             <div class="container-category">
                 {% include 'components/alert.twig' %}
-                {% include 'pages/components/category/content.twig' %}
+
+                {% if category != null %}
+                    {% include 'pages/components/category/content.twig' %}
+                {% else %}
+                    <h3 class="text-center">{% trans %}CreateCategoryDashboard{% endtrans %}</h3>
+                {% endif %}
             </div>
         </div>
 
