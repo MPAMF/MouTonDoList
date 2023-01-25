@@ -43,3 +43,14 @@ services:
     links:
       - db
     command: bash -c "composer install && composer make-static && php-fpm"
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "80:8000"
+    volumes:
+      - ./public/swagger/swagger.json:/swagger.json
+    environment:
+      API_URL: http://localhost:8080
+      SWAGGER_JSON: /swagger.json
+    depends_on:
+      - php-fpm
