@@ -717,6 +717,16 @@ function submitModalCategory() {
     showLoader()
 
     let catId = parseInt($("#modal-body").attr("data-id"))
+    let hideChecked = document.getElementById("modal-checkbox-task").checked
+
+    if(!isCatArchivedFalse(catId))
+    {
+        storageUpdateCategory(catId, hideChecked)
+        hideLoader()
+        bootstrap.Modal.getInstance($("#modal")).hide()
+        return
+    }
+
     const title = getValueFromLanguage('UpdateCategoryTitle').replace('%id%', catId)
 
     if(isOwnerById(catId)) {
@@ -726,33 +736,38 @@ function submitModalCategory() {
 
         if(error) {
             showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+            bootstrap.Modal.getInstance($("#modal")).hide()
             hideLoader()
             return;
         }
-    }
-    let hideChecked = document.getElementById("modal-checkbox-task").checked
 
-    let newName = document.getElementById("modal-input-name").value
-    let cat = getTempCatUpdate(catId, newName)
+        let newName = document.getElementById("modal-input-name").value
+        let cat = getTempCatUpdate(catId, newName)
 
-    repositories.categories.update(cat).then(() => {
+        repositories.categories.update(cat).then(() => {
 
-        document.getElementById("title").innerHTML = newName
-        let category = $('[data-sidebar-id="' + catId + '"]')[0]
-        category.parentElement.firstElementChild.innerHTML = newName
+            document.getElementById("title").innerHTML = newName
+            let category = $('[data-sidebar-id="' + catId + '"]')[0]
+            category.parentElement.firstElementChild.innerHTML = newName
 
-        updateCatFromData(catId, newName)
+            updateCatFromData(catId, newName)
+            storageUpdateCategory(catId, hideChecked)
+            toggleAllTasksVisibility()
+
+            showToast(getValueFromLanguage('UpdateCategorySuccess'), title, 'success')
+        }).catch(e => {
+            console.log(e)
+            showToast(getValueFromLanguage('UpdateCategoryError').replace('%code%', e.code), title, 'danger')
+        }).then(() => {
+            bootstrap.Modal.getInstance($("#modal")).hide()
+            hideLoader()
+        });
+    } else {
         storageUpdateCategory(catId, hideChecked)
-        toggleAllTasksVisibility()
-
-        showToast(getValueFromLanguage('UpdateCategorySuccess'), title, 'success')
-    }).catch(e => {
-        console.log(e)
-        showToast(getValueFromLanguage('UpdateCategoryError').replace('%code%', e.code), title, 'danger')
-    }).then(() => {
-        bootstrap.Modal.getInstance($("#modal")).hide()
         hideLoader()
-    });
+        bootstrap.Modal.getInstance($("#modal")).hide()
+        return
+    }
 }
 
 function submitModalSubCategory() {
