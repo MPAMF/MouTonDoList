@@ -68,7 +68,6 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
     repositories.tasks.update(task).then(() => {
         if(result.result !== undefined) {
             oldSub = result.result
-            console.log("old", oldSub)
         } else {
             oldSub = result.oldSub
             newSub = result.newSub

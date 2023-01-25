@@ -284,16 +284,22 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
     sortByPosition(newSub.tasks)
 
     let i = 0
+    let found = false
     newSub.tasks.forEach(function(task) {
         if(i === newIndex)
         {
             element.position = task.position
+            found = true
         }
         if(newIndex <= i )
             task.position++
         i++
     })
+    if(!found)
+        element.position = i
+    console.log(found, i, newSub.tasks.length)
     newSub.tasks.splice(newIndex, 0, element)
+    console.log(newSub)
 
     i = 0
     oldSub.tasks.forEach(function(task) {
