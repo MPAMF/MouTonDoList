@@ -158,7 +158,7 @@
                 </div>
                 <div class="container-fluid p-0">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitreModalNav{% endtrans %}</h1>
+                        <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitleModalNav{% endtrans %}</h1>
                         <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="{{ 'CloseAriaLabel'|trans|raw }}"></button>
                     </div>
                     <div class="modal-body">
@@ -337,10 +337,10 @@
     function loadAllValues(typeValue, values) {
         let res;
 
-        if (typeValue === 0) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+        if (typeValue === 0) {/* [0]: categoryName; [1]: SubCategoryName; [2]: taskName; [3]: subCategoryId; [4]: taskId;*/
             res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
-                res += createTaskToDo(value[0], value[1], value[2], getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value[3]));
+                res += createTaskToDo(value[0], value[1], value[2], value[3], value[4]);
             });
         }
         else if(typeValue === 1){
@@ -353,7 +353,7 @@
             res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
                 res += createNotification(value.id, value.category.name, value.category.owner.username,
-                    getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value.date));
+                    timeSince(Date.parse(value.created_at)));
             });
         }
 
@@ -395,16 +395,18 @@
         return `
         <li class="sidebar-li rounded p-2" id="invitation-` + invitationId + `">
             <div class="d-flex w-100 justify-content-between">
-                <label class="align-items-center mt-2" >
-                    ` + category + ` , ` + owner + ` , ` + date + `
+                <label class="align-items-center mt-2" title="` + getValueFromLanguage('NotifLabelTitleModalNav') + `">
+                    ` + getValueFromLanguage("LabelNotifModalNav").replace("%category%", category).replace("%owner%", owner) + `
+                    <small class="form-text text-muted" title="` + getValueFromLanguage('NotifDateTitleModalNav') + `">(`+ date +`)</small>
                 </label>
+
                 <div class="d-flex">
-                    <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success" title="Notification"
-                         onclick="updateInvitation(` + invitationId + `,true)">
+                    <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success"
+                         onclick="updateInvitation(` + invitationId + `,true)" title="` + getValueFromLanguage("BtnValidateTitleNotifModalNav") + `">
                         <span class="mdi mdi-check span-nav"></span>
                     </button>
-                    <button type="button" class="btn position-relative btn-nav me-1 btn-modal-remove" title="Notification"
-                         onclick="updateInvitation(` + invitationId + `,false))">
+                    <button type="button" class="btn position-relative btn-nav me-1 btn-modal-remove"
+                         onclick="updateInvitation(` + invitationId + `,false))" title="` + getValueFromLanguage("BtnRefuseTitleNotifModalNav") + `">
                         <span class="mdi mdi-18px mdi-close-thick"></span>
                     </button>
                 </div>
@@ -425,13 +427,13 @@
         addEventTaskToDo();
     }
 
-    function createTaskToDo(taskName, subCatId, taskId, date) {
+    function createTaskToDo(categoryName, subCategoryName, taskName, subCatId, taskId) {
         return `
         <li class="sidebar-li rounded p-2" id="taskToDo-` + subCatId + `-` + taskId + `">
             <div class="d-flex">
                 <div class="" onclick="openTaskDetails(` + subCatId + `,` + taskId + `)">
                     <label>
-                        ` + taskName + ` , ` + date + `
+                        `+ categoryName + ` , ` + subCategoryName + ` , ` + taskName  + `
                     </label>
                 </div>
                     <a class="ms-2" data-idCat="` + subCatId + `" data-idTask="` + taskId + `" role="button"
