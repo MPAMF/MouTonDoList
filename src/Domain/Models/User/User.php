@@ -11,20 +11,51 @@ use Respect\Validation\Validator;
 use ReturnTypeWillChange;
 use stdClass;
 
+/**
+ * @OA\Schema(title="User")
+ */
 class User extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $id;
 
+    /**
+     * @var string
+     * @OA\Property()
+     */
     // Primary key & unique
     private string $email;
 
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $username;
 
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $password;
 
     // Options
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $image_path;
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $theme;
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $language;
 
     public function __construct()
