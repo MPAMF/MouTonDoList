@@ -13,6 +13,27 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Delete(
+ *     path="/api/tasks/{id}",
+ *     description="Deletes a task",
+ *     @OA\Response(
+ *          response="204",
+ *          description="Deletes an task"
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="Task id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(response="404", description="Given category or task not found"),
+ *     @OA\Response(response="403", description="User has not the write permission of parent category.")
+ * )
+ */
 class DeleteTaskAction extends Action
 {
 

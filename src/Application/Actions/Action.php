@@ -20,6 +20,16 @@ use Slim\Views\Twig;
 use Symfony\Component\Translation\Translator;
 use Tagliatti\SlimValidation\ValidatorInterface;
 
+/**
+ * @OA\Info(title="MouTonDoList API", version="1.0")
+ *
+ * @OA\SecurityScheme(
+ *     securityScheme="Header Token",
+ *     type="apiKey",
+ *     in="header",
+ *     name="Authorization"
+ * )
+ */
 abstract class Action
 {
     use RedirectHandler, FlashMessageHandler;
