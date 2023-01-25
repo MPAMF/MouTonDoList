@@ -15,6 +15,27 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpInternalServerErrorException;
 
+/**
+ * @OA\Post(
+ *     path="/api/comments",
+ *     @OA\RequestBody(
+ *         description="TaskComment object",
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/TaskComment")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="Creates an task comment",
+ *          @OA\JsonContent(ref="#/components/schemas/TaskComment")
+ *     ),
+ *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
+ *     @OA\Response(response="403", description="User should have the write permission on the parent category"),
+ *     @OA\Response(response="500", description="Repository (database) error")
+ * )
+ */
 class CreateTaskCommentAction extends Action
 {
     /**

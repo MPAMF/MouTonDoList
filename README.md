@@ -18,6 +18,12 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 
 `vendor/bin/phinx seed:run`
 
+### Documentation Swagger
+
+Il est possible de générer une documentation de l'API via Swagger :
+
+`./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .`
+
 ## Feuilles de style 
 
 ### Base SCSS

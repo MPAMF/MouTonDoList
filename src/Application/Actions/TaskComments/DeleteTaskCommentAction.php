@@ -14,6 +14,27 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Delete(
+ *     path="/api/comments/{id}",
+ *     description="Deletes a comment",
+ *     @OA\Response(
+ *          response="204",
+ *          description="Deletes an comment"
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="Comment id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(response="404", description="Given comment not found"),
+ *     @OA\Response(response="403", description="User has not the write permission of parent category.")
+ * )
+ */
 class DeleteTaskCommentAction extends Action
 {
 

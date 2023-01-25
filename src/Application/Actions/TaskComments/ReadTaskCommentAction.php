@@ -14,6 +14,29 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Get(
+ *     path="/api/comments/{id}",
+ *     description="Gets a comment",
+ *     @OA\Response(
+ *          response="200",
+ *          description="Gets a comment",
+ *          @OA\JsonContent(ref="#/components/schemas/TaskComment")
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="TaskComment id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(response="404", description="Comment not found"),
+ *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
+ *     @OA\Response(response="403", description="User should be the owner of the category or the invitation to get it.")
+ * )
+ */
 class ReadTaskCommentAction extends Action
 {
     /**

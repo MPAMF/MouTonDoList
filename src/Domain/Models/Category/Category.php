@@ -12,17 +12,53 @@ use Respect\Validation\Validator;
 use ReturnTypeWillChange;
 use stdClass;
 
+/**
+ * @OA\Schema(title="Category")
+ */
 class Category extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
-
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $id;
+
+    /**
+     * @var int
+     * @OA\Property()
+     */
     private int $owner_id;
     private ?User $owner;
+
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $parent_category_id;
     private ?Category $parentCategory;
+
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $name;
+
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $color;
+
+    /**
+     * @var int
+     * @OA\Property()
+     */
     private int $position;
+
+    /**
+     * @var bool
+     * @OA\Property()
+     */
     private bool $archived;
 
     public function __construct()
