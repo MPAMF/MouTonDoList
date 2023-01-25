@@ -39,6 +39,10 @@ Si toute fois le fichier swagger.json ne se génère pas, utilisez la commande s
 
 `./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .`
 
+### Tests
+
+Des tests étaient prévu dans le répertoire `/tests`. Cette tâche était affectée à Victor, mais malgré les multiples relances, force est de constater que cela n'a pas été réalisé. Il en va de même pour les quelques cinq autres tâches qui lui ont été affectées. 
+
 ### Hors connexion
 
 - Page d'accueil : http://localhost:8080/
