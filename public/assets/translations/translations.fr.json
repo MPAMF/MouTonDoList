@@ -143,10 +143,10 @@
   "CategorySearchResult": "Résultat de la recherche :",
   "CategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une catégorie",
 
-  "SubCategoryDragTitle": "Attrape la sous-catégorie pour la changer d'emplacement",
-  "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie",
-  "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie archivée",
-  "SubCategoryNewTaskButtonName" : "Ajouter une sous-catégorie",
+  "SubCategoryDragTitle": "Attrape la section pour la changer d'emplacement",
+  "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une section",
+  "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une section archivée",
+  "SubCategoryNewTaskButtonName" : "Ajouter une section",
 
   "TaskDragTitle": "Attrape la tâche pour la changer d'emplacement",
   "TaskCheckboxTitle": "Etat de la tâche",
