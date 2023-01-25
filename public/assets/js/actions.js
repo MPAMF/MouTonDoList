@@ -683,13 +683,16 @@ function submitModalCategory() {
 
     showLoader()
 
-    let error = checkInputOnSubmit("#modal-input-name", "error-modal")
-    let memberSelectsName = document.getElementsByName("modal-member-select")
-    error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
-    let hideChecked = document.getElementById("modal-checkbox-task").checked
     let catId = parseInt($("#modal-body").attr("data-id"))
-
     const title = getValueFromLanguage('UpdateCategoryTitle').replace('%id%', catId)
+
+    let error = checkInputOnSubmit("#modal-input-name", "error-modal")
+
+    if(isOwnerById(catId)) {
+        let memberSelectsName = document.getElementsByName("modal-member-select")
+        error = error || checkSelectValuesOnSubmit(memberSelectsName, "error-modal-members", authModalSelectMemberStatusValues)
+    }
+    let hideChecked = document.getElementById("modal-checkbox-task").checked
 
     if(error) {
         showToast(getValueFromLanguage('InvalidData'), title, 'danger')
