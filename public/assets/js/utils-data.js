@@ -314,6 +314,8 @@ function moveSubCatFromData(subCatId, oldIndex, newIndex) {
     let cat = getCurrentCategory()
     sortByPosition(cat.subCategories)
 
+    console.log(cat)
+
     let result = structuredClone(cat)
     let i = -1
     if(oldIndex < newIndex) {
@@ -340,6 +342,7 @@ function moveSubCatFromData(subCatId, oldIndex, newIndex) {
     }
 
     sortByPosition(result.subCategories)
+    console.log(result)
     return result
 }
 
@@ -467,6 +470,17 @@ function getCatMaxPosition() {
     return max
 }
 
+function getAllCatMaxPosition() {
+    let max = 0
+    data.categories.forEach(function(cat) {
+        if(cat.category.archived || cat.category.owner_id !== data.user.id) return
+        let temp = cat.category.position
+        if(temp > max)
+            max = temp
+    })
+    return max
+}
+
 function prepareSubCatToData(id, name) {
     let subCat = getSubCatTemplate()
 
@@ -496,7 +510,7 @@ function prepareCatForData() {
     cat.category.archived = false
     cat.category.name = getValueFromLanguage("NewCategoryName")
     cat.category.owner_id = data.user.id
-    cat.category.position = 0
+    cat.category.position = getAllCatMaxPosition() + 1
     cat.category.subCategories = []
     cat.category.color = "#FF5733" // temp
 
