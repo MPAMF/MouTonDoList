@@ -17,7 +17,7 @@ use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 
 /**
- * @OA\Post(
+ * @OA\Put(
  *     path="/api/comments",
  *     @OA\RequestBody(
  *         description="TaskComment object",
