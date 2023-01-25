@@ -68,7 +68,6 @@ function moveTask(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, newIndex
     repositories.tasks.update(task).then(() => {
         if(result.result !== undefined) {
             oldSub = result.result
-            console.log("old", oldSub)
         } else {
             oldSub = result.oldSub
             newSub = result.newSub
@@ -693,7 +692,7 @@ function newCategory() {
     repositories.categories.create(cat.category).then((e) => {
         let newId = e.id
         let container = document.getElementById("category-default").firstElementChild
-        container.prepend(getSidebarOwnedCategory(newId))
+        container.append(getSidebarOwnedCategory(newId))
 
         let category = $('[data-sidebar-id="' + newId + '"]')[0]
         let newPopover = defaultPopover()

@@ -2,7 +2,6 @@ function openTaskDetails(subCatId, taskId)
 {
     let task = getTaskInCurrentById(subCatId, taskId)
     let isArchived = getCategoryBySubcatId(subCatId).category.archived
-    console.log(isArchived)
 
     // get from categories where id=id
     $("#modal-title").html(getValueFromLanguage('ModalTaskDetailsName'))

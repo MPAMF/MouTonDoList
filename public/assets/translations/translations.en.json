@@ -143,10 +143,10 @@
   "CategorySearchResult": "Search result:",
   "CategoryPopoverAriaLabel": "Opens a list of actions for a category",
 
-  "SubCategoryDragTitle": "Grab the subcategory to change its location",
-  "SubCategoryPopoverAriaLabel": "Opens a list of actions for a sub-category",
-  "ArchivedSubCategoryPopoverAriaLabel": "Opens a list of actions for an archived subcategory",
-  "SubCategoryNewTaskButtonName": "Add a sub-category",
+  "SubCategoryDragTitle": "Grab the section to change its location",
+  "SubCategoryPopoverAriaLabel": "Opens a list of actions for a section",
+  "ArchivedSubCategoryPopoverAriaLabel": "Opens a list of actions for an archived section",
+  "SubCategoryNewTaskButtonName": "Add a section",
 
   "TaskDragTitle": "Grab the task to change its location",
   "TaskCheckboxTitle": "Task status",
