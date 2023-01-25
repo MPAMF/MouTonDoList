@@ -40,21 +40,15 @@ Servez-vous!
 
 ## Fonctionnement général
 
-### Documentation Swagger
-
-Il est possible de générer une documentation de l'API via Swagger :
-
-`./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .`
-
 ### API
 
 Notre API couvre toutes les actions de l'application.
 
-Vous pouvez trouver la documentation ici : http://localhost:8080/swagger
+Vous pouvez trouver la documentation via Swagger ici : http://localhost:8080/swagger
 
 Si toute fois le fichier swagger.json ne se génère pas, utilisez la commande suivante :
 
-`./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .`
+`./vendor/bin/openapi --format json --exclude var --exclude vendor --exclude tests --output ./public/swagger/swagger.json .`
 
 ### Tests
 
