@@ -98,7 +98,7 @@ function openEditModalCategory(catId)
 
     let content = '<form class="row g-3 form-check">'
 
-    if(isCanEditById(catId))
+    if(isOwnerById(catId))
     {
         content +=
             '<div class="col-12">' +

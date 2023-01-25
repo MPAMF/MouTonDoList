@@ -1,5 +1,7 @@
 # Projet Todo
 
+/!\ Important à lire /!\
+
 ## Installation & démarrage
 
 - Copier .env-example à .env puis le remplir
@@ -14,9 +16,29 @@ La commande pour gérer les migrations est : `vendor/bin/phinx migrate`
 
 #### Seeder la base de données (seulement en dev)
 
-**Important:** Il faut que la base de données soit vide avant de lancer la génération de données de test. Sinon il y'aura des erreurs conséquentes.
+**Important:** Il faut que la base de données soit vide avant de lancer la génération de données de test. Sinon il y'aura des incohérances et des duplications dans la base de données.
 
 `vendor/bin/phinx seed:run`
+
+#### Données de test
+
+Via le seed, voici la liste des utilisateurs de test :
+- Paul 
+  - Email : contact@schawnndev.fr
+  - Mot de passe : paul
+- Matthieu
+  - Email : contact@matthieu-freitag.com
+  - Mot de passe : matthieu
+- Quentin
+  - Email : quentin.gerling@gmail.com
+  - Mot de passe : quentin
+- Victor
+  - Email : victor.hahn@gmail.com
+  - Mot de passe : victor
+
+Servez-vous!
+
+## Fonctionnement général
 
 ### Documentation Swagger
 
@@ -24,46 +46,19 @@ Il est possible de générer une documentation de l'API via Swagger :
 
 `./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .`
 
-## Feuilles de style 
+### API
 
-### Base SCSS
-Le fichier princpal est `global.css` et doit être compilé au format CSS. Il s'occupe d'importer bootstrap et de combiner les autres fichiers au format SCSS. Il doit uniquement être modifié si un fichier SCSS doit être ajouté.
+Notre API couvre toutes les actions de l'application.
 
-### Couleurs SCSS
+Vous pouvez trouver la documentation ici : http://localhost:8080/swagger
 
-Plusieurs fichiers de thèmes existent, avec un nom selon le format suivant : `theme-nom.scss`. Ils sont importés et combinés par `public/assets/scss/global.scss`. Ces fichiers modifient uniquement les propriétés bootstrap des éléments au niveau des couleurs. Lorsqu'une propriété est ajoutée, elle doit l'être dans chaque fichier `theme-nom.scss`.
-Attention : le thème par défaut est une "copie" de `theme-dark.scss` au format CSS (voir [ici](#couleurs-css)).
+Si toute fois le fichier swagger.json ne se génère pas, utilisez la commande suivante :
 
-### Layout SCSS
+`./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .`
 
-C'est le fichier `layout.scss`. Il est importé et combiné par `public/assets/scss/global.scss`. Il modifie les propriétés bootstrap des éléments au niveau de leur comportement.
-Attention : ce fichier est différent du ficher de même nom situé dans `public/assets/css/layout.css` (voir [ici](#layout-css)).
+### Tests
 
-### Base CSS
-
-On y retrouve la version compilée du fichier SCSS `public/assets/scss/global.scss` (voir [ici](#base-scss)). Ce fichier ne doit pas être modifié et doit être importé comme stylesheet dans le HTML.
-
-### Couleurs CSS 
-Les thèmes sont gérés par des fichiers au format SCSS (voir #lien). Cependant, le thème par défaut doit être au format CSS et importé comme stylesheet dans le HTML. On retrouve donc le fichier `theme-default.css` qui reprend les propriétés du fichier `public/assets/scss/theme-dark.scss` (voir [ici](#couleurs-scss)). Ainsi, si `theme-dak.scss` est modifié, il faut procéder manuellement à la modification dans `theme-default.css` (en CSS !).
-
-### Layout CSS
-C’est le fichier `layout.css`. Il doit être importé comme stylesheet dans le HTML. Contrairement au fichier `layout.scss` (voir [ici](#layout-scss)), il modifie les propriétés des nouveaux éléments non pris en charge par bootstrap (comportement et parfois couleurs).
-
-## Code Twig
-
-### Principaux
-
-Dans `Views/components` se trouve les éléments principaux qui correspondent aux balises : `head`, `header`, `footer`. Ils sont utilisés par quasiment toutes les pages et notamment dans le fichier `layout.twig` qui sert de template par défaut pour toutes les pages. Les différents éléments de ce layout sont modulables selon les besoins de chaque page.
-
-### Home
-
-Dans `View/home` se trouve `content.twig` qui reprend le template de base et applique ses propres composants qu'on retrouve dans `Views/home/components`. Cela représente les pages auxquelles un invité (utilisateur non connecté) aura accès : présentation, connexion, inscription, etc...
-
-### Pages
-
-Dans `View/pages` se trouve `dashboard.twig` qui le template de base et applique ses propres composants qu'on retrouve dans `Views/pages/components`. Cela représente les éléments auxquelles un utilisateur connecté aura accès : catégorie, sous-catégorie, tâche, barre verticale, etc...
-
-## Fonctionnement général
+Des tests étaient prévu dans le répertoire `/tests`. Cette tâche était affectée à Victor, mais malgré les multiples relances, force est de constater que cela n'a pas été réalisé. Il en va de même pour les quelques cinq autres tâches qui lui ont été affectées. 
 
 ### Hors connexion
 
@@ -71,9 +66,13 @@ Dans `View/pages` se trouve `dashboard.twig` qui le template de base et applique
 - Création de compte : http://localhost:8080/account/register
 - Connexion : http://localhost:8080/account/login
 
+![Default view of the app](resources/docs/readme-images/view-default.png)
+
 ### Dashboard
 
 - Dashboard : http://localhost:8080/dashboard
+
+![View of the app when logged in](resources/docs/readme-images/view-dashboard.png)
 
 #### Projet
 
@@ -150,3 +149,87 @@ Autres fonctionnalités accessibles depuis la barre de navigation :
 - fonctionnalité de recherche des tâches dans le projet courant : par nom d'utilisateur (suggéré) ou par mots clés
 
 Attention cependant : l'attribution d'une date à une tâche n'est pas encore implémentée au niveau du front, notamment par manque de temps mais aussi car cette fonctionnalité n'est pas obligatoire vis à vis du sujet.
+
+## Documentation fonctionelle
+
+### Code Twig
+
+![Logo Twig](resources/docs/readme-images/logo-twig.png)
+
+On retrouve les fichiers twig dans `src/Application/Views`. Le fichier `layout.twig` sert de template général aux autres fichiers.
+
+#### Principaux
+
+Dans `/components` se trouve les éléments principaux qui correspondent aux balises : `head`, `header`, `footer`, `modal`, etc.
+
+#### Home
+
+Dans `/home` se trouve `content.twig` qui reprend le template de base et applique ses propres composants qu'on retrouve dans `/home/components`. Cela représente les pages auxquelles un invité (utilisateur non connecté) aura accès : présentation, connexion, inscription, etc...
+
+#### Pages
+
+Dans `/pages` se trouve `dashboard.twig` qui le template de base et applique ses propres composants qu'on retrouve dans `/pages/components`. Cela représente les éléments auxquelles un utilisateur connecté aura accès : projet, section, tâche, barre verticale, etc...
+
+### Traductions
+
+![JSON Translations](resources/docs/readme-images/translations.png)
+
+Dans `/public/assets/translations/` on retrouve des fichiers au format `JSON` qui contiennent chacun les labels de leur langue.
+
+Langues pour l'instant disponibles :
+- français (default) => `translations.fr.json`
+- english => `translations.en.json`
+
+###  Feuilles de style
+
+![Logo SCSS](resources/docs/readme-images/logo-scss.png)
+
+- SCSS => `/public/assets/scss/`
+- CSS => `/public/assets/css/`
+
+#### Base SCSS
+
+Le fichier princpal est `global.css` et doit être compilé au format CSS. Il s'occupe d'importer bootstrap et de combiner les autres fichiers au format SCSS. Il doit uniquement être modifié si un fichier SCSS doit être ajouté.
+
+#### Couleurs SCSS
+
+Plusieurs fichiers de thèmes existent, avec un nom selon le format suivant : `theme-nom.scss`. Ils sont importés et combinés par `global.scss`. Ces fichiers modifient uniquement les propriétés bootstrap des éléments au niveau des couleurs. Lorsqu'une propriété est ajoutée, elle doit l'être dans chaque fichier `theme-nom.scss`.
+Attention : le thème par défaut est une "copie" de `theme-dark.scss` au format CSS (voir [ici](#couleurs-css)).
+
+#### Layout SCSS
+
+C'est le fichier `layout.scss`. Il est importé et combiné par `global.scss`. Il modifie les propriétés bootstrap des éléments au niveau de leur comportement.
+Attention : ce fichier est différent du ficher de même nom situé dans `public/assets/css/layout.css` (voir [ici](#layout-css)).
+
+#### Base CSS
+
+On y retrouve la version compilée du fichier SCSS `public/assets/scss/global.scss` (voir [ici](#base-scss)). Ce fichier ne doit pas être modifié et doit être importé comme stylesheet dans le HTML.
+
+#### Couleurs CSS
+Les thèmes sont gérés par des fichiers au format SCSS (voir #lien). Cependant, le thème par défaut doit être au format CSS et importé comme stylesheet dans le HTML. On retrouve donc le fichier `theme-default.css` qui reprend les propriétés du fichier `public/assets/scss/theme-dark.scss` (voir [ici](#couleurs-scss)). Ainsi, si `theme-dak.scss` est modifié, il faut procéder manuellement à la modification dans `theme-default.css` (en CSS !).
+
+#### Layout CSS
+C’est le fichier `layout.css`. Il doit être importé comme stylesheet dans le HTML. Contrairement au fichier `layout.scss` (voir [ici](#layout-scss)), il modifie les propriétés des nouveaux éléments non pris en charge par bootstrap (comportement et parfois couleurs).
+
+### Javascript
+
+![Logo JS](resources/docs/readme-images/logo-js.png)
+
+- `actions.js` => exécute les actions front et appels API
+- `check-connection.js` => exécute des vérifications à la connexion
+- `check-register.js` => exécute des vérifications à la création de compte
+- `checks.js` => exécute des vérifications générales avant les exécutions des actions
+- `content.js` => récupère une adaptation du code `twig` en `js` pour certains éléments
+- `dragdrop-setup.js` => initialise les drag and drop
+- `local-storage.js` => gère le local storage
+- `modal-init.js` => gère les modals
+- `notifications.js` => gère le centre des notifications
+- `popover-init.js` => initialise les popovers
+- `popover-setup.js` => gère les popovers
+- `repositories.js` => gère les appels API
+- `search.js` => effectue la recherche (front)
+- `sidebar-event.js` => toggle de la sidebar
+- `Sortable.min.js` => inclusion de la libraire `Sortable`
+- `theme-switcher.js` => effectue le changement de thème
+- `translations.js` => effectue le changement de langue
+- `utils-data.js` => gère l'objet `data`
