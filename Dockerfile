@@ -10,9 +10,12 @@ RUN npm install --global sass
 # Install composer from the official image
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+WORKDIR /var/www/html
+COPY . .
+ENV COMPOSER_ALLOW_SUPERUSER=1
 # Run composer install to install the dependencies
-# RUN composer install --optimize-autoloader --no-interaction --no-progress
-# RUN composer make-static
+RUN composer install --optimize-autoloader --no-interaction --no-progress
+RUN composer make-static
 
 ENV TZ=Europe/Paris
 ENV PHP_IDE_CONFIG="serverName=MouTonDoList"
@@ -25,4 +28,4 @@ RUN echo 'xdebug.mode=develop,debug' >> /usr/local/etc/php/php.ini
 RUN echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/php.ini
 RUN echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/php.ini
 
-RUN ./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .
+RUN ./vendor/bin/openapi --format json --exclude var --exclude vendor --exclude resources --output ./public/swagger/swagger.json .
