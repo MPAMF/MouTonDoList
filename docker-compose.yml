@@ -49,7 +49,7 @@ services:
     volumes:
       - ./public/swagger/swagger.json:/usr/share/nginx/html/swagger.json
     environment:
-      API_URL: /swagger.json
+      API_URL: swagger.json
       SWAGGER_JSON: /swagger.json
       BASE_URL: /swagger
     depends_on:
