@@ -97,6 +97,9 @@
   "TaskToDoDeleteToTaskModalNav": "Delete notification",
   "BtnValidateTitleNotifModalNav": "Accept the invitation",
   "BtnRefuseTitleNotifModalNav": "Decline the invitation",
+  "LabelNotifModalNav": "%owner% invites you to join <b>%category%</b>",
+  "NotifDateTitleModalNav": "Invitation date",
+  "NotifLabelTitleModalNav": "The content of the invitation",
 
   "ModalDropdownLanguages": "Français",
   "ModalDropdownLanguagesfr": "Français",

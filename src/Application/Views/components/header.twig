@@ -395,9 +395,11 @@
         return `
         <li class="sidebar-li rounded p-2" id="invitation-` + invitationId + `">
             <div class="d-flex w-100 justify-content-between">
-                <label class="align-items-center mt-2" >
-                    ` + category + ` , ` + owner + ` , ` + date + `
+                <label class="align-items-center mt-2" title="` + getValueFromLanguage('NotifLabelTitleModalNav') + `">
+                    ` + getValueFromLanguage("LabelNotifModalNav").replace("%category%", category).replace("%owner%", owner) + `
+                    <small class="form-text text-muted" title="` + getValueFromLanguage('NotifDateTitleModalNav') + `">(`+ date +`)</small>
                 </label>
+
                 <div class="d-flex">
                     <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success"
                          onclick="updateInvitation(` + invitationId + `,true)" title="` + getValueFromLanguage("BtnValidateTitleNotifModalNav") + `">
