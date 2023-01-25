@@ -14,6 +14,27 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpException;
 use Slim\Exception\HttpInternalServerErrorException;
 
+/**
+ * @OA\Post(
+ *     path="/api/users",
+ *     @OA\RequestBody(
+ *         description="User object",
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/User")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="Creates an User",
+ *          @OA\JsonContent(ref="#/components/schemas/User")
+ *     ),
+ *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
+ *     @OA\Response(response="403", description="This user already existe"),
+ *     @OA\Response(response="500", description="Repository (database) error")
+ * )
+ */
 class CreateUserAction extends Action
 {
     /**

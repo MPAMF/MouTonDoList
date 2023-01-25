@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 use App\Application\Actions\Auth\Login\DisplayLoginAction;
 use App\Application\Actions\Auth\Login\LoginAction;
-use App\Application\Actions\Auth\Login\TokenLoginAction;
 use App\Application\Actions\Auth\Logout\LogoutAction;
 use App\Application\Actions\Auth\Register\DisplayRegisterAction;
 use App\Application\Actions\Auth\Register\RegisterAction;

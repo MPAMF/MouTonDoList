@@ -16,6 +16,29 @@ use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Put(
+ *     path="/api/invitations",
+ *     @OA\RequestBody(
+ *         description="Invitation object",
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/UserCategory")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="Creates an invitation",
+ *          @OA\JsonContent(ref="#/components/schemas/UserCategory")
+ *     ),
+ *     @OA\Response(response="409", description="Invitation already exists"),
+ *     @OA\Response(response="404", description="Given category or user not found"),
+ *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
+ *     @OA\Response(response="500", description="Repository (database) error"),
+ *     @OA\Response(response="403", description="User should be the owner of the category to create an invitation")
+ * )
+ */
 class UpdateInvitationAction extends Action
 {
 

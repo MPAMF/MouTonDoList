@@ -14,16 +14,41 @@ use ReturnTypeWillChange;
 use stdClass;
 
 /**
+ * @OA\Schema(title="UserCategory")
  * Other name: Invitation
  */
 class UserCategory extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $id;
+
+    /**
+     * @var int
+     * @OA\Property()
+     */
     private int $user_id;
     private ?User $user;
+
+    /**
+     * @var int
+     * @OA\Property()
+     */
     private int $category_id;
     private ?Category $category;
+
+    /**
+     * @var bool
+     * @OA\Property()
+     */
     private bool $accepted;
+
+    /**
+     * @var bool
+     * @OA\Property()
+     */
     private bool $canEdit;
 
     public function __construct()

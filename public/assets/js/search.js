@@ -63,6 +63,7 @@ function resetAssign() {
 }
 
 function setAssignedValue(value, element) {
+    console.log(value)
     if(value === null) return
     assignId = value
     if(element.innerText !== "")
@@ -93,7 +94,7 @@ $(document).ready(function() {
                 resetSearchbar()
                 return
             }
-            let result = doSearch(input.toLowerCase().split())
+            let result = doSearch(input.toLowerCase().split(" "))
             displayResult(result)
         }
     });
@@ -103,10 +104,12 @@ function doSearch(splitInputs) {
     const result = []
     let correspond = false
 
-    if(assignId === null && splitInputs.length !== 1 && splitInputs[0] !== "")
+    splitInputs = splitInputs.filter(function(e){ return e.replace(/(\r\n|\n|\r)/gm,"")});
+
+    if(assignId === null && splitInputs.length === 0)
     {
         resetSearchbar()
-        return;
+        return result;
     }
 
     getCurrentCategory().subCategories.forEach(function(sub) {
@@ -117,8 +120,6 @@ function doSearch(splitInputs) {
             let user = false
             let name = false
             let desc = false
-
-            console.log(task)
 
             if(task.assigned !== null && task.assigned.username !== null)
                 user = (task.assigned.username.toLowerCase().split(" ")).some(r => splitInputs.includes(r))
@@ -132,23 +133,21 @@ function doSearch(splitInputs) {
 
             switch (assignId) {
                 case null: // Null
-                    if(!correspond && splitInputs.length !== 1 && splitInputs[0] !== "") // no input matched
-                        correspond = true
                     break
                 case -1: // None
                     if(correspond) // if input matched : combined
                         correspond = (task.assigned_id === null)
-                    else if(!correspond && splitInputs.length !== 1 && splitInputs[0] !== "") // no input matched
+                    else if(!correspond && splitInputs.length === 0) // no input matched
                         correspond = (task.assigned_id === null)
-                    else if(!correspond && splitInputs.length === 1 && splitInputs[0] === "") // no input
+                    else if(!correspond && splitInputs.length !== 0) // no input
                         correspond = true
                     break
                 case -2: // Any
-                    if(!correspond && splitInputs.length === 1 && splitInputs[0] === "") // no input
+                    if(!correspond && splitInputs.length === 0) // no input
                         correspond = true
                     break
                 case task.assigned_id: // User's id correspond
-                    if(!correspond && splitInputs.length === 1 && splitInputs[0] === "") // no input
+                    if(!correspond && splitInputs.length === 0) // no input
                         correspond = true
                     break
                 default:

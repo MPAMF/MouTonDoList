@@ -13,18 +13,61 @@ use Respect\Validation\Validator;
 use ReturnTypeWillChange;
 use stdClass;
 
+/**
+ * @OA\Schema(title="Task")
+ */
 class Task extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $id;
+
+    /**
+     * @var int
+     * @OA\Property()
+     */
     private int $category_id;
-    private string $name;
     private ?Category $category;
+
+    /**
+     * @var string
+     * @OA\Property()
+     */
+    private string $name;
+
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $description;
+
     private DateTime $due_date;
+
+    /**
+     * @var bool
+     * @OA\Property()
+     */
     private bool $checked;
+
+    /**
+     * @var int
+     * @OA\Property()
+     */
     private int $position;
+
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $last_editor_id;
     private ?User $last_editor;
+
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $assigned_id;
     private ?User $assigned;
 

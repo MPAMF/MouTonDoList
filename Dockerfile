@@ -24,3 +24,5 @@ RUN pecl install xdebug && \
 RUN echo 'xdebug.mode=develop,debug' >> /usr/local/etc/php/php.ini
 RUN echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/php.ini
 RUN echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/php.ini
+
+RUN ./vendor/bin/openapi --format json --exclude var --exclude vendor --output ./public/swagger/swagger.json .

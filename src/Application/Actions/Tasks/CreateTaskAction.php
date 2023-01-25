@@ -17,6 +17,28 @@ use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Post(
+ *     path="/api/tasks",
+ *     @OA\RequestBody(
+ *         description="Task object",
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/Task")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="Creates an task",
+ *          @OA\JsonContent(ref="#/components/schemas/Task")
+ *     ),
+ *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
+ *     @OA\Response(response="403", description="User should have the write permission on the parent category"),
+ *     @OA\Response(response="404", description="Given category not found"),
+ *     @OA\Response(response="500", description="Repository (database) error")
+ * )
+ */
 class CreateTaskAction extends Action
 {
 

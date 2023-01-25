@@ -13,12 +13,34 @@ use Respect\Validation\Validator;
 use ReturnTypeWillChange;
 use stdClass;
 
+/**
+ * @OA\Schema(title="TaskComment")
+ */
 class TaskComment extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $id;
+
+    /**
+     * @var string
+     * @OA\Property()
+     */
     private string $content;
+
+    /**
+     * @var int
+     * @OA\Property()
+     */
     private int $task_id;
     private ?Task $task;
+
+    /**
+     * @var int|null
+     * @OA\Property()
+     */
     private ?int $author_id;
     private ?User $author;
 

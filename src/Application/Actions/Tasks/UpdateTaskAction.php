@@ -18,6 +18,37 @@ use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Put(
+ *     path="/api/tasks",
+ *     @OA\RequestBody(
+ *         description="Task object",
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(ref="#/components/schemas/Task")
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="Task id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="Updates a task",
+ *          @OA\JsonContent(ref="#/components/schemas/Task")
+ *     ),
+ *     @OA\Response(response="400", description="Given arguments not passed trough validator."),
+ *     @OA\Response(response="403", description="User should have the write permission on the parent category"),
+ *     @OA\Response(response="404", description="Task or ategory not found"),
+ *     @OA\Response(response="500", description="Repository (database) error")
+ * )
+ */
 class UpdateTaskAction extends Action
 {
 

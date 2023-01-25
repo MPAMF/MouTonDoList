@@ -14,6 +14,27 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Exception\HttpNotFoundException;
 
+/**
+ * @OA\Delete(
+ *     path="/api/users/{id}",
+ *     description="Deletes an user",
+ *     @OA\Response(
+ *          response="204",
+ *          description="Deletes an user"
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="User id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
+ *         )
+ *     ),
+ *     @OA\Response(response="404", description="Given user not found"),
+ *     @OA\Response(response="403", description="Permission denied (forbidden)")
+ * )
+ */
 class DeleteUserAction extends Action
 {
 

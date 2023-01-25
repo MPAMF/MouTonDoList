@@ -284,16 +284,22 @@ function moveTaskFromData(taskId, oldSubCategoryId, oldIndex, newSubCategoryId, 
     sortByPosition(newSub.tasks)
 
     let i = 0
+    let found = false
     newSub.tasks.forEach(function(task) {
         if(i === newIndex)
         {
             element.position = task.position
+            found = true
         }
         if(newIndex <= i )
             task.position++
         i++
     })
+    if(!found)
+        element.position = i
+    console.log(found, i, newSub.tasks.length)
     newSub.tasks.splice(newIndex, 0, element)
+    console.log(newSub)
 
     i = 0
     oldSub.tasks.forEach(function(task) {
@@ -361,7 +367,9 @@ function getCategoryIdx(catId) {
 
 function removeCatFromData(catId) {
     let catIdx = getCategoryIdx(catId)
+    let position = getCategoryById(catId).position
     data.categories.splice(catIdx, 1)
+    shiftCatPositionsLeft(position)
 }
 
 function duplicateCatFromData(id, newId) {
@@ -387,7 +395,6 @@ function removeSubCatFromData(id) {
     let position = cat.subCategories[idx].position
     cat.subCategories.splice(idx, 1)
     shiftPositionsLeft(cat.subCategories, position)
-    console.log(cat.subCategories)
 }
 
 function removeMemberFromData(catId, userId) {
@@ -468,6 +475,17 @@ function getCatMaxPosition() {
     return max
 }
 
+function getAllCatMaxPosition() {
+    let max = 0
+    data.categories.forEach(function(cat) {
+        if(cat.category.archived || cat.category.owner_id !== data.user.id) return
+        let temp = cat.category.position
+        if(temp > max)
+            max = temp
+    })
+    return max
+}
+
 function prepareSubCatToData(id, name) {
     let subCat = getSubCatTemplate()
 
@@ -497,7 +515,7 @@ function prepareCatForData() {
     cat.category.archived = false
     cat.category.name = getValueFromLanguage("NewCategoryName")
     cat.category.owner_id = data.user.id
-    cat.category.position = 0
+    cat.category.position = getAllCatMaxPosition() + 1
     cat.category.subCategories = []
     cat.category.color = "#FF5733" // temp
 
@@ -513,7 +531,6 @@ function prepareCatForData() {
 function addCatToData(cat) {
     storagePushToCategories(cat.category_id, false)
     shiftCatPositionsRight()
-    console.log(cat)
     data.categories.push(cat)
 }
 
@@ -593,6 +610,13 @@ function shiftPositionsLeft(elements, start) {
     })
 }
 
+function shiftCatPositionsLeft(start) {
+    data.categories.forEach(function (element) {
+        if(element.category.position > start)
+            element.category.position--
+    })
+}
+
 function shiftCatPositionsRight() {
     data.categories.forEach(function (element) {
         element.category.position++
@@ -601,4 +625,13 @@ function shiftCatPositionsRight() {
 
 function isCatArchivedFalse(catId) {
     return getCategoryById(catId).archived === false
+}
+
+function getCategoryBySubcatId(subcatId) {
+    let subcatIdx = getSubCategoryIdx(subcatId)
+    let subcat = getSubCategoryByIdx(subcatIdx)
+    let catId = subcat.parent_category_id
+    let catIdx = data.categories.findIndex(c => c.category_id === catId)
+    let cat = data.categories[catIdx]
+    return cat
 }

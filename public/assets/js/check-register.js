@@ -2,7 +2,7 @@ let registerForm = document.getElementById("form_register");
 
 registerForm.addEventListener('submit' ,function(e){
     let email = document.getElementById("email");
-    let pseudo = document.getElementById("pseudo");
+    let pseudo = document.getElementById("username");
     let pass = document.getElementById("password");
     let passConf = document.getElementById("password-conf");
     let condition = document.getElementById("condition");

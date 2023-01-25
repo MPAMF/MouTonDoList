@@ -35,7 +35,7 @@
   "FormSignInTitle": "Créez votre compte",
   "FormUsername": "Votre pseudonyme",
   "FormConfPwd": "Confirmez votre mot de passe",
-  "FormCGV": "J'accepte les conditions générales de ventes.",
+  "FormCGV": "J'accepte les conditions d'utilisation du site web.",
 
   "InputSearchNav": "Recherche",
   "BtnNotif": "Notification",
@@ -143,10 +143,10 @@
   "CategorySearchResult": "Résultat de la recherche :",
   "CategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une catégorie",
 
-  "SubCategoryDragTitle": "Attrape la sous-catégorie pour la changer d'emplacement",
-  "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie",
-  "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une sous-catégorie archivée",
-  "SubCategoryNewTaskButtonName" : "Ajouter une sous-catégorie",
+  "SubCategoryDragTitle": "Attrape la section pour la changer d'emplacement",
+  "SubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une section",
+  "ArchivedSubCategoryPopoverAriaLabel": "Ouvre une liste d'actions pour une section archivée",
+  "SubCategoryNewTaskButtonName" : "Ajouter une section",
 
   "TaskDragTitle": "Attrape la tâche pour la changer d'emplacement",
   "TaskCheckboxTitle": "Etat de la tâche",
@@ -203,7 +203,7 @@
   "TimeMinutes": "minutes",
   "TimeNow": "à l'instant",
 
-  "FooterName": "&copy; 2023 Mouton Group \uD83D\uDC11",
+  "FooterName": "&copy; %year% Mouton Group \uD83D\uDC11",
   "FooterGitalb": "Page GitLab du projet",
   "FooterGithub": "Page GitHub du projet",
 
@@ -287,6 +287,28 @@
   "AddMemberCatSuccess": "Membre invité avec succès",
   "AddMemberCatError": "Erreur lors de l'invitation du membre",
   "AddMemberCatTitle": "Invitation du membre à la catégorie",
+
+  "InvitationAlreadyExists": "L'invitation existe déjà",
+  "CategoryNotParentCategory": "Le projet transmise n'est pas le projet",
+  "ParentCategoryNotFound": "Le projet n'est par trouvé",
+  "UserAlreadyExists": "L'utilisateur existe déjà",
+  "AuthLoginFailed": "Echec de l'authentification",
+  "AuthLogOutSuccess": "Déconnexion avec succès",
+  "TaskNotFoundException": "La tâche n'a pas été trouvé",
+  "CategoryIdNotValid": "L'identifiant du projet n'est pas valide",
+  "AssignedUserNotFoundException": "L'assignation a échoué car l'utilisateur n'est pas trouvé",
+  "UserIdOrEmailExpected": "L'identifiant de l'utilisateur ou son email est attendu",
+  "CreateCategoryDashboard": "Vous n'avez pas de projet, veuillez en créer un.",
+
+  "InvitationCreateDBError": "Erreur lors de la création de l'invitation dans la base de données",
+  "UserCreateDBError": "Erreur lors de la création de l'utilisateur dans la base de données",
+  "CategoryCreateDBError": "Erreur lors de la création du projet dans la base de données",
+  "CategoryUpdateDBError": "Erreur lors de la modification du projet dans la base de données",
+  "InvitationUpdateDBError": "Erreur lors de la modification de l'invitation dans la base de données",
+  "TaskCreateDBError": "Erreur lors de la création de la tâche dans la base de données",
+  "TaskUpdateDBError": "Erreur lors de la modification de la tâche dans la base de données",
+  "UserUpdateDBError": "Erreur lors de la modification de l'utilisateur dans la base de données",
+  "TaskCommentCreateDBError": "Erreur lors de la création du commentaire dans la base de données",
 
   "InvalidData": "Les données sont invalides"
 }
