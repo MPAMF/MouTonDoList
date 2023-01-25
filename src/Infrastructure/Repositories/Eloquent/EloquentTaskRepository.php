@@ -208,4 +208,9 @@ class EloquentTaskRepository extends Repository implements TaskRepository
                 ->update(['position' => $task->getPosition()]) != 0;
     }
 
+    public function searchTasks(string $name, int $userId, ?array $with = null): array
+    {
+        // TODO: Implement searchTasks() method.
+        return [];
+    }
 }
