@@ -2,6 +2,13 @@
 
 /!\ Important à lire /!\
 
+## Contributeurs
+
+- Matthieu FREITAG
+- Quentin GERLING
+- Victor Hahnschutz
+- Paul MEYER
+
 ## Installation & démarrage
 
 - Copier .env-example à .env puis le remplir
