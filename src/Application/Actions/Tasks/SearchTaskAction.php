@@ -25,7 +25,7 @@ class SearchTaskAction extends Action
     {
         $data = $this->searchTaskService->search(new SearchTaskRequest(
             userId: $this->user()->getId(),
-            searchInput: ""
+            searchInput: $this->resolveArg('input')
         ));
 
         return $this->respondWithData($data);
