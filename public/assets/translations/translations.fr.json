@@ -78,7 +78,7 @@
   "ModalCommentErrorText": "Veuillez indiquer un commentaire.",
   "ModalCommentAddText": "Ajouter le commentaire",
 
-  "TitreModalNav": "Données du compte",
+  "TitleModalNav": "Données du compte",
   "CloseModalNav": "Fermer",
   "CancelModalNav": "Annuler",
   "SaveModalNav": "Sauvegarder",
@@ -96,6 +96,8 @@
   "TaskToDoLiModalNav": "Tâches",
   "TaskToDoMoveToTaskModalNav": " Se déplacer vers la tâche",
   "TaskToDoDeleteToTaskModalNav": " Supprimer la notification",
+  "BtnValidateTitleNotifModalNav": "Accepter l'invitation",
+  "BtnRefuseTitleNotifModalNav": "Refuser l'invitation",
 
   "ModalDropdownLanguages": "Français",
   "ModalDropdownLanguagesfr": "Français",

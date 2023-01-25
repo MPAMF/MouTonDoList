@@ -158,7 +158,7 @@
                 </div>
                 <div class="container-fluid p-0">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitreModalNav{% endtrans %}</h1>
+                        <h1 class="modal-title fs-5" id="userModalLabel">{% trans %}TitleModalNav{% endtrans %}</h1>
                         <button type="button" class="btn-close modal-theme-close" data-bs-dismiss="modal" aria-label="{{ 'CloseAriaLabel'|trans|raw }}"></button>
                     </div>
                     <div class="modal-body">
@@ -353,7 +353,7 @@
             res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
                 res += createNotification(value.id, value.category.name, value.category.owner.username,
-                    getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value.date));
+                    timeSince(Date.parse(value.date)));
             });
         }
 
@@ -399,12 +399,12 @@
                     ` + category + ` , ` + owner + ` , ` + date + `
                 </label>
                 <div class="d-flex">
-                    <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success" title="Notification"
-                         onclick="updateInvitation(` + invitationId + `,true)">
+                    <button type="button" class="btn position-relative btn-nav me-2 btn-modal-success"
+                         onclick="updateInvitation(` + invitationId + `,true)" title="` + getValueFromLanguage("BtnValidateTitleNotifModalNav") + `">
                         <span class="mdi mdi-check span-nav"></span>
                     </button>
-                    <button type="button" class="btn position-relative btn-nav me-1 btn-modal-remove" title="Notification"
-                         onclick="updateInvitation(` + invitationId + `,false))">
+                    <button type="button" class="btn position-relative btn-nav me-1 btn-modal-remove"
+                         onclick="updateInvitation(` + invitationId + `,false))" title="` + getValueFromLanguage("BtnRefuseTitleNotifModalNav") + `">
                         <span class="mdi mdi-18px mdi-close-thick"></span>
                     </button>
                 </div>
