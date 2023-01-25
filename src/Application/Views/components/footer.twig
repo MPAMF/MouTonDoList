@@ -5,7 +5,8 @@
                href={% if (content) %} "/home" {% else %} "." {% endif %}>
                 <img src="/assets/img/appImg.jpg" alt="Logo" class="rounded-circle logo">
             </a>
-            <span class="mb-md-0 footer-text">{% trans %}FooterName{% endtrans %}</span>
+            {% set currentYear = "now"|date("Y") %}
+            <span class="mb-md-0 footer-text">{{ 'FooterName'|trans({'%year%': currentYear })|raw }}</span>
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
