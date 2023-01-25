@@ -146,7 +146,7 @@ function doSearch(splitInputs) {
 
             if (correspond) {
                 if(task.assigned === null || task.assigned.username === null)
-                    task.assigned.username = ""
+                    task.assigned = { "username": ""}
                 result.push(task)
                 correspond = false
             }
