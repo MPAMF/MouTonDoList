@@ -93,7 +93,7 @@ $(document).ready(function() {
                 resetSearchbar()
                 return
             }
-            let result = doSearch(input.split())
+            let result = doSearch(input.toLowerCase().split())
             displayResult(result)
         }
     });
@@ -112,10 +112,22 @@ function doSearch(splitInputs) {
     getCurrentCategory().subCategories.forEach(function(sub) {
         sub.tasks.forEach(function(task) {
 
-            const name = (task.name.split(" ")).some(r => splitInputs.includes(r))
-            const desc = (task.description.split(" ")).some(r => splitInputs.includes(r))
+            if(task === null) return
 
-            if (name || desc)
+            let user = false
+            let name = false
+            let desc = false
+
+            console.log(task)
+
+            if(task.assigned !== null && task.assigned.username !== null)
+                user = (task.assigned.username.toLowerCase().split(" ")).some(r => splitInputs.includes(r))
+            if(task.name !== null)
+                name = (task.name.toLowerCase().split(" ")).some(r => splitInputs.includes(r))
+            if(task.description !== null)
+                desc = (task.description.toLowerCase().split(" ")).some(r => splitInputs.includes(r))
+
+            if (user || name || desc)
                 correspond = true
 
             switch (assignId) {
@@ -146,7 +158,7 @@ function doSearch(splitInputs) {
 
             if (correspond) {
                 if(task.assigned === null || task.assigned.username === null)
-                    task.assigned.username = ""
+                    task.assigned = { "username": ""}
                 result.push(task)
                 correspond = false
             }
