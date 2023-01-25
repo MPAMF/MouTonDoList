@@ -288,5 +288,27 @@
   "AddMemberCatError": "Error while inviting member",
   "AddMemberCatTitle": "Invitation of the member to the category",
 
+  "InvitationAlreadyExists": "The invitation already exists",
+  "CategoryNotParentCategory": "The transmitted project is not the project",
+  "ParentCategoryNotFound": "The project is not found",
+  "UserAlreadyExists": "The user already exists",
+  "AuthLoginFailed": "Authentication failed",
+  "AuthLogOutSuccess": "Successful logout",
+  "TaskNotFoundException": "Task was not found",
+  "CategoryIdNotValid": "Project ID is not valid",
+  "AssignedUserNotFoundException": "Assignment failed because the user is not found",
+  "UserIdOrEmailExpected": "The user id or email is expected",
+  "CreateCategoryDashboard": "You don't have a project, please create one.",
+
+  "InvitationCreateDBError": "Error while creating the invitation in the database",
+  "UserCreateDBError": "Error creating user in database",
+  "CategoryCreateDBError": "Error when creating the project in the database",
+  "CategoryUpdateDBError": "Error when modifying the project in the database",
+  "InvitationUpdateDBError": "Error when modifying the invitation in the database",
+  "TaskCreateDBError": "Error when creating a task in the database",
+  "TaskUpdateDBError": "Error when modifying the task in the database",
+  "UserUpdateDBError": "Error when modifying the user in the database",
+  "TaskCommentCreateDBError": "Error when creating a comment in the database",
+
   "InvalidData": "Data is invalid"
 }

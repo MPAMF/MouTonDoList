@@ -288,5 +288,27 @@
   "AddMemberCatError": "Erreur lors de l'invitation du membre",
   "AddMemberCatTitle": "Invitation du membre à la catégorie",
 
+  "InvitationAlreadyExists": "L'invitation existe déjà",
+  "CategoryNotParentCategory": "Le projet transmise n'est pas le projet",
+  "ParentCategoryNotFound": "Le projet n'est par trouvé",
+  "UserAlreadyExists": "L'utilisateur existe déjà",
+  "AuthLoginFailed": "Echec de l'authentification",
+  "AuthLogOutSuccess": "Déconnexion avec succès",
+  "TaskNotFoundException": "La tâche n'a pas été trouvé",
+  "CategoryIdNotValid": "L'identifiant du projet n'est pas valide",
+  "AssignedUserNotFoundException": "L'assignation a échoué car l'utilisateur n'est pas trouvé",
+  "UserIdOrEmailExpected": "L'identifiant de l'utilisateur ou son email est attendu",
+  "CreateCategoryDashboard": "Vous n'avez pas de projet, veuillez en créer un.",
+
+  "InvitationCreateDBError": "Erreur lors de la création de l'invitation dans la base de données",
+  "UserCreateDBError": "Erreur lors de la création de l'utilisateur dans la base de données",
+  "CategoryCreateDBError": "Erreur lors de la création du projet dans la base de données",
+  "CategoryUpdateDBError": "Erreur lors de la modification du projet dans la base de données",
+  "InvitationUpdateDBError": "Erreur lors de la modification de l'invitation dans la base de données",
+  "TaskCreateDBError": "Erreur lors de la création de la tâche dans la base de données",
+  "TaskUpdateDBError": "Erreur lors de la modification de la tâche dans la base de données",
+  "UserUpdateDBError": "Erreur lors de la modification de l'utilisateur dans la base de données",
+  "TaskCommentCreateDBError": "Erreur lors de la création du commentaire dans la base de données",
+
   "InvalidData": "Les données sont invalides"
 }
