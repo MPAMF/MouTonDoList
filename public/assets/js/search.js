@@ -93,7 +93,7 @@ $(document).ready(function() {
                 resetSearchbar()
                 return
             }
-            let result = doSearch(input.split())
+            let result = doSearch(input.toLowerCase().split())
             displayResult(result)
         }
     });
@@ -112,8 +112,8 @@ function doSearch(splitInputs) {
     getCurrentCategory().subCategories.forEach(function(sub) {
         sub.tasks.forEach(function(task) {
 
-            const name = (task.name.split(" ")).some(r => splitInputs.includes(r))
-            const desc = (task.description.split(" ")).some(r => splitInputs.includes(r))
+            const name = (task.name.toLowerCase().split(" ")).some(r => splitInputs.includes(r))
+            const desc = (task.description.toLowerCase().split(" ")).some(r => splitInputs.includes(r))
 
             if (name || desc)
                 correspond = true
