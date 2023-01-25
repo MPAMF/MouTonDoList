@@ -337,10 +337,10 @@
     function loadAllValues(typeValue, values) {
         let res;
 
-        if (typeValue === 0) {/* [0]: taskName; [1]: subCategoryId; [2]: taskId; [3]: DateEcheance */
+        if (typeValue === 0) {/* [0]: categoryName; [1]: SubCategoryName; [2]: taskName; [3]: subCategoryId; [4]: taskId;*/
             res = `<ul class="list-group list-group-flush tasks w-100" data-sortable="tasks">`;
             values.forEach(value => {
-                res += createTaskToDo(value[0], value[1], value[2], getValueFromLanguage('LabelTaskToDoModalNav').replace('%data%',value[3]));
+                res += createTaskToDo(value[0], value[1], value[2], value[3], value[4]);
             });
         }
         else if(typeValue === 1){
@@ -425,13 +425,13 @@
         addEventTaskToDo();
     }
 
-    function createTaskToDo(taskName, subCatId, taskId, date) {
+    function createTaskToDo(categoryName, subCategoryName, taskName, subCatId, taskId) {
         return `
         <li class="sidebar-li rounded p-2" id="taskToDo-` + subCatId + `-` + taskId + `">
             <div class="d-flex">
                 <div class="" onclick="openTaskDetails(` + subCatId + `,` + taskId + `)">
                     <label>
-                        ` + taskName + ` , ` + date + `
+                        `+ categoryName + ` , ` + subCategoryName + ` , ` + taskName  + `
                     </label>
                 </div>
                     <a class="ms-2" data-idCat="` + subCatId + `" data-idTask="` + taskId + `" role="button"
