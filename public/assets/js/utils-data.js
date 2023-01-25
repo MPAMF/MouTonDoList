@@ -364,7 +364,9 @@ function getCategoryIdx(catId) {
 
 function removeCatFromData(catId) {
     let catIdx = getCategoryIdx(catId)
+    let position = getCategoryById(catId).position
     data.categories.splice(catIdx, 1)
+    shiftCatPositionsLeft(position)
 }
 
 function duplicateCatFromData(id, newId) {
@@ -602,6 +604,13 @@ function shiftPositionsLeft(elements, start) {
     elements.forEach(function (element) {
         if(element.position > start)
             element.position--
+    })
+}
+
+function shiftCatPositionsLeft(start) {
+    data.categories.forEach(function (element) {
+        if(element.category.position > start)
+            element.category.position--
     })
 }
 
