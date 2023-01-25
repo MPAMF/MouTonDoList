@@ -20,14 +20,23 @@ use Slim\Exception\HttpNotFoundException;
 use OpenApi\Annotations as OA;
 
 /**
- * @OA\Post(
- *     path="/api/invitations",
+ * @OA\Put(
+ *     path="/api/invitations/{id}",
  *     @OA\RequestBody(
  *         description="Invitation object",
  *         required=true,
  *         @OA\MediaType(
  *             mediaType="application/json",
  *             @OA\Schema(ref="#/components/schemas/UserCategory")
+ *         )
+ *     ),
+ *     @OA\Parameter(
+ *         name="id",
+ *         description="Invitation id",
+ *         in = "path",
+ *         required=true,
+ *         @OA\Schema(
+ *             type="integer"
  *         )
  *     ),
  *     @OA\Response(

@@ -19,7 +19,7 @@ use Slim\Exception\HttpNotFoundException;
  *     @OA\Response(
  *          response="200",
  *          description="Gets an invitation",
- *          @OA\JsonContent(ref="#/components/schemas/Invitation")
+ *          @OA\JsonContent(ref="#/components/schemas/UserCategory")
  *     ),
  *     @OA\Parameter(
  *         name="id",
