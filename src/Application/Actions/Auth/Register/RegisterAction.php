@@ -35,6 +35,6 @@ class RegisterAction extends Action
             return $this->withError($e->getMessage())->respondWithView('home/content.twig', []);
         }
 
-        return $this->withSuccess($this->translator->trans('AuthRegisterSuccess'))->redirect('account.login');
+        return $this->withSuccess($this->translator->trans('AuthRegisterSuccess'))->redirect('dashboard');
     }
 }
