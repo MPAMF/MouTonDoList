@@ -13,6 +13,9 @@ use Respect\Validation\Validator;
 use ReturnTypeWillChange;
 use stdClass;
 
+/**
+ * Other name: Invitation
+ */
 class UserCategory extends TimeStampedModel implements JsonSerializable, ValidatorModel
 {
     private ?int $id;
@@ -189,6 +192,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
         unset($result['user']);
         unset($result['category']);
         unset($result['members']);
+        unset($result['created_at']);
         return $result;
     }
 
@@ -203,6 +207,7 @@ class UserCategory extends TimeStampedModel implements JsonSerializable, Validat
             'category' => isset($this->category) ? $this->category->jsonSerialize() : null,
             'accepted' => $this->accepted,
             'can_edit' => $this->canEdit,
+            'created_at' => $this->getCreatedAt()->format('Y-m-d H:i:s')
         ];
 
         if (isset($this->members)) {
