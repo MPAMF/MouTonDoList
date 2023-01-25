@@ -254,7 +254,7 @@ function leaveCategory(id) {
 
     showLoader()
 
-    const title = getValueFromLanguage('LeaveMemberCatCommentTitle').replace('%id%', id)
+    const title = getValueFromLanguage('LeaveMemberCatTitle').replace('%id%', id)
 
     id = parseInt(id)
     let invitationId = getInvitationIdByCategoryId(id)
@@ -269,7 +269,7 @@ function leaveCategory(id) {
         showToast(getValueFromLanguage('LeaveMemberCatSuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
-        showToast(getValueFromLanguage('LeaveMemberCatCommentError').replace('%code%', e.code), title, 'danger')
+        showToast(getValueFromLanguage('LeaveMemberCatError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         hideLoader()
     });
@@ -423,7 +423,7 @@ function removeMember(catId, userId) {
 
     showLoader()
 
-    const title = getValueFromLanguage('RemoveMemberCatCommentTitle').replace('%id%', userId)
+    const title = getValueFromLanguage('RemoveMemberCatTitle').replace('%id%', userId)
 
     catId = parseInt(catId)
     userId = parseInt(userId)
@@ -435,7 +435,41 @@ function removeMember(catId, userId) {
         showToast(getValueFromLanguage('RemoveMemberCatSuccess'), title, 'success')
     }).catch(e => {
         console.log(e)
-        showToast(getValueFromLanguage('RemoveMemberCatCommentError').replace('%code%', e.code), title, 'danger')
+        showToast(getValueFromLanguage('RemoveMemberCatError').replace('%code%', e.code), title, 'danger')
+    }).then(() => {
+        hideLoader()
+    });
+}
+
+function updateMember(catId, userId, select) {
+
+    if(userId === data.user.id) return
+
+    showLoader()
+
+    const title = getValueFromLanguage('UpdateMemberCatTitle').replace('%id%', userId)
+
+    if(checkSelectValueOnSubmit(select, "error-memberStatusNew", authModalSelectMemberStatusValues)) {
+        showToast(getValueFromLanguage('InvalidData'), title, 'danger')
+        hideLoader()
+        return;
+    }
+
+    let can_edit = select.value === authModalSelectMemberStatusValues[1]
+    let invitationId = getInvitationIdByCategoryIdForMember(catId, userId)
+
+    let invite = {
+        "accepted": true,
+        "can_edit": can_edit,
+        "category_id": catId,
+        "id": invitationId
+    }
+
+    repositories.invitations.update(invite).then(() => {
+        showToast(getValueFromLanguage('UpdateMemberCatSuccess'), title, 'success')
+    }).catch(e => {
+        console.log(e)
+        showToast(getValueFromLanguage('UpdateMemberCatError').replace('%code%', e.code), title, 'danger')
     }).then(() => {
         hideLoader()
     });

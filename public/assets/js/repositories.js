@@ -170,12 +170,12 @@ class InvitationRepository extends Repository {
         return super.list(this.endpoint)
     }
 
-    create(category) {
-        return super.post(this.endpoint, category)
+    create(invitation) {
+        return super.post(this.endpoint, invitation)
     }
 
-    update(category) {
-        return super.put(this.endpoint, category.id, category)
+    update(invitation) {
+        return super.put(this.endpoint, invitation.id, invitation)
     }
 
     delete(id) {
