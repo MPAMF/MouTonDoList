@@ -602,3 +602,13 @@ function shiftCatPositionsRight() {
 function isCatArchivedFalse(catId) {
     return getCategoryById(catId).archived === false
 }
+
+function getCategoryBySubcatId(subcatId) {
+    let subcatIdx = getSubCategoryIdx(subcatId)
+    let subcat = getSubCategoryByIdx(subcatIdx)
+    let catId = subcat.parent_category_id
+    let catIdx = data.categories.findIndex(c => c.category_id === catId)
+    let cat = data.categories[catIdx]
+    console.log(cat)
+    return cat
+}

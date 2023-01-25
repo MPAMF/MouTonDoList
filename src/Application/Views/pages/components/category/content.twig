@@ -26,7 +26,7 @@
 
     <div id="default-category-content" data-sortable="categories">
         {% for subCategory in category.category.subCategories %}
-            {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks } %}
+            {% include 'pages/components/sub-category/content.twig' with { 'subCategory' : subCategory, 'tasks' : subCategory.tasks, 'isArchived' : category.category.archived } %}
         {% endfor %}
         {% if (canEdit and category.category.archived == false) %}
             {% include 'pages/components/sub-category/new.twig' with { 'catId' : category.category.id } %}
